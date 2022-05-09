@@ -355,7 +355,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;//減算(上とは別)
 	//blenddesc.SrcBlend = D3D12_BLEND_ONE;//ソースの値を100%使う
 	//blenddesc.DestBlend = D3D12_BLEND_ONE;//テストの値を100%使う
-	// 色判定
+	// 色反転
 	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算(上とは別)
 	//blenddesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;//ソースの値を100%使う
 	//blenddesc.DestBlend = D3D12_BLEND_ZERO;//テストの値を100%使う
