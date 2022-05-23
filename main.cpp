@@ -221,17 +221,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//描画初期化処理
 	// 頂点データ
 	XMFLOAT3 vertices[] = {
-	{ -0.5f, -0.5f, 0.0f }, // 左下
-	{ -0.5f, +0.5f, 0.0f }, // 左上
-	{ +0.5f, -0.5f, 0.0f }, // 右下
-	{ +0.5f, +0.5f, 0.0f }, // 右上
+
+	{ -0.3f, -0.3f, 0.0f }, // 左下0
+	{ 0.0f, +0.5f, 0.0f }, // 左上1
+	{ +0.3f, -0.3f, 0.0f }, // 右下2
+	{ 0.0f, 0.0f, 0.0f },//頂点3
+
 	};
 	// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * _countof(vertices));
 	uint16_t indices[] =
 	{
-		0,1,2, //三角形１
-		1,2,3, //三角形２
+		0,1,3, //三角形1
+		1,2,3, //三角形2
+		0,2,3, //三角形3
 	};
 	// 頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{}; // ヒープ設定
