@@ -1,9 +1,8 @@
-cbuffer ConstBufferDataMaterial:register(b0)
-{
-	float4 color;//êF(RGBA)
-}
+#include "Basic.hlsli"
 
-float4 main() : SV_TARGET
-{
-	return color;
+texture2D<float4> tex:register(t0);
+SamplerState smp:register(s0);
+
+float4 main(VSOutput input) :SV_TARGET{
+	return float4(tex.Sample(smp,input.uv));
 }
