@@ -229,10 +229,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// 頂点データ
 	Vertex vertices[] = {
 		//{	x	  y	   z}	 { u	v }
-		{{-50.0f,-50.0f,50.0f}, {0.0f,1.0f}}, //左下
-		{{-50.0f, 50.0f,50.0f}, {0.0f,0.0f}}, //左上
-		{{ 50.0f,-50.0f,50.0f}, {1.0f,1.0f}}, //右下
-		{{ 50.0f, 50.0f,50.0f}, {1.0f,0.0f}}, //右上
+		{{-50.0f,-50.0f, 50.0f}, {0.0f,1.0f}}, //左上
+		{{-50.0f, 50.0f, 0.0f}, {0.0f,0.0f}}, //左下
+		{{ 50.0f,-50.0f, 50.0f}, {1.0f,1.0f}}, //右上
+		{{ 50.0f, 50.0f, 0.0f}, {1.0f,0.0f}}, //右下
 	};
 	// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
@@ -395,14 +395,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	constMapTransform->mat.r[3].m128_f32[1] = 1.0f;*/
 
 	constMapTransform->mat = XMMatrixOrthographicOffCenterLH( 0, window_width, window_height, 0, 0,1);
-	//透視投影行列の計算
-	constMapTransform->mat = XMMatrixPerspectiveFovLH(
+	//射影変換行列の計算
+	XMMATRIX matProjection = 
+	XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(45.0f),//上下画角45度
 		(float)window_width / window_height,//アスペクト比(画面横幅/画面縦幅)
 		0.1f, 1000.0f//前端,奥端
 	);
 	//ビュー変換行列を計算
+	XMMATRIX matview;
+	XMFLOAT3 eye(0, 0, -100);	//始点座標
+	XMFLOAT3 target(0, 0, 0);	//注視点座標
+	XMFLOAT3 up(0, 1, 0);		//上方向ベクトル
+	matview = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 
+	constMapTransform->mat = matProjection;
+	constMapTransform->mat = matview * matProjection;
 #pragma region 画像データ
 #pragma region リソースデータ作成
 	////横方向ピクセル数
@@ -683,6 +691,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
 
+	float angle = 0.0f; //カメラの回転角
+
 	//ゲームループ
 	while (true)
 	{
@@ -703,12 +713,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//全キーの入力状態を取得する
 		BYTE key[256] = {};
 		keyboard->GetDeviceState(sizeof(key), key);
-		//数字の0キーが押されていたら
-		if (key[DIK_0])
-		{
-			OutputDebugStringA("Hit 0\n");//出力ウィンドウに[Hit 0]と表示
-		}
 #pragma endregion
+		if (key[DIK_D] || key[DIK_A])
+		{
+			if (key[DIK_D]) { angle += XMConvertToRadians(1.0f); }
+			else if (key[DIK_A]) { angle -= XMConvertToRadians(1.0f); }
+			//angleラジアンだけY軸前ア臨沂回転,半径は-100
+			eye.x = -100 * sinf(angle);
+			eye.z = -100 * cosf(angle);
+			matview = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+		}
+		constMapTransform->mat = matview * matProjection;
 		// バックバッファの番号を取得(2つなので0番か1番)
 		UINT bbIndex = swapChain->GetCurrentBackBufferIndex();
 		// 1.リソースバリアで書き込み可能に変更
