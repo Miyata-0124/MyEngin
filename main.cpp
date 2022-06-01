@@ -472,7 +472,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 	//値を書き込むと自動に転送される
-	constMapMaterial->color = XMFLOAT4(1, 1, 1, 0.5f);//色
+	constMapMaterial->color = XMFLOAT4(1, 1, 1, 1);//色
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
 		L"BasicVS.hlsl", // シェーダファイル名
