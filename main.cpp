@@ -395,6 +395,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	constMapTransform->mat.r[3].m128_f32[1] = 1.0f;*/
 
 	constMapTransform->mat = XMMatrixOrthographicOffCenterLH( 0, window_width, window_height, 0, 0,1);
+
+	//ワールド変換行列
+	XMMATRIX matWorld;
+	matWorld = XMMatrixIdentity();
+	XMMATRIX matScale; //スケーリング行列
+	matScale = XMMatrixScaling(1.0f, 0.5f, 1.0f);
+	matWorld *= matScale; //ワールド行列にスケーリングを反映
+
+	XMMATRIX matRot; //回転行列(2Dならz軸まわりのみでOK)
+	matRot = XMMatrixIdentity();
+	matRot *= XMMatrixRotationZ(XMConvertToRadians(0.0f)); //z軸まわりに45度回転
+	matRot *= XMMatrixRotationX(XMConvertToRadians(15.0f)); //z軸まわりに45度回転
+	matRot *= XMMatrixRotationY(XMConvertToRadians(30.0f)); //z軸まわりに45度回転
+	matWorld *= matRot; //ワールド行列に回転を反映
+
+	XMMATRIX matTrans; //平行移動行列
+	matTrans = XMMatrixTranslation(-50.0f, 0, 0); //(-50.0,0,0)平行移動
+	matWorld *= matTrans; // ワールド行列に平行移動を反映
+
 	//射影変換行列の計算
 	XMMATRIX matProjection = 
 	XMMatrixPerspectiveFovLH(
@@ -410,7 +429,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	matview = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 
 	constMapTransform->mat = matProjection;
-	constMapTransform->mat = matview * matProjection;
+	constMapTransform->mat = matWorld * matview * matProjection;
+
+	//スケーリング倍率
+	XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
+	//回転角
+	XMFLOAT3 rotation = { 0.0f,0.0f,0.0f };
+	// 座標
+	XMFLOAT3 position = { 0.0f,0.0f,0.0f };
+
 #pragma region 画像データ
 #pragma region リソースデータ作成
 	////横方向ピクセル数
@@ -723,7 +750,40 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			eye.z = -100 * cosf(angle);
 			matview = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 		}
-		constMapTransform->mat = matview * matProjection;
+
+		//いずれかのキーを押していたら
+		if (key[DIK_UP] || key[DIK_DOWN] || key[DIK_RIGHT] || key[DIK_LEFT])
+		{
+			//座標を移動する処理 (z座標)
+			if (key[DIK_UP]) { position.z += 1.0f; }
+			else if (key[DIK_DOWN]) { position.z -= 1.0f; }
+			if (key[DIK_RIGHT]) { position.x += 1.0f; }
+			else if (key[DIK_LEFT]) { position.x -= 1.0f; }
+		}
+#pragma region 行列計算
+		//ワールド変換行列
+		XMMATRIX matWorld;
+		
+		XMMATRIX matScale; //スケーリング行列
+		matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
+		
+		XMMATRIX matRot; //回転行列(2Dならz軸まわりのみでOK)
+		matRot = XMMatrixIdentity();
+		matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation.z)); //z軸まわりに45度回転
+		matRot *= XMMatrixRotationX(XMConvertToRadians(rotation.x)); //z軸まわりに45度回転
+		matRot *= XMMatrixRotationY(XMConvertToRadians(rotation.y)); //z軸まわりに45度回転
+		
+		XMMATRIX matTrans; //平行移動行列
+		matTrans = XMMatrixTranslation(position.x, position.y, position.z); //(-50.0,0,0)平行移動
+		
+
+		matWorld = XMMatrixIdentity(); //変形リセット
+		matWorld *= matScale; //ワールド行列にスケーリングを反映
+		matWorld *= matRot; //ワールド行列に回転を反映
+		matWorld *= matTrans; // ワールド行列に平行移動を反映
+#pragma endregion
+
+		constMapTransform->mat = matWorld * matview * matProjection;
 		// バックバッファの番号を取得(2つなので0番か1番)
 		UINT bbIndex = swapChain->GetCurrentBackBufferIndex();
 		// 1.リソースバリアで書き込み可能に変更
