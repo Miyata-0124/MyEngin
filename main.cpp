@@ -241,14 +241,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{{ 5.0f,-5.0f, 5.0f},{},{1.0f,1.0f}},//右下
 		{{ 5.0f, 5.0f, 5.0f},{},{1.0f,0.0f}},//右上
 		// 左				,
-		{{-5.0f,-5.0f, -5.0f},{},{0.0f,1.0f}},//左下
-		{{-5.0f,-5.0f,  5.0f},{},{0.0f,0.0f}},//左上
-		{{-5.0f, 5.0f, -5.0f},{},{1.0f,1.0f}},//右下
-		{{-5.0f, 5.0f,  5.0f},{},{1.0f,0.0f}},//右上
+		{{-5.0f,-5.0f,  5.0f},{},{0.0f,1.0f}},//左下
+		{{-5.0f, 5.0f,  5.0f},{},{0.0f,0.0f}},//左上
+		{{-5.0f,-5.0f, -5.0f},{},{1.0f,1.0f}},//右下
+		{{-5.0f, 5.0f, -5.0f},{},{1.0f,0.0f}},//右上
 		// 右
 		{{ 5.0f,-5.0f, -5.0f},{},{0.0f,1.0f}},//左下
-		{{ 5.0f,-5.0f,  5.0f},{},{0.0f,0.0f}},//左上
-		{{ 5.0f, 5.0f, -5.0f},{},{1.0f,1.0f}},//右下
+		{{ 5.0f, 5.0f, -5.0f},{},{0.0f,0.0f}},//左上
+		{{ 5.0f,-5.0f,  5.0f},{},{1.0f,1.0f}},//右下
 		{{ 5.0f, 5.0f,  5.0f},{},{1.0f,0.0f}},//右上
 		// 下
 		{{-5.0f,-5.0f, -5.0f},{},{0.0f,1.0f}},//左下
@@ -275,8 +275,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		8,9,10, //三角形5
 		10,9,11, //三角形6
 		// 右
-		12,14,13, //三角形7
-		13,14,15, //三角形8
+		12,13,14, //三角形7
+		14,13,15, //三角形8
 		// 下
 		16,18,17, //三角形9
 		17,18,19, //三角形10
@@ -284,6 +284,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		20,21,22, //三角形11
 		22,21,23, //三角形12
 	};
+	//法線の計算
+	for (int i = 0; i < _countof(indices) / 3; i++)
+	{//三角形1つごとに計算していく
+		//三角形のインデックスを取り出し,一時的な変数に入れる
+		unsigned short index0 = indices[i * 3 + 0];
+		unsigned short index1 = indices[i * 3 + 1];
+		unsigned short index2 = indices[i * 3 + 2];
+		//三角形を構成する頂点座標ベクトルに代入
+		XMVECTOR p0 = XMLoadFloat3(&vertices[index0].pos);
+		XMVECTOR p1 = XMLoadFloat3(&vertices[index1].pos);
+		XMVECTOR p2 = XMLoadFloat3(&vertices[index2].pos);
+		//p0->p1ベクトル.p0->p2ベクトルを計算 (ベクトル計算)
+		XMVECTOR v1 = XMVectorSubtract(p1, p0);
+		XMVECTOR v2 = XMVectorSubtract(p2, p0);
+		//外積は両方から垂直なベクトル
+		XMVECTOR normal = XMVector3Cross(v1, v2);
+		//正規化(長さを1にする)
+		normal = XMVector3Normalize(normal);
+		//求めた法線を頂点データに代入
+		XMStoreFloat3(&vertices[index0].normal, normal);
+		XMStoreFloat3(&vertices[index1].normal, normal);
+		XMStoreFloat3(&vertices[index2].normal, normal);
+	}
 	// 頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{}; // ヒープ設定
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
@@ -644,6 +667,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		OutputDebugStringA(error.c_str());
 		assert(0);
 	}
+
 	// 頂点レイアウト
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
 		{ //xyz座標(1行で書いたほうが見やすい)
@@ -654,7 +678,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		},
 		{ //uv座標(1行で書いたほうが見やすい)
 			"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
-		} ,
+		},
 	};
 	// グラフィックスパイプライン設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
