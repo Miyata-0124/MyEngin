@@ -518,6 +518,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	XMFLOAT3 rotation = { 0.0f,0.0f,0.0f };
 	// 座標
 	XMFLOAT3 position = { 0.0f,0.0f,0.0f };
+	//スケーリング倍率
+	XMFLOAT3 scale1 = { 1.0f,1.0f,1.0f };
+	//回転角
+	XMFLOAT3 rotation1 = { 0.0f,0.0f,0.0f };
+	// 座標
+	XMFLOAT3 position1 = { 0.0f,0.0f,0.0f };
 
 #pragma region 画像データ
 #pragma region リソースデータ作成
@@ -898,11 +904,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (key[DIK_D]) { position.x += 1.0f; }
 			else if (key[DIK_A]) { position.x -= 1.0f; }
 		}
-		if (key[DIK_Q] || key[DIK_E])
+		if (key[DIK_Q] || key[DIK_E]||key[DIK_V]||key[DIK_B])
 		{
 			//回転
 			if (key[DIK_Q]) { rotation.y += 1.0f; }
 			else if (key[DIK_E]) { rotation.y -= 1.0f; }
+			else if (key[DIK_V]) { rotation1.y += 1.0f; }
+			else if (key[DIK_B]) { rotation1.y -= 1.0f; }
 		}
 #pragma region 行列計算
 		//ワールド変換行列
@@ -933,10 +941,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		XMMATRIX matWorld1;
 		matWorld1 = XMMatrixIdentity();
 		//各種変形行列
-		XMMATRIX matScale1 = XMMatrixScaling(1.0f, 1.0f, 1.0f);
-		XMMATRIX matRot1 = XMMatrixRotationY(XM_PI / 4.0f);
-		XMMATRIX matTrans1 = XMMatrixTranslation(-20.0f, 0, 0);
+		XMMATRIX matScale1 = XMMatrixScaling(scale1.x, scale1.y, scale1.z);
+		XMMATRIX matRot1;
+		matRot1  = XMMatrixIdentity();
+		matRot1 *= XMMatrixRotationZ(XMConvertToRadians(rotation1.z)); //z軸まわりに45度回転
+		matRot1 *= XMMatrixRotationX(XMConvertToRadians(rotation1.x)); //z軸まわりに45度回転
+		matRot1 *= XMMatrixRotationY(XMConvertToRadians(rotation1.y)); //z軸まわりに45度回転
+		XMMATRIX matTrans1 = XMMatrixTranslation(-20.0f+position1.x, position1.y, position1.z);
 		//ワールド行列を合成
+		matWorld1 = XMMatrixIdentity(); //変形リセット
 		matWorld1 = matScale1 * matRot1 * matTrans1;
 		//ワールドビュー、ビュー、射影行列を合成してシェーダーに転送
 		constMapTransform1->mat = matWorld1 * matview * matProjection;
