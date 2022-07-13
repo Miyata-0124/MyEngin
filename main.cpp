@@ -426,9 +426,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma region ブレンド合成
 
 	//加算合成
-	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算(上とは別)
-	//blenddesc.SrcBlend = D3D12_BLEND_ONE;//ソースの値を100%使う
-	//blenddesc.DestBlend = D3D12_BLEND_ONE;//テストの値を100%使う
+	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算(上とは別)
+	blenddesc.SrcBlend = D3D12_BLEND_ONE;//ソースの値を100%使う
+	blenddesc.DestBlend = D3D12_BLEND_ONE;//テストの値を100%使う
 	// 減算合成
 	//blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;//減算(上とは別)
 	//blenddesc.SrcBlend = D3D12_BLEND_ONE;//ソースの値を100%使う
@@ -438,9 +438,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//blenddesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;//ソースの値を100%使う
 	//blenddesc.DestBlend = D3D12_BLEND_ZERO;//テストの値を100%使う
 	// 半透明合成
-	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算(上とは別)
-	blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;//ソースの値を100%使う
-	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;//テストの値を100%使う
+	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算(上とは別)
+	//blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;//ソースの値を100%使う
+	//blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;//テストの値を100%使う
 #pragma endregion
 	// 頂点レイアウトの設定
 	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
