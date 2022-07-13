@@ -224,14 +224,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	{ -0.5f, -0.5f, 0.0f }, // 左下
 	{ -0.5f, +0.5f, 0.0f }, // 左上
 	{ +0.5f, -0.5f, 0.0f }, // 右下
-	{ +0.5f, +0.5f, 0.0f }, // 右上
 	};
 	// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * _countof(vertices));
 	uint16_t indices[] =
 	{
 		0,1,2, //三角形１
-		1,2,3, //三角形２
 	};
 	// 頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{}; // ヒープ設定
@@ -280,6 +278,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	struct ConstBufferDataMaterial {
 		XMFLOAT4 color;//色(RGBA)
 	};
+
 	//ヒープ設定
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
 	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;//GPUへの転送用
@@ -342,11 +341,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		IID_PPV_ARGS(&constBuffMaterial));
 	assert(SUCCEEDED(result));
 	//定数バッファのマッピング
+	float R = 1.0f;
+	float G = 0.1f;
+	float B = 0.1f;
+	float speed = 0.01f;
 	ConstBufferDataMaterial* constMapMaterial = nullptr;
 	result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);//マッピング
 	assert(SUCCEEDED(result));
-	//値を書き込むと自動に転送される
-	constMapMaterial->color = XMFLOAT4(1, 1, 1, 0.5f);
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
 		L"BasicVS.hlsl", // シェーダファイル名
@@ -424,7 +425,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;//テストの値を0%使う
 #pragma region ブレンド合成
 
-	// 加算合成
+	//加算合成
 	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算(上とは別)
 	//blenddesc.SrcBlend = D3D12_BLEND_ONE;//ソースの値を100%使う
 	//blenddesc.DestBlend = D3D12_BLEND_ONE;//テストの値を100%使う
@@ -504,6 +505,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			OutputDebugStringA("Hit 0\n");//出力ウィンドウに[Hit 0]と表示
 		}
+
 #pragma endregion
 		// バックバッファの番号を取得(2つなので0番か1番)
 		UINT bbIndex = swapChain->GetCurrentBackBufferIndex();
@@ -521,6 +523,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// 3.画面クリア R G B A
 		FLOAT clearColor[] = { 0.1f,0.25f, 0.5f,0.0f }; //背景色
 		commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
+		//値を書き込むと自動に転送される
+		constMapMaterial->color = XMFLOAT4(R, G, B, 0.5f);
+		R -= speed;
+		G += speed;
+		B += speed;
+		if (R <= 0.0 && G >= 1.0 && B >= 1.0)
+		{
+			speed = -speed;
+		}
+		if (R >= 1.0 && G <= 0.0 && B <= 0.0)
+		{
+			speed = -speed;
+		}
 		// 4.描画コマンドここから
 		// ビューポート設定コマンド
 		D3D12_VIEWPORT viewport{};
@@ -553,7 +568,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		commandList->IASetIndexBuffer(&ibView);
 		// 描画コマンド
 		commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0); // 全ての頂点を使って描画
-		
 		// 4.描画コマンドここまで
 		// 5.リソースバリアを戻す
 		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態から
