@@ -41,7 +41,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//ウィンドウクラスの設定
 	WNDCLASSEX w{};
-	w.cbSize = sizeof(WNDCLASSEX);			
+	w.cbSize = sizeof(WNDCLASSEX);
 	w.lpfnWndProc = (WNDPROC)WindowProc;	 //ウィンドウプロシージャ設定
 	w.lpszClassName = L"DirectXGame";		 //ウィンドウクラス名
 	w.hInstance = GetModuleHandle(nullptr);	 //ウィンドウハンドル
@@ -317,7 +317,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//インデックスバッファをマッピング
 	uint16_t* indexMap = nullptr;
-	result = indexBuff->Map(0, nullptr, (void**) & indexMap);
+	result = indexBuff->Map(0, nullptr, (void**)&indexMap);
 	//全インデックスに対して
 	for (int i = 0; i < _countof(indices); i++)
 	{
@@ -416,7 +416,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// ブレンドステート
 	/*pipelineDesc.BlendState.RenderTarget[0].RenderTargetWriteMask
 		= D3D12_COLOR_WRITE_ENABLE_ALL;*/
-	//レンダーターゲットのブレンド設定
+		//レンダーターゲットのブレンド設定
 	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = pipelineDesc.BlendState.RenderTarget[0];
 	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL; // RBGA全てのチャンネルを描画
 	blenddesc.BlendEnable = true;//ブレンドを有効にする
