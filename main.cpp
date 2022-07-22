@@ -216,7 +216,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	assert(SUCCEEDED(result));
 
 #pragma endregion
-
 	//DirectX初期化処理ここまで
 	//描画初期化処理
 	// 頂点データ
@@ -224,6 +223,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	{ -0.5f, -0.5f, 0.0f }, // 左下
 	{ -0.5f, +0.5f, 0.0f }, // 左上
 	{ +0.5f, -0.5f, 0.0f }, // 右下
+
 	};
 	// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * _countof(vertices));
@@ -432,7 +432,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
 	// ラスタライザの設定
 	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE; // カリングしない
-	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ポリゴン内塗りつぶし
 	pipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
 	// ブレンドステート
 	/*pipelineDesc.BlendState.RenderTarget[0].RenderTargetWriteMask
@@ -445,20 +444,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;//ソースの値を100%使う
 	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;//テストの値を0%使う
 #pragma region ブレンド合成
-
-	//加算合成
-	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算(上とは別)
-	blenddesc.SrcBlend = D3D12_BLEND_ONE;//ソースの値を100%使う
-	blenddesc.DestBlend = D3D12_BLEND_ONE;//テストの値を100%使う
-	// 減算合成
-	//blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;//減算(上とは別)
-	//blenddesc.SrcBlend = D3D12_BLEND_ONE;//ソースの値を100%使う
-	//blenddesc.DestBlend = D3D12_BLEND_ONE;//テストの値を100%使う
-	// 色反転
+	//// 色反転
 	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算(上とは別)
 	//blenddesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;//ソースの値を100%使う
 	//blenddesc.DestBlend = D3D12_BLEND_ZERO;//テストの値を100%使う
-	// 半透明合成
+	//// 半透明合成
 	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算(上とは別)
 	//blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;//ソースの値を100%使う
 	//blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;//テストの値を100%使う
@@ -497,9 +487,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// パイプラインにルートシグネチャをセット
 	pipelineDesc.pRootSignature = rootSignature;
 	// パイプランステートの生成
-	ID3D12PipelineState* pipelineState = nullptr;
-	result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
-	assert(SUCCEEDED(result));
+	
 
 	//ゲームループ
 	while (true)
@@ -522,11 +510,46 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		BYTE key[256] = {};
 		keyboard->GetDeviceState(sizeof(key), key);
 		//数字の0キーが押されていたら
-		if (key[DIK_0])
+		int change = true;
+		int blend = 1;
+		if (key[DIK_B])
 		{
-			OutputDebugStringA("Hit 0\n");//出力ウィンドウに[Hit 0]と表示
+			blend += 1;
+			if (blend >= 2)
+			{
+				blend == 1;
+			}
+		}
+		if (blend == 1)
+		{
+			//加算合成
+			blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算(上とは別)
+			blenddesc.SrcBlend = D3D12_BLEND_ONE;//ソースの値を100%使う
+			blenddesc.DestBlend = D3D12_BLEND_ONE;//テストの値を100%使う
+		}
+		else if (blend == 2)
+		{
+			// 減算合成
+			blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;//減算(上とは別)
+			blenddesc.SrcBlend = D3D12_BLEND_ONE;//ソースの値を100%使う
+			blenddesc.DestBlend = D3D12_BLEND_ONE;//テストの値を100%使う
 		}
 
+		if (key[DIK_SPACE])
+		{
+			change ^= 1;
+		}
+		if (change == true)
+		{
+			pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ポリゴン内塗りつぶし
+		}
+		if (change == false)
+		{
+			pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_WIREFRAME; // ワイヤーフレーム
+		}
+		ID3D12PipelineState* pipelineState = nullptr;
+		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
+		assert(SUCCEEDED(result));
 #pragma endregion
 		// バックバッファの番号を取得(2つなので0番か1番)
 		UINT bbIndex = swapChain->GetCurrentBackBufferIndex();
