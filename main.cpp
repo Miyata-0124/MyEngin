@@ -996,36 +996,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		BYTE key[256] = {};
 		keyboard->GetDeviceState(sizeof(key), key);
 #pragma endregion
-		//if (key[DIK_Z] || key[DIK_C])
-		//{
-		//	if (key[DIK_Z]) { angle += XMConvertToRadians(1.0f); }
-		//	else if (key[DIK_C]) { angle -= XMConvertToRadians(1.0f); }
-		//	//angleラジアンだけY軸前ア臨沂回転,半径は-100
-		//	eye.x = -100 * sinf(angle);
-		//	eye.z = -100 * cosf(angle);
-		//	matview = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-		//}
-
-		/*eye.z -= 1.5f;
-		rotation.z += 1.5f;
-		matview = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));*/
-		//いずれかのキーを押していたら
-		//if (key[DIK_W] || key[DIK_A] || key[DIK_S] || key[DIK_D])
-		//{
-		//	//座標を移動する処理 (z座標)
-		//	if (key[DIK_W]) { position.y += 1.0f; }
-		//	else if (key[DIK_S]) { position.y -= 1.0f; }
-		//	if (key[DIK_D]) { position.x += 1.0f; }
-		//	else if (key[DIK_A]) { position.x -= 1.0f; }
-		//}
-		//if (key[DIK_Q] || key[DIK_E] || key[DIK_V] || key[DIK_B])
-		//{
-		//	//回転
-		//	if (key[DIK_Q]) { rotation.y += 1.0f; }
-		//	else if (key[DIK_E]) { rotation.y -= 1.0f; }
-		//	else if (key[DIK_V]) { rotation1.y += 1.0f; }
-		//	else if (key[DIK_B]) { rotation1.y -= 1.0f; }
-		//}
+		if (key[DIK_UP] || key[DIK_DOWN] || key[DIK_RIGHT] || key[DIK_LEFT])
+		{
+			if (key[DIK_UP]) { object3ds[0].position.y += 1.0f; }
+			else if (key[DIK_DOWN]) { object3ds[0].position.y -= 1.0f; }
+			if (key[DIK_RIGHT]) { object3ds[0].position.x += 1.0f; }
+			else if (key[DIK_LEFT]) { object3ds[0].position.x -= 1.0f; }
+		}
+		
 		for (size_t i = 0; i < _countof(object3ds); i++)
 		{
 			UpdateObject3d(&object3ds[i], matview, matProjection);
