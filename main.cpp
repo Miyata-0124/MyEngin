@@ -547,7 +547,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//親子構造のサンプル
 		if (i > 0) {
 			//1つ前のオブジェクトを親オブジェクトとする
-			object3ds[i].parent = &object3ds[i - 1];
+		//	object3ds[i].parent = &object3ds[i - 1];
 			//親オブジェクトの9割の大きさ
 			object3ds[i].scale = { 0.9f,0.9f,0.9f };
 			//親オブジェクトに対してz軸まわりに30度回転
@@ -664,7 +664,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ScratchImage scratchImg{};
 	//WICテクスチャのロード
 	result = LoadFromWICFile(
-		L"Resource/test.png",
+		L"Resource/reimu.png",
 		WIC_FLAGS_NONE,
 		&metadata, scratchImg
 	);
