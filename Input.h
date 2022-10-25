@@ -3,12 +3,13 @@
 #include <wrl.h>
 #define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
 #include <dinput.h>
+#include "WinApp.h"
 
 class Input
 {
 public: // メンバ関数
 	// 初期化
-	void Initialize(HINSTANCE hInstance,HWND hwnd);
+	void Initialize(WinApp* winApp);
 	// 更新
 	void Update();
 	/// <summary>
@@ -31,5 +32,7 @@ private: // メンバ変数
 	ComPtr<IDirectInputDevice8> keyboard;
 	BYTE key[256] = {};		// キー情報
 	BYTE keyPre[256] = {};	// 前キー情報
+	//WinDowsAPI
+	WinApp* winApp = nullptr;
 };
 
