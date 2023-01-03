@@ -7,9 +7,12 @@ class SpriteCommon
 public:
 	// èâä˙âª
 	void Initialize(DirectXCommon* dxCommon_);
+	void Draw();
 	DirectXCommon* GetdxCommon()const { return dxCommon; }
 private:
 	DirectXCommon* dxCommon;
 	HRESULT result;
+	ID3D12PipelineState* pipelineState;
+	ID3D12RootSignature* rootSignature;
 };
 

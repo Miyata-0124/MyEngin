@@ -52,8 +52,7 @@ void Sprite::Initialize(SpriteCommon* spriteCommon_)
 	vbView.SizeInBytes = sizeVB;
 	//頂点1つ分のデータサイズ
 	vbView.StrideInBytes = sizeof(XMFLOAT3);
-	
-	
+
 }
 
 void Sprite::Draw()
