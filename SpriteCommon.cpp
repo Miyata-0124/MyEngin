@@ -76,8 +76,36 @@ void SpriteCommon::Initialize(DirectXCommon* dxCommon_)
 	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
 	pipelineDesc.RasterizerState.DepthClipEnable = true;
 	//ブレンドステート
-	pipelineDesc.BlendState.RenderTarget[0].RenderTargetWriteMask
-		= D3D12_COLOR_WRITE_ENABLE_ALL;
+	//レンダーターゲットのブレンド設定
+	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = pipelineDesc.BlendState.RenderTarget[0];
+	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	blenddesc.BlendEnable = true; // ブレンドの有効
+	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD; // 加算
+	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE; // ソースの値を１００%使用
+	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
+	// ブレンド合成設定
+	{
+		//加算合成
+		//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
+		//blenddesc.SrcBlend = D3D12_BLEND_ONE;
+		//blenddesc.DestBlend = D3D12_BLEND_ONE;
+
+		//減算合成
+		//blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;
+		//blenddesc.SrcBlend = D3D12_BLEND_ONE;
+		//blenddesc.DestBlend = D3D12_BLEND_ONE;
+
+		//色反転
+		//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
+		//blenddesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;
+		//blenddesc.DestBlend = D3D12_BLEND_ZERO;
+		
+		//半透明合成
+		blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
+		blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
+		blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+	}
+	
 	//頂点レイアウトの設定
 	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
 	pipelineDesc.InputLayout.NumElements = _countof(inputLayout);
@@ -88,9 +116,18 @@ void SpriteCommon::Initialize(DirectXCommon* dxCommon_)
 	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	pipelineDesc.SampleDesc.Count = 1;
 
+	// ルートパラメータの設定
+	D3D12_ROOT_PARAMETER rootParam = {};
+	rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV; // 定数バッファビュー
+	rootParam.Descriptor.ShaderRegister = 0; // バッファ番号
+	rootParam.Descriptor.RegisterSpace = 0; // デフォルト値
+	rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; // 全てのシェーダーから見える
+
 	//ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	rootSignatureDesc.pParameters = &rootParam;
+	rootSignatureDesc.NumParameters = 1;
 	//ルートシグネチャのシリアライズ
 	ID3DBlob* rootSigBlob = nullptr;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
