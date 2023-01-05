@@ -18,7 +18,6 @@ private: // ç\ë¢ëÃ
 	};
 
 private:
-	SpriteCommon* spriteCommon;
 	DirectXCommon* dxCommon;
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>CommandList;
 	HRESULT result;
