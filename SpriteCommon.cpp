@@ -88,7 +88,6 @@ void SpriteCommon::Initialize(DirectXCommon* dxCommon_)
 	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	pipelineDesc.SampleDesc.Count = 1;
 
-	ID3D12RootSignature* rootSignature;
 	//ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
@@ -104,11 +103,13 @@ void SpriteCommon::Initialize(DirectXCommon* dxCommon_)
 	//パイプラインにルートシグネチャをセット
 	pipelineDesc.pRootSignature = rootSignature;
 
-	//パイプラインステートの生成
-	ID3D12PipelineState* pipelineState = nullptr;
 	result = dxCommon->GetDevice()->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
+	
+}
 
+void SpriteCommon::Draw()
+{
 	//パイプラインステートとルートシグネチャの設定
 	dxCommon->GetCommandList()->SetPipelineState(pipelineState);
 	dxCommon->GetCommandList()->SetGraphicsRootSignature(rootSignature);
