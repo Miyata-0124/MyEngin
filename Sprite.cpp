@@ -2,9 +2,10 @@
 
 //頂点データ
 XMFLOAT3 vertices[] = {
-	{-0.5f,-0.5f,0.0f},
-	{-0.5f, 0.5f,0.0f},
-	{ 0.5f,-0.5f,0.0f},
+	{-0.5,-0.5,0.0}, // 左上
+	{-0.5,+0.5,0.0}, // 左下
+	{+0.5,-0.5,0.0}, // 右下
+	{+0.5,+0.5,0.0}, // 右上
 };
 
 void Sprite::Initialize(SpriteCommon* spriteCommon_)
@@ -94,7 +95,7 @@ void Sprite::Draw()
 	//定数バッファビューの設定コマンド
 	CommandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
 	//プリミティブ形状の設定コマンド
-	CommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);//三角形リスト
+	CommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);//三角形リスト
 	//描画コマンド
-	CommandList->DrawInstanced(_countof(vertices), 1, 0, 0);
+	CommandList->DrawInstanced(_countof(vertices), 1, 0, 0);//全ての頂点を使って描画
 }
