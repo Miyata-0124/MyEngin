@@ -13,7 +13,7 @@ void	SpriteCommon::Initialize(DirectXCommon* directXCom_) {
 	device = directXCom->GetDevice();
 	//頂点シェーダーの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/hlsl/Sprite.hlsl",
+		L"Resource/hlsl/Sprite.hlsl",
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		"main", "vs_5_0",
@@ -37,7 +37,7 @@ void	SpriteCommon::Initialize(DirectXCommon* directXCom_) {
 	}
 	//ピクセルシェーダーの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/hlsl/PixelSprite.hlsl",
+		L"Resource/hlsl/PixelSprite.hlsl",
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		"main", "ps_5_0",
