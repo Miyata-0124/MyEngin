@@ -166,7 +166,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		dxCommon->PreDraw();
 
 		//•`‰æˆ—
-		spriteCommon->Draw();
+
 		sprite->Draw();
 		//•`‰æŒãˆ—
 		dxCommon->PostDraw();

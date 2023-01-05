@@ -1,21 +1,20 @@
-#pragma once //ƒXƒvƒ‰ƒCƒg1–‡•ª
-#include "SpriteCommon.h"
-#include "DirectXCommon.h"
-#include <DirectXMath.h>
+ï»¿#pragma once
+#include"SpriteCommon.h"
+#include"DirectXCommon.h"
+#include<DirectXMath.h>
 using namespace DirectX;
-
 class Sprite
 {
-public: // ƒƒ“ƒoŠÖ”
-	// ‰Šú‰»
-	void Initialize(SpriteCommon* spriteCommon_);
+public:
+	//ÂåˆæœŸåŒ–
+	void	Initialize(SpriteCommon* spriteCommon_);
+
+	//æç”»
 	void Draw();
 private:
 	SpriteCommon* spriteCommon;
-	DirectXCommon* dxCommon;
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>CommandList;
+	DirectXCommon* directXCom;
 	HRESULT result;
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>comList;
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 };
-
