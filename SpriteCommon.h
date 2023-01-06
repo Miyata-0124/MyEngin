@@ -4,21 +4,17 @@
 
 class SpriteCommon
 {
-public://メンバ関数
-	//初期化
-	void	Initialize(DirectXCommon* ditectXCom_);
-	//ゲッター
+public:
+	// 初期化
+	void Initialize(DirectXCommon* dxCommon_);
+	DirectXCommon* GetdxCommon()const { return dxCommon; }
 
-	DirectXCommon* GetdxCom()const { return directXCom; }
-public://静的メンバ関数
 
-	ID3D12PipelineState* GetPipelineState()const { return pipelineState; }
-	ID3D12RootSignature* GetRootSignature()const { return rootSignature; }
-private://メンバ変数
-	DirectXCommon* directXCom;
-	ID3D12Device* device;
-	HRESULT	result;
+	ID3D12PipelineState* GetPipelineState() { return pipelineState; }
+	ID3D12RootSignature* GetRootSignature() { return rootSignature; }
+private:
+	DirectXCommon* dxCommon;
+	HRESULT result;
 	ID3D12PipelineState* pipelineState = nullptr;
 	ID3D12RootSignature* rootSignature;
 };
-

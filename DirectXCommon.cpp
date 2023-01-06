@@ -1,11 +1,11 @@
 #include "DirectXCommon.h"
+
 #include<cassert>
 #include<vector>
-
 #pragma	comment(lib, "d3d12.lib")
 #pragma	comment(lib,"dxgi.lib")
 
-using namespace Microsoft::WRL;
+using	namespace Microsoft::WRL;
 
 
 //デバイスの初期化
@@ -114,7 +114,6 @@ void DirectXCommon::InitializeSwapchain() {
 	swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	//IDXGISwapChain1のComPtrを用意
-	ComPtr <IDXGISwapChain1>swapchain1;
 	//スワップチェーンの生成
 	result = dxgiFactory->CreateSwapChainForHwnd(
 		commandQueue.Get(),
@@ -122,9 +121,9 @@ void DirectXCommon::InitializeSwapchain() {
 		&swapChainDesc,
 		nullptr,
 		nullptr,
-		&swapchain1);
+		&swapChain1);
 	//生成したIDXGISwapChan1のオブジェクトをIDXGISwapChain4に変換する
-	swapchain1.As(&swapChain);
+	swapChain1.As(&swapChain);
 
 	assert(SUCCEEDED(result));
 }
@@ -229,7 +228,6 @@ void DirectXCommon::PreDraw() {
 
 	// 3.画面クリア R G B A
 	//値を書き込むと自動的に転送される
-	//constMapMaterial->color = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	FLOAT clearColor[4] = { 0.1f,0.25f,0.5f,1.0f }; // 青っぽい色
 	comList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 	comList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
@@ -265,6 +263,8 @@ void DirectXCommon::PreDraw() {
 void DirectXCommon::PostDraw() {
 	// バックバッファの番号を取得(2つなので0番か1番)
 	UINT bbIndex = swapChain->GetCurrentBackBufferIndex();
+
+	barrierDesc.Transition.pResource = backBuffers[bbIndex].Get(); // バックバッファを指定
 	// 5.リソースバリアを戻す
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態から
 	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT; // 表示状態へ
@@ -277,8 +277,9 @@ void DirectXCommon::PostDraw() {
 	ID3D12CommandList* commandLists[] = { comList.Get() };
 	commandQueue->ExecuteCommandLists(1, commandLists);
 	// 画面に表示するバッファをフリップ(裏表の入替え)
+
 	result = swapChain->Present(1, 0);
-	assert(SUCCEEDED(result));
+	//assert(SUCCEEDED(result));
 
 	// コマンドの実行完了を待つ
 	commandQueue->Signal(fence.Get(), ++fenceVal);
@@ -288,8 +289,6 @@ void DirectXCommon::PostDraw() {
 		WaitForSingleObject(event, INFINITE);
 		CloseHandle(event);
 	}
-	// FPS固定
-	UpdateFixFPS();
 	// キューをクリア
 	result = cmdAllocator->Reset();
 	assert(SUCCEEDED(result));
@@ -298,42 +297,9 @@ void DirectXCommon::PostDraw() {
 	assert(SUCCEEDED(result));
 }
 
-// FPS関係
-void DirectXCommon::InitializeFixFPS()
-{
-	// 現在時間を記録
-	reference_ = std::chrono::steady_clock::now();
-}
-
-//FPS関連バグあり
-void DirectXCommon::UpdateFixFPS()
-{
-	// 1/60ピッタリの時間
-	const std::chrono::microseconds kMinTime(uint64_t(1000000.0f / 60.0f));
-	// 1/60よりわずかに短い時間
-	const std::chrono::microseconds kMinCheckTime(uint64_t(1000000.0f / 60.0f));
-	// 現在時間の取得
-	std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-	// 前回の記録から経過時間を取得
-	std::chrono::microseconds elapsed = std::chrono::duration_cast<std::chrono::microseconds>(now - reference_);
-
-	// 1/60(わずかに短い時間)経っていない場合
-	if (elapsed < kMinTime) {
-		// 1/60経過するまで微小なスリープを繰り返す
-		while (std::chrono::steady_clock::now()-reference_<kMinTime)
-		{
-			//1マイクロ秒スリープ
-			std::this_thread::sleep_for(std::chrono::microseconds(1));
-		}
-	}
-	reference_ = std::chrono::steady_clock::now();
-}
-
 void DirectXCommon::Initialize(WinApp* winApp_) {
 	//NULL検出
 	assert(winApp_);
-	// FPS固定
-	InitializeFixFPS();
 	//メンバ変数に代入
 	this->winApp = winApp_;
 	//デバイスの初期化
