@@ -1,18 +1,15 @@
 #include "Sprite.h"
 
-//頂点データ
-XMFLOAT3 vertices[] = {
-	{-0.5,-0.5,0.0}, // 左上
-	{-0.5,+0.5,0.0}, // 左下
-	{+0.5,-0.5,0.0}, // 右下
+unsigned short indices[] = {
+	0,1,2, // 1つ目
+	1,2,3, // 2
 };
 
 void Sprite::Initialize(SpriteCommon* spriteCommon_)
 {
 	dxCommon = spriteCommon_->GetdxCommon();
 
-
-	UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * _countof(vertices));
+	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
 	//頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{};//ヒープ設定
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;//GPUへの転送
@@ -36,7 +33,7 @@ void Sprite::Initialize(SpriteCommon* spriteCommon_)
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
 	//GPU上のバッファに適応した仮想メモリ(メインメモリ上)取得
-	XMFLOAT3* vertMap = nullptr;
+	Vertex* vertMap = nullptr;
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 	//全長点に対いて
@@ -52,7 +49,7 @@ void Sprite::Initialize(SpriteCommon* spriteCommon_)
 	//頂点バッファのサイズ
 	vbView.SizeInBytes = sizeVB;
 	//頂点1つ分のデータサイズ
-	vbView.StrideInBytes = sizeof(XMFLOAT3);
+	vbView.StrideInBytes = sizeof(vertices[0]);
 
 	// 定数バッファの設定
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
@@ -81,7 +78,7 @@ void Sprite::Initialize(SpriteCommon* spriteCommon_)
 	result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);// マッピング
 	assert(SUCCEEDED(result));
 	// データ転送
-	constMapMaterial->color = XMFLOAT4(1, 1, 1, 0.5f);
+	constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);
 	
 
 }
@@ -94,7 +91,7 @@ void Sprite::Draw()
 	//定数バッファビューの設定コマンド
 	CommandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
 	//プリミティブ形状の設定コマンド
-	CommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);//三角形リスト
+	CommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);//三角形リスト
 	//描画コマンド
-	CommandList->DrawInstanced(_countof(vertices), 1, 0, 0);//全ての頂点を使って描画
+	CommandList->DrawInstanced(_countof(indices), 1, 0, 0);//全ての頂点を使って描画
 }

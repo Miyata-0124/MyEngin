@@ -17,6 +17,19 @@ private: // 構造体
 		XMFLOAT4 color;
 	};
 
+	struct Vertex
+	{
+		XMFLOAT3 pos; //xyz座標
+		XMFLOAT2 uv; // uv座標
+	};
+	//頂点データ
+	Vertex vertices[4] = {
+		{{-0.4f,-0.7f,0.0f},{0.0f,1.0f}},// 左下
+		{{-0.4f,+0.7f,0.0f},{0.0f,0.0f}},// 左上
+		{{+0.4f,-0.7f,0.0f},{1.0f,1.0f}},// 右下
+		{{+0.4f,+0.7f,0.0f},{1.0f,0.0f}},// 右上
+	};
+
 private:
 	DirectXCommon* dxCommon;
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>CommandList;
