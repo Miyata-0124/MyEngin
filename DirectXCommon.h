@@ -1,15 +1,8 @@
 #include<d3d12.h>
 #include<dxgi1_6.h>
 #include<wrl.h>
-#include<cassert>
 #include<vector>
-#include<d3d12.h>
-#include<dxgi1_6.h>
-#include<wrl.h>
-#include<vector>
-#include<thread>
 #include"WinApp.h"
-#include<chrono>
 
 
 #pragma once
@@ -35,20 +28,16 @@ public://メンバ関数
 	void PreDraw();
 	//描画後処理
 	void PostDraw();
-
-	//デバイスの取得
+public://ゲッター
+	//デバイス
 	ID3D12Device* GetDevice()const { return device.Get(); }
-	//コマンドリストの取得
+	//コマンドリスト
 	ID3D12GraphicsCommandList* GetCommandList()const { return comList.Get(); }
-	//resultゲッター
+	//result
 	HRESULT GetResult()const { return result; }
-private: // メンバ関数
-	// FPS固定初期化
-	void InitializeFixFPS();
-	// FPS固定更新
-	void UpdateFixFPS();
-	// 記録時間(FPS固定用)
-	std::chrono::steady_clock::time_point reference_;
+	//スワップチェーン
+	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc()const { return swapChainDesc; }
+
 private:
 	//DirectX12デバイス
 	Microsoft::WRL::ComPtr<ID3D12Device>device;
@@ -56,6 +45,7 @@ private:
 	Microsoft::WRL::ComPtr<IDXGIFactory7>dxgiFactory;
 	//コマンドキューの設定
 	D3D12_COMMAND_QUEUE_DESC	commandQueueDesc{};
+	Microsoft::WRL::ComPtr <IDXGISwapChain1>swapChain1;
 	Microsoft::WRL::ComPtr<IDXGISwapChain4>swapChain = nullptr;
 	Microsoft::WRL::ComPtr<ID3D12CommandAllocator>cmdAllocator = nullptr;
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>comList = nullptr;
@@ -81,4 +71,3 @@ private:
 	WinApp* winApp = nullptr;
 	HRESULT	result;
 };
-
