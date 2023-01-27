@@ -1,141 +1,231 @@
-#include "Model.h"
-#include"DirectXTex/DirectXTex.h"
+include "Model.h"
+#include <DirectXTex.h>
+#include <fstream>
+#include <sstream>
+#include <cassert>
+#include <string>
+#include <vector>
+#include <Windows.h>
+#include <d3d12.h>
+#include <d3dx12.h>
 
-//静的メンバ変数の実体
+using namespace DirectX;
+using namespace Microsoft::WRL;
+using namespace std;
+
+//静的メンバ変数の実態
 ID3D12Device* Model::device = nullptr;
 
-Model* Model::LoadFromOBJ(const	std::string& modelname) {
-	//インスタンスの生成
+Model* Model::LoadFromOBJ(const std::string& modelname) {
+	//新たなModel型のインスタンスのメモリを確保
 	Model* model = new Model();
+
 	//デスクリプタヒープの生成
 	model->InitializeDescriptorHeap();
-	//obj読み込み
+
+	//読み込み
 	model->LoadFromOBJInternal(modelname);
-	//バッファの生成
+
+	//バッファ生成
 	model->CreateBuffers();
 
 	return model;
 }
 
-void Model::LoadFromOBJInternal(const	std::string& modelname) {
+void Model::LoadFromOBJInternal(const std::string& modelname) {
+
+	HRESULT result = S_FALSE;
+
 	//ファイルストリーム
 	std::ifstream file;
-	//.objファイルを開く
-	//file.open("Resources/triangle_tex/triangle_tex.obj");
-	//const std::string modelname = "triangle_mat";
-	const std::string filename = modelname + ".obj";
-	const std::string directoryPath = "Resources/" + modelname + "/";
-	file.open(directoryPath + filename);
+	//objファイルを開く
+	//const string modelname = "triangle_mat";
+	const string filename = modelname + ".obj";	//"triangle_mat.obj"
+	const string directoryPath = "Resources/" + modelname + "/";	//"Resources/triangle_mat/"
+	file.open(directoryPath + filename);	//"Resources/triangle_mat/triangle_mat.obj"
+	//file.open("Resources/triangle_mat/triangle_mat.obj");
 	//ファイルオープン失敗をチェック
-	assert(!file.fail());
+	if (file.fail()) {
+		assert(0);
+	}
 
-	std::vector<XMFLOAT3>positions;		//頂点座標
-	std::vector<XMFLOAT3>normals;		//法線ベクトル
-	std::vector<XMFLOAT2>texcoords;		//テクスチャUV
-
+	vector<XMFLOAT3> positions;	//頂点座標
+	vector<XMFLOAT3> normals;	//法線ベクトル
+	vector<XMFLOAT2> texcoords;	//テクスチャUV
 	//1行ずつ読み込む
-	std::string line;
-
+	string line;
 	while (getline(file, line)) {
-		//1行分の文字列をストリームに変更して解析しやすくする
+
+		//1行分の文字列をストリームに変換して解析しやすくする
 		std::istringstream line_stream(line);
+
 		//半角スペース区切りで行の先頭文字列を取得
-		std::string key;
+		string key;
 		getline(line_stream, key, ' ');
-		//先頭文字列がｖなら頂点座標
-		if (key == "v")
+
+		//先頭文字列がmtllibならマテリアル
+		if (key == "mtllib")
 		{
-			//XYZ座標読み込み
-			XMFLOAT3	position{};
+			//マテリアルのファイル名読み込み
+			string filename;
+			line_stream >> filename;
+			//マテリアル読み込み
+			LoadMaterial(directoryPath, filename);
+		}
+
+		//先頭文字列がvなら頂点座標
+		if (key == "v") {
+			//X,Y,Z座標読み込み
+			XMFLOAT3 position{};
 			line_stream >> position.x;
 			line_stream >> position.y;
 			line_stream >> position.z;
 			//座標データに追加
 			positions.emplace_back(position);
 			//頂点データに追加
-			//VertexPosNormalUv	vertex{};
-			//vertex.pos = position;
-			//vertices.emplace_back(vertex);
+			/*VertexPosNormalUv vertex{};
+			vertex.pos = position;
+			vertices.emplace_back(vertex);*/
 		}
-		//先頭文字列がfならポリゴン（三角形）
-		if (key == "f")
-		{
-			//半角スペース区切りで行の続きを読み込む
-			std::string	index_string;
-			while (getline(line_stream, index_string, ' ')) {
-				//頂点インデックス一個分の文字列をストリームに変換して解析しやすくする
-				std::istringstream index_stream(index_string);
-				unsigned short indexPosition, indexNormal, indexTexcoord;
-				index_stream >> indexPosition;
-				index_stream.seekg(1, std::ios_base::cur);//スラッシュを飛ばす
-				index_stream >> indexTexcoord;
-				index_stream.seekg(1, std::ios_base::cur);//スラッシュを飛ばす
-				index_stream >> indexNormal;
-				//頂点データの追加
-				VertexPosNormalUv vertex{};
-				vertex.pos = positions[indexPosition - 1];
-				vertex.normal = normals[indexNormal - 1];
-				vertex.uv = texcoords[indexTexcoord - 1];
-				vertices.emplace_back(vertex);
-				//頂点インデックスに追加
-				indices.emplace_back((unsigned short)indices.size());
-			}
-		}
-		//先頭文字列がvtならポリゴン
-		if (key == "vt")
-		{
-			//UV成分の読み込み
-			XMFLOAT2	texcoord{};
+
+		//先頭文字列がvtならテクスチャ
+		if (key == "vt") {
+			//U,V成分読み込み
+			XMFLOAT2 texcoord{};
 			line_stream >> texcoord.x;
 			line_stream >> texcoord.y;
-			//v方向反転　//モデリングツールによって方向が逆になるため
+			//V方向反転
 			texcoord.y = 1.0f - texcoord.y;
 			//テクスチャ座標データに追加
 			texcoords.emplace_back(texcoord);
 		}
-		//先頭文字列がvnならポリゴン
-		if (key == "vn")
-		{
-			//xyz成分の読み込み
-			XMFLOAT3	normal{};
+
+		//先頭文字列がvnなら法線ベクトル
+		if (key == "vn") {
+			//X,Y,Z成分読み込み
+			XMFLOAT3 normal{};
 			line_stream >> normal.x;
 			line_stream >> normal.y;
 			line_stream >> normal.z;
 			//法線ベクトルデータに追加
 			normals.emplace_back(normal);
 		}
-		//先頭文字列がならポリゴン
-		if (key == "mtllib")
-		{
-			//マテリアルのファイル名読み込み
-			std::string filename;
-			line_stream >> filename;
-			//マテリアル読み込み
-			LoadMaterial(directoryPath, filename);
+
+		//先頭文字列がfならポリゴン(三角形)
+		if (key == "f") {
+			//半角スペース区切りで行の続きを読み込む
+			string index_string;
+			while (getline(line_stream, index_string, ' ')) {
+
+				//頂点インデックス1個分の文字列をストリームに変換して解析しやすくする
+				std::istringstream index_stream(index_string);
+				unsigned short indexPosition, indexNormal, indexTexcoord;
+				index_stream >> indexPosition;
+				index_stream.seekg(1, ios_base::cur);//スラッシュを飛ばす
+				index_stream >> indexTexcoord;
+				index_stream.seekg(1, ios_base::cur);//スラッシュを飛ばす
+				index_stream >> indexNormal;
+
+				//頂点データの追加
+				VertexPosNormalUv vertex{};
+				vertex.pos = positions[indexPosition - 1];
+				vertex.normal = normals[indexNormal - 1];
+				vertex.uv = texcoords[indexTexcoord - 1];
+				vertices.emplace_back(vertex);
+
+				//インデックスデータの追加
+				indices.emplace_back((unsigned short)indices.size());
+
+				//頂点インデックスに追加
+				//indices.emplace_back(indexPosition - 1);
+			}
 		}
 	}
+	//ファイルを閉じる
+	file.close();
+
+}
+
+void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename) {
+	//ファイルストリーム
+	std::ifstream file;
+	//マテリアルファイルを開く
+	file.open(directoryPath + filename);
+	//ファイルオープン失敗をチェック
+	if (file.fail()) {
+		assert(0);
+	}
+
+	//1行ずつ読み込む
+	string line;
+	while (getline(file, line)) {
+
+		//1行分の文字列をストリームに変換
+		std::istringstream line_stream(line);
+
+		//半角スペース区切りで行の先頭文字列を取得
+		string key;
+		getline(line_stream, key, ' ');
+
+		//先頭のタブ文字は無視する
+		if (key[0] == '\t') {
+			key.erase(key.begin());	//先頭の文字を削除
+
+		}
+
+		//先頭文字列がnewmtlならマテリアル名
+		if (key == "newmtl") {
+			//マテリアル名読み込み
+			line_stream >> material.name;
+		}
+		//先頭文字列がKaならアンビエント色
+		if (key == "Ka") {
+			line_stream >> material.ambient.x;
+			line_stream >> material.ambient.y;
+			line_stream >> material.ambient.z;
+		}
+		//先頭文字列がKdならディフーズ色
+		if (key == "Kd") {
+			line_stream >> material.diffuse.x;
+			line_stream >> material.diffuse.y;
+			line_stream >> material.diffuse.z;
+		}
+		//先頭文字列がKsならスペキュラー色
+		if (key == "Ks") {
+			line_stream >> material.specular.x;
+			line_stream >> material.specular.y;
+			line_stream >> material.specular.z;
+		}
+		//先頭文字列がmap_Kdならテクスチャファイル名
+		if (key == "map_Kd") {
+			//テクスチャのファイル読み込み
+			line_stream >> material.textureFilename;
+			//テクスチャ読み込み
+			LoadTexture(directoryPath, material.textureFilename);
+		}
+	}
+
+	//ファイルを閉じる
 	file.close();
 }
 
-void Model::LoadTexture(const	std::string& directoryPath, const std::string& filename) {
+void Model::LoadTexture(const std::string& directoryPath, const std::string& filename) {
 	HRESULT result = S_FALSE;
 
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
 
 	//ファイルパスを結合
-	std::string	filepath = directoryPath + filename;
+	string filepath = directoryPath + filename;
 
-	//ユニコード文字列に変更する
-	wchar_t	wfilepath[128];
-	int	iBufferSize = MultiByteToWideChar(
-		CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
+	//ユニコード文字列に変換する
+	wchar_t wfilepath[128];
+	int iBufferSize = MultiByteToWideChar(CP_ACP, 0,
+		filepath.c_str(), -1, wfilepath, _countof(wfilepath));
 
 	// WICテクスチャのロード
-	//result = LoadFromWICFile( L"Resources/tex1.png", WIC_FLAGS_NONE, &metadata, scratchImg);
-
+	//result = LoadFromWICFile(L"Resources/tex1.png", WIC_FLAGS_NONE, &metadata, scratchImg);
 	result = LoadFromWICFile(wfilepath, WIC_FLAGS_NONE, &metadata, scratchImg);
-
 	assert(SUCCEEDED(result));
 
 	ScratchImage mipChain{};
@@ -198,72 +288,8 @@ void Model::LoadTexture(const	std::string& directoryPath, const std::string& fil
 	);
 }
 
-void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename) {
-	//ファイルストリーム
-	std::ifstream	file;
-	//マテリアルファイルを開く
-	file.open(directoryPath + filename);
-	//ファイルオープン失敗をチェック
-	if (file.fail())
-	{
-		assert(0);
-	}
-	//1行ずつ読み込む
-	std::string line;
-
-	while (std::getline(file, line)) {
-		//一行分の文字列をストリームに変換
-		std::istringstream line_stream(line);
-
-		//半角スペース区切りで行の先頭文字列を取得
-		std::string	key;
-		getline(line_stream, key, ' ');
-
-		//先頭のタブ文字は無視する
-		if (key[0] == '\t')
-		{
-			key.erase(key.begin());//先頭の文字を削除
-		}
-		//先頭文字列がnewmtlならマテリアル名
-		if (key == "newmtl")
-		{
-			//マテリアル名読み込み
-			line_stream >> material.name;
-		}
-		//先頭文字列がKaならアンビエント色
-		if (key == "Ka")
-		{
-			line_stream >> material.ambient.x;
-			line_stream >> material.ambient.y;
-			line_stream >> material.ambient.z;
-		}
-		//先頭文字列がKaならディフューズ色
-		if (key == "Kd")
-		{
-			line_stream >> material.diffuse.x;
-			line_stream >> material.diffuse.y;
-			line_stream >> material.diffuse.z;
-		}
-		//先頭文字列がKsならスペキュラー色
-		if (key == "Ks")
-		{
-			line_stream >> material.specular.x;
-			line_stream >> material.specular.y;
-			line_stream >> material.specular.z;
-		}
-		//先頭文字列がmap_Kdならテクスチャファイル名
-		if (key == "map_Kd")
-		{
-			//テクスチャのファイル名読み込み
-			line_stream >> material.textureFilename;
-			//テクスチャ読み込み
-			LoadTexture(directoryPath, material.textureFilename);
-		}
-	}
-	file.close();
-}
-
-void Model::InitializeDescriptorHeap() {
+void Model::InitializeDescriptorHeap()
+{
 	HRESULT result = S_FALSE;
 
 	// デスクリプタヒープを生成	
@@ -278,21 +304,28 @@ void Model::InitializeDescriptorHeap() {
 
 	// デスクリプタサイズを取得
 	descriptorHandleIncrementSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
 }
 
 void Model::CreateBuffers() {
-	HRESULT result = S_FALSE;
 
-	//UINT sizeVB = static_cast<UINT>(sizeof(vertices));
+	HRESULT result;
+
+	// nullptrチェック
+	assert(device);
+
 	UINT sizeVB = static_cast<UINT>(sizeof(VertexPosNormalUv) * vertices.size());
+	UINT sizeIB = static_cast<UINT>(sizeof(unsigned short) * indices.size());
+
 	// ヒーププロパティ
 	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	// リソース設定
-	CD3DX12_RESOURCE_DESC resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeVB);
+	CD3DX12_RESOURCE_DESC resourceDescVB = CD3DX12_RESOURCE_DESC::Buffer(sizeVB);
+	CD3DX12_RESOURCE_DESC resourceDescIB = CD3DX12_RESOURCE_DESC::Buffer(sizeIB);
 
 	// 頂点バッファ生成
 	result = device->CreateCommittedResource(
-		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDescVB, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
 
@@ -307,44 +340,47 @@ void Model::CreateBuffers() {
 
 	// 頂点バッファビューの作成
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-	//vbView.SizeInBytes = sizeof(vertices);
 	vbView.SizeInBytes = sizeVB;
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
-	//UINT sizeIB = static_cast<UINT>(sizeof(indices));
-	UINT sizeIB = static_cast<UINT>(sizeof(unsigned short) * indices.size());
 	// リソース設定
-	resourceDesc.Width = sizeIB;
+	resourceDescVB.Width = sizeIB;
 
 	// インデックスバッファ生成
 	result = device->CreateCommittedResource(
-		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDescIB, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&indexBuff));
 
 	// インデックスバッファへのデータ転送
 	unsigned short* indexMap = nullptr;
 	result = indexBuff->Map(0, nullptr, (void**)&indexMap);
 	if (SUCCEEDED(result)) {
+
 		std::copy(indices.begin(), indices.end(), indexMap);
+
 		indexBuff->Unmap(0, nullptr);
 	}
 
 	// インデックスバッファビューの作成
 	ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
 	ibView.Format = DXGI_FORMAT_R16_UINT;
-	//ibView.SizeInBytes = sizeof(indices);
 	ibView.SizeInBytes = sizeIB;
 
-	resourceDesc = CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) & ~0xff);
-	//定数バッファの生成
+	// リソース設定
+	CD3DX12_RESOURCE_DESC resourceDesc =
+		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) & ~0xff);
+
+	// マテリアル用定数バッファの生成
 	result = device->CreateCommittedResource(
-		&heapProps,
+		&heapProps, // アップロード可能
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuffB1));
-	//定数バッファデータ転送
+	assert(SUCCEEDED(result));
+
+	// マテリアル用定数バッファへデータ転送
 	ConstBufferDataB1* constMap1 = nullptr;
 	result = constBuffB1->Map(0, nullptr, (void**)&constMap1);
 	constMap1->ambient = material.ambient;
@@ -354,12 +390,7 @@ void Model::CreateBuffers() {
 	constBuffB1->Unmap(0, nullptr);
 }
 
-void Model::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial)
-{
-	// nullptrチェック
-	assert(device);
-	assert(cmdList);
-
+void Model::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial) {
 	// 頂点バッファの設定
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
 	// インデックスバッファの設定
@@ -373,16 +404,11 @@ void Model::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial
 	ID3D12DescriptorHeap* ppHeaps[] = { descHeap.Get() };
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 
-	//// 定数バッファビューをセット
-	//cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
-	//// シェーダリソースビューをセット
-	//cmdList->SetGraphicsRootDescriptorTable(1, gpuDescHandleSRV);
-	if (material.textureFilename.size() > 0)
-	{
+	if (material.textureFilename.size() > 0) {
 		// シェーダリソースビューをセット
 		cmdList->SetGraphicsRootDescriptorTable(2, gpuDescHandleSRV);
 	}
+
 	// 描画コマンド
-	//cmdList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
 	cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
 }

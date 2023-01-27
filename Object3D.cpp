@@ -1,16 +1,16 @@
 #include "Object3d.h"
 #include <d3dcompiler.h>
-#include "DirectXTex/DirectXTex.h"
-#include<fstream>
-#include<sstream>
-#include<string>
-#include<vector>
-#include<cassert>
+#include <DirectXTex.h>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
 
 #pragma comment(lib, "d3dcompiler.lib")
 
 using namespace DirectX;
 using namespace Microsoft::WRL;
+using namespace std;
 
 /// <summary>
 /// 静的メンバ変数の実体
@@ -18,14 +18,26 @@ using namespace Microsoft::WRL;
 const float Object3d::radius = 5.0f;				// 底面の半径
 const float Object3d::prizmHeight = 8.0f;			// 柱の高さ
 ID3D12Device* Object3d::device = nullptr;
+UINT Object3d::descriptorHandleIncrementSize = 0;
 ID3D12GraphicsCommandList* Object3d::cmdList = nullptr;
 ComPtr<ID3D12RootSignature> Object3d::rootsignature;
 ComPtr<ID3D12PipelineState> Object3d::pipelinestate;
+ComPtr<ID3D12DescriptorHeap> Object3d::descHeap;
+ComPtr<ID3D12Resource> Object3d::vertBuff;
+ComPtr<ID3D12Resource> Object3d::indexBuff;
+ComPtr<ID3D12Resource> Object3d::texbuff;
+CD3DX12_CPU_DESCRIPTOR_HANDLE Object3d::cpuDescHandleSRV;
+CD3DX12_GPU_DESCRIPTOR_HANDLE Object3d::gpuDescHandleSRV;
 XMMATRIX Object3d::matView{};
 XMMATRIX Object3d::matProjection{};
 XMFLOAT3 Object3d::eye = { 0, 0, -50.0f };
 XMFLOAT3 Object3d::target = { 0, 0, 0 };
 XMFLOAT3 Object3d::up = { 0, 1, 0 };
+D3D12_VERTEX_BUFFER_VIEW Object3d::vbView{};
+D3D12_INDEX_BUFFER_VIEW Object3d::ibView{};
+std::vector<Model::VertexPosNormalUv> Object3d::vertices;
+std::vector<unsigned short> Object3d::indices;
+//Object3d::Material Object3d::material;
 
 void Object3d::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
 {
@@ -33,13 +45,25 @@ void Object3d::StaticInitialize(ID3D12Device* device, int window_width, int wind
 	assert(device);
 
 	Object3d::device = device;
+
+	//モデルにデバイスをセット
 	Model::SetDevice(device);
+
+	// デスクリプタヒープの初期化
+	//InitializeDescriptorHeap();
 
 	// カメラ初期化
 	InitializeCamera(window_width, window_height);
 
 	// パイプライン初期化
 	InitializeGraphicsPipeline();
+
+	// テクスチャ読み込み
+	//LoadTexture();
+
+	// モデル生成
+	CreateModel();
+
 }
 
 void Object3d::PreDraw(ID3D12GraphicsCommandList* cmdList)
@@ -78,10 +102,10 @@ Object3d* Object3d::Create()
 		assert(0);
 		return nullptr;
 	}
-	//スケールをセット
-	float	scele_val = 20;
-	object3d->scale = { scele_val,scele_val, scele_val };
 
+	//スケールをセット
+	float scale_val = 1.0f;
+	object3d->scale = { scale_val, scale_val, scale_val };
 
 	return object3d;
 }
@@ -117,6 +141,17 @@ void Object3d::CameraMoveVector(XMFLOAT3 move)
 	SetTarget(target_moved);
 }
 
+void Object3d::CameraMoveEyeVector(XMFLOAT3 move)
+{
+	XMFLOAT3 eye_moved = GetEye();
+
+	eye_moved.x += move.x;
+	eye_moved.y += move.y;
+	eye_moved.z += move.z;
+
+	SetEye(eye_moved);
+}
+
 void Object3d::InitializeCamera(int window_width, int window_height)
 {
 	// ビュー行列の生成
@@ -147,7 +182,7 @@ void Object3d::InitializeGraphicsPipeline()
 
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/hlsl/ObjVS.hlsl",	// シェーダファイル名
+		L"Resources/Shaders/OBJVertexShader.hlsl",	// シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "vs_5_0",	// エントリーポイント名、シェーダーモデル指定
@@ -170,7 +205,7 @@ void Object3d::InitializeGraphicsPipeline()
 
 	// ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/hlsl/ObjPS.hlsl",	// シェーダファイル名
+		L"Resources/Shaders/OBJPixelShader.hlsl",	// シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "ps_5_0",	// エントリーポイント名、シェーダーモデル指定
@@ -285,6 +320,11 @@ void Object3d::InitializeGraphicsPipeline()
 
 }
 
+void Object3d::CreateModel()
+{
+
+}
+
 void Object3d::UpdateViewMatrix()
 {
 	// ビュー行列の更新
@@ -293,6 +333,8 @@ void Object3d::UpdateViewMatrix()
 
 bool Object3d::Initialize()
 {
+	HRESULT result;
+
 	// nullptrチェック
 	assert(device);
 
@@ -301,8 +343,6 @@ bool Object3d::Initialize()
 	// リソース設定
 	CD3DX12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB0) + 0xff) & ~0xff);
-
-	HRESULT result;
 
 	// 定数バッファの生成
 	result = device->CreateCommittedResource(
@@ -320,20 +360,19 @@ bool Object3d::Initialize()
 void Object3d::Update()
 {
 	HRESULT result;
-	XMMATRIX matScale, matRot, matTrans;
 
 	// スケール、回転、平行移動行列の計算
+	//matRot = XMMatrixIdentity();
 	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
-	matRot = XMMatrixIdentity();
-	matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation.z));
-	matRot *= XMMatrixRotationX(XMConvertToRadians(rotation.x));
-	matRot *= XMMatrixRotationY(XMConvertToRadians(rotation.y));
+	//matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation.z));
+	//matRot *= XMMatrixRotationX(XMConvertToRadians(rotation.x));
+	//matRot *= XMMatrixRotationY(XMConvertToRadians(rotation.y));
 	matTrans = XMMatrixTranslation(position.x, position.y, position.z);
 
 	// ワールド行列の合成
 	matWorld = XMMatrixIdentity(); // 変形をリセット
 	matWorld *= matScale; // ワールド行列にスケーリングを反映
-	matWorld *= matRot; // ワールド行列に回転を反映
+	//matWorld *= matRot; // ワールド行列に回転を反映
 	matWorld *= matTrans; // ワールド行列に平行移動を反映
 
 	// 親オブジェクトがあれば
@@ -341,22 +380,34 @@ void Object3d::Update()
 		// 親オブジェクトのワールド行列を掛ける
 		matWorld *= parent->matWorld;
 	}
+
 	// 定数バッファへデータ転送
-	ConstBufferDataB0* constMap = nullptr;
-	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
-	//constMap->color = color;
-	constMap->mat = matWorld * matView * matProjection;	// 行列の合成
-	constBuffB0->Unmap(0, nullptr);
+	TransferMatrix();
+
 }
 
-void Object3d::Draw() {
+void Object3d::Draw()
+{
 	// nullptrチェック
 	assert(device);
 	assert(Object3d::cmdList);
 
-	if (model == nullptr)return;
+	//モデルがセットされていなければ描画をスキップ
+	if (model == nullptr) return;
 
+	// 定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
 
+	//モデルを描画
 	model->Draw(cmdList, 1);
+}
+
+void Object3d::TransferMatrix() {
+	// 定数バッファへデータ転送
+	HRESULT result;
+
+	ConstBufferDataB0* constMap0 = nullptr;
+	result = constBuffB0->Map(0, nullptr, (void**)&constMap0);
+	constMap0->mat = matWorld * matView * matProjection;	// 行列の合成
+	constBuffB0->Unmap(0, nullptr);
 }

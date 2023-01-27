@@ -1,109 +1,115 @@
 #pragma once
-#include"SpriteCommon.h"
-#include"DirectXCommon.h"
-#include<DirectXMath.h>
-#include<array>
-using namespace DirectX;
+#include "SpriteCommon.h"
 
 class Sprite
 {
-private://静的メンバ変数
-	// 射影行列計算
-	static	XMMATRIX	matProjection;
-	//SRVの最大枚数
-	static const size_t	maxSRVCount = 2056;
-public://メンバ関数
-	//初期化
-	void	Initialize(SpriteCommon* spriteCommon_, uint32_t texIndex_ = UINT32_MAX);
-	//描画
-	void Draw();
-	void Update();
+public:
+	//定数バッファ用データ構造体(マテリアル)
+	/*定数バッファ・・・CPUで動くプログラムの変数群を、GPUで動くプログラマブルシェーダーに定数群（バッファ）として送り込む機構*/
+	struct ConstBufferDataMaterial {
+		XMFLOAT4 color = { 1.0f,1.0f,1.0f,1.0f }; //色(RGBA)
+	};
 
+	//定数バッファ用データ構造体(3D変換行列)
+	struct ConstBufferDataTransform {
+		XMMATRIX mat;	//3D変換行列
+	};
 
-public://ゲッター、セッター
-	//回転
-	void	SetRotation(const float& rotation_);
-	const float& GetRotation()const { return rotation; }
+	struct Vertex {
+		XMFLOAT3 pos;	//xyz座標
+		XMFLOAT2 uv;	//uv座標
+	};
+
+	void Initialize(SpriteCommon* spriteCommon);
+
+	void Update(SpriteCommon* spriteCommon);
+
+	void Draw(SpriteCommon* spriteCommon);
+
+	//セッター
+	void SetPosition(const XMFLOAT2& position) { position_ = position; }
+	void SetSize(const XMFLOAT2& size) { size_ = size; }
+	void SetRotation(const float& rotation) { rotation_.z = rotation; }
+	void SetColor(const XMFLOAT4& color) { color_ = color; }
+	void SetIndex(const uint32_t textureIndex) { textureIndex_ = textureIndex; }
+	//void SetTextureSize(const XMFLOAT2 textureSize) { textureSize_ = textureSize; }
+	//ゲッター
+	const XMFLOAT2& GetPosition() const { return position_; }
+	const XMFLOAT2& GetSize() const { return size_; }
+	const float& GetRotation() const { return rotation_.z; }
+	const XMFLOAT4& GetColor() const { return color_; }
+	const uint32_t GetTextureIndex() const { return textureIndex_; }
+	//const XMFLOAT2 GetTextureSize() const { return textureSize_; }
+
+private:
+	//頂点番号
+	enum VertexNumber {
+		LB,//左下
+		LT,//左上
+		RB,//右下
+		RT,//右上
+	};
+
+	HRESULT result;
+
+	//スケーリング倍率
+	XMFLOAT3 scale;
+	//回転角
+	XMFLOAT3 rotation_;
 	//座標
-	void	SetPosition(const XMFLOAT2& position_);
-	const XMFLOAT2& GetPosition()const { return position; }
+	XMFLOAT2 position_;
 	//色
-	void	SetColor(const XMFLOAT4& color_);
-	const XMFLOAT4& GetColor()const { return color; }
-	//サイズ
-	void	SetSize(const XMFLOAT2& size_);
-	const XMFLOAT2& GetSize()const { return size; }
-	//アンカーポイント
-	void	SetAnchorPoint(const XMFLOAT2& anchorPoint_);
-	const XMFLOAT2& GetAnchorPoint()const { return anchorPoint; }
-	// 左右反転の設定
-	void SetIsFlipX(const	bool isFlipX_);
-	// 上下反転の設定
-	void SetIsFlipY(const	bool isFlipY_);
-	//非表示
-	void	SetIsInvisible(const	bool isInvisible_);
+	XMFLOAT4 color_ = { 1, 1, 1, 1 };
+	//表示サイズ
+	XMFLOAT2 size_ = { 100.0f, 100.0f };
+
+	//頂点データ
+	Vertex vertices[4] = {
+		{{-0.0f,100.0f,0.0f},{0.0f,1.0f}},//左下
+		{{-0.0f,+0.0f,0.0f},{0.0f,0.0f}},//左上
+		{{100.0f,100.0f,0.0f},{1.0f,1.0f}},//右下
+		{{100.0f,-0.0f,0.0f},{1.0f,0.0f}},//右上
+	};
+
+	//テクスチャ左上座標
+	//XMFLOAT2 textureLeftTop_ = { 0.0f,0.0f };
+	//テクスチャ切り出しサイズ
+	//XMFLOAT2 textureSize_ = { 100.0f,100.0f };
+
+	//頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
+	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
+
+	//頂点バッファの設定
+	/*頂点バッファ・・・頂点データ用のバッファ*/
+	D3D12_HEAP_PROPERTIES heapProp{};//ヒープ設定
+
+	//リソース設定
+	D3D12_RESOURCE_DESC resDesc{};
+
+	ComPtr<ID3D12Resource> vertBuff;
+
+	Vertex* vertMap = nullptr;
+	//頂点バッファビュー
+	D3D12_VERTEX_BUFFER_VIEW vbView{};
+
+	//定数バッファの生成
+	/*定数バッファ・・・全ピクセル共通のデータを送るときに利用するバッファ*/
+	ComPtr<ID3D12Resource> constBuffMaterial;
+
+	//定数バッファ(行列用)
+	ComPtr<ID3D12Resource> constBuffTransform;
+
+	//定数バッファマップ(行列用)
+	ConstBufferDataTransform* constMapTransform = nullptr;
+
+	ConstBufferDataMaterial* constMapMaterial = nullptr;
+
 	//テクスチャ番号
-	void	SetTexIndex(const uint32_t texIndex_) { texIndex = texIndex_; }
-	const	uint32_t& GetTexIndex()const { return texIndex; }
-	//サイズ
-	void	SetTexSize(const XMFLOAT2& texSize_);
-	const XMFLOAT2& GetTexSize()const { return texSize; }
-	//サイズ
-	void	SetTexLeftTop(const XMFLOAT2& texLeftTop_);
-	const XMFLOAT2& GetTexLeftTop()const { return texLeftTop; }
+	uint32_t textureIndex_ = 0;
+
+	SpriteCommon* spriteCommon_;
 
 private:
 	//テクスチャサイズをイメージに合わせる
-	void	AdjustTexSize();
-
-private://構造体
-	//頂点データ
-	struct Vertex {
-		XMFLOAT3	pos;//xyz座標
-		XMFLOAT2	uv;//uv座標
-	};
-
-	//定数バッファ用データ（マテリアル）
-	struct ConstBufferData {
-		XMFLOAT4	color;//色（RGB）
-		XMMATRIX	mat;//3D変換行列
-	};
-
-private:
-	SpriteCommon* spriteCommon;
-	DirectXCommon* directXCom;
-	HRESULT result;
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>comList;
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	D3D12_INDEX_BUFFER_VIEW	ibView{};
-	ID3D12Resource* vertBuff = nullptr;
-	D3D12_DESCRIPTOR_HEAP_DESC	srvHeapDesc = {};
-	ID3D12DescriptorHeap* srvHeap = nullptr;
-	ID3D12Resource* constBuff = nullptr;
-	ConstBufferData* constMap = nullptr;
-	//回転
-	float	rotation = 0;
-	//座標
-	XMFLOAT2	position = { -1.0f,1.0f };
-	//カラー
-	XMFLOAT4	color = { 1,1,1,1 };
-	//サイズ
-	XMFLOAT2	size = { 100.0f,100.0f };
-	//アンカーポイント
-	XMFLOAT2	anchorPoint = { 0.0f,0.0f };
-	// 左右反転
-	bool isFlipX = false;
-	// 上下反転
-	bool isFlipY = false;
-	//非表示
-	bool	isInvisible = false;
-	//3D変換行列
-	XMMATRIX	matWorld;
-	//テクスチャの番号
-	uint32_t texIndex = 0;
-	//テクスチャ左上座標
-	XMFLOAT2	texLeftTop = { 0.0f,0.0f };
-	//サイズ
-	XMFLOAT2	texSize = { 256.0f,256.0f };
-
+	void AdjustTextrueSize();
 };
