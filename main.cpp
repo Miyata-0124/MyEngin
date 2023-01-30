@@ -58,9 +58,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	spriteCommon = new SpriteCommon;
 	spriteCommon->Initialize(dxCommon);
 
-	Sprite* sprite = nullptr;
-	sprite = new Sprite;
-	sprite->Initialize(spriteCommon);
+	//Sprite* sprite = nullptr;
+	//sprite = new Sprite;
+	//sprite->Initialize(spriteCommon);
 	
 	
 	
@@ -332,8 +332,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	input = nullptr;
 	delete spriteCommon;
 	spriteCommon = nullptr;
-	delete sprite;
-	sprite = nullptr;
+	/*delete sprite;
+	sprite = nullptr;*/
 
 	return 0;
 }

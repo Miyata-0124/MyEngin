@@ -26,9 +26,6 @@ private:
 	};
 
 public:
-	SpriteCommon();
-	~SpriteCommon();
-
 	void Initialize(DirectXCommon* dxCommon_);
 	void Update();
 	HRESULT GetResult() { return result; }
