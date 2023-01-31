@@ -88,16 +88,16 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	sprite->SetSize(XMFLOAT2(100.0f, 100.0f));
 	sprite2->SetSize(XMFLOAT2(100.0f, 100.0f));
 	//モデル
-	Model* model = Model::LoadFromOBJ("triangle_mat");
-	Model* model2 = Model::LoadFromOBJ("box_mat");
+	Model* model = Model::LoadFromOBJ("stage");
+	//Model* model2 = Model::LoadFromOBJ("wall");
 	//3dオブジェクト生成
 	Object3d* obj3d = Object3d::Create();
 	Object3d* obj3d2 = Object3d::Create();
 	//modelクラスをひも付け
 	obj3d->SetModel(model);
-	obj3d2->SetModel(model2);
-	obj3d->SetPosition({ -5,0,-5 });
-	obj3d2->SetPosition({ +5,0,+50 });
+	//obj3d2->SetModel(model2);
+	obj3d->SetPosition({ 0,0,0 });
+	//obj3d2->SetPosition({ +5,0,+50 });
 	//変数
 #pragma	endregion
 	while (true)
@@ -189,7 +189,7 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	delete	spriteCommon;
 	delete	sprite;
 	delete model;
-	delete model2;
+	//delete model2;
 	delete obj3d;
 	delete obj3d2;
 #pragma	endregion

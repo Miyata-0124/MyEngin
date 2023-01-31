@@ -14,6 +14,7 @@ void	SpriteCommon::Loadtexture(uint32_t index, std::string fileName) {
 
 	//ディレクトリパスとファイル名を結合
 	std::string fullPath = defaultTextureDirectoryPath + fileName;
+	
 	//ワイド文字列に変換した際の文字列バッファサイズを計算
 	int filePathBufferSize = MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, nullptr, 0);
 	//ワイド文字列に変換
@@ -24,7 +25,7 @@ void	SpriteCommon::Loadtexture(uint32_t index, std::string fileName) {
 		wfilePath.data(),
 		WIC_FLAGS_NONE,
 		&metadata, scratchImg);
-
+		assert(SUCCEEDED(result));
 
 	ScratchImage	mipChain{};
 	result = GenerateMipMaps(

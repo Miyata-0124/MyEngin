@@ -41,26 +41,26 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resource\hlsl\Basic.hlsli">
+    <None Include="Resources\hlsl\Basic.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
-    <None Include="Resource\hlsl\Object3d.hlsli" />
-    <None Include="Resource\hlsl\Obj.hlsli" />
-    <None Include="Resource\hlsl\Sprite.hlsli" />
+    <None Include="Resources\hlsl\Object3d.hlsli" />
+    <None Include="Resources\hlsl\Obj.hlsli" />
+    <None Include="Resources\hlsl\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resource\hlsl\BasicPS.hlsl">
+    <FxCompile Include="Resources\hlsl\BasicPS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resource\hlsl\BasicVS.hlsl">
+    <FxCompile Include="Resources\hlsl\BasicVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resource\hlsl\SpriteVS.hlsl" />
-    <FxCompile Include="Resource\hlsl\SpritePS.hlsl" />
-    <FxCompile Include="Resource\hlsl\Object3dPS.hlsl" />
-    <FxCompile Include="Resource\hlsl\Object3dVS.hlsl" />
-    <FxCompile Include="Resource\hlsl\ObjPS.hlsl" />
-    <FxCompile Include="Resource\hlsl\ObjVS.hlsl" />
+    <FxCompile Include="Resources\hlsl\SpriteVS.hlsl" />
+    <FxCompile Include="Resources\hlsl\SpritePS.hlsl" />
+    <FxCompile Include="Resources\hlsl\Object3dPS.hlsl" />
+    <FxCompile Include="Resources\hlsl\Object3dVS.hlsl" />
+    <FxCompile Include="Resources\hlsl\ObjPS.hlsl" />
+    <FxCompile Include="Resources\hlsl\ObjVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">

@@ -15,8 +15,8 @@ using namespace Microsoft::WRL;
 /// <summary>
 /// Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ì
 /// </summary>
-const float Object3d::radius = 5.0f;				// ’ê–Ê‚Ì”¼Œa
-const float Object3d::prizmHeight = 8.0f;			// ’Œ‚Ì‚‚³
+const float Object3d::radius = 5.0f;				// ”¼Œa
+const float Object3d::prizmHeight = 8.0f;			// ‚‚³
 ID3D12Device* Object3d::device = nullptr;
 ID3D12GraphicsCommandList* Object3d::cmdList = nullptr;
 ComPtr<ID3D12RootSignature> Object3d::rootsignature;
