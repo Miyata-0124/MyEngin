@@ -154,6 +154,11 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="position">座標</param>
 	void SetPosition(const XMFLOAT3& position) { this->position = position; }
+	/// <summary>
+	/// オブジェクトサイズの設定
+	/// </summary>
+	/// <param name="size"></param>
+	void SetSize(const XMFLOAT3& size) { this->scale = size; }
 
 	//セッター
 	void	SetModel(Model* model_) { model = model_; }

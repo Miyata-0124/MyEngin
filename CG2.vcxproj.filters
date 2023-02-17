@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="hlsl&amp;hlsli">
+      <UniqueIdentifier>{abad5199-e88e-4fe3-a557-8205c244cb20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -44,9 +47,15 @@
     <None Include="Resources\hlsl\Basic.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
-    <None Include="Resources\hlsl\Object3d.hlsli" />
-    <None Include="Resources\hlsl\Obj.hlsli" />
-    <None Include="Resources\hlsl\Sprite.hlsli" />
+    <None Include="Resources\hlsl\Obj.hlsli">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </None>
+    <None Include="Resources\hlsl\Object3d.hlsli">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </None>
+    <None Include="Resources\hlsl\Sprite.hlsli">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\hlsl\BasicPS.hlsl">
@@ -55,12 +64,24 @@
     <FxCompile Include="Resources\hlsl\BasicVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\hlsl\SpriteVS.hlsl" />
-    <FxCompile Include="Resources\hlsl\SpritePS.hlsl" />
-    <FxCompile Include="Resources\hlsl\Object3dPS.hlsl" />
-    <FxCompile Include="Resources\hlsl\Object3dVS.hlsl" />
-    <FxCompile Include="Resources\hlsl\ObjPS.hlsl" />
-    <FxCompile Include="Resources\hlsl\ObjVS.hlsl" />
+    <FxCompile Include="Resources\hlsl\Object3dPS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\hlsl\Object3dVS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\hlsl\ObjPS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\hlsl\ObjVS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\hlsl\SpritePS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\hlsl\SpriteVS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">

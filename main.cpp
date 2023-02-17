@@ -1,14 +1,16 @@
-#include<string>
-#include <DirectXMath.h>
-#include<d3dcompiler.h>
-#include"DirectXTex/DirectXTex.h"
-#include<cassert>
-#include<vector>
+#pragma region before includer
 
-#pragma	comment(lib,"d3dcompiler.lib")
-#pragma	comment(lib, "d3d12.lib")
-#pragma	comment(lib,"dxgi.lib")
-
+//#include<string>
+//#include <DirectXMath.h>
+//#include<d3dcompiler.h>
+//#include"DirectXTex/DirectXTex.h"
+//#include<cassert>
+//#include<vector>
+//
+//#pragma	comment(lib,"d3dcompiler.lib")
+//#pragma	comment(lib, "d3d12.lib")
+//#pragma	comment(lib,"dxgi.lib")
+#pragma endregion
 //自作クラス
 #include"Input.h"
 #include"WinApp.h"
@@ -20,26 +22,6 @@
 
 using namespace DirectX;
 using	namespace Microsoft::WRL;
-
-struct ConstBufferDataMaterial
-{
-	XMFLOAT4 color;//(RGBA)
-};
-
-struct ConstBufferDataTransform
-{
-	XMMATRIX mat;//３D変換行列
-};
-
-struct Vertex
-{
-	XMFLOAT3 pos;//xyz座標
-	XMFLOAT3 normal;//法線ベクトル
-	XMFLOAT2 uv;	//uv座標
-};
-float R = 1.0f;
-float G = 0.0f;
-float B = 0.0f;
 
 //windowsアプリでのエントリーポイント(main関数)
 int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -76,28 +58,17 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//スプライト
 	Sprite* sprite = new	Sprite();
 	sprite->Initialize(spriteCommon, 1);
-	Sprite* sprite2 = new	Sprite();
-	sprite2->Initialize(spriteCommon, 2);
-	sprite2->SetPosition(XMFLOAT2(50.0f, 50.0f));
-	sprite2->SetColor(XMFLOAT4(0.1f, 0.0f, 0.0f, 0.5f));
-	sprite2->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	//sprite2->SetIsFlipX(true);
-	//sprite2->SetIsFlipY(true);
 	sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-
 	sprite->SetSize(XMFLOAT2(100.0f, 100.0f));
-	sprite2->SetSize(XMFLOAT2(100.0f, 100.0f));
+	sprite->SetPosition({ 100,50 });
 	//モデル
 	Model* model = Model::LoadFromOBJ("stage");
-	//Model* model2 = Model::LoadFromOBJ("wall");
 	//3dオブジェクト生成
 	Object3d* obj3d = Object3d::Create();
-	Object3d* obj3d2 = Object3d::Create();
 	//modelクラスをひも付け
 	obj3d->SetModel(model);
-	//obj3d2->SetModel(model2);
+	obj3d->SetSize({ 10,10,10 });
 	obj3d->SetPosition({ 0,0,0 });
-	//obj3d2->SetPosition({ +5,0,+50 });
 	//変数
 #pragma	endregion
 	while (true)
@@ -118,23 +89,8 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			OutputDebugStringA("Hit 0\n");//出力ウィンドウに表示
 		}
-		//スプライトの回転
-		{
-			float rotation = sprite->GetRotation();
-			if (input->PushKey(DIK_O))
-			{
-				rotation += 10.0f;
-			}
-			else if (input->PushKey(DIK_P))
-			{
-				rotation -= 10.0f;
-			}
-			sprite->SetRotation(rotation);
-			//sprite2->SetSize(XMFLOAT2(150.0f, 50.0f));
-			sprite2->SetRotation(rotation);
-		}
-		//スプライトの座標
-		{
+#pragma region スプライト移動
+		/*{
 			XMFLOAT2 position = sprite->GetPosition();
 			if (input->PushKey(DIK_UP))
 			{
@@ -154,22 +110,19 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			}
 			sprite->SetPosition(position);
-		}
+		}*/
+#pragma endregion
 		obj3d->Update();
-		obj3d2->Update();
 		//-------------------描画処理-------------------
 		//Direct毎フレーム処理　ここから
 		directXCom->PreDraw();
 		Object3d::PreDraw(directXCom->GetCommandList());
 		obj3d->Draw();
-		obj3d2->Draw();
 		Object3d::PostDraw();
 
 		//sprite->SetIsInvisible(true);
 		sprite->SetTexIndex(1);
-		sprite2->SetTexIndex(2);
 		sprite->Draw();
-		sprite2->Draw();
 
 		//
 		directXCom->PostDraw();
@@ -191,7 +144,6 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	delete model;
 	//delete model2;
 	delete obj3d;
-	delete obj3d2;
 #pragma	endregion
 	return 0;
 }
