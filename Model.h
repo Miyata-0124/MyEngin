@@ -35,7 +35,7 @@ private://メンバ関数
 	//バッファ生成
 	void CreateBuffers();
 public: // サブクラス
-	// 頂点データ構造体
+	// 構造体
 	struct VertexPosNormalUv
 	{
 		XMFLOAT3 pos; // xyz座標

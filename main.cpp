@@ -18,6 +18,7 @@
 #include"SpriteCommon.h"
 #include"Sprite.h"
 #include"Object3d.h"
+#include"Particle.h"
 #include"Model.h"
 
 using namespace DirectX;
@@ -54,6 +55,7 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma	region	最初のシーンの初期化
 	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
+	Particle::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	//スプライト
 	Sprite* sprite = new Sprite();
 	sprite->Initialize(spriteCommon, 1);
@@ -72,14 +74,21 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//3dオブジェクト生成
 	Object3d* obj3d = Object3d::Create();
 	Object3d* obj3d2 = Object3d::Create();
+
+	Particle* particle = Particle::Create();
 	//modelクラスをひも付け
 	obj3d->SetModel(model);
 	obj3d->SetSize({ 5,5,5 });
-	obj3d->SetPosition({ -5,0,0 });
+	obj3d->SetPosition({ -15,0,0 });
 
 	obj3d2->SetModel(model2);
 	obj3d2->SetSize({ 5,5,5 });
-	obj3d2->SetPosition({ 5,0,0 });
+	obj3d2->SetPosition({ 15,0,0 });
+
+	particle->SetModel(model2);
+	particle->SetSize({ 1,1,1 });
+	particle->SetPosition({ 0,0,0 });
+
 	//変数
 #pragma	endregion
 	while (true)
@@ -125,12 +134,17 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma endregion
 		obj3d->Update();
 		obj3d2->Update();
+		particle->Update();
 		//-------------------描画処理-------------------
 		//Direct毎フレーム処理　ここから
 		directXCom->PreDraw();
 		Object3d::PreDraw(directXCom->GetCommandList());
+		Particle::PreDraw(directXCom->GetCommandList());
 		obj3d->Draw();
 		obj3d2->Draw();
+
+		particle->Draw();
+		Particle::PostDraw();
 		Object3d::PostDraw();
 
 		//sprite->SetIsInvisible(true);
@@ -157,6 +171,7 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	delete sprite;
 	delete model;
 	delete model2;
+	delete particle;
 	delete obj3d;
 #pragma	endregion
 	return 0;
