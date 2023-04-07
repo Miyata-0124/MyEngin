@@ -43,32 +43,43 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	input->Initialize(winApp);
 	//DirectX初期化処理　　ここまで
 #pragma endregion
+#pragma	endregion
 //スプライト
 	SpriteCommon* spriteCommon = nullptr;
 	//スプライト共通部分の初期化
-	spriteCommon = new	SpriteCommon;
+	spriteCommon = new SpriteCommon;
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "reimu.png");
 	spriteCommon->Loadtexture(2, "test.png");
-
-#pragma	endregion
 #pragma	region	最初のシーンの初期化
 	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	//スプライト
-	Sprite* sprite = new	Sprite();
+	Sprite* sprite = new Sprite();
 	sprite->Initialize(spriteCommon, 1);
 	sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
 	sprite->SetSize(XMFLOAT2(100.0f, 100.0f));
-	sprite->SetPosition({ 100,50 });
+	sprite->SetPosition({ 150,50 });
+
+	Sprite* sprite2 = new Sprite();
+	sprite2->Initialize(spriteCommon, 2);
+	sprite2->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	sprite2->SetSize(XMFLOAT2(100.0f, 100.0f));
+	sprite2->SetPosition({ 50,50 });
 	//モデル
-	Model* model = Model::LoadFromOBJ("stage");
+	Model* model = Model::LoadFromOBJ("sphere");
+	Model* model2 = Model::LoadFromOBJ("wall");
 	//3dオブジェクト生成
 	Object3d* obj3d = Object3d::Create();
+	Object3d* obj3d2 = Object3d::Create();
 	//modelクラスをひも付け
 	obj3d->SetModel(model);
-	obj3d->SetSize({ 10,10,10 });
-	obj3d->SetPosition({ 0,0,0 });
+	obj3d->SetSize({ 5,5,5 });
+	obj3d->SetPosition({ -5,0,0 });
+
+	obj3d2->SetModel(model2);
+	obj3d2->SetSize({ 5,5,5 });
+	obj3d2->SetPosition({ 5,0,0 });
 	//変数
 #pragma	endregion
 	while (true)
@@ -90,7 +101,7 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			OutputDebugStringA("Hit 0\n");//出力ウィンドウに表示
 		}
 #pragma region スプライト移動
-		/*{
+		{
 			XMFLOAT2 position = sprite->GetPosition();
 			if (input->PushKey(DIK_UP))
 			{
@@ -110,20 +121,23 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			}
 			sprite->SetPosition(position);
-		}*/
+		}
 #pragma endregion
 		obj3d->Update();
+		obj3d2->Update();
 		//-------------------描画処理-------------------
 		//Direct毎フレーム処理　ここから
 		directXCom->PreDraw();
 		Object3d::PreDraw(directXCom->GetCommandList());
 		obj3d->Draw();
+		obj3d2->Draw();
 		Object3d::PostDraw();
 
 		//sprite->SetIsInvisible(true);
 		sprite->SetTexIndex(1);
 		sprite->Draw();
-
+		sprite2->SetTexIndex(2);
+		sprite2->Draw();
 		//
 		directXCom->PostDraw();
 
@@ -136,13 +150,13 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 #pragma	region	最初のシーンの終了
 	winApp->Finalize();
-	delete	input;
+	delete input;
 	delete winApp;
-	delete	directXCom;
-	delete	spriteCommon;
-	delete	sprite;
+	delete directXCom;
+	delete spriteCommon;
+	delete sprite;
 	delete model;
-	//delete model2;
+	delete model2;
 	delete obj3d;
 #pragma	endregion
 	return 0;
