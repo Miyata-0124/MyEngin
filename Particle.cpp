@@ -43,7 +43,7 @@ const	DirectX::XMFLOAT3	operator+(const	DirectX::XMFLOAT3& lhs, const DirectX::X
 	return	result;
 }
 
-void Particle::Add(int life, XMFLOAT3	position, XMFLOAT3	velocity, XMFLOAT3	accel, float	start_scale, float	end_scale) {
+void Particle::Control(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3	accel, float start_scale, float	end_scale) {
 	//リストに追加
 	particles.emplace_front();
 	//参照
@@ -346,16 +346,6 @@ void Particle::InitializeGraphicsPipeline()
 			D3D12_APPEND_ALIGNED_ELEMENT,
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
 		},
-		//{ // 法線ベクトル(1行で書いたほうが見やすい)
-		//	"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
-		//	D3D12_APPEND_ALIGNED_ELEMENT,
-		//	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
-		//},
-		//{ // uv座標(1行で書いたほうが見やすい)
-		//	"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,
-		//	D3D12_APPEND_ALIGNED_ELEMENT,
-		//	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
-		//},
 		{//スケール
 			"TEXCOORD",0,DXGI_FORMAT_R32_FLOAT,0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
@@ -617,13 +607,13 @@ void Particle::Update()
 	if (SUCCEEDED(result))
 	{
 		//パーティクルの情報を1つずつ反映
-		for (std::forward_list<Particles>::iterator it = particles.begin();
-			it != particles.end(); it++)
+		for (std::forward_list<Particles>::iterator itrator_ = particles.begin();
+			itrator_ != particles.end(); itrator_++)
 		{
 			//座標
-			vertMap->pos = it->position;
+			vertMap->pos = itrator_->position;
 			//スケール
-			vertMap->scale = it->scale;
+			vertMap->scale = itrator_->scale;
 			//次の頂点
 			vertMap++;
 		}

@@ -141,7 +141,7 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				XMFLOAT3	acc{};
 				acc.y = (float)rand() / RAND_MAX * rnd_acc;
 
-				particle->Add(100, pos, vel, acc, 1.0f, 0.0f);
+				particle->Control(100, pos, vel, acc, 1.0f, 0.0f);
 			}
 		}
 #pragma region スプライト移動
