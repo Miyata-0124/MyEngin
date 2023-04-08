@@ -77,6 +77,9 @@
     <None Include="Resources\hlsl\Sprite.hlsli">
       <Filter>hlsl&amp;hlsli</Filter>
     </None>
+    <None Include="Resources\hlsl\Particle.hlsli">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\hlsl\BasicPS.hlsl">
@@ -101,6 +104,15 @@
       <Filter>hlsl&amp;hlsli</Filter>
     </FxCompile>
     <FxCompile Include="Resources\hlsl\SpriteVS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\hlsl\ParticleGS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\hlsl\ParticlePS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\hlsl\ParticleVS.hlsl">
       <Filter>hlsl&amp;hlsli</Filter>
     </FxCompile>
   </ItemGroup>

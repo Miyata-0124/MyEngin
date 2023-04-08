@@ -12,14 +12,15 @@
 //#pragma	comment(lib,"dxgi.lib")
 #pragma endregion
 //自作クラス
-#include"Input.h"
-#include"WinApp.h"
-#include"DirectXCommon.h"
-#include"SpriteCommon.h"
-#include"Sprite.h"
-#include"Object3d.h"
-#include"Particle.h"
-#include"Model.h"
+#include "Input.h"
+#include "WinApp.h"
+#include "DirectXCommon.h"
+#include "ViewProjection.h"
+#include "SpriteCommon.h"
+#include "Sprite.h"
+#include "Particle.h"
+#include "Object3d.h"
+#include "Model.h"
 
 using namespace DirectX;
 using	namespace Microsoft::WRL;
@@ -52,10 +53,12 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "reimu.png");
 	spriteCommon->Loadtexture(2, "test.png");
-#pragma	region	最初のシーンの初期化
+#pragma	region	シーンの初期化
+	//ViewProjection
+	std::unique_ptr<ViewProjection>camera = std::make_unique<ViewProjection>();
+	camera->Initialeze();
 	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
-	Particle::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	//スプライト
 	Sprite* sprite = new Sprite();
 	sprite->Initialize(spriteCommon, 1);
@@ -75,7 +78,6 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Object3d* obj3d = Object3d::Create();
 	Object3d* obj3d2 = Object3d::Create();
 
-	Particle* particle = Particle::Create();
 	//modelクラスをひも付け
 	obj3d->SetModel(model);
 	obj3d->SetSize({ 5,5,5 });
@@ -84,13 +86,16 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	obj3d2->SetModel(model2);
 	obj3d2->SetSize({ 5,5,5 });
 	obj3d2->SetPosition({ 15,0,0 });
-
-	particle->SetModel(model2);
-	particle->SetSize({ 1,1,1 });
-	particle->SetPosition({ 0,0,0 });
-
-	//変数
+#pragma region パーティクル関係
+	//パーティクル
+	Particle::StaticInitialize(directXCom->GetDevice(), camera.get());
+	Particle::LoadTexture(1, "MK.png");
+	Particle::LoadTexture(2, "testpar1.png");
+	Particle* particle = nullptr;
+	particle = Particle::Create(1);
+	particle->Update();
 #pragma	endregion
+	//更新処理
 	while (true)
 	{
 
@@ -103,11 +108,41 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma region 毎フレーム処理
 
 		input->Update();
-
-		//数字の0キーが押されてたら
-		if (input->TriggerKey(DIK_0))
 		{
-			OutputDebugStringA("Hit 0\n");//出力ウィンドウに表示
+			XMFLOAT3 eye = camera->GetEye();
+			XMFLOAT3 traget = camera->GetTarget();
+			//eye.z -= 0.1f;
+
+			camera->SetEye(eye);
+			camera->Update();
+		}
+		//パーティクル
+		if (input->TriggerKey(DIK_F))
+		{
+			//パーティクル
+			for (int i = 0; i < 100; i++)
+			{
+				//XYZ全て[-5.0f,+5.0f]でランダムに分布
+				const	float	rnd_pos = 20.0f;
+				XMFLOAT3	pos{};
+				pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+				pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+				pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+
+				//XYZ全て[-0.05f,+0.05f]でランダムに分布
+				const	float	rnd_vel = 0.1f;
+				XMFLOAT3	vel{};
+				vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+				vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+				vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+				//重力に見立ててYのみ[-0.001f,0]でランダムに分布
+				const	float	rnd_acc = 0.001f;
+				XMFLOAT3	acc{};
+				acc.y = (float)rand() / RAND_MAX * rnd_acc;
+
+				particle->Add(100, pos, vel, acc, 1.0f, 0.0f);
+			}
 		}
 #pragma region スプライト移動
 		{
@@ -139,13 +174,15 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//Direct毎フレーム処理　ここから
 		directXCom->PreDraw();
 		Object3d::PreDraw(directXCom->GetCommandList());
-		Particle::PreDraw(directXCom->GetCommandList());
 		obj3d->Draw();
 		obj3d2->Draw();
 
-		particle->Draw();
-		Particle::PostDraw();
 		Object3d::PostDraw();
+		Particle::PreDraw(directXCom->GetCommandList());
+
+		particle->Draw();
+
+		Particle::PostDraw();
 
 		//sprite->SetIsInvisible(true);
 		sprite->SetTexIndex(1);
@@ -171,7 +208,6 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	delete sprite;
 	delete model;
 	delete model2;
-	delete particle;
 	delete obj3d;
 #pragma	endregion
 	return 0;

@@ -10,7 +10,7 @@ std::string SpriteCommon::defaultTextureDirectoryPath = "Resources/";
 void SpriteCommon::Loadtexture(uint32_t index, std::string fileName) {
 
 	TexMetadata	metadata{};
-	ScratchImage	scratchImg{};
+	ScratchImage scratchImg{};
 
 	//ディレクトリパスとファイル名を結合
 	std::string fullPath = defaultTextureDirectoryPath + fileName;
