@@ -98,7 +98,7 @@ public: // 静的メンバ関数
 	static void LoadTexture(uint32_t index, std::string fileName);
 
 	//テクスチャ番号
-	void	SetTexIndex(const uint32_t texIndex_) { texIndex = texIndex_; }
+	void	SetTexure(const uint32_t texIndex_) { texIndex = texIndex_; }
 	const	uint32_t& GetTexIndex()const { return texIndex; }
 
 private: // 静的メンバ変数

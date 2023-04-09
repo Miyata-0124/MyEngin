@@ -1,16 +1,3 @@
-#pragma region before includer
-
-//#include<string>
-//#include <DirectXMath.h>
-//#include<d3dcompiler.h>
-//#include"DirectXTex/DirectXTex.h"
-//#include<cassert>
-//#include<vector>
-//
-//#pragma	comment(lib,"d3dcompiler.lib")
-//#pragma	comment(lib, "d3d12.lib")
-//#pragma	comment(lib,"dxgi.lib")
-#pragma endregion
 //自作クラス
 #include "Input.h"
 #include "WinApp.h"
@@ -80,11 +67,11 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//modelクラスをひも付け
 	obj3d->SetModel(model);
-	obj3d->SetSize({ 5,5,5 });
+	obj3d->SetSize({ 2,2,2 });
 	obj3d->SetPosition({ -15,0,0 });
 
 	obj3d2->SetModel(model2);
-	obj3d2->SetSize({ 5,5,5 });
+	obj3d2->SetSize({ 2,2,2 });
 	obj3d2->SetPosition({ 15,0,0 });
 #pragma region パーティクル関係
 	//パーティクル
@@ -92,6 +79,7 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Particle::LoadTexture(1, "MK.png");
 	Particle::LoadTexture(2, "testpar1.png");
 	Particle* particle = nullptr;
+	// 引数の数字はテクスチャ読み込みのインデックスナンバー
 	particle = Particle::Create(1);
 	particle->Update();
 #pragma	endregion
@@ -116,19 +104,12 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			camera->SetEye(eye);
 			camera->Update();
 		}
-		//パーティクル
+		//パーティクル発生
 		if (input->TriggerKey(DIK_F))
 		{
 			//パーティクル
 			for (int i = 0; i < 100; i++)
 			{
-				//XYZ全て[-5.0f,+5.0f]でランダムに分布
-				const	float	rnd_pos = 20.0f;
-				XMFLOAT3	pos{};
-				pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-				pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-				pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-
 				//XYZ全て[-0.05f,+0.05f]でランダムに分布
 				const	float	rnd_vel = 0.1f;
 				XMFLOAT3	vel{};
@@ -141,7 +122,7 @@ int	WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				XMFLOAT3	acc{};
 				acc.y = (float)rand() / RAND_MAX * rnd_acc;
 
-				particle->Control(100, pos, vel, acc, 1.0f, 0.0f);
+				particle->Control(100, obj3d->GetPosition(), vel, acc, 1.0f, 0.0f);
 			}
 		}
 #pragma region スプライト移動

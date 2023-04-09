@@ -43,6 +43,15 @@ const	DirectX::XMFLOAT3	operator+(const	DirectX::XMFLOAT3& lhs, const DirectX::X
 	return	result;
 }
 
+/// <summary>
+/// パーティクルの制御
+/// </summary>
+/// <param name="life"></param>
+/// <param name="position"></param>
+/// <param name="velocity"></param>
+/// <param name="accel"></param>
+/// <param name="start_scale"></param>
+/// <param name="end_scale"></param>
 void Particle::Control(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3	accel, float start_scale, float	end_scale) {
 	//リストに追加
 	particles.emplace_front();
