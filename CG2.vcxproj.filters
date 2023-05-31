@@ -16,9 +16,6 @@
     <Filter Include="hlsl&amp;hlsli">
       <UniqueIdentifier>{abad5199-e88e-4fe3-a557-8205c244cb20}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Math">
-      <UniqueIdentifier>{957e6497-ae6d-42c8-b0e2-e383de1abbb2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ViewProjection">
       <UniqueIdentifier>{76c921d4-8c12-41d0-8e55-ee9d33884fac}</UniqueIdentifier>
     </Filter>
