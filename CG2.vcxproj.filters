@@ -80,6 +80,9 @@
     <None Include="Resources\hlsl\Particle.hlsli">
       <Filter>hlsl&amp;hlsli</Filter>
     </None>
+    <None Include="Fbx.hlsli">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\hlsl\BasicPS.hlsl">
@@ -113,6 +116,12 @@
       <Filter>hlsl&amp;hlsli</Filter>
     </FxCompile>
     <FxCompile Include="Resources\hlsl\ParticleVS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="FbxPS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="FbxVS.hlsl">
       <Filter>hlsl&amp;hlsli</Filter>
     </FxCompile>
   </ItemGroup>

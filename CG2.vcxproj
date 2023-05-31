@@ -102,6 +102,7 @@
     <ClCompile Include="WinApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Fbx.hlsli" />
     <None Include="Resources\hlsl\Basic.hlsli" />
     <None Include="Resources\hlsl\Obj.hlsli" />
     <None Include="Resources\hlsl\Object3d.hlsli" />
@@ -109,6 +110,14 @@
     <None Include="Resources\hlsl\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="FbxPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="FbxVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Resources\hlsl\BasicPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
