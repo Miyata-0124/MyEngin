@@ -35,8 +35,8 @@ void GameScene::Initialize()
 	//スプライト
 	sprite->Initialize(spriteCommon, 1);
 	sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	sprite->SetSize(XMFLOAT2(1280.0f, 720.0f));
-	sprite->SetPosition({ 640,360 });
+	sprite->SetSize(XMFLOAT2(96.0f, 96.0f));
+	sprite->SetPosition({ 48,48 });
 	//
 	//	Sprite* sprite2 = new Sprite();
 	//	sprite2->Initialize(spriteCommon, 2);
