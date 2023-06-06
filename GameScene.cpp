@@ -1,5 +1,9 @@
 #include "GameScene.h"
 
+
+/// <summary>
+/// 初期化処理
+/// </summary>
 void GameScene::Initialize()
 {
 #pragma region WindowsAPIの初期化
@@ -81,6 +85,10 @@ void GameScene::Initialize()
 	//#pragma	endregion
 }
 
+
+/// <summary>
+/// 更新処理
+/// </summary>
 void GameScene::Update()
 {
 	///それぞれのクラスのUpdateのみ記述
@@ -146,6 +154,10 @@ void GameScene::Update()
 	object1->Update();
 }
 
+
+/// <summary>
+/// 描画処理
+/// </summary>
 void GameScene::Draw()
 {
 	//描画処理ここから↓
