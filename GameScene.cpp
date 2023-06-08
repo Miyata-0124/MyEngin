@@ -31,6 +31,7 @@ void GameScene::Initialize()
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "MK.png");
 	spriteCommon->Loadtexture(2, "test.png");
+
 #pragma	region	シーンの初期化
 	//ViewProjection
 //	std::unique_ptr<ViewProjection>camera = std::make_unique<ViewProjection>();
@@ -44,6 +45,11 @@ void GameScene::Initialize()
 	sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
 	sprite->SetSize(XMFLOAT2(320.0f, 180.0f));
 	sprite->SetPosition({ 160,90 });
+	//ポストエフェクト用テクスチャ読み込み
+	postEffect->Initialize(spriteCommon, 2);
+	postEffect->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	postEffect->SetSize(XMFLOAT2(320.0f, 180.0f));
+	postEffect->SetPosition({ 480,90 });
 
 	model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
@@ -180,6 +186,10 @@ void GameScene::Draw()
 	sprite->SetIsInvisible(false);
 	sprite->SetTexIndex(1);
 	sprite->Draw();
+
+	postEffect->SetIsInvisible(false);
+	postEffect->SetTexIndex(2);
+	postEffect->Draw();
 	/*sprite2->SetTexIndex(2);
 	sprite2->Draw();*/
 
@@ -196,6 +206,7 @@ void GameScene::Finalize()
 	delete directXCom;
 	delete spriteCommon;
 	delete sprite;
+	delete postEffect;
 	//delete model;
 	delete object1;
 	//delete model1;

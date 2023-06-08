@@ -7,7 +7,7 @@ using namespace DirectX;
 
 class Sprite
 {
-private://静的メンバ変数
+protected://静的メンバ変数
 	// 射影行列計算
 	static	XMMATRIX	matProjection;
 	//SRVの最大枚数
@@ -69,7 +69,7 @@ private://構造体
 		XMMATRIX	mat;//3D変換行列
 	};
 
-private:
+protected:
 	SpriteCommon* spriteCommon;
 	DirectXCommon* directXCom;
 	HRESULT result;

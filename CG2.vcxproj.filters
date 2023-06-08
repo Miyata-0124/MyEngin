@@ -19,6 +19,24 @@
     <Filter Include="ViewProjection">
       <UniqueIdentifier>{76c921d4-8c12-41d0-8e55-ee9d33884fac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GameScene">
+      <UniqueIdentifier>{15556cf4-209a-4095-867d-2bc3ed546996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\FBX">
+      <UniqueIdentifier>{9e46f69d-2374-41e1-ab72-e4261f9fa41e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sprite">
+      <UniqueIdentifier>{93286075-27b2-4faa-ad19-440e0cef67fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\GameScene">
+      <UniqueIdentifier>{50dc4f9a-0092-4eaa-940b-f9ef0e137e95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\FBX">
+      <UniqueIdentifier>{c155eeba-6f65-409c-8225-66362ed6eb3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Sprite">
+      <UniqueIdentifier>{cf2ef2be-bd94-4438-8569-816faa9dee8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,37 +51,40 @@
     <ClCompile Include="DirectXCommon.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteCommon.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Object3D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ViewProjection.cpp">
       <Filter>ViewProjection</Filter>
     </ClCompile>
-    <ClCompile Include="Particle.cpp">
+    <ClCompile Include="JsonLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="FbxLoader.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\FBX</Filter>
     </ClCompile>
     <ClCompile Include="FbxModel.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\FBX</Filter>
     </ClCompile>
     <ClCompile Include="FbxObject3D.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="JsonLoader.cpp">
+    <ClCompile Include="Sprite.cpp">
+      <Filter>ソース ファイル\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteCommon.cpp">
+      <Filter>ソース ファイル\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>ソース ファイル\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3D.cpp">
+      <Filter>ソース ファイル\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>ソース ファイル\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="PostEffect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -138,40 +159,43 @@
     <ClInclude Include="DirectXCommon.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteCommon.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Object3D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ViewProjection.h">
       <Filter>ViewProjection</Filter>
     </ClInclude>
-    <ClInclude Include="Particle.h">
+    <ClInclude Include="JsonLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="FbxLoader.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\FBX</Filter>
     </ClInclude>
     <ClInclude Include="FbxModel.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\FBX</Filter>
     </ClInclude>
     <ClInclude Include="FbxObject3D.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="JsonLoader.h">
+    <ClInclude Include="Model.h">
+      <Filter>ヘッダー ファイル\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3D.h">
+      <Filter>ヘッダー ファイル\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>ヘッダー ファイル\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>ヘッダー ファイル\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteCommon.h">
+      <Filter>ヘッダー ファイル\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="PostEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

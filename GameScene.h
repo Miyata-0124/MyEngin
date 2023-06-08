@@ -10,6 +10,7 @@
 #include "Object3d.h"
 #include "FbxObject3D.h"
 #include "Model.h"
+#include "PostEffect.h"
 
 #include "FbxLoader.h"
 class GameScene
@@ -47,9 +48,9 @@ private: //ゲーム内使用クラス
 	//スプライト
 	SpriteCommon* spriteCommon = nullptr;
 	Sprite* sprite = new Sprite();
+	//ポストエフェクト
+	PostEffect* postEffect = new PostEffect();
 	//FBX
 	FbxModel* model = nullptr;
 	FbxObject3d* object1 = new FbxObject3d();
-
 };
-
