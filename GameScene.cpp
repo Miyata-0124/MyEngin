@@ -41,23 +41,22 @@ void GameScene::Initialize()
 	sprite->SetSize(XMFLOAT2(320.0f, 180.0f));
 	sprite->SetPosition({ 160,90 });
 
-	model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+#pragma region FBX
+	/*model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
 	object1->initialize();
 	object1->SetModel(model);
 	object1->SetRotation({ 0,60,0 });
 	object1->SetPosition({ 0,-3,0 });
-	object1->PlayAnimation();
-	//
-	//	Sprite* sprite2 = new Sprite();
-	//	sprite2->Initialize(spriteCommon, 2);
-	//	sprite2->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	//	sprite2->SetSize(XMFLOAT2(100.0f, 100.0f));
-	//	sprite2->SetPosition({ 50,50 });
+	object1->PlayAnimation();*/
+#pragma endregion
+#pragma region モデル
 	//	//モデル
 	//	Model* model1 = Model::LoadFromOBJ("sphere");
 	//	Model* model2 = Model::LoadFromOBJ("wall");
-		//3dオブジェクト生成
+#pragma endregion
+#pragma region Player等のオブジェクト
+	//　3dオブジェクト生成
 	//	Object3d* obj3d = Object3d::Create();
 	//	Object3d* obj3d2 = Object3d::Create();
 	//
@@ -69,6 +68,9 @@ void GameScene::Initialize()
 	//	obj3d2->SetModel(model2);
 	//	obj3d2->SetSize({ 2,2,2 });
 	//	obj3d2->SetPosition({ 15,0,0 });
+#pragma endregion
+
+	
 	//#pragma region パーティクル関係
 	//	//パーティクル
 	//	Particle::StaticInitialize(directXCom->GetDevice(), camera.get());
@@ -95,6 +97,7 @@ void GameScene::Update()
 	//	camera->SetEye(eye);
 	//	camera->Update();
 	//}
+#pragma region パーティクル
 	//パーティクル発生
 	//if (input->TriggerKey(DIK_F))
 	//{
@@ -116,6 +119,7 @@ void GameScene::Update()
 	//		particle->Control(100, obj3d->GetPosition(), vel, acc, 1.0f, 0.0f);
 	//	}
 	//}
+#pragma endregion
 #pragma region スプライト移動
 		/*{
 			XMFLOAT2 position = sprite->GetPosition();
@@ -160,9 +164,13 @@ void GameScene::Draw()
 	//obj3d2->Draw();
 
 	//Object3d::PostDraw();
+#pragma region パーティクル
+
 	//Particle::PreDraw(directXCom->GetCommandList());
 	//particle->Draw();
 	//Particle::PostDraw();
+
+#pragma endregion
 
 	// UI関連
 	sprite->SetIsInvisible(false);
