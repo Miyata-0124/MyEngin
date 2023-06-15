@@ -9,9 +9,10 @@
 #include "Particle.h"
 #include "Object3d.h"
 #include "FbxObject3D.h"
-#include "Model.h"
-
 #include "FbxLoader.h"
+#include "Model.h"
+#include "Player.h"
+
 class GameScene
 {
 public: //基本関数
@@ -51,5 +52,7 @@ private: //ゲーム内使用クラス
 	FbxModel* model = nullptr;
 	FbxObject3d* object1 = new FbxObject3d();
 
+	//プレイヤー
+	Player* player = new Player();
 };
 

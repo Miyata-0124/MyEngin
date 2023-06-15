@@ -17,7 +17,7 @@ Model* Model::LoadFromOBJ(const	std::string& modelname) {
 	return model;
 }
 
-void Model::LoadFromOBJInternal(const	std::string& modelname) {
+void Model::LoadFromOBJInternal(const std::string& modelname) {
 	//ファイルストリーム
 	std::ifstream file;
 	//.objファイルを開く
@@ -132,8 +132,6 @@ void Model::LoadTexture(const	std::string& directoryPath, const std::string& fil
 		CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
 
 	// WICテクスチャのロード
-	//result = LoadFromWICFile( L"Resources/tex1.png", WIC_FLAGS_NONE, &metadata, scratchImg);
-
 	result = LoadFromWICFile(wfilepath, WIC_FLAGS_NONE, &metadata, scratchImg);
 
 	assert(SUCCEEDED(result));

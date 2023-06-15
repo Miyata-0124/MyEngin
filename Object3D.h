@@ -161,7 +161,7 @@ public: // メンバ関数
 	void SetSize(const XMFLOAT3& size) { this->scale = size; }
 
 	//セッター
-	void	SetModel(Model* model_) { model = model_; }
+	void SetModel(Model* model_) { model = model_; }
 
 
 

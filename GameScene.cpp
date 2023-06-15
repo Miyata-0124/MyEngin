@@ -29,8 +29,8 @@ void GameScene::Initialize()
 	spriteCommon->Loadtexture(2, "test.png");
 #pragma	region	シーンの初期化
 	//ViewProjection
-//	std::unique_ptr<ViewProjection>camera = std::make_unique<ViewProjection>();
-//	camera->Initialeze();
+	/*std::unique_ptr<ViewProjection>camera = std::make_unique<ViewProjection>();
+	camera->Initialeze();*/
 //	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
@@ -52,35 +52,32 @@ void GameScene::Initialize()
 #pragma endregion
 #pragma region モデル
 	//	//モデル
-	//	Model* model1 = Model::LoadFromOBJ("sphere");
-	//	Model* model2 = Model::LoadFromOBJ("wall");
+	//Model* model1 = Model::LoadFromOBJ("wall");
+	Model* playerModel = Model::LoadFromOBJ("Box");
 #pragma endregion
 #pragma region Player等のオブジェクト
+
+	player->Initialize(playerModel);
+
 	//　3dオブジェクト生成
-	//	Object3d* obj3d = Object3d::Create();
-	//	Object3d* obj3d2 = Object3d::Create();
-	//
-		//modelクラスをひも付け
-	//	obj3d->SetModel(model1);
-	//	obj3d->SetSize({ 2,2,2 });
-	//	obj3d->SetPosition({ 15,0,0 });
-	//
-	//	obj3d2->SetModel(model2);
-	//	obj3d2->SetSize({ 2,2,2 });
-	//	obj3d2->SetPosition({ 15,0,0 });
+		/*Object3d* obj3d = Object3d::Create();
+		modelクラスをひも付け
+		obj3d->SetModel(model1);
+		obj3d->SetSize({ 2,2,2 });
+		obj3d->SetPosition({ 15,0,0 });*/
 #pragma endregion
 
 	
-	//#pragma region パーティクル関係
-	//	//パーティクル
-	//	Particle::StaticInitialize(directXCom->GetDevice(), camera.get());
-	//	Particle::LoadTexture(1, "MK.png");
-	//	Particle::LoadTexture(2, "testpar1.png");
-	//	Particle* particle = nullptr;
-	//	// 引数の数字はテクスチャ読み込みのインデックスナンバー
-	//	particle = Particle::Create(1);
-	//	particle->Update();
-	//#pragma	endregion
+	#pragma region パーティクル関係
+		//パーティクル
+		//Particle::StaticInitialize(directXCom->GetDevice(), camera.get());
+		//Particle::LoadTexture(1, "MK.png");
+		//Particle::LoadTexture(2, "testpar1.png");
+		//Particle* particle = nullptr;
+		//// 引数の数字はテクスチャ読み込みのインデックスナンバー
+		//particle = Particle::Create(1);
+		//particle->Update();
+	#pragma	endregion
 }
 
 void GameScene::Update()
@@ -143,11 +140,11 @@ void GameScene::Update()
 			sprite->SetPosition(position);
 		}*/
 #pragma endregion
+	player->Update();
 		//obj3d->Update();
-		/*obj3d2->Update();
-		particle->Update();*/
+		//particle->Update();
 
-	object1->Update();
+	//object1->Update();
 }
 
 void GameScene::Draw()
@@ -158,12 +155,13 @@ void GameScene::Draw()
 
 
 	//オブジェクト
-	object1->Draw(directXCom->GetCommandList());
-	//Object3d::PreDraw(directXCom->GetCommandList());
-	//obj3d->Draw();
-	//obj3d2->Draw();
+	//object1->Draw(directXCom->GetCommandList());
+	Object3d::PreDraw(directXCom->GetCommandList());
+	player->Draw();
 
-	//Object3d::PostDraw();
+	//obj3d->Draw();
+
+	Object3d::PostDraw();
 #pragma region パーティクル
 
 	//Particle::PreDraw(directXCom->GetCommandList());
@@ -176,8 +174,6 @@ void GameScene::Draw()
 	sprite->SetIsInvisible(false);
 	sprite->SetTexIndex(1);
 	sprite->Draw();
-	/*sprite2->SetTexIndex(2);
-	sprite2->Draw();*/
 
 	directXCom->PostDraw();
 	//ここまで↑
@@ -192,9 +188,9 @@ void GameScene::Finalize()
 	delete directXCom;
 	delete spriteCommon;
 	delete sprite;
-	//delete model;
+	delete model;
 	delete object1;
-	//delete model1;
-	//delete model2;
-	//delete obj3d;
+	delete player;
+	/*delete model1;
+	delete obj3d;*/
 }
