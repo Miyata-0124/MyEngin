@@ -29,12 +29,11 @@ void GameScene::Initialize()
 	spriteCommon->Loadtexture(2, "test.png");
 #pragma	region	シーンの初期化
 	//ViewProjection
-	/*std::unique_ptr<ViewProjection>camera = std::make_unique<ViewProjection>();
-	camera->Initialeze();*/
-//	//一度しか宣言しない
+	
+//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
-
+	//Particle::StaticInitialize(directXCom->GetDevice(), camera.get());
 	//スプライト
 	sprite->Initialize(spriteCommon, 1);
 	sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
@@ -53,6 +52,7 @@ void GameScene::Initialize()
 #pragma region モデル
 	//	//モデル
 	//Model* model1 = Model::LoadFromOBJ("wall");
+	//プレイヤーモデル
 	Model* playerModel = Model::LoadFromOBJ("Box");
 #pragma endregion
 #pragma region Player等のオブジェクト
@@ -70,7 +70,6 @@ void GameScene::Initialize()
 	
 	#pragma region パーティクル関係
 		//パーティクル
-		//Particle::StaticInitialize(directXCom->GetDevice(), camera.get());
 		//Particle::LoadTexture(1, "MK.png");
 		//Particle::LoadTexture(2, "testpar1.png");
 		//Particle* particle = nullptr;
@@ -86,14 +85,6 @@ void GameScene::Update()
 	//キー情報
 	input->Update();
 
-	//{
-	//	XMFLOAT3 eye = camera->GetEye();
-	//	XMFLOAT3 traget = camera->GetTarget();
-	//	//eye.z -= 0.1f;
-
-	//	camera->SetEye(eye);
-	//	camera->Update();
-	//}
 #pragma region パーティクル
 	//パーティクル発生
 	//if (input->TriggerKey(DIK_F))
@@ -140,7 +131,7 @@ void GameScene::Update()
 			sprite->SetPosition(position);
 		}*/
 #pragma endregion
-	player->Update();
+	player->Update(input);
 		//obj3d->Update();
 		//particle->Update();
 

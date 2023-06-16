@@ -16,23 +16,23 @@ using namespace Microsoft::WRL;
 
 class Model
 {
-public://静的メンバ関数
-	//obj読み込み
+public: // 静的メンバ関数
+	// obj読み込み
 	static Model* LoadFromOBJ(const	std::string& modelname);
-	//セッター
+	// セッター
 	static void SetDevice(ID3D12Device* device_) { Model::device = device_; }
-	//描画
+	// 描画
 	void	Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial);
-private://メンバ関数
-	//obj読み込み
+private: // メンバ関数
+	// obj読み込み
 	void LoadFromOBJInternal(const	std::string& modelname);
-	//テクスチャ
+	// テクスチャ
 	void LoadTexture(const	std::string& directoryPath, const std::string& filename);
-	//マテリアル
+	// マテリアル
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
-	//デスクリプタヒープの初期化
+	// デスクリプタヒープの初期化
 	void InitializeDescriptorHeap();
-	//バッファ生成
+	// バッファ生成
 	void CreateBuffers();
 public: // サブクラス
 	// 構造体
@@ -43,7 +43,7 @@ public: // サブクラス
 		XMFLOAT2 uv;  // uv座標
 	};
 
-	//定数バッファ用データ構造体B1
+	// 定数バッファ用データ構造体B1
 	struct ConstBufferDataB1
 	{
 		XMFLOAT3 ambient;//アンビエント係数
@@ -54,7 +54,7 @@ public: // サブクラス
 		float alpha;	 //アルファ
 	};
 
-	//マテリアル
+	// マテリアル
 	struct Material
 	{
 		std::string name;//マテリアル名
@@ -72,10 +72,10 @@ public: // サブクラス
 		}
 	};
 private:
-	//デバイス
+	// デバイス
 	static	ID3D12Device* device;
-private://メンバ変数
-	//頂点インデックス配列
+private:// メンバ変数
+	// 頂点インデックス配列
 	std::vector<unsigned short>indices;
 	std::vector<VertexPosNormalUv>vertices;
 	// デスクリプタサイズ
@@ -96,8 +96,8 @@ private://メンバ変数
 	D3D12_VERTEX_BUFFER_VIEW vbView;
 	// インデックスバッファビュー
 	D3D12_INDEX_BUFFER_VIEW ibView;
-	//マテリアル
+	// マテリアル
 	Material	material;
-	//ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
+	// ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 	ComPtr<ID3D12Resource> constBuffB1; // 定数バッファ
 };

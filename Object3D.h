@@ -30,11 +30,11 @@ public: // サブクラス
 	};
 
 private: // 定数
-	static const int division = 50;					// 分割数
-	static const float radius;				// 底面の半径
-	static const float prizmHeight;			// 柱の高さ
-	static const int planeCount = division * 2 + division * 2;		// 面の数
-	static const int vertexCount = planeCount * 3;		// 頂点数
+	static const int division = 50;	// 分割数
+	static const float radius;	// 底面の半径
+	static const float prizmHeight;	// 柱の高さ
+	static const int planeCount = division * 2 + division * 2; // 面の数
+	static const int vertexCount = planeCount * 3; // 頂点数
 
 public: // 静的メンバ関数
 	/// <summary>
@@ -150,6 +150,18 @@ public: // メンバ関数
 	const XMFLOAT3& GetPosition() const { return position; }
 
 	/// <summary>
+	/// サイズの取得
+	/// </summary>
+	/// <returns></returns>
+	const XMFLOAT3& GetScale()const { return scale; }
+
+	/// <summary>
+	/// 回転の取得
+	/// </summary>
+	/// <returns></returns>
+	const XMFLOAT3& GetRotation()const { return rotation; }
+
+	/// <summary>
 	/// 座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
@@ -162,9 +174,6 @@ public: // メンバ関数
 
 	//セッター
 	void SetModel(Model* model_) { model = model_; }
-
-
-
 
 private: // メンバ変数
 	//ComPtr<ID3D12Resource> constBuff; // 定数バッファ

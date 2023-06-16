@@ -31,20 +31,20 @@ void Input::Update()
 	// 前のキー情報保存
 	memcpy(keyPre, key, sizeof(key));
 
-	//キーボード情報の取得開始
+	// キーボード情報の取得開始
 	keyboard->Acquire();
-	//全キーの入力状態を取得する
+	// 全キーの入力状態を取得する
 	keyboard->GetDeviceState(sizeof(key), key);
 #pragma endregion
 }
 
 bool Input::PushKey(BYTE keyNumber)
 {
-	//指定キーを入力していればtrueを返す
+	// 指定キーを入力していればtrueを返す
 	if (key[keyNumber]) {
 		return true;
 	}
-	//それ以外でfalse
+	// それ以外でfalse
 	return false;
 }
 
