@@ -18,5 +18,20 @@ void JsonLoader::LoadFlomJSONInternal(const std::string& modelname)
 	}
 
 	//JSON文字列から解凍したデータ
-	
+	nlohmann::json deserialize;
+
+	//解凍
+	file >> deserialize;
+
+	//正しいレベルエディタファイルかチェック
+	assert(deserialize.is_object());
+	assert(deserialize.contains("name"));
+	assert(deserialize["name"].is_string());
+
+	//"name"を文字列として取得
+	std::string name = deserialize["name"].get<std::string>();
+	//正しいレベルエディタファイルかチェック
+	assert(name.compare("scene") == 0);
+
+
 }
