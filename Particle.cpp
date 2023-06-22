@@ -588,7 +588,7 @@ bool Particle::Initialize(uint32_t texIndex_)
 void Particle::Update()
 {
 	HRESULT result;
-	XMMATRIX matScale, matRot, matTrans;
+	//XMMATRIX matScale, matRot, matTrans;
 
 	//パーティクルの削除
 	particles.remove_if([](Particles& x) {
