@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "JsonLoader.h"
 
 
 /// <summary>
@@ -33,7 +34,7 @@ void GameScene::Initialize()
 	spriteCommon->Loadtexture(2, "test.png");
 
 #pragma	region	ƒV[ƒ“‚Ì‰Šú‰»
-	//ViewProjection
+//ViewProjection
 //	std::unique_ptr<ViewProjection>camera = std::make_unique<ViewProjection>();
 //	camera->Initialeze();
 //	//ˆê“x‚µ‚©éŒ¾‚µ‚È‚¢

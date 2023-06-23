@@ -53,4 +53,6 @@ private: //ゲーム内使用クラス
 	//FBX
 	FbxModel* model = nullptr;
 	FbxObject3d* object1 = new FbxObject3d();
+
+	LevelData* levelData = nullptr;
 };
