@@ -34,6 +34,7 @@ class JsonLoader
 {
 public:
 	void LoadFlomJSONInternal(const	std::string& modelname);
+	void Scanning(nlohmann::json& deserialize);
 private:
 
 };
