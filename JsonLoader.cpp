@@ -1,6 +1,5 @@
 #include "JsonLoader.h"
 #include "DirectXTex/DirectXTex.h"
-#include <nlohmann/json.hpp>
 
 void JsonLoader::LoadFlomJSONInternal(const std::string& modelname)
 {

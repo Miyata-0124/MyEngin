@@ -10,6 +10,7 @@
 #include <d3d12.h>
 #include <DirectXMath.h>
 #include "DirectXTex/d3dx12.h"
+#include <nlohmann/json.hpp>
 
 //データ格納用
 struct LevelData
