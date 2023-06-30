@@ -102,6 +102,9 @@
     <ClCompile Include="WinApp.cpp">
       <Filter>ソース ファイル\enginBase</Filter>
     </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\hlsl\Basic.hlsli">
@@ -209,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="WinApp.h">
       <Filter>ヘッダー ファイル\enginBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

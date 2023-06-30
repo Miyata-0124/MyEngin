@@ -12,6 +12,7 @@
 #include "FbxLoader.h"
 #include "Model.h"
 #include "Player.h"
+#include "Floor.h"
 
 class GameScene
 {
@@ -54,5 +55,6 @@ private: //ゲーム内使用クラス
 	
 	//プレイヤー
 	Player* player = new Player();
+	Floor* flor = new Floor();
 };
 

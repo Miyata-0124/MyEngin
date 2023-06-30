@@ -58,6 +58,7 @@ void GameScene::Initialize()
 #pragma region Player等のオブジェクト
 
 	player->Initialize(playerModel);
+	flor->Initialize(playerModel);
 
 	//　3dオブジェクト生成
 		/*Object3d* obj3d = Object3d::Create();
@@ -132,6 +133,7 @@ void GameScene::Update()
 		}*/
 #pragma endregion
 	player->Update(input);
+	flor->Update();
 		//obj3d->Update();
 		//particle->Update();
 
@@ -149,6 +151,7 @@ void GameScene::Draw()
 	//object1->Draw(directXCom->GetCommandList());
 	Object3d::PreDraw(directXCom->GetCommandList());
 	player->Draw();
+	flor->Draw();
 
 	//obj3d->Draw();
 
