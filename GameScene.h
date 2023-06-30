@@ -13,6 +13,7 @@
 #include "PostEffect.h"
 
 #include "FbxLoader.h"
+#include "JsonLoader.h"
 class GameScene
 {
 public: //基本関数
@@ -48,6 +49,8 @@ private: //ゲーム内使用クラス
 	//スプライト
 	SpriteCommon* spriteCommon = nullptr;
 	Sprite* sprite = new Sprite();
+	//JSON
+	JsonLoader* jsonLoader = new JsonLoader();
 	//ポストエフェクト
 	PostEffect* postEffect = new PostEffect();
 	//FBX

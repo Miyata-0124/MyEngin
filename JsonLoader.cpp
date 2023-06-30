@@ -1,6 +1,8 @@
 #include "JsonLoader.h"
 #include "DirectXTex/DirectXTex.h"
 
+using namespace nlohmann;
+
 void JsonLoader::LoadFlomJSONInternal(const std::string& modelname)
 {
 	//ファイルストリーム
@@ -55,11 +57,11 @@ void JsonLoader::LoadFlomJSONInternal(const std::string& modelname)
 			}
 
 			//トランスフォームパラメータの読み込み
-			nlohmann::json& transform = object["transform"];
+ 			nlohmann::json& transform = object["transform"];
 			//平行移動
-			objectData.position.m128_f32[0] = (float)transform["position"][1];
-			objectData.position.m128_f32[1] = (float)transform["position"][2];
-			objectData.position.m128_f32[2] = -(float)transform["position"][0];
+			objectData.position.m128_f32[0] = (float)transform["translation"][1];
+			objectData.position.m128_f32[1] = (float)transform["translation"][2];
+			objectData.position.m128_f32[2] = -(float)transform["translation"][0];
 			objectData.position.m128_f32[3] = 1.0f;
 			//回転角
 			objectData.rotation.m128_f32[0] = -(float)transform["rotation"][1];
@@ -67,62 +69,23 @@ void JsonLoader::LoadFlomJSONInternal(const std::string& modelname)
 			objectData.rotation.m128_f32[2] = (float)transform["rotation"][0];
 			objectData.rotation.m128_f32[3] = 0.0f;
 			//スケーリング
-			objectData.scal.m128_f32[0] = (float)transform["scal"][1];
-			objectData.scal.m128_f32[1] = (float)transform["scal"][2];
-			objectData.scal.m128_f32[2] = (float)transform["scal"][0];
-			objectData.scal.m128_f32[3] = 0.0f;
-			// TODO コライダーのパラメータ読み込み
+			objectData.scaling.m128_f32[0] = (float)transform["scaling"][1];
+			objectData.scaling.m128_f32[1] = (float)transform["scaling"][2];
+			objectData.scaling.m128_f32[2] = (float)transform["scaling"][0];
+			objectData.scaling.m128_f32[3] = 0.0f;
+			// TODO コライダーのパラメータ読み
 		}
 
 		//再帰関数
-		if (object.contains("children")) {
-			Scanning(deserialize);
+		if (type.compare("children") == 0) {
+			//Scanning();
 		}
+		
 	}
 }
 
 //childrenの走査
-void JsonLoader::Scanning(nlohmann::json& deserialize)
+void JsonLoader::Scanning()
 {
-	//レベルデータ格納用インスタンスを生成
-	LevelData* levelData = new LevelData();
-	//"children"を走査
-	for (nlohmann::json& object : deserialize["children"]) {
-		assert(object.contains("type"));
-
-		//種別を取得
-		std::string type = object["type"].get<std::string>();
-
-		//種類ごとの処理
-		//メッシュ
-		if (type.compare("MESH") == 0) {
-			// 要素の追加
-			levelData->objects.emplace_back(LevelData::ObjectData{});
-			//今追加した要素の参照を得る
-			LevelData::ObjectData& objectData = levelData->objects.back();
-
-			if (object.contains("file_name")) {
-				objectData.fileName = object["file_name"];
-			}
-
-			//トランスフォームパラメータの読み込み
-			nlohmann::json& transform = object["transform"];
-			//平行移動
-			objectData.position.m128_f32[0] = (float)transform["position"][1];
-			objectData.position.m128_f32[1] = (float)transform["position"][2];
-			objectData.position.m128_f32[2] = -(float)transform["position"][0];
-			objectData.position.m128_f32[3] = 1.0f;
-			//回転角
-			objectData.rotation.m128_f32[0] = -(float)transform["rotation"][1];
-			objectData.rotation.m128_f32[1] = -(float)transform["rotation"][2];
-			objectData.rotation.m128_f32[2] = (float)transform["rotation"][0];
-			objectData.rotation.m128_f32[3] = 0.0f;
-			//スケーリング
-			objectData.scal.m128_f32[0] = (float)transform["scal"][1];
-			objectData.scal.m128_f32[1] = (float)transform["scal"][2];
-			objectData.scal.m128_f32[2] = (float)transform["scal"][0];
-			objectData.scal.m128_f32[3] = 0.0f;
-			// TODO コライダーのパラメータ読み込み
-		}
-	}
+	
 }

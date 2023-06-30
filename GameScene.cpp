@@ -30,7 +30,7 @@ void GameScene::Initialize()
 	spriteCommon = new SpriteCommon;
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "MK.png");
-	spriteCommon->Loadtexture(2, "test.png");
+	spriteCommon->Loadtexture(2, "testpar1.png");
 
 #pragma	region	シーンの初期化
 //ViewProjection
@@ -46,12 +46,14 @@ void GameScene::Initialize()
 	sprite->SetSize(XMFLOAT2(320.0f, 180.0f));
 	sprite->SetPosition({ 160,90 });
 	//ポストエフェクト用テクスチャ読み込み
-	postEffect->Initialize(spriteCommon, 2);
+	/*postEffect->Initialize(spriteCommon, 2);
 	postEffect->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
 	postEffect->SetSize(XMFLOAT2(320.0f, 180.0f));
-	postEffect->SetPosition({ 480,90 });
+	postEffect->SetPosition({ 480,90 });*/
 
 	model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+
+	jsonLoader->LoadFlomJSONInternal("test");
 
 	object1->initialize();
 	object1->SetModel(model);
@@ -172,7 +174,7 @@ void GameScene::Draw()
 
 
 	//オブジェクト
-	object1->Draw(directXCom->GetCommandList());
+	//object1->Draw(directXCom->GetCommandList());
 	//Object3d::PreDraw(directXCom->GetCommandList());
 	//obj3d->Draw();
 	//obj3d2->Draw();
@@ -183,13 +185,13 @@ void GameScene::Draw()
 	//Particle::PostDraw();
 
 	// UI関連
-	sprite->SetIsInvisible(false);
-	sprite->SetTexIndex(1);
-	sprite->Draw();
+	//sprite->SetIsInvisible(false);
+	//sprite->SetTexIndex(1);
+	//sprite->Draw();
 
-	postEffect->SetIsInvisible(false);
+	/*postEffect->SetIsInvisible(false);
 	postEffect->SetTexIndex(2);
-	postEffect->Draw();
+	postEffect->Draw();*/
 	/*sprite2->SetTexIndex(2);
 	sprite2->Draw();*/
 

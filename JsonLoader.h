@@ -11,6 +11,8 @@
 #include <DirectXMath.h>
 #include "DirectXTex/d3dx12.h"
 #include <nlohmann/json.hpp>
+#include "Model.h"
+#include "Object3D.h"
 
 //データ格納用
 struct LevelData
@@ -24,7 +26,7 @@ struct LevelData
 		// 回転角
 		DirectX::XMVECTOR rotation;
 		// スケーリング
-		DirectX::XMVECTOR scal;
+		DirectX::XMVECTOR scaling;
 	};
 
 	//オブジェクト配列
@@ -34,8 +36,10 @@ struct LevelData
 class JsonLoader
 {
 public:
+	//json読み込み
 	void LoadFlomJSONInternal(const	std::string& modelname);
-	void Scanning(nlohmann::json& deserialize);
+	//子ノード再帰読み込み
+	void Scanning();
 private:
 
 };
