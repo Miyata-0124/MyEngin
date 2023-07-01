@@ -8,6 +8,8 @@ public:
 	void Initialize(Model* model);
 	void Update();
 	void Draw();
+
+	//Getter,Setter
 private:
 	Object3d* obj3d;
 	//î•ñ(‘å‚«‚³,‰ñ“]Šp,À•W)

@@ -6,15 +6,26 @@ void Player::Initialize(Model* model)
 	obj3d->SetModel(model);
 	obj3d->SetSize({ 2,2,2 });
 	obj3d->SetPosition({ 0,0,0 });
-	//移動速度
-	moveSpeed = { 0.5f,0.5f,0.5f };
-	//姿勢管理フラグ
-	downPosture = false;
+	//速度
+	moveSpeed = { 0.5f,0.5f,0.5f };//移動
+	accelSpeed = { 0.0f,0.0f };
+	yadd = { 0,0 };
+	//状態管理フラグ,タイマー
 }
 
 void Player::Update(Input* input)
 {
+	//現在の情報を取得
+	scale = obj3d->GetScale();
+	rotation = obj3d->GetRotation();
+	position = obj3d->GetPosition();
+
 	Move(input);
+	Gravity();
+	//変更後の値をobjに渡す
+	obj3d->SetSize(scale);
+	obj3d->SetRotation(rotation);
+	obj3d->SetPosition(position);
 	obj3d->Update();
 }
 
@@ -29,16 +40,38 @@ void Player::Draw()
 /// <param name="input">キー情報</param>
 void Player::Move(Input* input)
 {
-	//現在の座標を取得
-	position = obj3d->GetPosition();
 	//取得した情報に値を追加していく
 	if (input->PushKey(DIK_UP)) //登る
 	{
 		//もし登り下り可能なパイプがあったなら座標を上げる
 	}
+	if (input->TriggerKey(DIK_UP))
+	{
+		if (scale.y != 2)
+		{
+			scale = { 2,2,2 };
+		}
+		if (isCrouche)
+		{
+			position.y += 1;
+		}
+		isCrouche = false;
+	}
 	if (input->PushKey(DIK_DOWN)) // 下がる
 	{
 		//もし登り下り可能なパイプがあったなら座標を下げる
+	}
+	if (input->TriggerKey(DIK_DOWN))
+	{
+		if (scale.y != 1)
+		{
+			scale = { 2,1,2 };
+		}
+		if (!isCrouche)
+		{
+			position.y -= 1;
+		}
+		isCrouche = true;
 	}
 	if (input->PushKey(DIK_LEFT)) // 左に移動
 	{
@@ -48,10 +81,34 @@ void Player::Move(Input* input)
 	{
 		position.x += moveSpeed.x;
 	}
-	if (input->TriggerKey(DIK_SPACE)) // ジャンプ
+	if (input->TriggerKey(DIK_SPACE)) // ジャンプかスライド
+	{
+		CrouchMove(input);
+	}
+	
+}
+
+void Player::CrouchMove(Input* input)
+{
+	if (isCrouche == false)
+	{
+		yadd.y = -2.0f;
+	}
+	if (isCrouche == true)
 	{
 
 	}
-	//変更後の値をobjに渡す
-	obj3d->SetPosition({ position.x,position.y,position.z });
+}
+
+void Player::Gravity()
+{
+	position.y -= yadd.y;
+	if (position.y >= -5)
+	{
+		yadd.y += 0.2f;
+	}
+	else
+	{
+		yadd.y = 0.0f;
+	}
 }

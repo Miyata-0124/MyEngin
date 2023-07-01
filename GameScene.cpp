@@ -54,11 +54,12 @@ void GameScene::Initialize()
 	//Model* model1 = Model::LoadFromOBJ("wall");
 	//プレイヤーモデル
 	Model* playerModel = Model::LoadFromOBJ("Box");
+	Model* ground = Model::LoadFromOBJ("blue");
 #pragma endregion
 #pragma region Player等のオブジェクト
 
 	player->Initialize(playerModel);
-	flor->Initialize(playerModel);
+	flor->Initialize(ground);
 
 	//　3dオブジェクト生成
 		/*Object3d* obj3d = Object3d::Create();
@@ -138,6 +139,7 @@ void GameScene::Update()
 		//particle->Update();
 
 	//object1->Update();
+	//当たり判定
 }
 
 void GameScene::Draw()

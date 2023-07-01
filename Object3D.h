@@ -170,11 +170,17 @@ public: // メンバ関数
 	/// オブジェクトサイズの設定
 	/// </summary>
 	/// <param name="size"></param>
-	void SetSize(const XMFLOAT3& size) { this->scale = size; }
+	void SetSize(const XMFLOAT3& scale) { this->scale = scale; }
+	/// <summary>
+	/// 回転角の設定
+	/// </summary>
+	/// <param name="rotation"></param>
+	void SetRotation(const XMFLOAT3& rotation) { this->rotation = rotation; }
 
 	//セッター
 	void SetModel(Model* model_) { model = model_; }
 
+	XMMATRIX GetMatWorld() { return matWorld; }
 private: // メンバ変数
 	//ComPtr<ID3D12Resource> constBuff; // 定数バッファ
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
@@ -189,6 +195,7 @@ private: // メンバ変数
 	XMFLOAT3 position = { 0,0,0 };
 	// ローカルワールド変換行列
 	XMMATRIX matWorld;
+	XMMATRIX matScale, matRot, matTrans;
 	// 親オブジェクト
 	Object3d* parent = nullptr;
 	//モデル
