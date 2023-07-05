@@ -7,15 +7,16 @@ class Player
 {
 public:
 	void Initialize(Model* model);
-	void Update(Input* input);
+	void Update(Input* input, bool isHit);
 	void Draw();
 	//行動
 	void Move(Input* input);
 	//しゃがみの行動
 	void CrouchMove(Input* input);
 	//重力
-	void Gravity();
+	void Gravity(bool isHit);
 	//Getter,Setter
+	XMFLOAT3 GetPosition() { return position; }
 private:
 	Object3d* obj3d;
 	//情報(大きさ,回転角,座標)

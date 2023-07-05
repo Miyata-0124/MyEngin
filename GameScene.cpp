@@ -1,4 +1,7 @@
 #include "GameScene.h"
+#include "Collision.h"
+#include <sstream>
+#include <iomanip>
 
 void GameScene::Initialize()
 {
@@ -79,6 +82,12 @@ void GameScene::Initialize()
 		//particle = Particle::Create(1);
 		//particle->Update();
 	#pragma	endregion
+
+	sphere.center = XMVectorSet(player->GetPosition().x, player->GetPosition().y, player->GetPosition().z, 1);
+	sphere.radius = 1.0f;
+
+	plane.normal = XMVectorSet(flor->GetPosition().x, flor->GetPosition().y, flor->GetPosition().z, 0);
+	plane.distance = 0.0f;
 }
 
 void GameScene::Update()
@@ -86,7 +95,7 @@ void GameScene::Update()
 	///それぞれのクラスのUpdateのみ記述
 	//キー情報
 	input->Update();
-
+	bool hit = Collision::CheckSphere2Plane(sphere, plane);
 #pragma region パーティクル
 	//パーティクル発生
 	//if (input->TriggerKey(DIK_F))
@@ -133,13 +142,13 @@ void GameScene::Update()
 			sprite->SetPosition(position);
 		}*/
 #pragma endregion
-	player->Update(input);
+	player->Update(input,hit);
 	flor->Update();
 		//obj3d->Update();
 		//particle->Update();
 
 	//object1->Update();
-	//当たり判定
+
 }
 
 void GameScene::Draw()

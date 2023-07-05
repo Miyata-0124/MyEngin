@@ -10,6 +10,7 @@ public:
 	void Draw();
 
 	//Getter,Setter
+	XMFLOAT3 GetPosition() { return position; }
 private:
 	Object3d* obj3d;
 	//î•ñ(‘å‚«‚³,‰ñ“]Šp,À•W)

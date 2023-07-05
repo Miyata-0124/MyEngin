@@ -6,13 +6,16 @@
 #include <DirectXMath.h>
 #include "DirectXTex/d3dx12.h"
 #include"Model.h"
+#include "CollisionInfo.h"
+
+class BaseCollider;
 
 /// <summary>
 /// 3Dオブジェクト
 /// </summary>
 class Object3d
 {
-private: // エイリアス
+protected: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::を省略
@@ -132,16 +135,23 @@ private:// 静的メンバ関数
 	static void UpdateViewMatrix();
 
 public: // メンバ関数
-	bool Initialize();
+
+	Object3d() = default;
+
+	virtual ~Object3d();
+
+	virtual bool Initialize();
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update();
+	virtual void Update();
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	virtual void Draw();
+
+	virtual void OnCollider(const CollisionInfo& info) {}
 
 	/// <summary>
 	/// 座標の取得
@@ -179,9 +189,18 @@ public: // メンバ関数
 
 	//セッター
 	void SetModel(Model* model_) { model = model_; }
-
-	XMMATRIX GetMatWorld() { return matWorld; }
-private: // メンバ変数
+	/// <summary>
+	/// ワールド行列の取得
+	/// </summary>
+	/// <returns></returns>
+	const XMMATRIX& GetMatWorld() { return matWorld; }
+	/// <summary>
+	/// コライダーのセット
+	/// </summary>
+	/// <param name="collider"></param>
+	void SetCollider(BaseCollider* collider);
+	
+protected: // メンバ変数
 	//ComPtr<ID3D12Resource> constBuff; // 定数バッファ
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 	//ComPtr<ID3D12Resource> constBuffB1; // 定数バッファ
@@ -200,4 +219,7 @@ private: // メンバ変数
 	Object3d* parent = nullptr;
 	//モデル
 	Model* model = nullptr;
+
+	const char* name = nullptr;
+	BaseCollider* collider = nullptr;
 };

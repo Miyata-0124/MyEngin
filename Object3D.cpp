@@ -1,4 +1,6 @@
 #include "Object3d.h"
+#include "BaseCollider.h"
+#include "CollisionManager.h"
 #include <d3dcompiler.h>
 #include "DirectXTex/DirectXTex.h"
 #include<fstream>
@@ -291,6 +293,15 @@ void Object3d::UpdateViewMatrix()
 	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 }
 
+Object3d::~Object3d()
+{
+	if (collider) {
+		//コリジョンマネージャから登録を解除する
+		CollisionManager::GetInstance()->RemoveCollder(collider);
+		delete collider;
+	}
+}
+
 bool Object3d::Initialize()
 {
 	// nullptrチェック
@@ -313,6 +324,8 @@ bool Object3d::Initialize()
 		nullptr,
 		IID_PPV_ARGS(&constBuffB0));
 	assert(SUCCEEDED(result));
+
+	name = typeid(*this).name();
 
 	return true;
 }
@@ -346,6 +359,10 @@ void Object3d::Update()
 	//constMap->color = color;
 	constMap->mat = matWorld * matView * matProjection;	// 行列の合成
 	constBuffB0->Unmap(0, nullptr);
+
+	if (collider) {
+		collider->Update();
+	}
 }
 
 void Object3d::Draw() {
@@ -358,4 +375,13 @@ void Object3d::Draw() {
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
 
 	model->Draw(cmdList, 1);
+}
+
+void Object3d::SetCollider(BaseCollider* collider)
+{
+	collider->SetObject(this);
+	this->collider = collider;
+	//コリジョンマネージャに保存
+	CollisionManager::GetInstance()->AddCollider(collider);
+	//コライダーの更新
 }

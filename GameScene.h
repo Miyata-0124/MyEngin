@@ -13,6 +13,7 @@
 #include "Model.h"
 #include "Player.h"
 #include "Floor.h"
+#include "CollisionPrimitive.h"
 
 class GameScene
 {
@@ -56,5 +57,10 @@ private: //ゲーム内使用クラス
 	//プレイヤー
 	Player* player = new Player();
 	Floor* flor = new Floor();
+
+	//当たり判定 球
+	Sphere sphere;
+	//当たり判定 平面
+	Plane plane;
 };
 
