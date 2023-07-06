@@ -13,7 +13,7 @@ void Player::Initialize(Model* model)
 	//状態管理フラグ,タイマー
 }
 
-void Player::Update(Input* input,bool isHit)
+void Player::Update(Input* input)
 {
 	//現在の情報を取得
 	scale = obj3d->GetScale();
@@ -21,7 +21,7 @@ void Player::Update(Input* input,bool isHit)
 	position = obj3d->GetPosition();
 
 	Move(input);
-	Gravity(isHit);
+	Gravity();
 	//変更後の値をobjに渡す
 	obj3d->SetSize(scale);
 	obj3d->SetRotation(rotation);
@@ -100,7 +100,7 @@ void Player::CrouchMove(Input* input)
 	}
 }
 
-void Player::Gravity(bool ishit)
+void Player::Gravity()
 {
 	position.y -= yadd.y;
 	yadd.y += 0.2f;

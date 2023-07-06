@@ -11,6 +11,7 @@
 #include "FbxObject3D.h"
 #include "FbxLoader.h"
 #include "Model.h"
+#include "Item.h"
 #include "Player.h"
 #include "Floor.h"
 #include "CollisionPrimitive.h"
@@ -56,13 +57,9 @@ private: //ゲーム内使用クラス
 	
 	//プレイヤー
 	Player* player = new Player();
+	//床(仮)
 	Floor* flor = new Floor();
-
-	//当たり判定 球
-	Sphere sphere;
-	//当たり判定 平面
-	Plane plane;
-	//判定用
-	bool hit;
+	//アイテム
+	Item* item = new Item();
 };
 

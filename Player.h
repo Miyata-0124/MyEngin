@@ -7,14 +7,14 @@ class Player
 {
 public:
 	void Initialize(Model* model);
-	void Update(Input* input, bool isHit);
+	void Update(Input* input);
 	void Draw();
 	//s“®
 	void Move(Input* input);
 	//‚µ‚á‚ª‚İ‚Ìs“®
 	void CrouchMove(Input* input);
 	//d—Í
-	void Gravity(bool isHit);
+	void Gravity();
 	//Getter,Setter
 	XMFLOAT3 GetPosition() { return position; }
 

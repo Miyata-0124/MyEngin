@@ -63,7 +63,7 @@ void GameScene::Initialize()
 
 	player->Initialize(playerModel);
 	flor->Initialize(ground);
-
+	item->Initialize(playerModel);
 	//　3dオブジェクト生成
 		/*Object3d* obj3d = Object3d::Create();
 		modelクラスをひも付け
@@ -136,14 +136,13 @@ void GameScene::Update()
 			sprite->SetPosition(position);
 		}*/
 #pragma endregion
-	player->Update(input,hit);
+	player->Update(input);
 	flor->Update();
-
+	item->Update();
 		//obj3d->Update();
 		//particle->Update();
 
 	//object1->Update();
-	hit = Collision::CheckSphere2Plane(sphere, plane);
 }
 
 void GameScene::Draw()
@@ -158,7 +157,7 @@ void GameScene::Draw()
 	Object3d::PreDraw(directXCom->GetCommandList());
 	player->Draw();
 	flor->Draw();
-
+	item->Draw();
 	//obj3d->Draw();
 
 	Object3d::PostDraw();
