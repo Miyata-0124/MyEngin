@@ -98,7 +98,8 @@ void PostEffect::Draw()
 	{
 		return;
 	}
-
+	//	SRVヒープとその他の処理をまとめている関数
+	//	分離させる必要大
 	spriteCommon->SetTextureCommands(texIndex);
 
 	// 頂点バッファビューの設定コマンド
