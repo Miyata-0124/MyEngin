@@ -11,6 +11,8 @@ public:
 
 	//Getter,Setter
 	XMFLOAT3 GetPosition() { return position; }
+
+	XMMATRIX GetMatWorld() { return obj3d->GetMatWorld(); }
 private:
 	Object3d* obj3d;
 	//î•ñ(‘å‚«‚³,‰ñ“]Šp,À•W)

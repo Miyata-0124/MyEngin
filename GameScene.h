@@ -62,5 +62,7 @@ private: //ゲーム内使用クラス
 	Sphere sphere;
 	//当たり判定 平面
 	Plane plane;
+	//判定用
+	bool hit;
 };
 

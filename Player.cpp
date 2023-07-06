@@ -85,14 +85,14 @@ void Player::Move(Input* input)
 	{
 		CrouchMove(input);
 	}
-	
 }
 
 void Player::CrouchMove(Input* input)
 {
-	if (isCrouche == false)
+	if (isCrouche == false && isJump == false)
 	{
 		yadd.y = -2.0f;
+		isJump = true;
 	}
 	if (isCrouche == true)
 	{
@@ -104,8 +104,12 @@ void Player::Gravity(bool ishit)
 {
 	position.y -= yadd.y;
 	yadd.y += 0.2f;
-	if (ishit)
+	if (position.y<=-5.0f)
 	{
 		yadd.y = 0.0f;
+		if (isJump)
+		{
+			isJump = false;
+		}
 	}
 }

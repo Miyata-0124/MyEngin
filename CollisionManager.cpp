@@ -23,9 +23,9 @@ void CollisionManager::CheckAllCollisions()
 
             if (colA->GetShapeType() == COLISIONSHAPE_SPHERE && colB->GetShapeType() == COLISIONSHAPE_PLANE) {
                 Sphere* SphereA = dynamic_cast<Sphere*>(colA);
-                Plane* SphereB = dynamic_cast<Plane*>(colB);
+                Plane* PlaneA = dynamic_cast<Plane*>(colB);
                 DirectX::XMVECTOR inter;
-                if (Collision::CheckSphere2Plane(*SphereA, *SphereB, &inter)) {
+                if (Collision::CheckSphere2Plane(*SphereA, *PlaneA, &inter)) {
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
