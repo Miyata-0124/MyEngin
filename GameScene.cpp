@@ -51,6 +51,8 @@ void GameScene::Initialize()
 	postEffect->SetSize(XMFLOAT2(320.0f, 180.0f));
 	postEffect->SetPosition({ 480,90 });*/
 
+	//jsonLoader->LoadFlomJSONInternal(".json")
+
 	model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
 	jsonLoader->LoadFlomJSONInternal("test");
