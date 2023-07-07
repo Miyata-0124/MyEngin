@@ -4,12 +4,12 @@ void Player::Initialize(Model* model)
 {
 	obj3d = Object3d::Create();
 	obj3d->SetModel(model);
-	obj3d->SetSize({ 2,2,2 });
+	obj3d->SetSize({ 1,1,1 });
 	obj3d->SetPosition({ 0,0,0 });
 	//速度
 	moveSpeed = { 0.5f,0.5f,0.5f };//移動
 	accelSpeed = { 0.0f,0.0f };
-	yadd = { 0,0 };
+	yadd = 0.0f;
 	//状態管理フラグ,タイマー
 }
 
@@ -47,13 +47,13 @@ void Player::Move(Input* input)
 	}
 	if (input->TriggerKey(DIK_UP))
 	{
-		if (scale.y != 2)
+		if (scale.y != 1)
 		{
-			scale = { 2,2,2 };
+			scale = { 1,1,1 };
 		}
 		if (isCrouche)
 		{
-			position.y += 1;
+			position.y += 0.5f;
 		}
 		isCrouche = false;
 	}
@@ -63,13 +63,13 @@ void Player::Move(Input* input)
 	}
 	if (input->TriggerKey(DIK_DOWN))
 	{
-		if (scale.y != 1)
+		if (scale.y != 0.5f)
 		{
-			scale = { 2,1,2 };
+			scale = { 1,0.5,1 };
 		}
 		if (!isCrouche)
 		{
-			position.y -= 1;
+			position.y -= 0.5f;
 		}
 		isCrouche = true;
 	}
@@ -91,7 +91,7 @@ void Player::CrouchMove(Input* input)
 {
 	if (isCrouche == false && isJump == false)
 	{
-		yadd.y = -2.0f;
+		yadd = -1.0f;
 		isJump = true;
 	}
 	if (isCrouche == true)
@@ -102,11 +102,11 @@ void Player::CrouchMove(Input* input)
 
 void Player::Gravity()
 {
-	position.y -= yadd.y;
-	yadd.y += 0.2f;
+	position.y -= yadd;
+	yadd += 0.2f;
 	if (position.y<=-5.0f)
 	{
-		yadd.y = 0.0f;
+		yadd = 0.0f;
 		if (isJump)
 		{
 			isJump = false;

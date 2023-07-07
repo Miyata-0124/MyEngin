@@ -58,12 +58,13 @@ void GameScene::Initialize()
 	//プレイヤーモデル
 	Model* playerModel = Model::LoadFromOBJ("Box");
 	Model* ground = Model::LoadFromOBJ("blue");
+	Model* item_ = Model::LoadFromOBJ("Item");
 #pragma endregion
 #pragma region Player等のオブジェクト
 
 	player->Initialize(playerModel);
 	flor->Initialize(ground);
-	item->Initialize(playerModel);
+	item->Initialize(item_);
 	//　3dオブジェクト生成
 		/*Object3d* obj3d = Object3d::Create();
 		modelクラスをひも付け

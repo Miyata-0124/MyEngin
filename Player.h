@@ -28,7 +28,7 @@ private:
 	//速度
 	XMFLOAT3 moveSpeed;//移動
 	XMFLOAT2 accelSpeed;//加速速度
-	XMFLOAT2 yadd;//重力
+	float yadd;//重力
 
 	//状態管理フラグ,タイマー
 	bool isCrouche = false;
