@@ -93,33 +93,7 @@ void GameScene::Initialize()
 	//	particle->Update();
 	//#pragma	endregion
 
-	for (auto& objectData : jsonLoader->objects) {
-		Model* model = Model::LoadFromOBJ("Box");
-		decltype(models)::iterator it = models.find(objectData.fileName);
-		if (it != models.end()) { model = it->second;}
-
-		// モデルを指定して3Dオブジェクトを生成
-		Object3d* newObject = Object3d::Create();
-		newObject->SetModel(model);
-
-		// 座標
-		DirectX::XMFLOAT3 pos;
-		DirectX::XMStoreFloat3(&pos, objectData.position);
-		newObject->SetPosition(pos);
-
-		// 回転角
-		DirectX::XMFLOAT3 rot;
-		DirectX::XMStoreFloat3(&rot, objectData.rotation);
-		newObject->SetRotation(rot);
-
-		// 座標
-		DirectX::XMFLOAT3 scale;
-		DirectX::XMStoreFloat3(&scale, objectData.scaling);
-		newObject->SetSize(scale);
-		
-		// 配列に登録
-		objects.push_back(newObject);
-	}
+	LoadMapBox();
 }
 
 
@@ -250,4 +224,37 @@ void GameScene::Finalize()
 	//delete model1;
 	//delete model2;
 	//delete obj3d;
+}
+
+void GameScene::LoadMapBox()
+{
+	for (auto& objectData : jsonLoader->objects) {
+		Model* model = Model::LoadFromOBJ("Box");
+		decltype(models)::iterator it = models.find(objectData.fileName);
+		if (it != models.end()) { model = it->second; }
+
+		
+
+		// モデルを指定して3Dオブジェクトを生成
+		Object3d* newObject = Object3d::Create();
+		newObject->SetModel(model);
+
+		// 座標
+		DirectX::XMFLOAT3 scale;
+		DirectX::XMStoreFloat3(&scale, objectData.scaling);
+		newObject->SetSize(scale);
+
+		// 回転角
+		DirectX::XMFLOAT3 rot;
+		DirectX::XMStoreFloat3(&rot, objectData.rotation);
+		newObject->SetRotation(rot);
+
+		// 座標
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMStoreFloat3(&pos, objectData.position);
+		newObject->SetPosition(pos);
+
+		// 配列に登録
+		objects.push_back(newObject);
+	}
 }

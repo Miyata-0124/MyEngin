@@ -77,9 +77,9 @@ LevelData* JsonLoader::LoadFlomJSONInternal(const std::string& modelname)
 		}
 
 		//Ä‹AŠÖ”
-		/*if (type.compare("children") == 0) {
+		if (type.compare("children") == 0) {
 
-		}*/
+		}
 	}
 	return levelData;
 }

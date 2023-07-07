@@ -37,6 +37,7 @@ public: //Šî–{ŠÖ”
 	/// </summary>
 	void Finalize();
 
+	void LoadMapBox();
 public: //main‚Éˆê•”ˆø‚«“n‚µ—p
 	WinApp* GetWinApp() { return winApp; }
 	Input* GetInput() { return input; }
