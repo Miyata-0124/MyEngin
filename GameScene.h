@@ -50,7 +50,10 @@ private: //ゲーム内使用クラス
 	SpriteCommon* spriteCommon = nullptr;
 	Sprite* sprite = new Sprite();
 	//JSON
-	JsonLoader* jsonLoader = new JsonLoader();
+	LevelData* jsonLoader = nullptr;
+	std::map<std::string, Model*> models;
+
+	std::vector<Object3d*> objects;
 	//ポストエフェクト
 	PostEffect* postEffect = new PostEffect();
 	//FBX

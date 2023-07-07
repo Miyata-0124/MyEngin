@@ -37,9 +37,7 @@ class JsonLoader
 {
 public:
 	//json読み込み
-	void LoadFlomJSONInternal(const	std::string& modelname);
-	//子ノード再帰読み込み
-	void Scanning();
+	static LevelData* LoadFlomJSONInternal(const std::string& modelname);
 private:
 
 };

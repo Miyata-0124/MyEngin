@@ -160,6 +160,8 @@ public: // メンバ関数
 	/// <param name="size"></param>
 	void SetSize(const XMFLOAT3& size) { this->scale = size; }
 
+	void SetRotation(const XMFLOAT3& rotation) { this->rotation = rotation; }
+
 	//セッター
 	void	SetModel(Model* model_) { model = model_; }
 

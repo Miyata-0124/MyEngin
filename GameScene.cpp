@@ -55,7 +55,7 @@ void GameScene::Initialize()
 
 	model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
-	jsonLoader->LoadFlomJSONInternal("test");
+	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
 
 	object1->initialize();
 	object1->SetModel(model);
@@ -93,6 +93,37 @@ void GameScene::Initialize()
 	//	particle = Particle::Create(1);
 	//	particle->Update();
 	//#pragma	endregion
+
+	for (auto& objectData : jsonLoader->objects) {
+		Model* model = nullptr;
+		decltype(models)::iterator it = models.find(objectData.fileName);
+		if (it != models.end()) {
+			model = it->second;
+		}
+
+		// モデルを指定して3Dオブジェクトを生成
+		Object3d* newObject = Object3d::Create();
+		newObject->SetModel(model);
+
+
+		// 座標
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMStoreFloat3(&pos, objectData.position);
+		newObject->SetPosition(pos);
+
+		// 回転角
+		DirectX::XMFLOAT3 rot;
+		DirectX::XMStoreFloat3(&rot, objectData.rotation);
+		newObject->SetRotation(rot);
+
+		// 座標
+		DirectX::XMFLOAT3 scale;
+		DirectX::XMStoreFloat3(&scale, objectData.scaling);
+		newObject->SetSize(scale);
+
+		// 配列に登録
+		objects.push_back(newObject);
+	}
 }
 
 
@@ -162,6 +193,9 @@ void GameScene::Update()
 		particle->Update();*/
 
 	object1->Update();
+	for (auto object : objects) {
+		object->Update();
+	}
 }
 
 
@@ -196,7 +230,9 @@ void GameScene::Draw()
 	postEffect->Draw();*/
 	/*sprite2->SetTexIndex(2);
 	sprite2->Draw();*/
-
+	for (auto object : objects) {
+		object->Draw();
+	}
 	directXCom->PostDraw();
 	//ここまで↑
 }

@@ -3,7 +3,7 @@
 
 using namespace nlohmann;
 
-void JsonLoader::LoadFlomJSONInternal(const std::string& modelname)
+LevelData* JsonLoader::LoadFlomJSONInternal(const std::string& modelname)
 {
 	//ファイルストリーム
 	std::ifstream file;
@@ -81,11 +81,6 @@ void JsonLoader::LoadFlomJSONInternal(const std::string& modelname)
 			//Scanning();
 		}
 		
+		return levelData;
 	}
-}
-
-//childrenの走査
-void JsonLoader::Scanning()
-{
-	
 }
