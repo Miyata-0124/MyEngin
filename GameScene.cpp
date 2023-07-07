@@ -57,11 +57,11 @@ void GameScene::Initialize()
 
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
 
-	object1->initialize();
+	/*object1->initialize();
 	object1->SetModel(model);
 	object1->SetRotation({ 0,60,0 });
 	object1->SetPosition({ 0,-3,0 });
-	object1->PlayAnimation();
+	object1->PlayAnimation();*/
 	//
 	//	Sprite* sprite2 = new Sprite();
 	//	sprite2->Initialize(spriteCommon, 2);
@@ -97,14 +97,11 @@ void GameScene::Initialize()
 	for (auto& objectData : jsonLoader->objects) {
 		Model* model = nullptr;
 		decltype(models)::iterator it = models.find(objectData.fileName);
-		if (it != models.end()) {
-			model = it->second;
-		}
+		if (it != models.end()) { model = it->second;}
 
 		// モデルを指定して3Dオブジェクトを生成
 		Object3d* newObject = Object3d::Create();
 		newObject->SetModel(model);
-
 
 		// 座標
 		DirectX::XMFLOAT3 pos;
@@ -192,7 +189,7 @@ void GameScene::Update()
 		/*obj3d2->Update();
 		particle->Update();*/
 
-	object1->Update();
+	//object1->Update();
 	for (auto object : objects) {
 		object->Update();
 	}
@@ -210,15 +207,19 @@ void GameScene::Draw()
 
 
 	//オブジェクト
+	Object3d::PreDraw(directXCom->GetCommandList());
 	//object1->Draw(directXCom->GetCommandList());
 	//Object3d::PreDraw(directXCom->GetCommandList());
 	//obj3d->Draw();
 	//obj3d2->Draw();
-
-	//Object3d::PostDraw();
+	for (auto object : objects) {
+		object->Draw();
+	}
+	Object3d::PostDraw();
 	//Particle::PreDraw(directXCom->GetCommandList());
 	//particle->Draw();
 	//Particle::PostDraw();
+
 
 	// UI関連
 	//sprite->SetIsInvisible(false);
@@ -230,9 +231,7 @@ void GameScene::Draw()
 	postEffect->Draw();*/
 	/*sprite2->SetTexIndex(2);
 	sprite2->Draw();*/
-	for (auto object : objects) {
-		object->Draw();
-	}
+
 	directXCom->PostDraw();
 	//ここまで↑
 }
