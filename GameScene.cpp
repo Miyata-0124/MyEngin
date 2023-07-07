@@ -52,8 +52,7 @@ void GameScene::Initialize()
 	postEffect->SetPosition({ 480,90 });*/
 
 	//jsonLoader->LoadFlomJSONInternal(".json")
-
-	model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+	model2 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
 
@@ -95,7 +94,7 @@ void GameScene::Initialize()
 	//#pragma	endregion
 
 	for (auto& objectData : jsonLoader->objects) {
-		Model* model = nullptr;
+		Model* model = Model::LoadFromOBJ("Box");
 		decltype(models)::iterator it = models.find(objectData.fileName);
 		if (it != models.end()) { model = it->second;}
 
@@ -117,7 +116,7 @@ void GameScene::Initialize()
 		DirectX::XMFLOAT3 scale;
 		DirectX::XMStoreFloat3(&scale, objectData.scaling);
 		newObject->SetSize(scale);
-
+		
 		// ”z—ñ‚É“o˜^
 		objects.push_back(newObject);
 	}

@@ -18,7 +18,7 @@
                 "scaling": [
                     10.0,
                     10.0,
-                    0.20000000298023224
+                    0.2
                 ]
             }
         },
@@ -87,11 +87,11 @@
         },
         {
             "type": "MESH",
-            "name": "Cube.003",
+            "name": "Cube",
             "transform": {
                 "translation": [
+                    -0.019999999552965164,
                     -9.0,
-                    0.0,
                     0.800000011920929
                 ],
                 "rotation": [
@@ -108,7 +108,7 @@
         },
         {
             "type": "MESH",
-            "name": "Cube.004",
+            "name": "Cube.003",
             "transform": {
                 "translation": [
                     9.0,
@@ -129,11 +129,11 @@
         },
         {
             "type": "MESH",
-            "name": "Cube",
+            "name": "Cube.004",
             "transform": {
                 "translation": [
-                    0.0,
                     -9.0,
+                    0.0,
                     0.800000011920929
                 ],
                 "rotation": [

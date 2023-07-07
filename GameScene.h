@@ -57,6 +57,6 @@ private: //ゲーム内使用クラス
 	//ポストエフェクト
 	PostEffect* postEffect = new PostEffect();
 	//FBX
-	FbxModel* model = nullptr;
+	FbxModel* model2 = nullptr;
 	FbxObject3d* object1 = new FbxObject3d();
 };
