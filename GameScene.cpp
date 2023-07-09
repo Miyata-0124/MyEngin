@@ -70,6 +70,7 @@ void GameScene::Initialize()
 
 	collisionManager = CollisionManager::GetInstance();
 	objPlayer = Player::Create(playerModel);
+	objPlayer->SetInput(input);
 	objPlayer->Initialize();
 	//objFloor = Floor::Create(ground);
 	//objFloor->Initialize();

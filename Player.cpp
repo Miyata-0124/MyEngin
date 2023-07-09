@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "Input.h"
 #include "SphereCollider.h"
 
 using namespace DirectX;
@@ -30,8 +29,9 @@ bool Player::Initialize()
 	{
 		return false;
 	}
+	//初期座標指定
+	SetPosition({ -10,0,0, });
 	//コライダーの追加
-	float radius = 0.6f;
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
 	return true;
@@ -39,16 +39,29 @@ bool Player::Initialize()
 
 void Player::Update()
 {
-	position.y -= yadd;
-	yadd += 0.2f;
-	if (position.y <= -5.0f)
+	if (input->PushKey(DIK_LEFT))
 	{
-		yadd = 0.0f;
+		position.x -= 0.5f;
 	}
+	else if (input->PushKey(DIK_RIGHT))
+	{
+		position.x += 0.5f;
+	}
+	Gravity();
 	Object3d::Update();
 }
 
 void Player::OnCollider(const CollisionInfo& info)
 {
 	//パーティクルを発生させる
+}
+
+void Player::Gravity()
+{
+	position.y -= yadd;
+	yadd += 0.2f;
+	if (position.y <= -5.0f)
+	{
+		yadd = 0.0f;
+	}
 }
