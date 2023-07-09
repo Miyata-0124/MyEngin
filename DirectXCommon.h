@@ -39,7 +39,7 @@ public://ゲッター
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc()const { return swapChainDesc; }
 
 	//バックバッファの取得
-	size_t GetBuckBufferCount()const { return backBuffers.size(); }
+	size_t GetBackBufferCount()const { return backBuffers.size(); }
 private:
 	//DirectX12デバイス
 	Microsoft::WRL::ComPtr<ID3D12Device>device;

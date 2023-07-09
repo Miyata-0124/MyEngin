@@ -4,8 +4,8 @@ void Item::Initialize(Model* model)
 {
 	obj3d = Object3d::Create();
 	obj3d->SetModel(model);
-	obj3d->SetSize({ 0.5f,2,0.5f });
-	obj3d->SetPosition({ 0,0,0 });
+	obj3d->SetSize({ 0.5f,0.5f,0.5f });
+	obj3d->SetPosition({ 5,0,0});
 
 	yadd = 0.0f;
 }

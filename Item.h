@@ -2,6 +2,7 @@
 #include "Object3D.h"
 #include "Model.h"
 #include "Input.h"
+#include <random>
 /// <summary>
 /// 投擲出来るアイテム(石や槍など)
 /// </summary>

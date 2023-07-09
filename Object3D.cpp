@@ -384,4 +384,5 @@ void Object3d::SetCollider(BaseCollider* collider)
 	//コリジョンマネージャに保存
 	CollisionManager::GetInstance()->AddCollider(collider);
 	//コライダーの更新
+	collider->Update();
 }

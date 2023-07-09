@@ -8,6 +8,8 @@
 class Input
 {
 public: // ƒƒ“ƒoŠÖ”
+	static Input* GetInstance();
+
 	// ‰Šú‰»
 	void Initialize(WinApp* winApp);
 	// XV

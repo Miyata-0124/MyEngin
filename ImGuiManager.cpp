@@ -1,6 +1,6 @@
 #include "ImguiManager.h"
 
-void ImguiManager::Initialize(WinApp * winApp_, DirectXCommon * dxCom_) {
+void ImguiManager::Initialize(WinApp* winApp_, DirectXCommon* dxCom_) {
 	winApp = winApp_;
 	dxCom = dxCom_;
 	//コンテキストの作成
@@ -20,7 +20,7 @@ void ImguiManager::Initialize(WinApp * winApp_, DirectXCommon * dxCom_) {
 
 	ImGui_ImplDX12_Init(
 		dxCom->GetDevice(),
-		static_cast<int>(dxCom->GetBuckBufferCount()),
+		static_cast<int>(dxCom->GetBackBufferCount()),
 		DXGI_FORMAT_B8G8R8X8_UNORM_SRGB, srvHeap.Get(),
 		srvHeap->GetCPUDescriptorHandleForHeapStart(),
 		srvHeap->GetGPUDescriptorHandleForHeapStart()
