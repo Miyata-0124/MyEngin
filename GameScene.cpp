@@ -74,15 +74,12 @@ void GameScene::Initialize()
 	objPlayer->Initialize();
 	objFloor = Floor::Create(ground);
 	objFloor->Initialize();
-
-	item = new Item();
-	item->Initialize(item_);
-	
-
+	objItem = Item::Create(item_);
+	objItem->Initialize();
 	//コライダー追加
 	objPlayer->SetCollider(new SphereCollider);
+	objItem->SetCollider(new SphereCollider);
 	objFloor->SetCollider(new PlaneCollider);
-
 #pragma endregion
 
 	
@@ -153,8 +150,8 @@ void GameScene::Update()
 		}*/
 #pragma endregion
 	objPlayer->Update();
+	objItem->Update();
 	objFloor->Update();
-	item->Update();
 		//obj3d->Update();
 		//particle->Update();
 
@@ -174,9 +171,8 @@ void GameScene::Draw()
 	//object1->Draw(directXCom->GetCommandList());
 	Object3d::PreDraw(directXCom->GetCommandList());
 	objPlayer->Draw();
+	objItem->Draw();
 	objFloor->Draw();
-	item->Draw();
-
 	//obj3d->Draw();
 
 	Object3d::PostDraw();
@@ -211,7 +207,6 @@ void GameScene::Finalize()
 	delete sprite;
 	delete model;
 	delete object1;
-	delete objPlayer;
 	delete imgui;
 	/*delete model1;
 	delete obj3d;*/

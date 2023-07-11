@@ -1,26 +1,40 @@
 #pragma once
 #include "Object3D.h"
-#include "Model.h"
-#include "Input.h"
-#include <random>
 /// <summary>
 /// 投擲出来るアイテム(石や槍など)
 /// </summary>
-class Item
+class Item : public Object3d
 {
 public:
-	void Initialize(Model* model);
-	void Update();
-	void Draw();
+	/// <summary>
+	/// オブジェクト生成
+	/// </summary>
+	/// <param name="model"></param>
+	/// <returns></returns>
+	static Item* Create(Model* model = nullptr);
 
-	void Gravity();
+public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <returns></returns>
+	bool Initialize() override;
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update()override;
+
+	/// <summary>
+	/// コールバック
+	/// </summary>
+	/// <param name="info"></param>
+	void OnCollider(const CollisionInfo& info)override;
+
 private:
-	Object3d* obj3d;
-	//情報(大きさ,回転角,座標)
-	XMFLOAT3 scale;
-	XMFLOAT3 rotation;
-	XMFLOAT3 position;
+	void Gravity();
 
-	float yadd;
+private:
+	float yadd = 0.0f;
+	float radius = 0.6f;
 };
-

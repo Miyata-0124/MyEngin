@@ -50,7 +50,6 @@ void Player::Update()
 
 void Player::OnCollider(const CollisionInfo& info)
 {
-	//パーティクルを発生させる
 	yadd = 0.0f;
 }
 

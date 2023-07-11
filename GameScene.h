@@ -65,7 +65,7 @@ private: //ゲーム内使用クラス
 	//床(仮)
 	Floor* objFloor = nullptr;
 	//アイテム
-	Item* item;
+	Item* objItem = nullptr;
 
 	CollisionManager* collisionManager = nullptr;
 };
