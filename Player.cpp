@@ -39,10 +39,19 @@ bool Player::Initialize()
 
 void Player::Update()
 {
+	//姿勢変更情報
+	ChangePosture();
+	switch (posture)
+	{
+	case Posture::Upright://直立
+		//ジャンプ
+		Jamp();
+		break;
+	case Posture::Croching://しゃがみ
+		break;
+	}
 	//移動
 	Move();
-	//ジャンプ
-	Jamp();
 	//重力
 	Gravity();
 	Object3d::Update();
@@ -51,25 +60,45 @@ void Player::Update()
 void Player::OnCollider(const CollisionInfo& info)
 {
 	yadd = 0.0f;
+	isJamp = false;
 }
 
 void Player::Move()
 {
 	if (input->PushKey(DIK_LEFT))
 	{
-		position.x -= 0.5f;
+		position.x -= moveSpeed;
 	}
 	else if (input->PushKey(DIK_RIGHT))
 	{
-		position.x += 0.5f;
+		position.x += moveSpeed;
 	}
 }
 
 void Player::Jamp()
 {
-	if (input->TriggerKey(DIK_SPACE))
+	if (!isJamp && input->TriggerKey(DIK_SPACE))
 	{
 		yadd -= 1.5f;
+		isJamp = true;
+	}
+}
+
+void Player::ChangePosture()
+{
+	if (posture == Posture::Upright && input->TriggerKey(DIK_DOWN))
+	{
+		moveSpeed = 0.3f;
+		SetSize({ 1,0.5f,1 });
+		position.y -= 0.5f;
+		posture = Posture::Croching;
+	}
+	if (posture == Posture::Croching && input->TriggerKey(DIK_UP))
+	{
+		moveSpeed = 0.4f;
+		SetSize({ 1,1,1 });
+		position.y += 0.5f;
+		posture = Posture::Upright;
 	}
 }
 

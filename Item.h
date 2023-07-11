@@ -35,6 +35,8 @@ private:
 	void Gravity();
 
 private:
+	//d—Í‰ÁZ—Ê
 	float yadd = 0.0f;
+	//”¼Œa
 	float radius = 0.6f;
 };
