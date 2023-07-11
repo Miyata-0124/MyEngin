@@ -39,6 +39,23 @@ bool Player::Initialize()
 
 void Player::Update()
 {
+	//移動
+	Move();
+	//ジャンプ
+	Jamp();
+	//重力
+	Gravity();
+	Object3d::Update();
+}
+
+void Player::OnCollider(const CollisionInfo& info)
+{
+	//パーティクルを発生させる
+	yadd = 0.0f;
+}
+
+void Player::Move()
+{
 	if (input->PushKey(DIK_LEFT))
 	{
 		position.x -= 0.5f;
@@ -47,21 +64,18 @@ void Player::Update()
 	{
 		position.x += 0.5f;
 	}
-	Gravity();
-	Object3d::Update();
 }
 
-void Player::OnCollider(const CollisionInfo& info)
+void Player::Jamp()
 {
-	//パーティクルを発生させる
+	if (input->TriggerKey(DIK_SPACE))
+	{
+		yadd -= 1.5f;
+	}
 }
 
 void Player::Gravity()
 {
 	position.y -= yadd;
 	yadd += 0.2f;
-	if (position.y <= -5.0f)
-	{
-		yadd = 0.0f;
-	}
 }

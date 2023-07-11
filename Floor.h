@@ -30,7 +30,10 @@ public:
 	/// <param name="info"></param>
 	void OnCollider(const CollisionInfo& info)override;
 private:
-
+	//Œ´“_‚©‚ç‚Ì‹——£
+	float distance = -7.0f;
+	//”¼Œa
+	float radius = 0.5f;
 //public:
 //	void Initialize(Model* model);
 //	void Update();

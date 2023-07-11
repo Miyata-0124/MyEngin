@@ -72,8 +72,8 @@ void GameScene::Initialize()
 	objPlayer = Player::Create(playerModel);
 	objPlayer->SetInput(input);
 	objPlayer->Initialize();
-	//objFloor = Floor::Create(ground);
-	//objFloor->Initialize();
+	objFloor = Floor::Create(ground);
+	objFloor->Initialize();
 
 	item = new Item();
 	item->Initialize(item_);
@@ -81,13 +81,8 @@ void GameScene::Initialize()
 
 	//コライダー追加
 	objPlayer->SetCollider(new SphereCollider);
-	//objFloor->SetCollider(new PlaneCollider);
-	//　3dオブジェクト生成
-		/*Object3d* obj3d = Object3d::Create();
-		modelクラスをひも付け
-		obj3d->SetModel(model1);
-		obj3d->SetSize({ 2,2,2 });
-		obj3d->SetPosition({ 15,0,0 });*/
+	objFloor->SetCollider(new PlaneCollider);
+
 #pragma endregion
 
 	
@@ -158,7 +153,7 @@ void GameScene::Update()
 		}*/
 #pragma endregion
 	objPlayer->Update();
-	//objFloor->Update();
+	objFloor->Update();
 	item->Update();
 		//obj3d->Update();
 		//particle->Update();
@@ -179,7 +174,7 @@ void GameScene::Draw()
 	//object1->Draw(directXCom->GetCommandList());
 	Object3d::PreDraw(directXCom->GetCommandList());
 	objPlayer->Draw();
-	//objFloor->Draw();
+	objFloor->Draw();
 	item->Draw();
 
 	//obj3d->Draw();

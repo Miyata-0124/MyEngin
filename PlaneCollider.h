@@ -4,7 +4,7 @@
 
 #include <DirectXMath.h>
 
-class PlaneCollider :public BaseCollider, public Sphere
+class PlaneCollider :public BaseCollider, public Plane
 {
 private: //エイリアス
 	//DirectXを省略
@@ -25,7 +25,7 @@ public:
 private:
 	//オブジェクト中心
 	XMVECTOR offset;
-	//半径
+	//原点からの距離
 	float distance;
 };
 
