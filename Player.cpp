@@ -1,114 +1,109 @@
 #include "Player.h"
+#include "SphereCollider.h"
 
-void Player::Initialize(Model* model)
+using namespace DirectX;
+
+Player* Player::Create(Model* model)
 {
-	obj3d = Object3d::Create();
-	obj3d->SetModel(model);
-	obj3d->SetSize({ 2,2,2 });
-	obj3d->SetPosition({ 0,0,0 });
-	//速度
-	moveSpeed = { 0.5f,0.5f,0.5f };//移動
-	accelSpeed = { 0.0f,0.0f };
-	yadd = { 0,0 };
-	//状態管理フラグ,タイマー
+	//インスタンス生成
+	Player* instance = new Player();
+	if (instance == nullptr)
+	{
+		return nullptr;
+	}
+	//初期化
+	if (!instance->Initialize()) {
+		delete instance;
+		assert(0);
+	}
+	//モデルセット
+	if (model) {
+		instance->SetModel(model);
+	}
+	return instance;
 }
 
-void Player::Update(Input* input)
+bool Player::Initialize()
 {
-	//現在の情報を取得
-	scale = obj3d->GetScale();
-	rotation = obj3d->GetRotation();
-	position = obj3d->GetPosition();
+	if (!Object3d::Initialize())
+	{
+		return false;
+	}
+	//初期座標指定
+	SetPosition({ -10,0,0, });
+	//コライダーの追加
+	//半径分足元から浮いている座標が中心
+	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
+	return true;
+}
 
-	Move(input);
+void Player::Update()
+{
+	//姿勢変更情報
+	ChangePosture();
+	switch (posture)
+	{
+	case Posture::Upright://直立
+		//ジャンプ
+		Jamp();
+		break;
+	case Posture::Croching://しゃがみ
+		break;
+	}
+	//移動
+	Move();
+	//重力
 	Gravity();
-	//変更後の値をobjに渡す
-	obj3d->SetSize(scale);
-	obj3d->SetRotation(rotation);
-	obj3d->SetPosition(position);
-	obj3d->Update();
+	Object3d::Update();
 }
 
-void Player::Draw()
+void Player::OnCollider(const CollisionInfo& info)
 {
-	obj3d->Draw();
+	yadd = 0.0f;
+	isJamp = false;
 }
 
-/// <summary>
-/// 行動
-/// </summary>
-/// <param name="input">キー情報</param>
-void Player::Move(Input* input)
+void Player::Move()
 {
-	//取得した情報に値を追加していく
-	if (input->PushKey(DIK_UP)) //登る
+	if (input->PushKey(DIK_LEFT))
 	{
-		//もし登り下り可能なパイプがあったなら座標を上げる
+		position.x -= moveSpeed;
 	}
-	if (input->TriggerKey(DIK_UP))
+	else if (input->PushKey(DIK_RIGHT))
 	{
-		if (scale.y != 2)
-		{
-			scale = { 2,2,2 };
-		}
-		if (isCrouche)
-		{
-			position.y += 1;
-		}
-		isCrouche = false;
+		position.x += moveSpeed;
 	}
-	if (input->PushKey(DIK_DOWN)) // 下がる
-	{
-		//もし登り下り可能なパイプがあったなら座標を下げる
-	}
-	if (input->TriggerKey(DIK_DOWN))
-	{
-		if (scale.y != 1)
-		{
-			scale = { 2,1,2 };
-		}
-		if (!isCrouche)
-		{
-			position.y -= 1;
-		}
-		isCrouche = true;
-	}
-	if (input->PushKey(DIK_LEFT)) // 左に移動
-	{
-		position.x -= moveSpeed.x;
-	}
-	if (input->PushKey(DIK_RIGHT)) // 右に移動
-	{
-		position.x += moveSpeed.x;
-	}
-	if (input->TriggerKey(DIK_SPACE)) // ジャンプかスライド
-	{
-		CrouchMove(input);
-	}
-	
 }
 
-void Player::CrouchMove(Input* input)
+void Player::Jamp()
 {
-	if (isCrouche == false)
+	if (!isJamp && input->TriggerKey(DIK_SPACE))
 	{
-		yadd.y = -2.0f;
+		yadd -= 1.5f;
+		isJamp = true;
 	}
-	if (isCrouche == true)
-	{
+}
 
+void Player::ChangePosture()
+{
+	if (posture == Posture::Upright && input->TriggerKey(DIK_DOWN))
+	{
+		moveSpeed = 0.3f;
+		SetSize({ 1,0.5f,1 });
+		position.y -= 0.5f;
+		posture = Posture::Croching;
+	}
+	if (posture == Posture::Croching && input->TriggerKey(DIK_UP))
+	{
+		moveSpeed = 0.4f;
+		SetSize({ 1,1,1 });
+		position.y += 0.5f;
+		posture = Posture::Upright;
 	}
 }
 
 void Player::Gravity()
 {
-	position.y -= yadd.y;
-	if (position.y >= -5)
-	{
-		yadd.y += 0.2f;
-	}
-	else
-	{
-		yadd.y = 0.0f;
-	}
+	position.y -= yadd;
+	yadd += 0.2f;
 }

@@ -1,4 +1,10 @@
 #include "GameScene.h"
+#include "SphereCollider.h"
+#include "PlaneCollider.h"
+#include "CollisionManager.h"
+#include "Player.h"
+#include <sstream>
+#include <iomanip>
 
 void GameScene::Initialize()
 {
@@ -18,6 +24,9 @@ void GameScene::Initialize()
 	//キー情報
 	input = new	Input;
 	input->Initialize(winApp);
+
+	imgui = new ImguiManager();
+	imgui->Initialize(winApp, directXCom);
 	//DirectX初期化処理　　ここまで
 #pragma endregion
 #pragma	endregion
@@ -55,18 +64,22 @@ void GameScene::Initialize()
 	//プレイヤーモデル
 	Model* playerModel = Model::LoadFromOBJ("Box");
 	Model* ground = Model::LoadFromOBJ("blue");
+	Model* item_ = Model::LoadFromOBJ("Item");
 #pragma endregion
 #pragma region Player等のオブジェクト
 
-	player->Initialize(playerModel);
-	flor->Initialize(ground);
-
-	//　3dオブジェクト生成
-		/*Object3d* obj3d = Object3d::Create();
-		modelクラスをひも付け
-		obj3d->SetModel(model1);
-		obj3d->SetSize({ 2,2,2 });
-		obj3d->SetPosition({ 15,0,0 });*/
+	collisionManager = CollisionManager::GetInstance();
+	objPlayer = Player::Create(playerModel);
+	objPlayer->SetInput(input);
+	objPlayer->Initialize();
+	objFloor = Floor::Create(ground);
+	objFloor->Initialize();
+	objItem = Item::Create(item_);
+	objItem->Initialize();
+	//コライダー追加
+	objPlayer->SetCollider(new SphereCollider);
+	objItem->SetCollider(new SphereCollider);
+	objFloor->SetCollider(new PlaneCollider);
 #pragma endregion
 
 	
@@ -86,7 +99,10 @@ void GameScene::Update()
 	///それぞれのクラスのUpdateのみ記述
 	//キー情報
 	input->Update();
-
+	imgui->Begin();
+	//デモウィンドウの表示オン
+	imgui->End();
+	
 #pragma region パーティクル
 	//パーティクル発生
 	//if (input->TriggerKey(DIK_F))
@@ -133,13 +149,15 @@ void GameScene::Update()
 			sprite->SetPosition(position);
 		}*/
 #pragma endregion
-	player->Update(input);
-	flor->Update();
+	objPlayer->Update();
+	objItem->Update();
+	objFloor->Update();
 		//obj3d->Update();
 		//particle->Update();
 
 	//object1->Update();
-	//当たり判定
+
+	collisionManager->CheckAllCollisions();
 }
 
 void GameScene::Draw()
@@ -152,9 +170,9 @@ void GameScene::Draw()
 	//オブジェクト
 	//object1->Draw(directXCom->GetCommandList());
 	Object3d::PreDraw(directXCom->GetCommandList());
-	player->Draw();
-	flor->Draw();
-
+	objPlayer->Draw();
+	objItem->Draw();
+	objFloor->Draw();
 	//obj3d->Draw();
 
 	Object3d::PostDraw();
@@ -171,6 +189,8 @@ void GameScene::Draw()
 	sprite->SetTexIndex(1);
 	sprite->Draw();
 
+	imgui->Draw();
+
 	directXCom->PostDraw();
 	//ここまで↑
 }
@@ -178,6 +198,7 @@ void GameScene::Draw()
 void GameScene::Finalize()
 {
 	winApp->Finalize();
+	imgui->Finalize();
 	FbxLoader::GetInstance()->Finalize();
 	delete input;
 	delete winApp;
@@ -186,7 +207,7 @@ void GameScene::Finalize()
 	delete sprite;
 	delete model;
 	delete object1;
-	delete player;
+	delete imgui;
 	/*delete model1;
 	delete obj3d;*/
 }

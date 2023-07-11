@@ -1,5 +1,6 @@
 #pragma once
 //自作クラス
+#include <list>
 #include "Input.h"
 #include "WinApp.h"
 #include "DirectXCommon.h"
@@ -11,8 +12,12 @@
 #include "FbxObject3D.h"
 #include "FbxLoader.h"
 #include "Model.h"
-#include "Player.h"
+#include "Item.h"
 #include "Floor.h"
+#include "ImGuiManager.h"
+
+class CollisionManager;
+class Player;
 
 class GameScene
 {
@@ -44,6 +49,8 @@ public: //mainに一部引き渡し用
 private: //ゲーム内使用クラス
 	WinApp* winApp = nullptr;
 	DirectXCommon* directXCom = nullptr;
+	//デバッグテキスト
+	ImguiManager* imgui = nullptr;;
 	//キー情報
 	Input* input = nullptr;
 	//スプライト
@@ -54,7 +61,12 @@ private: //ゲーム内使用クラス
 	FbxObject3d* object1 = new FbxObject3d();
 	
 	//プレイヤー
-	Player* player = new Player();
-	Floor* flor = new Floor();
+	Player* objPlayer = nullptr;
+	//床(仮)
+	Floor* objFloor = nullptr;
+	//アイテム
+	Item* objItem = nullptr;
+
+	CollisionManager* collisionManager = nullptr;
 };
 
