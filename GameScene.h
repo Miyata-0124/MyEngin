@@ -15,6 +15,7 @@
 #include "Item.h"
 #include "Floor.h"
 #include "ImGuiManager.h"
+#include "JsonLoader.h"
 
 class CollisionManager;
 class Player;
@@ -42,6 +43,8 @@ public: //基本関数
 	/// </summary>
 	void Finalize();
 
+	void LoadMap();
+
 public: //mainに一部引き渡し用
 	WinApp* GetWinApp() { return winApp; }
 	Input* GetInput() { return input; }
@@ -60,6 +63,12 @@ private: //ゲーム内使用クラス
 	FbxModel* model = nullptr;
 	FbxObject3d* object1 = new FbxObject3d();
 	
+	//マップ用JsonLoader
+	//JSON
+	LevelData* jsonLoader = nullptr;
+	std::map<std::string, Model*> models;
+	std::vector<Object3d*> objects;
+
 	//プレイヤー
 	Player* objPlayer = nullptr;
 	//床(仮)

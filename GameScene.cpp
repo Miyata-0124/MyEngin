@@ -49,6 +49,8 @@ void GameScene::Initialize()
 	sprite->SetSize(XMFLOAT2(320.0f, 180.0f));
 	sprite->SetPosition({ 160,90 });
 
+	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
+
 #pragma region FBX
 	/*model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
@@ -81,7 +83,7 @@ void GameScene::Initialize()
 	objItem->SetCollider(new SphereCollider);
 	objFloor->SetCollider(new PlaneCollider);
 #pragma endregion
-
+	LoadMap();
 	
 	#pragma region パーティクル関係
 		//パーティクル
@@ -155,6 +157,10 @@ void GameScene::Update()
 		//obj3d->Update();
 		//particle->Update();
 
+	for (auto object : objects) {
+		object->Update();
+	}
+
 	collisionManager->CheckAllCollisions();
 }
 
@@ -208,4 +214,35 @@ void GameScene::Finalize()
 	delete imgui;
 	/*delete model1;
 	delete obj3d;*/
+}
+
+void GameScene::LoadMap()
+{
+	for (auto& objectData : jsonLoader->objects) {
+		Model* model = Model::LoadFromOBJ("Box");
+		decltype(models)::iterator it = models.find(objectData.fileName);
+		if (it != models.end()) { model = it->second; }
+
+		// モデルを指定して3Dオブジェクトを生成
+		Object3d* newObject = Object3d::Create();
+		newObject->SetModel(model);
+
+		// 座標
+		DirectX::XMFLOAT3 scale;
+		DirectX::XMStoreFloat3(&scale, objectData.scaling);
+		newObject->SetSize(scale);
+
+		// 回転角
+		DirectX::XMFLOAT3 rot;
+		DirectX::XMStoreFloat3(&rot, objectData.rotation);
+		newObject->SetRotation(rot);
+
+		// 座標
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMStoreFloat3(&pos, objectData.position);
+		newObject->SetPosition(pos);
+
+		// 配列に登録
+		objects.push_back(newObject);
+	}
 }
