@@ -11,7 +11,7 @@
 #include "FbxObject3D.h"
 #include "Model.h"
 #include "PostEffect.h"
-
+#include "PostCommon.h"
 #include "FbxLoader.h"
 #include "JsonLoader.h"
 class GameScene
@@ -56,6 +56,7 @@ private: //ゲーム内使用クラス
 
 	std::vector<Object3d*> objects;
 	//ポストエフェクト
+	PostCommon* postCommon = nullptr;
 	PostEffect* postEffect = new PostEffect();
 	//FBX
 	FbxModel* model2 = nullptr;
