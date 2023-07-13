@@ -47,6 +47,8 @@ private:
 	void Move();
 	//ジャンプ
 	void Jamp();
+	//ハイジャンプ
+	void HiJamp();
 	//姿勢変更
 	void ChangePosture();
 	//重力
@@ -65,5 +67,6 @@ private:
 	//フラグ,タイマー
 	//ジャンプフラグ
 	bool isJamp = false;
+	float hiJampTimer = 5.0f;
 };
 

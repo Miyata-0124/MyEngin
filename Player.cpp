@@ -48,6 +48,8 @@ void Player::Update()
 		Jamp();
 		break;
 	case Posture::Croching://しゃがみ
+		//ハイジャンプ
+		HiJamp();
 		break;
 	}
 	//移動
@@ -85,6 +87,11 @@ void Player::Jamp()
 		yadd -= 1.5f;
 		isJamp = true;
 	}
+}
+
+void Player::HiJamp()
+{
+
 }
 
 void Player::ChangePosture()
