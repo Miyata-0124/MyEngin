@@ -31,6 +31,9 @@ public:
 	/// <param name="info"></param>
 	void OnCollider(const CollisionInfo& info)override;
 
+	//保持できるかどうかのフラグを取得
+	bool GetRetention() { return isRetention; }
+
 private:
 	void Gravity();
 
@@ -39,4 +42,7 @@ private:
 	float yadd = 0.0f;
 	//半径
 	float radius = 0.6f;
+
+	//タイマー,フラグ
+	bool isRetention = false;
 };

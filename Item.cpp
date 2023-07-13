@@ -46,7 +46,11 @@ void Item::Update()
 
 void Item::OnCollider(const CollisionInfo& info)
 {
-	yadd = 0.0f;
+	//°‚É“–‚½‚Á‚½‚È‚ç
+	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE)
+	{
+		yadd = 0.0f;
+	}
 }
 
 void Item::Gravity()

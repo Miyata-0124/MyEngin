@@ -155,8 +155,6 @@ void GameScene::Update()
 		//obj3d->Update();
 		//particle->Update();
 
-	//object1->Update();
-
 	collisionManager->CheckAllCollisions();
 }
 

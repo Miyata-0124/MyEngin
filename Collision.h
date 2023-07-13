@@ -12,5 +12,6 @@ public:
 	/// <param name="inter">Œð“_</param>
 	/// <returns></returns>
 	static bool CheckSphere2Plane(const Sphere& sphere, const Plane& plane, DirectX::XMVECTOR* inter = nullptr);
+	static bool CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, DirectX::XMVECTOR* inter);
 };
 
