@@ -43,6 +43,6 @@ private://ƒƒ“ƒo•Ï”
 	ID3D12RootSignature* rootSignature;
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>comList;
 	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, maxSRVCount>texBuffers;
-	UINT	incrementSize;
+	UINT incrementSize;
 
 };

@@ -10,10 +10,10 @@
 #include "Object3d.h"
 #include "FbxObject3D.h"
 #include "Model.h"
-#include "PostEffect.h"
-#include "PostCommon.h"
 #include "FbxLoader.h"
 #include "JsonLoader.h"
+#include "PostEffect.h"
+
 class GameScene
 {
 public: //基本関数
@@ -56,8 +56,7 @@ private: //ゲーム内使用クラス
 
 	std::vector<Object3d*> objects;
 	//ポストエフェクト
-	PostCommon* postCommon = nullptr;
-	PostEffect* postEffect = new PostEffect();
+	PostEffect* postEffect = nullptr;
 	//FBX
 	FbxModel* model2 = nullptr;
 	FbxObject3d* object1 = new FbxObject3d();
