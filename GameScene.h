@@ -55,9 +55,6 @@ private: //ゲーム内使用クラス
 	std::map<std::string, Model*> models;
 
 	std::vector<Object3d*> objects;
-	//ポストエフェクト
-	PostCommon* postCommon = nullptr;
-	PostEffect* postEffect = new PostEffect();
 	//FBX
 	FbxModel* model2 = nullptr;
 	FbxObject3d* object1 = new FbxObject3d();

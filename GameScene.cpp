@@ -32,9 +32,6 @@ void GameScene::Initialize()
 	spriteCommon->Loadtexture(1, "MK.png");
 	spriteCommon->Loadtexture(2, "testpar1.png");
 
-	postCommon = new PostCommon;
-	postCommon->Initialize(directXCom);
-	postCommon->Loadtexture(1, "MK.png");
 #pragma	region	シーンの初期化
 //ViewProjection
 //	std::unique_ptr<ViewProjection>camera = std::make_unique<ViewProjection>();
@@ -48,11 +45,6 @@ void GameScene::Initialize()
 	sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
 	sprite->SetSize(XMFLOAT2(320.0f, 180.0f));
 	sprite->SetPosition({ 160,90 });
-	//ポストエフェクト用テクスチャ読み込み
-	postEffect->Initialize(postCommon, 1);
-	postEffect->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	postEffect->SetSize(XMFLOAT2(320.0f, 180.0f));
-	postEffect->SetPosition({ 480,90 });
 
 	model2 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
@@ -200,10 +192,6 @@ void GameScene::Draw()
 	//sprite->SetIsInvisible(false);
 	//sprite->SetTexIndex(1);
 	//sprite->Draw();
-
-	postEffect->SetIsInvisible(false);
-	postEffect->SetTexIndex(1);
-	postEffect->Draw();
 	/*sprite2->SetTexIndex(2);
 	sprite2->Draw();*/
 
@@ -220,23 +208,20 @@ void GameScene::Finalize()
 	delete directXCom;
 	delete spriteCommon;
 	delete sprite;
-	delete postCommon;
-	delete postEffect;
 	delete object1;
 }
 
 void GameScene::LoadMapBox()
 {
 	for (auto& objectData : jsonLoader->objects) {
-		Model* model = Model::LoadFromOBJ("Box");
+		Model* model = Model::LoadFromOBJ("ches");
 		decltype(models)::iterator it = models.find(objectData.fileName);
 		if (it != models.end()) { model = it->second; }
 
 		// モデルを指定して3Dオブジェクトを生成
 		Object3d* newObject = Object3d::Create();
 		newObject->SetModel(model);
-
-		// 座標
+		// サイズ
 		DirectX::XMFLOAT3 scale;
 		DirectX::XMStoreFloat3(&scale, objectData.scaling);
 		newObject->SetSize(scale);
