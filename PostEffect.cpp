@@ -1,6 +1,9 @@
 #include "PostEffect.h"
 #include "WinApp.h"
 #include"DirectXTex/DirectXTex.h"
+#include <d3dx12.h>
+
+using namespace DirectX;
 
 //インデックスデータ
 unsigned short postIndices[] = {
@@ -39,6 +42,7 @@ void PostEffect::Initialize(PostCommon* postCommon_, uint32_t texIndex_)
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&vertBuff));
+
 	//GPU上のバッファに対応した仮想メモリ（メインメモリ上）を取得
 	Update();
 

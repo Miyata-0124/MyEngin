@@ -286,8 +286,6 @@ void PostCommon::Loadtexture(uint32_t index, std::string fileName)
 		assert(SUCCEEDED(result));
 	}
 
-
-
 	//SRVヒープの先頭ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE	srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
 

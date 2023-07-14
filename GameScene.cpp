@@ -56,7 +56,7 @@ void GameScene::Initialize()
 
 	model2 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
-	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
+	//sonLoader = JsonLoader::LoadFlomJSONInternal("test");
 
 	/*object1->initialize();
 	object1->SetModel(model);
@@ -95,7 +95,7 @@ void GameScene::Initialize()
 	//	particle->Update();
 	//#pragma	endregion
 
-	LoadMapBox();
+	//LoadMapBox();
 }
 
 
@@ -165,9 +165,9 @@ void GameScene::Update()
 		particle->Update();*/
 
 	//object1->Update();
-	for (auto object : objects) {
+	/*for (auto object : objects) {
 		object->Update();
-	}
+	}*/
 }
 
 
@@ -187,9 +187,9 @@ void GameScene::Draw()
 	//Object3d::PreDraw(directXCom->GetCommandList());
 	//obj3d->Draw();
 	//obj3d2->Draw();
-	for (auto object : objects) {
+	/*for (auto object : objects) {
 		object->Draw();
-	}
+	}*/
 	Object3d::PostDraw();
 	//Particle::PreDraw(directXCom->GetCommandList());
 	//particle->Draw();
