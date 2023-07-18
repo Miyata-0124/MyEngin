@@ -26,10 +26,14 @@ bool Collision::CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, 
     float sideC = sphere2.center.m128_f32[2] - sphere.center.m128_f32[2]; //Z
     float sideD = sphere.radius + sphere2.radius;                         //R
 
+    //A‚Ì2æ
     float sideX = (sideA * sideA);
+    //B‚Ì2æ
     float sideY = (sideB * sideB);
+    //C‚Ì2æ
     float sideZ = (sideC * sideC);
     float sphereDist = sideX + sideY + sideZ;
+    //”¼Œa‚ğ‘«‚µ‚½•¨‚Ì2æ
     float Radius2 = (sideD * sideD);
     //”¼Œa‚æ‚è‚à¬‚³‚¯‚ê‚Î“–‚½‚Á‚Ä‚¢‚é
     if (Radius2 >= sphereDist)return true;

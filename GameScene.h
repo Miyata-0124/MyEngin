@@ -12,13 +12,13 @@
 #include "FbxObject3D.h"
 #include "FbxLoader.h"
 #include "Model.h"
-#include "Item.h"
-#include "Floor.h"
 #include "ImGuiManager.h"
 #include "JsonLoader.h"
 
 class CollisionManager;
 class Player;
+class Floor;
+class Item;
 
 class GameScene
 {
@@ -53,7 +53,7 @@ private: //ゲーム内使用クラス
 	WinApp* winApp = nullptr;
 	DirectXCommon* directXCom = nullptr;
 	//デバッグテキスト
-	ImguiManager* imgui = nullptr;;
+	//ImguiManager* imgui = nullptr;;
 	//キー情報
 	Input* input = nullptr;
 	//スプライト

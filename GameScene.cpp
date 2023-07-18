@@ -3,6 +3,8 @@
 #include "PlaneCollider.h"
 #include "CollisionManager.h"
 #include "Player.h"
+#include "Floor.h"
+#include "Item.h"
 #include <sstream>
 #include <iomanip>
 
@@ -25,8 +27,8 @@ void GameScene::Initialize()
 	input = new	Input;
 	input->Initialize(winApp);
 
-	imgui = new ImguiManager();
-	imgui->Initialize(winApp, directXCom);
+	//imgui = new ImguiManager();
+	//imgui->Initialize(winApp, directXCom);
 	//DirectX初期化処理　　ここまで
 #pragma endregion
 #pragma	endregion
@@ -101,9 +103,9 @@ void GameScene::Update()
 	///それぞれのクラスのUpdateのみ記述
 	//キー情報
 	input->Update();
-	imgui->Begin();
+	//imgui->Begin();
 	//デモウィンドウの表示オン
-	imgui->End();
+	//imgui->End();
 	
 #pragma region パーティクル
 	//パーティクル発生
@@ -154,8 +156,8 @@ void GameScene::Update()
 	objPlayer->Update();
 	objItem->Update();
 	objFloor->Update();
-		//obj3d->Update();
-		//particle->Update();
+	//obj3d->Update();
+	//particle->Update();
 
 	/*for (auto object : objects) {
 		object->Update();
@@ -196,7 +198,7 @@ void GameScene::Draw()
 	sprite->SetTexIndex(1);
 	sprite->Draw();
 
-	imgui->Draw();
+	//imgui->Draw();
 
 	directXCom->PostDraw();
 	//ここまで↑
@@ -205,7 +207,7 @@ void GameScene::Draw()
 void GameScene::Finalize()
 {
 	winApp->Finalize();
-	imgui->Finalize();
+	//imgui->Finalize();
 	FbxLoader::GetInstance()->Finalize();
 	delete input;
 	delete winApp;
@@ -214,7 +216,7 @@ void GameScene::Finalize()
 	delete sprite;
 	delete model;
 	delete object1;
-	delete imgui;
+	//delete imgui;
 	/*delete model1;
 	delete obj3d;*/
 }
@@ -229,6 +231,8 @@ void GameScene::LoadMap()
 		// モデルを指定して3Dオブジェクトを生成
 		Object3d* newObject = Object3d::Create();
 		newObject->SetModel(model);
+
+		newObject->SetCollider(new SphereCollider);
 
 		// 座標
 		DirectX::XMFLOAT3 scale;

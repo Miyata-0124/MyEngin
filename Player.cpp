@@ -61,11 +61,9 @@ void Player::Update()
 
 void Player::OnCollider(const CollisionInfo& info)
 {
-	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE)
-	{
-		yadd = 0.0f;
-		isJamp = false;
-	}
+	yadd = 0.0f;
+	isJamp = false;
+	
 }
 
 void Player::Move()

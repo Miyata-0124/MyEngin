@@ -33,7 +33,7 @@ void CollisionManager::CheckAllCollisions()
             }
         }
     }
-    sphereA = colliders.begin();
+    /*sphereA = colliders.begin();
     for (; sphereA != colliders.end(); ++sphereA) {
         sphereB = sphereA;
         ++sphereB;
@@ -71,5 +71,5 @@ void CollisionManager::CheckAllCollisions()
 
             }
         }
-    }
+    }*/
 }
