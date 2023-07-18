@@ -12,7 +12,6 @@
 #include "FbxObject3D.h"
 #include "FbxLoader.h"
 #include "Model.h"
-#include "ImGuiManager.h"
 #include "JsonLoader.h"
 
 class CollisionManager;
