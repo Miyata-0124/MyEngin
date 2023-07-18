@@ -11,9 +11,7 @@ CollisionManager* CollisionManager::GetInstance()
 void CollisionManager::CheckAllCollisions()
 {
     std::forward_list<BaseCollider*>::iterator sphereA;
-    std::forward_list<BaseCollider*>::iterator sphereB;
     std::forward_list<BaseCollider*>::iterator planeA;
-    std::forward_list<BaseCollider*>::iterator rayA;
     //総当たりチェック
     sphereA = colliders.begin();
     for (; sphereA != colliders.end(); ++sphereA) {

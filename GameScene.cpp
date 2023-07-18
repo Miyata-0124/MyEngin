@@ -27,8 +27,6 @@ void GameScene::Initialize()
 	input = new	Input;
 	input->Initialize(winApp);
 
-	//imgui = new ImguiManager();
-	//imgui->Initialize(winApp, directXCom);
 	//DirectX初期化処理　　ここまで
 #pragma endregion
 #pragma	endregion
@@ -103,9 +101,6 @@ void GameScene::Update()
 	///それぞれのクラスのUpdateのみ記述
 	//キー情報
 	input->Update();
-	//imgui->Begin();
-	//デモウィンドウの表示オン
-	//imgui->End();
 	
 #pragma region パーティクル
 	//パーティクル発生
@@ -216,7 +211,6 @@ void GameScene::Finalize()
 	delete sprite;
 	delete model;
 	delete object1;
-	//delete imgui;
 	/*delete model1;
 	delete obj3d;*/
 }

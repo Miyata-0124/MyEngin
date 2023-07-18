@@ -1,6 +1,7 @@
 #pragma once
 #include "Object3D.h"
 #include "Model.h"
+//最も低い地形クラス
 
 class Floor : public Object3d
 {
@@ -31,9 +32,9 @@ public:
 	void OnCollider(const CollisionInfo& info)override;
 private:
 	//原点からの距離
-	float distance = -7.0f;
+	float distance = -14.0f;
 	//半径
-	float radius = 0.5f;
+	float radius = 20.0f;
 //public:
 //	void Initialize(Model* model);
 //	void Update();
