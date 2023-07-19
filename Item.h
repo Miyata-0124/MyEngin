@@ -38,7 +38,7 @@ private:
 	//重力加算量
 	float yadd = 0.0f;
 	//半径
-	float radius = 0.25f;
+	float radius = 0.5f;
 
 	//タイマー,フラグ
 };

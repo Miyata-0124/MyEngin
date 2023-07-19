@@ -10,64 +10,35 @@ CollisionManager* CollisionManager::GetInstance()
 
 void CollisionManager::CheckAllCollisions()
 {
-    std::forward_list<BaseCollider*>::iterator sphereA;
-    std::forward_list<BaseCollider*>::iterator planeA;
+    std::forward_list<BaseCollider*>::iterator colliderA;//判定用1個目のリスト
+    std::forward_list<BaseCollider*>::iterator colliderB;//2個目のリスト
     //総当たりチェック
-    sphereA = colliders.begin();
-    for (; sphereA != colliders.end(); ++sphereA) {
-        planeA = sphereA;
-        ++planeA;
-        for (; planeA != colliders.end(); ++planeA) {
-            BaseCollider* colA = *sphereA; //Sphere
-            BaseCollider* colB = *planeA; //Plane
+    colliderA = colliders.begin();
+    for (; colliderA != colliders.end(); ++colliderA) {
+        colliderB = colliderA;
+        ++colliderB;
+        for (; colliderB != colliders.end(); ++colliderB) {
+            BaseCollider* colA = *colliderA; //判定1
+            BaseCollider* colB = *colliderB; //判定2
             if (colA->GetShapeType() == COLISIONSHAPE_SPHERE && colB->GetShapeType() == COLISIONSHAPE_PLANE) {
-                Sphere* SphereA = dynamic_cast<Sphere*>(colA);
-                Plane* PlaneA = dynamic_cast<Plane*>(colB);
-                DirectX::XMVECTOR inter;
-                if (Collision::CheckSphere2Plane(*SphereA, *PlaneA, &inter)) {
+                Sphere* SphereA = dynamic_cast<Sphere*>(colA);//球
+                Plane* PlaneA = dynamic_cast<Plane*>(colB);//平面
+                DirectX::XMVECTOR inter;//交点
+                if (Collision::CheckSphere2Plane(*SphereA, *PlaneA, &inter)) {//球と平面の判定
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
             }
-        }
-    }
-    /*sphereA = colliders.begin();
-    for (; sphereA != colliders.end(); ++sphereA) {
-        sphereB = sphereA;
-        ++sphereB;
-        for (; sphereB != colliders.end(); ++sphereB) {
-            BaseCollider* colA = *sphereA;
-            BaseCollider* colB = *sphereB;
 
             if (colA->GetShapeType() == COLISIONSHAPE_SPHERE && colB->GetShapeType() == COLISIONSHAPE_SPHERE) {
-                Sphere* SphereA = dynamic_cast<Sphere*>(colA);
-                Sphere* SphereB = dynamic_cast<Sphere*>(colB);
-                DirectX::XMVECTOR inter;
-                if (Collision::CheckSphere2Sphere(*SphereA, *SphereB,&inter)) {
+                Sphere* SphereA = dynamic_cast<Sphere*>(colA);//球1
+                Sphere* SphereB = dynamic_cast<Sphere*>(colB);//球2
+                DirectX::XMVECTOR inter;//交点
+                if (Collision::CheckSphere2Sphere(*SphereA, *SphereB, &inter)) { //球達の判定
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
-                    colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
+                    colA->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
             }
         }
     }
-    rayA = colliders.begin();
-    for (; rayA != colliders.end(); ++rayA) {
-        planeA = rayA;
-        ++planeA;
-        for (; planeA != colliders.end(); ++planeA) {
-            BaseCollider* colA = *rayA;
-            BaseCollider* colB = *planeA;
-            if (colA->GetShapeType() == COLISIONSHAPE_RAY && colB->GetShapeType() == COLISIONSHAPE_PLANE) {
-                Ray* RayA = dynamic_cast<Ray*>(colA);
-                Plane* PlaneA = dynamic_cast<Plane*>(colB);
-                float distance;
-                DirectX::XMVECTOR inter;
-                if (Collision::CheckRay2Plane(*RayA, *PlaneA, &distance, &inter)) {
-                    colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
-                    colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
-                }
-
-            }
-        }
-    }*/
 }

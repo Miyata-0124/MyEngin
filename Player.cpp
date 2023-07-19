@@ -61,9 +61,18 @@ void Player::Update()
 
 void Player::OnCollider(const CollisionInfo& info)
 {
-	yadd = 0.0f;
-	isJamp = false;
-	
+	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE)
+	{
+		yadd = 0.0f;
+		isJamp = false;
+	}
+	else if(info.collider->GetShapeType()==COLISIONSHAPE_SPHERE)
+	{
+		if (input->TriggerKey(DIK_X))
+		{
+			position.y = 0;
+		}
+	}
 }
 
 void Player::Move()

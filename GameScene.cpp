@@ -49,7 +49,7 @@ void GameScene::Initialize()
 	sprite->SetSize(XMFLOAT2(320.0f, 180.0f));
 	sprite->SetPosition({ 160,90 });
 
-	//jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
+	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
 
 #pragma region FBX
 	/*model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
@@ -154,10 +154,11 @@ void GameScene::Update()
 	//obj3d->Update();
 	//particle->Update();
 
-	/*for (auto object : objects) {
+	for (auto object : objects) {
 		object->Update();
-	}*/
+	}
 
+	//判定マネージャー
 	collisionManager->CheckAllCollisions();
 }
 
@@ -175,9 +176,9 @@ void GameScene::Draw()
 	objItem->Draw();
 	objFloor->Draw();
 
-	//for (auto object : objects) {
-	//	object->Draw();
-	//}
+	for (auto object : objects) {
+		object->Draw();
+	}
 
 	Object3d::PostDraw();
 #pragma region パーティクル
