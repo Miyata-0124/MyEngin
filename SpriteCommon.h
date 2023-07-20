@@ -14,16 +14,16 @@ private://静的メンバ変数
 	static	std::string defaultTextureDirectoryPath;
 public://メンバ関数
 	//初期化
-	void	Initialize(DirectXCommon* ditectXCom_);
+	void Initialize(DirectXCommon* ditectXCom_);
 	//テクスチャ読み込み
-	void	Loadtexture(uint32_t index, std::string fileName);
+	void Loadtexture(uint32_t index, std::string fileName);
 	//描画前処理
 	void PreDraw();
 	//描画後処理
 	void PostDraw();
 
 	//描画用テクスチャコマンド
-	void	SetTextureCommands(uint32_t index);
+	void SetTextureCommands(uint32_t index);
 	//ゲッター
 	ID3D12DescriptorHeap* GetSrvHeap()const { return srvHeap; }
 
