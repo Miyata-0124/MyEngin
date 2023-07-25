@@ -23,20 +23,26 @@ Item* Item::Create(Model* model)
 
 bool Item::Initialize()
 {
+
 	if (!Object3d::Initialize())
 	{
 		return false;
 	}
 	//初期座標指定
-	SetPosition({ 0,0,0, });
+	SetSize({ 1,1,1 });
+	SetPosition({ 0,-10,0, });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
-	SetCollider(new SphereCollider(XMVECTOR({ position.x,position.y-radius,position.z,0 }), radius));
+	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
 	return true;
 }
 
 void Item::Update()
 {
+	if (isRetention)
+	{
+		SetPosition({ playerPosition.x,playerPosition.y + radius,playerPosition.z });
+	}
 	//重力
 	Gravity();
 	Object3d::Update();
@@ -53,6 +59,9 @@ void Item::OnCollider(const CollisionInfo& info)
 
 void Item::Gravity()
 {
-	position.y -= yadd;
-	yadd += 0.2f;
+	if (isRetention == false)
+	{
+		position.y -= yadd;
+		yadd += 0.2f;
+	}
 }

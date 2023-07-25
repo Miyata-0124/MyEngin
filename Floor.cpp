@@ -30,8 +30,8 @@ bool Floor::Initialize()
 	SetSize({ 80,1,80, });
 	SetPosition({ 0, -15, 0 });
 	//コライダーの追加
-	//半径分足元から浮いている座標が中心
-	SetCollider(new PlaneCollider(XMVECTOR({ position.x,position.y,position.z,0 }), distance));
+	//中心座標と原点からの距離
+	SetCollider(new PlaneCollider(XMVECTOR({ radius.m128_f32[0],radius.m128_f32[1],radius.m128_f32[2],0}), distance));
 	return true;
 }
 

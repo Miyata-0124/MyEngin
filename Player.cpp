@@ -30,10 +30,11 @@ bool Player::Initialize()
 		return false;
 	}
 	//初期座標指定
-	SetPosition({ -10,0,0, });
+	SetSize({ 1,1,1 });
+	SetPosition({ -10,-10,0, });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
-	SetCollider(new SphereCollider(XMVECTOR({ position.x,position.y - radius, position.z,0 }), radius));
+	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
 	return true;
 }
 
@@ -45,15 +46,17 @@ void Player::Update()
 	{
 	case Posture::Upright://直立
 		//ジャンプ
-		Jamp();
+		Jump();
 		break;
 	case Posture::Croching://しゃがみ
 		//ハイジャンプ
-		HiJamp();
+		HiJump();
 		break;
 	}
 	//移動
 	Move();
+	//アイテムに対する行動
+	Retention();
 	//重力
 	Gravity();
 	Object3d::Update();
@@ -66,11 +69,17 @@ void Player::OnCollider(const CollisionInfo& info)
 		yadd = 0.0f;
 		isJamp = false;
 	}
-	else if(info.collider->GetShapeType()==COLISIONSHAPE_SPHERE)
+	else if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
 	{
-		if (input->TriggerKey(DIK_X))
+		//アイテムに当たった時
+		if (input->TriggerKey(DIK_Z) && !isRetention)
 		{
-			position.y = 0;
+			//保持フラグを真にする
+			isRetention = true;
+		}
+		if (input->TriggerKey(DIK_X) && isRetention)
+		{
+			isRetention = false;
 		}
 	}
 }
@@ -87,7 +96,7 @@ void Player::Move()
 	}
 }
 
-void Player::Jamp()
+void Player::Jump()
 {
 	if (!isJamp && input->TriggerKey(DIK_SPACE))
 	{
@@ -96,7 +105,7 @@ void Player::Jamp()
 	}
 }
 
-void Player::HiJamp()
+void Player::HiJump()
 {
 
 }
@@ -123,4 +132,12 @@ void Player::Gravity()
 {
 	position.y -= yadd;
 	yadd += 0.2f;
+}
+
+void Player::Retention()
+{
+	if (isRetention)
+	{
+		
+	}
 }

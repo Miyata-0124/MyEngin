@@ -42,17 +42,29 @@ public:
 	/// <param name="input">キー情報</param>
 	/// <returns></returns>
 	Input* SetInput(Input* input) { return this->input = input; }
+	/// <summary>
+	/// はんけいを渡している
+	/// </summary>
+	/// <returns></returns>
+	float GetRadius() { return radius; }
+
+	//現在の姿勢受け渡し
+	Posture GetPosture() { return posture; }
+	//保持フラグの受け渡し
+	bool GetRetention() { return isRetention; }
 private:
 	//左右移動
 	void Move();
 	//ジャンプ
-	void Jamp();
+	void Jump();
 	//ハイジャンプ
-	void HiJamp();
+	void HiJump();
 	//姿勢変更
 	void ChangePosture();
 	//重力
 	void Gravity();
+	//アイテムに対する行動
+	void Retention();
 private:
 	Input* input = nullptr;
 	Posture posture = Posture::Upright;
@@ -60,13 +72,16 @@ private:
 	//重力加算量
 	float yadd = 0.0f;
 	//半径
-	float radius = 0.5f;
+	float radius = 1.0f;
 	//移動速度
 	float moveSpeed = 0.4f;
 
 	//フラグ,タイマー
-	//ジャンプフラグ
+	//ジャンプ
 	bool isJamp = false;
-	float hiJampTimer = 5.0f;
+	//横にハイジャンプ
+	float hiJumpTimer = 5.0f;
+	//アイテムを保持
+	bool isRetention = false;
 };
 

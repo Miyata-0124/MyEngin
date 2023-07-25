@@ -3,6 +3,7 @@
 /// <summary>
 /// 投擲出来るアイテム(石や槍など)
 /// </summary>
+
 class Item : public Object3d
 {
 public:
@@ -31,6 +32,11 @@ public:
 	/// <param name="info"></param>
 	void OnCollider(const CollisionInfo& info)override;
 
+	float GetRadius() { return radius; }
+
+	void SetRetention(bool isRetention) { this->isRetention = isRetention; }
+	//プレイヤーの座標取得
+	void SetPPosition(XMFLOAT3 position) { this->playerPosition = position; }
 private:
 	void Gravity();
 
@@ -38,7 +44,10 @@ private:
 	//重力加算量
 	float yadd = 0.0f;
 	//半径
-	float radius = 0.5f;
+	float radius = 1.0f;
 
 	//タイマー,フラグ
+	bool isRetention = false;
+
+	XMFLOAT3 playerPosition;
 };

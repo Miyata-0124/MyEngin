@@ -18,27 +18,24 @@ bool Collision::CheckSphere2Plane(const Sphere& sphere, const Plane& plane, Dire
     }
     return true;
 }
-
+//‹…‚Ç‚¤‚µ‚Ì”»’è
 bool Collision::CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, DirectX::XMVECTOR* inter)
 {
-    //‹…1‚ÌÀ•W
-    XMVECTOR vector1 = sphere.center;
-    //‹…2‚ÌÀ•W
-    XMVECTOR vector2 = sphere2.center;
-
-    //‹…1‚Ì”¼Œa
-    float radius1 = sphere.radius;
-    //‹…2‚Ì”¼Œa
-    float radius2 = sphere2.radius;
-
-    float a = vector1.m128_f32[0] - vector2.m128_f32[0];
-    float b = vector1.m128_f32[1] - vector2.m128_f32[1];
-    float c = vector1.m128_f32[2] - vector2.m128_f32[2];
-
-    double d = sqrt((a * a) + (b * b) + (c * c));
-
-    if (d > radius1+radius2)return false;
-    else return true;
+    //x
+    float x = sphere.center.m128_f32[0] - sphere2.center.m128_f32[0];
+    //y
+    float y = sphere.center.m128_f32[1] - sphere2.center.m128_f32[1];
+    //z
+    float z = sphere.center.m128_f32[2] - sphere2.center.m128_f32[2];
+    //‹…‚Ç‚¤‚µ‚Ì‹——£
+    double d = sqrt((x * x) + (y * y) + (z * z));
+    //‹——£‚ª”¼Œa‚ğ‘«‚µ‚½‚à‚Ì‚æ‚è¬‚³‚¢(”¼Œa‚Ì’†‚É‚¢‚é)‚È‚çƒAƒ^ƒŠ
+    if (d <= sphere.radius + sphere2.radius)
+    {
+        return true;
+    }
+    //‚»‚êˆÈŠO‚Å‚ÍƒnƒYƒŒ‚Æ‚µ‚Ä•Ô‚·
+    return false;
 }
 
 bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance, DirectX::XMVECTOR* inter)

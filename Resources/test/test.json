@@ -3,12 +3,12 @@
     "objects": [
         {
             "type": "MESH",
-            "name": "Cube.001",
+            "name": "wall.001",
             "transform": {
                 "translation": [
-                    0.0,
-                    0.0,
-                    0.0
+                    15.0,
+                    20.0,
+                    5.0
                 ],
                 "rotation": [
                     0.0,
@@ -16,9 +16,9 @@
                     0.0
                 ],
                 "scaling": [
+                    20.0,
                     1.0,
-                    1.0,
-                    1.0
+                    8.0
                 ]
             }
         },
@@ -66,12 +66,33 @@
         },
         {
             "type": "MESH",
-            "name": "Cube",
+            "name": "wall",
             "transform": {
                 "translation": [
+                    15.0,
+                    -20.0,
+                    5.0
+                ],
+                "rotation": [
                     0.0,
-                    0.0,
+                    -0.0,
                     0.0
+                ],
+                "scaling": [
+                    20.0,
+                    1.0,
+                    8.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体",
+            "transform": {
+                "translation": [
+                    15.0,
+                    15.5,
+                    5.5
                 ],
                 "rotation": [
                     0.0,
@@ -81,7 +102,7 @@
                 "scaling": [
                     1.0,
                     1.0,
-                    1.0
+                    3.8345260620117188
                 ]
             }
         }

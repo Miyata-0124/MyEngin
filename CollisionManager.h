@@ -12,7 +12,7 @@ public:
 		colliders.push_front(collider);
 	}
 	//コライダーの削除
-	inline void RemoveCollder(BaseCollider* collider) {
+	inline void RemoveCollider(BaseCollider* collider) {
 		colliders.remove(collider);
 	}
 	//全ての衝突チェック

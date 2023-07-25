@@ -32,9 +32,9 @@ public:
 	void OnCollider(const CollisionInfo& info)override;
 private:
 	//Œ´“_‚©‚ç‚Ì‹——£
-	float distance = -14.0f;
+	float distance = -13.0f;
 	//”¼Œa
-	float radius = 20.0f;
+	XMVECTOR radius = { 40.0f, 1.0f,40.0f };
 //public:
 //	void Initialize(Model* model);
 //	void Update();

@@ -76,15 +76,13 @@ void GameScene::Initialize()
 	collisionManager = CollisionManager::GetInstance();
 	objPlayer = Player::Create(playerModel);
 	objPlayer->SetInput(input);
-	objPlayer->Initialize();
 	objFloor = Floor::Create(ground);
-	objFloor->Initialize();
 	objItem = Item::Create(item_);
-	objItem->Initialize();
 	//コライダー追加
+	/*objItem->SetCollider(new SphereCollider);
 	objPlayer->SetCollider(new SphereCollider);
-	objItem->SetCollider(new SphereCollider);
-	objFloor->SetCollider(new PlaneCollider);
+	objFloor->SetCollider(new PlaneCollider);*/
+	
 #pragma endregion
 	//LoadMap();
 	
@@ -104,7 +102,7 @@ void GameScene::Update()
 	///それぞれのクラスのUpdateのみ記述
 	//キー情報
 	input->Update();
-	
+
 #pragma region パーティクル
 	//パーティクル発生
 	//if (input->TriggerKey(DIK_F))
@@ -160,12 +158,13 @@ void GameScene::Update()
 	for (auto object : objects) {
 		object->Update();
 	}
-
+	objItem->SetPPosition(objPlayer->GetPosition());
+	objItem->SetRetention(objPlayer->GetRetention());
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
 
 	imgui->Begin();
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 	imgui->End();
 }
 
@@ -199,7 +198,7 @@ void GameScene::Draw()
 	// UI関連
 	sprite->SetIsInvisible(false);
 	sprite->SetTexIndex(1);
-	sprite->Draw();
+	//sprite->Draw();
 
 	imgui->Draw();
 
@@ -218,7 +217,10 @@ void GameScene::Finalize()
 	delete spriteCommon;
 	delete sprite;
 	delete model;
-	delete object1;
+	delete objPlayer;
+	delete objFloor;
+	delete objItem;
+	//delete object1;
 	/*delete model1;
 	delete obj3d;*/
 }
@@ -233,8 +235,6 @@ void GameScene::LoadMap()
 		// モデルを指定して3Dオブジェクトを生成
 		Object3d* newObject = Object3d::Create();
 		newObject->SetModel(model);
-
-		newObject->SetCollider(new SphereCollider);
 
 		// 座標
 		DirectX::XMFLOAT3 scale;
