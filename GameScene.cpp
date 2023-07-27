@@ -198,13 +198,13 @@ void GameScene::Draw()
 	//sprite->SetTexIndex(1);
 	//sprite->Draw();
 
-	spriteCommon->PreDraw();
+	postEffect->PreDrawScene(directXCom->GetCommandList());
 	//sprite->Draw();
 
 	postEffect->SetIsInvisible(false);
 	postEffect->Draw(directXCom->GetCommandList());
 
-	spriteCommon->PostDraw();
+	postEffect->PostDrawScene(directXCom->GetCommandList());
 	/*sprite2->SetTexIndex(2);
 	sprite2->Draw();*/
 
