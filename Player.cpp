@@ -85,10 +85,12 @@ void Player::Move()
 	if (input->PushKey(DIK_LEFT))
 	{
 		position.x -= moveSpeed;
+		isDirection = true;
 	}
 	else if (input->PushKey(DIK_RIGHT))
 	{
 		position.x += moveSpeed;
+		isDirection = false;
 	}
 }
 

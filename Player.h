@@ -53,7 +53,7 @@ public:
 	//フラグの受け渡し
 	bool GetRetention() { return isRetention; }
 	bool GetThrow() { return isThrow; }
-
+	bool GetDirection() { return isDirection; }
 private:
 	//左右移動
 	void Move();
@@ -78,7 +78,8 @@ private:
 	//移動速度
 	float moveSpeed = 0.4f;
 
-	//フラグ,タイマー
+	//フラグ,タイマー( false=右 , true=左)
+	bool isDirection = false;
 	//ジャンプ
 	bool isJamp = false;
 	//横にハイジャンプ

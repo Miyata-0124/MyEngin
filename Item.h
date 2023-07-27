@@ -33,11 +33,15 @@ public:
 	/// <param name="info"></param>
 	void OnCollider(const CollisionInfo& info)override;
 
+	void RetentionThrow();
+
 	float GetRadius() { return radius; }
 
 	void SetRetention(bool isRetention) { this->isRetention = isRetention; }
 	//プレイヤーの座標取得
 	void SetPPosition(XMFLOAT3 position) { this->playerPosition = position; }
+	//プレイヤーの向き取得
+	void SetDirection(bool isDirection) { this->isDirection = isDirection; }
 
 	/// <summary>
 	/// キー情報セット
@@ -55,11 +59,12 @@ private:
 	//半径
 	float radius = 1.0f;
 	//移動する速度
-	float throwSpeed = 2.0f;
+	float throwSpeed = 5.0f;
 
 	//タイマー,フラグ
 	bool isRetention = false;
 	bool isThrow = false;
+	bool isDirection = false;
 
 	float throwTimer = 3.0f; //掛かった時間
 

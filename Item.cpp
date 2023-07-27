@@ -39,6 +39,25 @@ bool Item::Initialize()
 
 void Item::Update()
 {
+	//•ÛŽ“Š±‚Ì‹““®
+	RetentionThrow();
+	//d—Í
+	Gravity();
+	Object3d::Update();
+}
+
+void Item::OnCollider(const CollisionInfo& info)
+{
+	//°‚É“–‚½‚Á‚½‚È‚ç
+	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE)
+	{
+		yadd = 0.0f;
+		isThrow = false;
+	}
+}
+
+void Item::RetentionThrow()
+{
 	if (isRetention)
 	{
 		SetPosition({ playerPosition.x,playerPosition.y + radius,playerPosition.z });
@@ -62,24 +81,18 @@ void Item::Update()
 		}
 		if (throwTimer != 0)
 		{
+			if (!isDirection)
+			{
+				throwSpeed = 5.0f;
+			}
+			else if (isDirection)
+			{
+				throwSpeed = -5.0f;
+			}
 			position.x += throwSpeed;
 		}
 	}
 
-
-	//d—Í
-	Gravity();
-	Object3d::Update();
-}
-
-void Item::OnCollider(const CollisionInfo& info)
-{
-	//°‚É“–‚½‚Á‚½‚È‚ç
-	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE)
-	{
-		yadd = 0.0f;
-		isThrow = false;
-	}
 }
 
 void Item::Gravity()

@@ -159,6 +159,7 @@ void GameScene::Update()
 #pragma region 各クラス間の情報受け渡し
 	objItem->SetPPosition(objPlayer->GetPosition());
 	objItem->SetRetention(objPlayer->GetRetention());
+	objItem->SetDirection(objPlayer->GetDirection());
 #pragma endregion
 	
 	//判定マネージャー
