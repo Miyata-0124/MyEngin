@@ -54,11 +54,17 @@ private:
 	float yadd = 0.0f;
 	//半径
 	float radius = 1.0f;
+	//移動する速度
+	float throwSpeed = 2.0f;
 
 	//タイマー,フラグ
 	bool isRetention = false;
+	bool isThrow = false;
+
+	float throwTimer = 3.0f; //掛かった時間
 
 	XMFLOAT3 playerPosition;
 private:
 	Input* input = nullptr;
+
 };

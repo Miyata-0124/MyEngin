@@ -44,9 +44,29 @@ void Item::Update()
 		SetPosition({ playerPosition.x,playerPosition.y + radius,playerPosition.z });
 		if (input->TriggerKey(DIK_X))
 		{
-			yadd -= 1.5f;
+			if (!isThrow)
+			{
+				isThrow = true;
+			}
 		}
 	}
+	if (isThrow)
+	{
+		if (throwTimer > 0.0f)
+		{
+			throwTimer -= 0.1f;
+		}
+		else
+		{
+			throwTimer = 3.0f;
+		}
+		if (throwTimer != 0)
+		{
+			position.x += throwSpeed;
+		}
+	}
+
+
 	//d—Í
 	Gravity();
 	Object3d::Update();
@@ -58,6 +78,7 @@ void Item::OnCollider(const CollisionInfo& info)
 	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE)
 	{
 		yadd = 0.0f;
+		isThrow = false;
 	}
 }
 
