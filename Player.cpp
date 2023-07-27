@@ -77,10 +77,6 @@ void Player::OnCollider(const CollisionInfo& info)
 			//保持フラグを真にする
 			isRetention = true;
 		}
-		if (input->TriggerKey(DIK_X) && isRetention)
-		{
-			isRetention = false;
-		}
 	}
 }
 
@@ -136,8 +132,13 @@ void Player::Gravity()
 
 void Player::Retention()
 {
+	//物を保持していて
 	if (isRetention)
 	{
-		
+		//Xキーが押されたら
+		if (input->TriggerKey(DIK_X))
+		{
+			isRetention = false;
+		}
 	}
 }

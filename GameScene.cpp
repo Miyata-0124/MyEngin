@@ -158,8 +158,12 @@ void GameScene::Update()
 	for (auto object : objects) {
 		object->Update();
 	}
+
+#pragma region 各クラス間の情報受け渡し
 	objItem->SetPPosition(objPlayer->GetPosition());
 	objItem->SetRetention(objPlayer->GetRetention());
+#pragma endregion
+	
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
 

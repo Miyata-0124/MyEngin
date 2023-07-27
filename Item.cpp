@@ -29,7 +29,7 @@ bool Item::Initialize()
 		return false;
 	}
 	//初期座標指定
-	SetSize({ 1,1,1 });
+	SetSize({ 0.5f,0.5f,0.5f });
 	SetPosition({ 0,-10,0, });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心

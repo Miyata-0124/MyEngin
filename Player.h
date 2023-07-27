@@ -2,7 +2,7 @@
 #include "Object3D.h"
 #include "Input.h"
 
-enum class Posture
+enum class Posture //姿勢管理
 {
 	Upright,
 	Croching
@@ -50,8 +50,10 @@ public:
 
 	//現在の姿勢受け渡し
 	Posture GetPosture() { return posture; }
-	//保持フラグの受け渡し
+	//フラグの受け渡し
 	bool GetRetention() { return isRetention; }
+	bool GetThrow() { return isThrow; }
+
 private:
 	//左右移動
 	void Move();
@@ -83,5 +85,7 @@ private:
 	float hiJumpTimer = 5.0f;
 	//アイテムを保持
 	bool isRetention = false;
-};
+	//投擲フラグ
+	bool isThrow = false;
 
+};
