@@ -9,7 +9,7 @@ using namespace DirectX;
 //インデックスデータ
 unsigned short postIndices[] = {
 	0,1,2,
-	1,2,3,
+	2,1,3,
 };
 
 void PostEffect::Initialize(SpriteCommon* spriteCommon_,uint32_t texIndex)
@@ -113,7 +113,9 @@ void PostEffect::Initialize(SpriteCommon* spriteCommon_,uint32_t texIndex)
 		const UINT depthPitch = rowPitch * WinApp::window_height;
 		//イメージ
 		UINT* img = new UINT[pixelCount];
-		for (int i = 0; i < pixelCount; i++) { img[i] = 0xff0000ff; }
+		for (int i = 0; i < pixelCount; i++) { 
+			img[i] = 0xff0000ff; 
+		}
 
 		//テクスチャバッファにデータ転送
 		result = texBuff->WriteToSubresource(0, nullptr, img, rowPitch, depthPitch);
@@ -122,7 +124,7 @@ void PostEffect::Initialize(SpriteCommon* spriteCommon_,uint32_t texIndex)
 	}
 	incrementSize = directXCom->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	//デスクリプタヒープ設定
+	//デスクリプタヒープ生成
 	D3D12_DESCRIPTOR_HEAP_DESC srvDescHeapDesc = {};
 	srvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvDescHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
@@ -146,12 +148,8 @@ void PostEffect::Initialize(SpriteCommon* spriteCommon_,uint32_t texIndex)
 
 void PostEffect::Draw(ID3D12GraphicsCommandList* comList)
 {
-	//srvHeap = spriteCommon->GetSrvHeap();
 	comList = directXCom->GetCommandList();
 	matWorld = XMMatrixIdentity();
-	//matWorld.r[0].m128_f32[0] = 2.0f / directXCom->GetSwapChainDesc().Width;
-	//matWorld.r[1].m128_f32[1] = -2.0f / directXCom->GetSwapChainDesc().Height;
-	//matWorld *= XMMatrixScaling(1.0f, 1.0f, 0.0f);
 	matWorld *= XMMatrixRotationZ(XMConvertToRadians(rotation));
 	matWorld *= XMMatrixTranslation(position.x, position.y, 0.0f);
 
@@ -176,7 +174,7 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* comList)
 	//定数バッファビュー(CBV)の設定コマンド
 	//comList->SetGraphicsRootConstantBufferView(2, constBuff->GetGPUVirtualAddress());
 	// 描画コマンド
-	comList->DrawIndexedInstanced(_countof(postIndices), texIndex, 0, 0, 0);//全ての頂点を使って描画
+	comList->DrawIndexedInstanced(_countof(postIndices), 1, 0, 0, 0);//全ての頂点を使って描画
 }
 
 void PostEffect::SetTextureCommands(uint32_t index)
@@ -194,9 +192,9 @@ void PostEffect::SetTextureCommands(uint32_t index)
 	//線ストリップ		LINESTRIP
 	//点リスト			POINTLIST
 	//SRVヒープの設定コマンド
-	comList->SetDescriptorHeaps(1, &srvHeap);
+	comList->SetDescriptorHeaps(1, &descHeapSRV);
 	//SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
-	D3D12_GPU_DESCRIPTOR_HANDLE	srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE	srvGpuHandle = descHeapSRV->GetGPUDescriptorHandleForHeapStart();
 	//SRVヒープの先頭にあるSRVをルートパラメータ１番に設定
 	//srvGpuHandle.ptr = 0;
 	for (size_t i = 0; i < index; i++)

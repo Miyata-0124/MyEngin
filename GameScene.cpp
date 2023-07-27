@@ -47,7 +47,7 @@ void GameScene::Initialize()
 
 	postEffect = new PostEffect();
 	postEffect->Initialize(spriteCommon, 2);
-	postEffect->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	postEffect->SetAnchorPoint(XMFLOAT2(0.0f, 0.0f));
 	postEffect->SetSize(XMFLOAT2(320.0f, 180.0f));
 	postEffect->SetPosition({ 480,90 });
 
@@ -198,11 +198,13 @@ void GameScene::Draw()
 	//sprite->SetTexIndex(1);
 	//sprite->Draw();
 
+	spriteCommon->PreDraw();
+	//sprite->Draw();
+
 	postEffect->SetIsInvisible(false);
-	postEffect->SetTexIndex(1);
 	postEffect->Draw(directXCom->GetCommandList());
 
-
+	spriteCommon->PostDraw();
 	/*sprite2->SetTexIndex(2);
 	sprite2->Draw();*/
 

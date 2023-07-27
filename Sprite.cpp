@@ -5,7 +5,7 @@
 //インデックスデータ
 unsigned	short	indices[] = {
 	0,1,2,
-	1,2,3,
+	2,1,3,
 };
 
 XMMATRIX Sprite::matProjection;
@@ -297,5 +297,5 @@ void Sprite::Draw() {
 	//定数バッファビュー(CBV)の設定コマンド
 	//comList->SetGraphicsRootConstantBufferView(2, constBuff->GetGPUVirtualAddress());
 	// 描画コマンド
-	comList->DrawIndexedInstanced(_countof(indices), texIndex, 0, 0, 0);//全ての頂点を使って描画
+	comList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);//全ての頂点を使って描画
 }
