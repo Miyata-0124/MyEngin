@@ -78,10 +78,7 @@ void GameScene::Initialize()
 	objPlayer->SetInput(input);
 	objFloor = Floor::Create(ground);
 	objItem = Item::Create(item_);
-	//コライダー追加
-	/*objItem->SetCollider(new SphereCollider);
-	objPlayer->SetCollider(new SphereCollider);
-	objFloor->SetCollider(new PlaneCollider);*/
+	objItem->SetInput(input);
 	
 #pragma endregion
 	//LoadMap();

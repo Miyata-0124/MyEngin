@@ -42,6 +42,10 @@ void Item::Update()
 	if (isRetention)
 	{
 		SetPosition({ playerPosition.x,playerPosition.y + radius,playerPosition.z });
+		if (input->TriggerKey(DIK_X))
+		{
+			yadd -= 1.5f;
+		}
 	}
 	//d—Í
 	Gravity();

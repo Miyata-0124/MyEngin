@@ -1,4 +1,5 @@
 #pragma once
+#include "Input.h"
 #include "Object3D.h"
 /// <summary>
 /// 投擲出来るアイテム(石や槍など)
@@ -37,6 +38,14 @@ public:
 	void SetRetention(bool isRetention) { this->isRetention = isRetention; }
 	//プレイヤーの座標取得
 	void SetPPosition(XMFLOAT3 position) { this->playerPosition = position; }
+
+	/// <summary>
+	/// キー情報セット
+	/// </summary>
+	/// <param name="input">キー情報</param>
+	/// <returns></returns>
+	Input* SetInput(Input* input) { return this->input = input; }
+
 private:
 	void Gravity();
 
@@ -50,4 +59,6 @@ private:
 	bool isRetention = false;
 
 	XMFLOAT3 playerPosition;
+private:
+	Input* input = nullptr;
 };
