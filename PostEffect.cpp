@@ -11,6 +11,7 @@ unsigned short postIndices[] = {
 	0,1,2,
 	2,1,3,
 };
+
 //静的メンバ変数の実態
 const float PostEffect::clearColor[4] = { 0.25f,0.5f,0.1f,0.0f };
 
@@ -20,21 +21,93 @@ void PostEffect::Initialize(SpriteCommon* spriteCommon_,uint32_t texIndex)
 	ID3DBlob* psBlob = nullptr;
 	ID3DBlob* errorBlob = nullptr;
 
-	//変数へコピー
-	spriteCommon = spriteCommon_;
-	directXCom = spriteCommon_->GetdxCom();
-
-	HRESULT result;
-	Sprite::Initialize(spriteCommon, texIndex);
-
 	CD3DX12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,
 		D3D12_MEMORY_POOL_L0);
 	//テクスチャリソース設定
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-		(UINT)WinApp::window_width,(UINT)WinApp::window_height,
+		(UINT)WinApp::window_width, (UINT)WinApp::window_height,
 		1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET
 	);
+
+
+	{
+		//変数へコピー
+		spriteCommon = spriteCommon_;
+		directXCom = spriteCommon_->GetdxCom();
+
+		HRESULT result;
+		//Sprite::Initialize(spriteCommon, texIndex);
+			//頂点バッファ
+		D3D12_HEAP_PROPERTIES heapProp{};//ヒープ設定
+		heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;//GPUへの転送
+		//リソース設定
+		D3D12_RESOURCE_DESC resDesc{};
+		resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+		resDesc.Width = sizeof(Vertex) * 4;
+		resDesc.Height = 1;
+		resDesc.DepthOrArraySize = 1;
+		resDesc.MipLevels = 1;
+		resDesc.SampleDesc.Count = 1;
+		resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+		//頂点バッファの生成
+		//ID3D12Resource* vertBuff = nullptr;
+		result = directXCom->GetResult();
+		result = directXCom->GetDevice()->CreateCommittedResource(
+			&heapProp,//ヒープ設定
+			D3D12_HEAP_FLAG_NONE,
+			&resDesc,//リソース設定
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			nullptr,
+			IID_PPV_ARGS(&vertBuff));
+		assert(SUCCEEDED(result));
+
+		//頂点データ
+		Vertex vertices[4] = {
+			{{-0.5f,-0.5f,0.0f},{0.0f,1.0f}},
+			{{-0.5f,+0.5f,0.0f},{0.0f,0.0f}},
+			{{+0.5f,-0.5f,0.0f},{1.0f,1.0f}},
+			{{+0.5f,+0.5f,0.0f},{1.0f,0.0f}},
+		};
+
+		// 頂点バッファへのデータ転送
+		Vertex* vertMap = nullptr;
+		result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+		if (SUCCEEDED(result)) {
+			memcpy(vertMap, vertices, sizeof(vertices));
+			vertBuff->Unmap(0, nullptr);
+		}
+		//頂点バッファビューの作成
+		//GPU仮想アドレス
+		vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+		//頂点バッファのサイズ
+		vbView.SizeInBytes = sizeof(Vertex) * 4;
+		//頂点1つ分のデータサイズ
+		vbView.StrideInBytes = sizeof(Vertex);
+
+		// 定数バッファの設定
+		D3D12_HEAP_PROPERTIES cbHeapProp{};   // ヒープ設定
+		cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
+		// リソース設定
+		D3D12_RESOURCE_DESC cbResourceDesc{};
+		cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+		cbResourceDesc.Width = (sizeof(ConstBufferData) + 0xff) & ~0xff; // 頂点データ全体のサイズ
+		cbResourceDesc.Height = 1;
+		cbResourceDesc.DepthOrArraySize = 1;
+		cbResourceDesc.MipLevels = 1;
+		cbResourceDesc.SampleDesc.Count = 1;
+		cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+		//定数バッファの生成
+		result = directXCom->GetDevice()->CreateCommittedResource(
+			&cbHeapProp,//ヒープ設定
+			D3D12_HEAP_FLAG_NONE,
+			&cbResourceDesc,//リソース設定
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			nullptr,
+			IID_PPV_ARGS(&constBuff));
+		assert(SUCCEEDED(result));
+	}
+
 	//テクスチャバッファの生成
 	CD3DX12_CLEAR_VALUE crealVal = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, clearColor);
 	result = directXCom->GetDevice()->CreateCommittedResource(
@@ -133,12 +206,12 @@ void PostEffect::Initialize(SpriteCommon* spriteCommon_,uint32_t texIndex)
 void PostEffect::Draw(ID3D12GraphicsCommandList* comList)
 {
 	comList = directXCom->GetCommandList();
-	matWorld = XMMatrixIdentity();
-	matWorld *= XMMatrixRotationZ(XMConvertToRadians(rotation));
-	matWorld *= XMMatrixTranslation(position.x, position.y, 0.0f);
+	//matWorld = XMMatrixIdentity();
+	//matWorld *= XMMatrixRotationZ(XMConvertToRadians(rotation));
+	//matWorld *= XMMatrixTranslation(position.x, position.y, 0.0f);
 
 	constMap->color = color;
-	constMap->mat = matWorld * matProjection;
+	constMap->mat = XMMatrixIdentity();
 
 	//非表示
 	if (isInvisible)

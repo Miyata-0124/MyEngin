@@ -33,6 +33,19 @@ public:
 	void PostDrawScene(ID3D12GraphicsCommandList* cmdList);
 private:
 	void CreateHeaps();
+private://構造体
+	//頂点データ
+	struct Vertex {
+		XMFLOAT3	pos;//xyz座標
+		XMFLOAT2	uv;//uv座標
+	};
+
+	//定数バッファ用データ（マテリアル）
+	struct ConstBufferData {
+		XMFLOAT4	color;//色（RGB）
+		XMMATRIX	mat;//3D変換行列
+	};
+
 private:
 	SpriteCommon* spriteCommon;
 	DirectXCommon* directXCom;

@@ -78,7 +78,6 @@ void	Sprite::Initialize(SpriteCommon* spriteCommon_, uint32_t texIndex_) {
 	spriteCommon = spriteCommon_;
 	directXCom = spriteCommon_->GetdxCom();
 
-	//UINT	sizeVB=static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
 	//頂点バッファ
 	D3D12_HEAP_PROPERTIES heapProp{};//ヒープ設定
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;//GPUへの転送

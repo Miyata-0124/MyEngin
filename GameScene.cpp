@@ -41,15 +41,15 @@ void GameScene::Initialize()
 
 	//スプライト
 	sprite->Initialize(spriteCommon, 1);
-	sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	sprite->SetAnchorPoint(XMFLOAT2(0.0f, 0.0f));
 	sprite->SetSize(XMFLOAT2(320.0f, 180.0f));
-	sprite->SetPosition({ 160,90 });
+	sprite->SetPosition({ 0,0 });
 
 	postEffect = new PostEffect();
 	postEffect->Initialize(spriteCommon, 2);
 	postEffect->SetAnchorPoint(XMFLOAT2(0.0f, 0.0f));
 	postEffect->SetSize(XMFLOAT2(320.0f, 180.0f));
-	postEffect->SetPosition({ 480,90 });
+	postEffect->SetPosition({ 320,0 });
 
 	model2 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
@@ -174,6 +174,10 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 	//描画処理ここから↓
+	postEffect->PreDrawScene(directXCom->GetCommandList());
+
+	postEffect->PostDrawScene(directXCom->GetCommandList());
+	//描画開始
 	directXCom->PreDraw();
 	//背景
 
@@ -194,20 +198,18 @@ void GameScene::Draw()
 
 
 	// UI関連
-	//sprite->SetIsInvisible(false);
+	//->SetIsInvisible(false);
 	//sprite->SetTexIndex(1);
 	//sprite->Draw();
 
-	postEffect->PreDrawScene(directXCom->GetCommandList());
-	//sprite->Draw();
 
-	postEffect->SetIsInvisible(false);
-	postEffect->Draw(directXCom->GetCommandList());
-
-	postEffect->PostDrawScene(directXCom->GetCommandList());
 	/*sprite2->SetTexIndex(2);
 	sprite2->Draw();*/
 
+	//ポストエフェクトの描画
+	postEffect->SetIsInvisible(false);
+	postEffect->Draw(directXCom->GetCommandList());
+	//描画終了
 	directXCom->PostDraw();
 	//ここまで↑
 }
