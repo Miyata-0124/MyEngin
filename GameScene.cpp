@@ -32,9 +32,6 @@ void GameScene::Initialize()
 	spriteCommon->Loadtexture(1, "MK.png");
 	spriteCommon->Loadtexture(2, "testpar1.png");
 #pragma	region	シーンの初期化
-//ViewProjection
-//	std::unique_ptr<ViewProjection>camera = std::make_unique<ViewProjection>();
-//	camera->Initialeze();
 //	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
@@ -53,11 +50,11 @@ void GameScene::Initialize()
 
 	//sonLoader = JsonLoader::LoadFlomJSONInternal("test");
 
-	/*object1->initialize();
-	object1->SetModel(model);
+	object1->initialize();
+	object1->SetModel(model2);
 	object1->SetRotation({ 0,60,0 });
 	object1->SetPosition({ 0,-3,0 });
-	object1->PlayAnimation();*/
+	object1->PlayAnimation();
 	//
 	//	Sprite* sprite2 = new Sprite();
 	//	sprite2->Initialize(spriteCommon, 2);
@@ -159,7 +156,7 @@ void GameScene::Update()
 		/*obj3d2->Update();
 		particle->Update();*/
 
-	//object1->Update();
+	object1->Update();
 	/*for (auto object : objects) {
 		object->Update();
 	}*/
@@ -173,16 +170,15 @@ void GameScene::Draw()
 {
 	//描画処理ここから↓
 	postEffect->PreDrawScene(directXCom->GetCommandList());
-
-	postEffect->PostDrawScene(directXCom->GetCommandList());
 	//描画開始
 	directXCom->PreDraw();
+
 	//背景
 
 
 	//オブジェクト
 	Object3d::PreDraw(directXCom->GetCommandList());
-	//object1->Draw(directXCom->GetCommandList());
+	object1->Draw(directXCom->GetCommandList());
 	//Object3d::PreDraw(directXCom->GetCommandList());
 	//obj3d->Draw();
 	//obj3d2->Draw();
@@ -190,15 +186,17 @@ void GameScene::Draw()
 		object->Draw();
 	}*/
 	Object3d::PostDraw();
+
+	postEffect->PostDrawScene(directXCom->GetCommandList());
 	//Particle::PreDraw(directXCom->GetCommandList());
 	//particle->Draw();
 	//Particle::PostDraw();
 
 
 	// UI関連
-	//->SetIsInvisible(false);
-	//sprite->SetTexIndex(1);
-	//sprite->Draw();
+	/*sprite->SetIsInvisible(false);
+	sprite->SetTexIndex(1);
+	sprite->Draw();*/
 
 
 	/*sprite2->SetTexIndex(2);
