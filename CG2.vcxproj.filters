@@ -107,6 +107,9 @@
     <None Include="Resources\hlsl\Fbx.hlsli">
       <Filter>hlsl&amp;hlsli</Filter>
     </None>
+    <None Include="Resources\hlsl\PostEffect.hlsli">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\hlsl\BasicPS.hlsl">
@@ -146,6 +149,12 @@
       <Filter>hlsl&amp;hlsli</Filter>
     </FxCompile>
     <FxCompile Include="Resources\hlsl\FbxPS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\hlsl\PostEffectPS.hlsl">
+      <Filter>hlsl&amp;hlsli</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\hlsl\PostEffectVS.hlsl">
       <Filter>hlsl&amp;hlsli</Filter>
     </FxCompile>
   </ItemGroup>

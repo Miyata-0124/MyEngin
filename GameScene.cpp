@@ -45,11 +45,9 @@ void GameScene::Initialize()
 	sprite->SetSize(XMFLOAT2(320.0f, 180.0f));
 	sprite->SetPosition({ 0,0 });
 
-	postEffect = new PostEffect();
-	postEffect->Initialize(spriteCommon, 2);
-	postEffect->SetAnchorPoint(XMFLOAT2(0.0f, 0.0f));
-	postEffect->SetSize(XMFLOAT2(320.0f, 180.0f));
-	postEffect->SetPosition({ 320,0 });
+	PostEffect::StaticInitialize(directXCom);
+	postEffect = new PostEffect;
+	postEffect->Initialize();
 
 	model2 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
@@ -207,8 +205,7 @@ void GameScene::Draw()
 	sprite2->Draw();*/
 
 	//ポストエフェクトの描画
-	postEffect->SetIsInvisible(false);
-	postEffect->Draw(directXCom->GetCommandList());
+	postEffect->Draw(directXCom->GetCommandList(), input);
 	//描画終了
 	directXCom->PostDraw();
 	//ここまで↑
