@@ -7,7 +7,6 @@
 #include "Item.h"
 #include <sstream>
 #include <iomanip>
-#include <imgui.h>
 
 void GameScene::Initialize()
 {
@@ -28,8 +27,6 @@ void GameScene::Initialize()
 	input = new	Input;
 	input->Initialize(winApp);
 
-	imgui = new ImguiManager;
-	imgui->Initialize(winApp, directXCom);
 	//DirectX初期化処理　　ここまで
 #pragma endregion
 #pragma	endregion
@@ -164,10 +161,6 @@ void GameScene::Update()
 	
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
-
-	imgui->Begin();
-	//ImGui::ShowDemoWindow();
-	imgui->End();
 }
 
 void GameScene::Draw()
@@ -202,8 +195,6 @@ void GameScene::Draw()
 	sprite->SetTexIndex(1);
 	//sprite->Draw();
 
-	imgui->Draw();
-
 	directXCom->PostDraw();
 	//ここまで↑
 }
@@ -212,7 +203,6 @@ void GameScene::Finalize()
 {
 	winApp->Finalize();
 	FbxLoader::GetInstance()->Finalize();
-	imgui->Finalize();
 	delete input;
 	delete winApp;
 	delete directXCom;

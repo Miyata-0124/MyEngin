@@ -61,16 +61,3 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
 
     return true;
 }
-
-//bool Collision::CheckBox2Sphere(const Box& box, const Sphere& sphere, DirectX::XMVECTOR* inter)
-//{
-//    //‚à‚µƒvƒŒƒCƒ„[‚ÌX‚ª” ‚æ‚è‘å‚«‚¯‚ê‚Î
-//    if (sphere.center.m128_f32[0] >= box.center.m128_f32[0] + box.radius)
-//    {
-//        float x = sphere.center.m128_f32[0] - box.center.m128_f32[0] + box.radius;
-//    }
-//    else if (sphere.center.m128_f32[0] <= box.center.m128_f32[0] - box.radius)
-//    {
-//
-//    }
-//}

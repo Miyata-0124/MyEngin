@@ -50,7 +50,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)imgui;$(SolutionDir)DirectXTex;$(ProjectDir)lib\fbx_sdk\include;C:\json-3.11.2\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)DirectXTex;$(ProjectDir)lib\fbx_sdk\include;C:\json-3.11.2\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -102,7 +102,6 @@
     <ClCompile Include="FbxObject3D.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="ImGuiManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="JsonLoader.cpp" />
@@ -215,7 +214,6 @@
     <ClInclude Include="FbxObject3D.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameScene.h" />
-    <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="JsonLoader.h" />
@@ -237,9 +235,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\DirectXTex-feb2022\DirectXTex-feb2022\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
-    </ProjectReference>
-    <ProjectReference Include="imgui\imgui.vcxproj">
-      <Project>{f429aee2-20dd-46ff-944f-e5f41320c9d5}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

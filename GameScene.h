@@ -6,7 +6,6 @@
 #include "DirectXCommon.h"
 #include "ViewProjection.h"
 #include "SpriteCommon.h"
-#include "ImGuiManager.h"
 #include "Sprite.h"
 #include "Particle.h"
 #include "Object3d.h"
@@ -77,6 +76,5 @@ private: //ゲーム内使用クラス
 	Item* objItem = nullptr;
 
 	CollisionManager* collisionManager = nullptr;
-	ImguiManager* imgui = nullptr;
 };
 

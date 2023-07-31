@@ -31,6 +31,7 @@ void CollisionManager::CheckAllCollisions()
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
             }
+            //球と平面
             if (colB->GetShapeType() == COLISIONSHAPE_SPHERE && colA->GetShapeType() == COLISIONSHAPE_PLANE) {
                 Sphere* SphereA = dynamic_cast<Sphere*>(colB);//プレイヤー,アイテム
                 Plane* PlaneA = dynamic_cast<Plane*>(colA);//床
@@ -40,7 +41,6 @@ void CollisionManager::CheckAllCollisions()
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
             }
-
             //球と球
             if (colA->GetShapeType() == COLISIONSHAPE_SPHERE && colB->GetShapeType() == COLISIONSHAPE_SPHERE)
             {
