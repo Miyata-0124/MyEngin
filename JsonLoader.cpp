@@ -74,17 +74,17 @@ LevelData* JsonLoader::LoadFlomJSONInternal(const std::string& modelname)
 			objectData.scaling.m128_f32[2] = (float)transform["scaling"][0];
 			objectData.scaling.m128_f32[3] = 0.0f;
 			// TODO コライダーのパラメータ読み
-			//nlohmann::json& collider = object["collider"];
-			////中心
-			//objectData.center.m128_f32[0] = (float)collider["center"][1];
-			//objectData.center.m128_f32[1] = (float)collider["center"][2];
-			//objectData.center.m128_f32[2] = (float)collider["center"][0];
-			//objectData.center.m128_f32[3] = 1.0f;
-			////サイズ
-			//objectData.size.m128_f32[0] = (float)collider["size"][1];
-			//objectData.size.m128_f32[1] = (float)collider["size"][2];
-			//objectData.size.m128_f32[2] = (float)collider["size"][0];
-			//objectData.size.m128_f32[3] = 0.0f;
+			nlohmann::json& collider = object["collider"];
+			//中心
+			objectData.center.m128_f32[0] = (float)collider["center"][1];
+			objectData.center.m128_f32[1] = (float)collider["center"][2];
+			objectData.center.m128_f32[2] = (float)collider["center"][0];
+			objectData.center.m128_f32[3] = 1.0f;
+			//サイズ
+			objectData.size.m128_f32[0] = (float)collider["size"][1];
+			objectData.size.m128_f32[1] = (float)collider["size"][2];
+			objectData.size.m128_f32[2] = (float)collider["size"][0];
+			objectData.size.m128_f32[3] = 0.0f;
 		}
 
 		//再帰関数

@@ -10,22 +10,13 @@
 
 void GameScene::Initialize()
 {
-#pragma region WindowsAPIの初期化
-	winApp = new	WinApp;
-	winApp->Initialize();
-#pragma endregion
-
-#pragma region DirectX初期化処理
-	//DirectX初期化処理　　ここから
-	directXCom = new DirectXCommon;
-	directXCom->Initialize(winApp);
-
+	Framework::Initialize();
 	//FBX関連
-	FbxLoader::GetInstance()->Initialize(directXCom->GetDevice());
+	FbxLoader::GetInstance()->Initialize(Framework::GetDXCommon()->GetDevice());
 
 	//キー情報
 	input = new	Input;
-	input->Initialize(winApp);
+	input->Initialize(Framework::GetWinApp());
 
 	//DirectX初期化処理　　ここまで
 #pragma endregion
@@ -33,15 +24,15 @@ void GameScene::Initialize()
 //スプライト
 	//スプライト共通部分の初期化
 	spriteCommon = new SpriteCommon;
-	spriteCommon->Initialize(directXCom);
+	spriteCommon->Initialize(Framework::GetDXCommon());
 	spriteCommon->Loadtexture(1, "MK.png");
 	spriteCommon->Loadtexture(2, "test.png");
 	//ViewProjection
 	camera = new ViewProjection();
 	camera->Initialeze();
 //一度しか宣言しない
-	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
-	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
+	Object3d::StaticInitialize(Framework::GetDXCommon()->GetDevice(), WinApp::window_width, WinApp::window_height);
+	FbxObject3d::StaticInitialize(Framework::GetDXCommon()->GetDevice(), WinApp::window_width, WinApp::window_height);
 	//Particle::StaticInitialize(directXCom->GetDevice(), camera.get());
 	//スプライト
 	sprite->Initialize(spriteCommon, 1);
@@ -181,21 +172,19 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 	//描画処理ここから↓
-	directXCom->PreDraw();
-	//背景
-
-
+	Framework::GetDXCommon()->PreDraw();
 	//オブジェクト
 	//object1->Draw(directXCom->GetCommandList());
-	Object3d::PreDraw(directXCom->GetCommandList());
+	Object3d::PreDraw(Framework::GetDXCommon()->GetCommandList());
+	//背景
+	objBackGround->Draw();
 	//プレイヤー
 	objPlayer->Draw();
 	//アイテム
 	objItem->Draw();
 	//地面
 	//objFloor->Draw();
-	//背景
-	objBackGround->Draw();
+
 	for (auto object : objects) {
 		object->Draw();
 	}
@@ -214,17 +203,15 @@ void GameScene::Draw()
 	sprite->SetTexIndex(1);
 	sprite->Draw();
 
-	directXCom->PostDraw();
+	Framework::GetDXCommon()->PostDraw();
 	//ここまで↑
 }
 
 void GameScene::Finalize()
 {
-	winApp->Finalize();
+	Framework::Finalize();
 	FbxLoader::GetInstance()->Finalize();
 	delete input;
-	delete winApp;
-	delete directXCom;
 	delete spriteCommon;
 	delete sprite;
 	delete model;
@@ -263,7 +250,14 @@ void GameScene::LoadMap()
 		newObject->SetPosition(pos);
 
 		////コライダー
-		//DirectX::XMFLOAT3 center;
+		DirectX::XMFLOAT3 center;
+		DirectX::XMStoreFloat3(&center, objectData.center);
+		newObject->SetCenter(center);
+
+		//コライダーサイズ
+		DirectX::XMFLOAT3 size;
+		DirectX::XMStoreFloat3(&size, objectData.size);
+		newObject->SetColSize(size);
 		// 配列に登録
 		objects.push_back(newObject);
 	}

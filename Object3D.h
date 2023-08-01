@@ -199,7 +199,9 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="collider"></param>
 	void SetCollider(BaseCollider* collider);
-	
+
+	void SetCenter(const XMFLOAT3& center) { this->center = center; }
+	void SetColSize(const XMFLOAT3& size) { this->size = size; }
 protected: // メンバ変数
 	//ComPtr<ID3D12Resource> constBuff; // 定数バッファ
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
@@ -215,6 +217,10 @@ protected: // メンバ変数
 	// ローカルワールド変換行列
 	XMMATRIX matWorld;
 	XMMATRIX matScale, matRot, matTrans;
+	//中心座標
+	XMFLOAT3 center = { 0,0,0 };
+	//コライダーサイズ
+	XMFLOAT3 size = { 1,1,1 };
 	// 親オブジェクト
 	Object3d* parent = nullptr;
 	//モデル

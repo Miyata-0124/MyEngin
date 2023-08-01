@@ -2,8 +2,6 @@
 //自作クラス
 #include <list>
 #include "Input.h"
-#include "WinApp.h"
-#include "DirectXCommon.h"
 #include "ViewProjection.h"
 #include "SpriteCommon.h"
 #include "Sprite.h"
@@ -14,6 +12,7 @@
 #include "Model.h"
 #include "JsonLoader.h"
 #include "BackGround.h"
+#include "Framework.h"
 
 class CollisionManager;
 class Player;
@@ -21,44 +20,42 @@ class BackGround;
 class Floor;
 class Item;
 
-class GameScene
+class GameScene : public Framework
 {
 public: //基本関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize() override;
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update() override;
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw() override;
 
 	/// <summary>
 	/// 解放
 	/// </summary>
-	void Finalize();
+	void Finalize() override;
 
 	void LoadMap();
 
 public: //mainに一部引き渡し用
-	WinApp* GetWinApp() { return winApp; }
 	Input* GetInput() { return input; }
 
 private: //ゲーム内使用クラス
-	WinApp* winApp = nullptr;
-	DirectXCommon* directXCom = nullptr;
+	
 	//デバッグテキスト
 	//ImguiManager* imgui = nullptr;
 	//キー情報
 	Input* input = nullptr;
 	//カメラ
-	ViewProjection* camera = nullptr);
+	ViewProjection* camera = nullptr;
 	//スプライト
 	SpriteCommon* spriteCommon = nullptr;
 	Sprite* sprite = new Sprite();
