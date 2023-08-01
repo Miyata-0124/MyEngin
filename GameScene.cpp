@@ -36,9 +36,9 @@ void GameScene::Initialize()
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "MK.png");
 	spriteCommon->Loadtexture(2, "test.png");
-#pragma	region	シーンの初期化
 	//ViewProjection
-	
+	camera = new ViewProjection();
+	camera->Initialeze();
 //一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
@@ -73,7 +73,7 @@ void GameScene::Initialize()
 
 	collisionManager = CollisionManager::GetInstance();
 	//プレイヤー
-	objPlayer = Player::Create(playerModel);
+	objPlayer = Player::Create(ground);
 	objPlayer->SetInput(input);
 	//地面
 	objFloor = Floor::Create(ground);
@@ -83,7 +83,7 @@ void GameScene::Initialize()
 	//背景
 	objBackGround = BackGround::Create(backGround);
 #pragma endregion
-	//LoadMap();
+	LoadMap();
 	
 	#pragma region パーティクル関係
 		//パーティクル
@@ -101,7 +101,8 @@ void GameScene::Update()
 	///それぞれのクラスのUpdateのみ記述
 	//キー情報
 	input->Update();
-
+	//カメラ
+	camera->Update();
 #pragma region パーティクル
 	//パーティクル発生
 	//if (input->TriggerKey(DIK_F))
@@ -192,7 +193,7 @@ void GameScene::Draw()
 	//アイテム
 	objItem->Draw();
 	//地面
-	objFloor->Draw();
+	//objFloor->Draw();
 	//背景
 	objBackGround->Draw();
 	for (auto object : objects) {
@@ -261,6 +262,8 @@ void GameScene::LoadMap()
 		DirectX::XMStoreFloat3(&pos, objectData.position);
 		newObject->SetPosition(pos);
 
+		////コライダー
+		//DirectX::XMFLOAT3 center;
 		// 配列に登録
 		objects.push_back(newObject);
 	}

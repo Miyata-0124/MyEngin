@@ -57,6 +57,8 @@ private: //ゲーム内使用クラス
 	//ImguiManager* imgui = nullptr;
 	//キー情報
 	Input* input = nullptr;
+	//カメラ
+	ViewProjection* camera = nullptr);
 	//スプライト
 	SpriteCommon* spriteCommon = nullptr;
 	Sprite* sprite = new Sprite();

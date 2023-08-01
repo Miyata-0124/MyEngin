@@ -27,6 +27,11 @@ struct LevelData
 		DirectX::XMVECTOR rotation;
 		// スケーリング
 		DirectX::XMVECTOR scaling;
+		//コライダー
+		//中心
+		DirectX::XMVECTOR center;
+		//サイズ
+		DirectX::XMVECTOR size;
 	};
 
 	//オブジェクト配列

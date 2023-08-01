@@ -73,6 +73,7 @@ void Item::RetentionThrow()
 			}
 		}
 	}
+	//“Š±‚³‚ê‚½
 	if (isThrow)
 	{
 		if (throwTimer > 0.0f)
@@ -87,11 +88,11 @@ void Item::RetentionThrow()
 		{
 			if (!isDirection)
 			{
-				throwSpeed = 5.0f;
+				throwSpeed = 3.0f;
 			}
 			else if (isDirection)
 			{
-				throwSpeed = -5.0f;
+				throwSpeed = -3.0f;
 			}
 			position.x += throwSpeed;
 		}

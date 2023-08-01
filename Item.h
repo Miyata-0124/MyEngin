@@ -59,7 +59,7 @@ private:
 	//半径
 	float radius = 1.0f;
 	//移動する速度
-	float throwSpeed = 5.0f;
+	float throwSpeed = 3.0f;
 
 	//タイマー,フラグ
 	bool isRetention = false;
