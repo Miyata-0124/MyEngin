@@ -50,6 +50,8 @@ private: //ゲーム内使用クラス
 	//スプライト
 	SpriteCommon* spriteCommon = nullptr;
 	Sprite* sprite = new Sprite();
+	//カメラ初期化
+	std::unique_ptr<Camera>camera = std::make_unique<Camera>();
 	//JSON
 	LevelData* jsonLoader = nullptr;
 	std::map<std::string, Model*> models;
