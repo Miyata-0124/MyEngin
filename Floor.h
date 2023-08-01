@@ -34,7 +34,7 @@ private:
 	//Œ´“_‚©‚ç‚Ì‹——£
 	float distance = -13.0f;
 	//”¼Œa
-	XMVECTOR radius = { 40.0f, 1.0f,40.0f };
+	XMVECTOR radius = { 40.0f, 1.0f,10.0f };
 //public:
 //	void Initialize(Model* model);
 //	void Update();

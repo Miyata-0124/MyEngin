@@ -13,9 +13,11 @@
 #include "FbxLoader.h"
 #include "Model.h"
 #include "JsonLoader.h"
+#include "BackGround.h"
 
 class CollisionManager;
 class Player;
+class BackGround;
 class Floor;
 class Item;
 
@@ -52,7 +54,7 @@ private: //ゲーム内使用クラス
 	WinApp* winApp = nullptr;
 	DirectXCommon* directXCom = nullptr;
 	//デバッグテキスト
-	//ImguiManager* imgui = nullptr;;
+	//ImguiManager* imgui = nullptr;
 	//キー情報
 	Input* input = nullptr;
 	//スプライト
@@ -74,6 +76,8 @@ private: //ゲーム内使用クラス
 	Floor* objFloor = nullptr;
 	//アイテム
 	Item* objItem = nullptr;
+	//背景
+	BackGround* objBackGround = nullptr;
 
 	CollisionManager* collisionManager = nullptr;
 };

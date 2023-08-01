@@ -27,7 +27,7 @@ bool Floor::Initialize()
 	{
 		return false;
 	}
-	SetSize({ 80,1,80, });
+	SetSize({ 80,1,20, });
 	SetPosition({ 0, -15, 0 });
 	//コライダーの追加
 	//中心座標と原点からの距離

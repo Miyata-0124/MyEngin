@@ -45,9 +45,9 @@ void GameScene::Initialize()
 	//Particle::StaticInitialize(directXCom->GetDevice(), camera.get());
 	//スプライト
 	sprite->Initialize(spriteCommon, 1);
-	sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	sprite->SetSize(XMFLOAT2(320.0f, 180.0f));
-	sprite->SetPosition({ 160,90 });
+	sprite->SetAnchorPoint(XMFLOAT2(0, 0));
+	sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
+	sprite->SetPosition({ -1280,0 });
 
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
 
@@ -67,16 +67,21 @@ void GameScene::Initialize()
 	Model* playerModel = Model::LoadFromOBJ("Box");
 	Model* ground = Model::LoadFromOBJ("blue");
 	Model* item_ = Model::LoadFromOBJ("Item");
+	Model* backGround = Model::LoadFromOBJ("BG");
 #pragma endregion
 #pragma region Player等のオブジェクト
 
 	collisionManager = CollisionManager::GetInstance();
+	//プレイヤー
 	objPlayer = Player::Create(playerModel);
 	objPlayer->SetInput(input);
+	//地面
 	objFloor = Floor::Create(ground);
+	//アイテム
 	objItem = Item::Create(item_);
 	objItem->SetInput(input);
-	
+	//背景
+	objBackGround = BackGround::Create(backGround);
 #pragma endregion
 	//LoadMap();
 	
@@ -143,9 +148,14 @@ void GameScene::Update()
 			sprite->SetPosition(position);
 		}*/
 #pragma endregion
+	//プレイヤー
 	objPlayer->Update();
+	//アイテム
 	objItem->Update();
+	//地面
 	objFloor->Update();
+	//背景
+	objBackGround->Update();
 	//obj3d->Update();
 	//particle->Update();
 
@@ -154,9 +164,13 @@ void GameScene::Update()
 	}
 
 #pragma region 各クラス間の情報受け渡し
+	//オブジェクト
 	objItem->SetPPosition(objPlayer->GetPosition());
 	objItem->SetRetention(objPlayer->GetRetention());
 	objItem->SetDirection(objPlayer->GetDirection());
+	//スプライト
+
+
 #pragma endregion
 	
 	//判定マネージャー
@@ -173,10 +187,14 @@ void GameScene::Draw()
 	//オブジェクト
 	//object1->Draw(directXCom->GetCommandList());
 	Object3d::PreDraw(directXCom->GetCommandList());
+	//プレイヤー
 	objPlayer->Draw();
+	//アイテム
 	objItem->Draw();
+	//地面
 	objFloor->Draw();
-
+	//背景
+	objBackGround->Draw();
 	for (auto object : objects) {
 		object->Draw();
 	}
@@ -193,7 +211,7 @@ void GameScene::Draw()
 	// UI関連
 	sprite->SetIsInvisible(false);
 	sprite->SetTexIndex(1);
-	//sprite->Draw();
+	sprite->Draw();
 
 	directXCom->PostDraw();
 	//ここまで↑
@@ -212,6 +230,7 @@ void GameScene::Finalize()
 	delete objPlayer;
 	delete objFloor;
 	delete objItem;
+	delete objBackGround;
 	//delete object1;
 	/*delete model1;
 	delete obj3d;*/
@@ -227,7 +246,6 @@ void GameScene::LoadMap()
 		// モデルを指定して3Dオブジェクトを生成
 		Object3d* newObject = Object3d::Create();
 		newObject->SetModel(model);
-
 		// 座標
 		DirectX::XMFLOAT3 scale;
 		DirectX::XMStoreFloat3(&scale, objectData.scaling);
