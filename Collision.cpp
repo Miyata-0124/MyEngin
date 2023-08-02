@@ -61,3 +61,8 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
 
     return true;
 }
+
+bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, XMVECTOR* intetr)
+{
+    return false;
+}

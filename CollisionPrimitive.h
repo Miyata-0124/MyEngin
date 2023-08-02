@@ -34,3 +34,14 @@ struct Ray
 	//•ûŒü
 	DirectX::XMVECTOR dir = { 1,0,0,0 };
 };
+
+//’¼•û‘Ì‚Ì” 
+struct OBB
+{
+	//êŠ
+	DirectX::XMVECTOR pos = { 0,0,0,0 };
+	//•ûŒü²
+	DirectX::XMVECTOR normalDir = { 0,0,0,0 };
+	//²‚Ì’·‚³
+	float dirLength[3] = { 1,1,1 };
+};

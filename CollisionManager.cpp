@@ -52,6 +52,12 @@ void CollisionManager::CheckAllCollisions()
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
             }
+            //直方体と球
+            if (colA->GetShapeType() == COLISIONSHAPE_OBB && colB->GetShapeType() == COLISIONSHAPE_SPHERE)
+            {
+                OBB* obbA = dynamic_cast<OBB*>(colA);//直方体1　壁やマップ
+                Sphere* SphereA = dynamic_cast<Sphere*>(colB);;//球1 プレイヤー
+            }
         }
     }
 }

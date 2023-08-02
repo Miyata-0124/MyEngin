@@ -109,6 +109,7 @@
     <ClCompile Include="JsonLoader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="OBBCollider.cpp" />
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="PlaneCollider.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="JsonLoader.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="OBBCollider.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="PlaneCollider.h" />

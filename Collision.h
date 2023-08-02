@@ -29,5 +29,13 @@ public:
 	/// <param name="inter">Œğ“_</param>
 	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©</returns>
 	static bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
+	/// <summary>
+	/// ’¼•û‘Ì‚Æ‹…
+	/// </summary>
+	/// <param name="obb">’¼•û‘Ì</param>
+	/// <param name="sphere">‹…</param>
+	/// <param name="intetr">Œğ“_</param>
+	/// <returns></returns>
+	static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, XMVECTOR* intetr);
 };
 
