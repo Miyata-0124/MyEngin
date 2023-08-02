@@ -66,7 +66,7 @@ private:
 	bool isThrow = false;
 	bool isDirection = false;
 
-	float throwTimer = 3.0f; //Š|‚©‚Á‚½ŽžŠÔ
+	float throwTimer = 3.0f; //‚©‚©‚Á‚½ŽžŠÔ
 
 	XMFLOAT3 playerPosition;
 private:
