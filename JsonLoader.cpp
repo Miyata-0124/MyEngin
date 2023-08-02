@@ -73,8 +73,11 @@ LevelData* JsonLoader::LoadFlomJSONInternal(const std::string& modelname)
 			objectData.scaling.m128_f32[1] = (float)transform["scaling"][2];
 			objectData.scaling.m128_f32[2] = (float)transform["scaling"][0];
 			objectData.scaling.m128_f32[3] = 0.0f;
+
 			// TODO コライダーのパラメータ読み
 			nlohmann::json& collider = object["collider"];
+			//想定されているコライダー名
+			objectData.collName = collider["type"];
 			//中心
 			objectData.center.m128_f32[0] = (float)collider["center"][1];
 			objectData.center.m128_f32[1] = (float)collider["center"][2];

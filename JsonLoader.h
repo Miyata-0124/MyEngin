@@ -28,9 +28,11 @@ struct LevelData
 		// スケーリング
 		DirectX::XMVECTOR scaling;
 		//コライダー
-		//中心
+		// コライダー名
+		std::string collName;
+		// 中心
 		DirectX::XMVECTOR center;
-		//サイズ
+		// サイズ
 		DirectX::XMVECTOR size;
 	};
 

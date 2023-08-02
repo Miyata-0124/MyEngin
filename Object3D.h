@@ -202,6 +202,7 @@ public: // メンバ関数
 
 	void SetCenter(const XMFLOAT3& center) { this->center = center; }
 	void SetColSize(const XMFLOAT3& size) { this->size = size; }
+	void SetName(const char& name) { this->collName = name; }
 protected: // メンバ変数
 	//ComPtr<ID3D12Resource> constBuff; // 定数バッファ
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
@@ -227,5 +228,6 @@ protected: // メンバ変数
 	Model* model = nullptr;
 
 	const char* name = nullptr;
+	char collName;
 	BaseCollider* collider = nullptr;
 };

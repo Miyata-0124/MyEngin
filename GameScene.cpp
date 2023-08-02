@@ -250,6 +250,8 @@ void GameScene::LoadMap()
 		newObject->SetPosition(pos);
 
 		////コライダー
+		
+		//コライダー中心
 		DirectX::XMFLOAT3 center;
 		DirectX::XMStoreFloat3(&center, objectData.center);
 		newObject->SetCenter(center);
