@@ -65,6 +65,7 @@ void PostEffect::Draw(ID3D12GraphicsCommandList * cmdList_, Input * input_) {
 	// 描画コマンド
 	cmdList_->DrawInstanced(_countof(vertices_), 1, 0, 0);//全ての頂点を使って描画
 }
+
 void PostEffect::CreateTex() {
 	//テクスチャリソース設定
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
@@ -107,6 +108,7 @@ void PostEffect::CreateTex() {
 		}
 	}
 }
+
 void PostEffect::CreateSRV() {
 	//SRV用デスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC srvDescHeapDesc = {};
@@ -127,6 +129,7 @@ void PostEffect::CreateSRV() {
 		&srvDesc,
 		descHeapSRV->GetCPUDescriptorHandleForHeapStart());
 }
+
 void PostEffect::CreateRTV() {
 	//RTV用デスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
@@ -154,6 +157,7 @@ void PostEffect::CreateRTV() {
 		);
 	}
 }
+
 void PostEffect::CreateDepth() {
 	//深度バッファリソース設定
 	CD3DX12_RESOURCE_DESC depthResourceDesc =
@@ -170,6 +174,7 @@ void PostEffect::CreateDepth() {
 		IID_PPV_ARGS(&depthBuff));
 	assert(SUCCEEDED(result_));
 }
+
 void PostEffect::CreateDSV() {
 	//DSV用デスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC DescHeapDesc{};
@@ -186,6 +191,7 @@ void PostEffect::CreateDSV() {
 		&dsvDesc,
 		descHeapDSV->GetCPUDescriptorHandleForHeapStart());
 }
+
 void PostEffect::CreateVertexBuffer() {
 	//頂点バッファの生成
 	CD3DX12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
@@ -236,6 +242,7 @@ void PostEffect::CreateVertexBuffer() {
 		constBuff->Unmap(0, nullptr);
 	}
 }
+
 void PostEffect::CreateGraphicsPipelineState() {
 	Microsoft::WRL::ComPtr<ID3DBlob> vsBlob = nullptr;
 	Microsoft::WRL::ComPtr<ID3DBlob> psBlob = nullptr;
@@ -376,6 +383,7 @@ void PostEffect::CreateGraphicsPipelineState() {
 	result_ = dxCommon->GetDevice()->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result_));
 }
+
 void PostEffect::PreDrawScene(ID3D12GraphicsCommandList * cmdList_) {
 	CD3DX12_RESOURCE_BARRIER resourceBuff[2] = {
 		CD3DX12_RESOURCE_BARRIER::Transition(texBuff[0].Get(),D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,D3D12_RESOURCE_STATE_RENDER_TARGET),
@@ -421,6 +429,7 @@ void PostEffect::PreDrawScene(ID3D12GraphicsCommandList * cmdList_) {
 	//深度バッファのクリア
 	cmdList_->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
+
 void PostEffect::PostDrawScene(ID3D12GraphicsCommandList * cmdList_) {
 	CD3DX12_RESOURCE_BARRIER resourceBuff[2] = {
 			CD3DX12_RESOURCE_BARRIER::Transition(texBuff[0].Get(),D3D12_RESOURCE_STATE_RENDER_TARGET,D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE),

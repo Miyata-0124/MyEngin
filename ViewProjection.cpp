@@ -1,8 +1,8 @@
 #include "ViewProjection.h"
 #include"WinApp.h"
 
-void ViewProjection::Initialeze() {
-	eye = { 0, 0, -50.0f };
+void Camera::Initialeze() {
+	eye = { 10, 10, 10.0f };
 	target = { 0, 0, 0 };
 	up = { 0, 1, 0 };
 
@@ -10,11 +10,12 @@ void ViewProjection::Initialeze() {
 	UpdateProjection();
 }
 
-void ViewProjection::Update() {
+void Camera::Update() {
 	UpdateView();
+	UpdateViewProjection();
 }
 
-void ViewProjection::UpdateView() {
+void Camera::UpdateView() {
 	// ビュー行列の生成
 	matView = XMMatrixLookAtLH(
 		XMLoadFloat3(&eye),
@@ -22,10 +23,14 @@ void ViewProjection::UpdateView() {
 		XMLoadFloat3(&up));
 }
 
-void ViewProjection::UpdateProjection() {
+void Camera::UpdateProjection() {
 	// 透視投影による射影行列の生成
 	matProjection = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(60.0f),
 		(float)WinApp::window_width / WinApp::window_height,
 		0.1f, 1000.0f);
+}
+
+void	Camera::UpdateViewProjection() {
+	matViewProjection = matView * matProjection;
 }

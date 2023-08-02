@@ -31,12 +31,15 @@ void GameScene::Initialize()
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "MK.png");
 	spriteCommon->Loadtexture(2, "testpar1.png");
+	//カメラ
+	camera = std::make_unique<Camera>();
+	camera->Initialeze();
+	camera->SetTarget({ 0,0,0 });
+	camera->SetEye({ 0,0,-20 });
+	camera->Update();
 #pragma	region	シーンの初期化
-//ViewProjection
-//	std::unique_ptr<ViewProjection>camera = std::make_unique<ViewProjection>();
-//	camera->Initialeze();
 //	//一度しか宣言しない
-	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
+	Object3d::StaticInitialize(directXCom->GetDevice(), camera.get());
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 
 	//スプライト
@@ -102,7 +105,7 @@ void GameScene::Update()
 	///それぞれのクラスのUpdateのみ記述
 	//キー情報
 	input->Update();
-
+	camera->Update();
 	//{
 	//	XMFLOAT3 eye = camera->GetEye();
 	//	XMFLOAT3 traget = camera->GetTarget();
@@ -178,6 +181,7 @@ void GameScene::Draw()
 	postEffect->PostDrawScene(directXCom->GetCommandList());
 	//描画開始
 	directXCom->PreDraw();
+
 	//背景
 
 
@@ -190,22 +194,24 @@ void GameScene::Draw()
 		object->Draw();
 	}*/
 	Object3d::PostDraw();
+
+	postEffect->PostDrawScene(directXCom->GetCommandList());
 	//Particle::PreDraw(directXCom->GetCommandList());
 	//particle->Draw();
 	//Particle::PostDraw();
 
 
 	// UI関連
-	//->SetIsInvisible(false);
-	//sprite->SetTexIndex(1);
-	//sprite->Draw();
+	/*sprite->SetIsInvisible(false);
+	sprite->SetTexIndex(1);
+	sprite->Draw();*/
 
 
 	/*sprite2->SetTexIndex(2);
 	sprite2->Draw();*/
 
 	//ポストエフェクトの描画
-	postEffect->Draw(directXCom->GetCommandList(), input);
+	//postEffect->Draw(directXCom->GetCommandList(), input);
 	//描画終了
 	directXCom->PostDraw();
 	//ここまで↑

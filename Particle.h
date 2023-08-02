@@ -73,7 +73,7 @@ public: // 静的メンバ関数
 	/// <param name="device">デバイス</param>
 	/// <param name="window_width">画面幅</param>
 	/// <param name="window_height">画面高さ</param>
-	static void StaticInitialize(ID3D12Device* device, ViewProjection* camera_);
+	static void StaticInitialize(ID3D12Device* device, Camera* camera_);
 
 	/// <summary>
 	/// 描画前処理
@@ -138,7 +138,7 @@ private: // 静的メンバ変数
 	// 頂点データ配列
 	static VertexPos vertices[vertexCount];
 	//カメラ
-	static ViewProjection* camera;
+	static Camera* camera;
 private:// 静的メンバ関数
 	/// <summary>
 	/// デスクリプタヒープの初期化
@@ -148,7 +148,7 @@ private:// 静的メンバ関数
 	/// <summary>
 	/// カメラ初期化
 	/// </summary>
-	static void InitializeCamera(ViewProjection* camera_);
+	static void InitializeCamera(Camera* camera_);
 
 	/// <summary>
 	/// グラフィックパイプライン生成

@@ -31,7 +31,7 @@ XMMATRIX Particle::matView{};
 XMMATRIX Particle::matProjection{};
 D3D12_VERTEX_BUFFER_VIEW Particle::vbView{};
 Particle::VertexPos Particle::vertices[vertexCount];
-ViewProjection* Particle::camera = nullptr;
+Camera* Particle::camera = nullptr;
 
 //XMFLOAT3同士の加算処理
 const	DirectX::XMFLOAT3	operator+(const	DirectX::XMFLOAT3& lhs, const DirectX::XMFLOAT3& rhs) {
@@ -229,7 +229,7 @@ void	Particle::SetTextureCommands(uint32_t index) {
 
 }
 
-void Particle::StaticInitialize(ID3D12Device* device, ViewProjection* camera_)
+void Particle::StaticInitialize(ID3D12Device* device, Camera* camera_)
 {
 	// nullptrチェック
 	assert(device);
@@ -444,7 +444,7 @@ void Particle::InitializeGraphicsPipeline()
 
 }
 
-void Particle::InitializeCamera(ViewProjection* camera_)
+void Particle::InitializeCamera(Camera* camera_)
 {
 	// ビュー行列の生成
 	//matView = XMMatrixLookAtLH(
