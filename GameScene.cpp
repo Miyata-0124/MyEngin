@@ -53,11 +53,11 @@ void GameScene::Initialize()
 
 	//sonLoader = JsonLoader::LoadFlomJSONInternal("test");
 
-	/*object1->initialize();
-	object1->SetModel(model);
+	object1->initialize();
+	object1->SetModel(model2);
 	object1->SetRotation({ 0,60,0 });
 	object1->SetPosition({ 0,-3,0 });
-	object1->PlayAnimation();*/
+	object1->PlayAnimation();
 	//
 	//	Sprite* sprite2 = new Sprite();
 	//	sprite2->Initialize(spriteCommon, 2);
@@ -159,7 +159,7 @@ void GameScene::Update()
 		/*obj3d2->Update();
 		particle->Update();*/
 
-	//object1->Update();
+	object1->Update();
 	/*for (auto object : objects) {
 		object->Update();
 	}*/
@@ -173,6 +173,7 @@ void GameScene::Draw()
 {
 	//描画処理ここから↓
 	postEffect->PreDrawScene(directXCom->GetCommandList());
+	object1->Draw(directXCom->GetCommandList());
 
 	postEffect->PostDrawScene(directXCom->GetCommandList());
 	//描画開始
@@ -182,7 +183,6 @@ void GameScene::Draw()
 
 	//オブジェクト
 	Object3d::PreDraw(directXCom->GetCommandList());
-	//object1->Draw(directXCom->GetCommandList());
 	//Object3d::PreDraw(directXCom->GetCommandList());
 	//obj3d->Draw();
 	//obj3d2->Draw();
