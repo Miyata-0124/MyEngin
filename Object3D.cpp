@@ -38,8 +38,6 @@ void Object3d::StaticInitialize(ID3D12Device* device, Camera* camera_)
 	// パイプライン初期化
 	InitializeGraphicsPipeline();
 
-	camera = new Camera;
-	camera = camera_;
 }
 
 void Object3d::PreDraw(ID3D12GraphicsCommandList* cmdList)

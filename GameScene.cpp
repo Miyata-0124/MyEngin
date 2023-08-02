@@ -186,16 +186,14 @@ void GameScene::Draw()
 
 
 	//オブジェクト
-	Object3d::PreDraw(directXCom->GetCommandList());
+	//Object3d::PreDraw(directXCom->GetCommandList());
 	//Object3d::PreDraw(directXCom->GetCommandList());
 	//obj3d->Draw();
 	//obj3d2->Draw();
 	/*for (auto object : objects) {
 		object->Draw();
 	}*/
-	Object3d::PostDraw();
-
-	postEffect->PostDrawScene(directXCom->GetCommandList());
+	//Object3d::PostDraw();
 	//Particle::PreDraw(directXCom->GetCommandList());
 	//particle->Draw();
 	//Particle::PostDraw();
@@ -211,7 +209,7 @@ void GameScene::Draw()
 	sprite2->Draw();*/
 
 	//ポストエフェクトの描画
-	//postEffect->Draw(directXCom->GetCommandList(), input);
+	postEffect->Draw(directXCom->GetCommandList(), input);
 	//描画終了
 	directXCom->PostDraw();
 	//ここまで↑
