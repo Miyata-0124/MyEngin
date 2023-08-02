@@ -10,6 +10,8 @@ float4 main(VSOutput input) : SV_TARGET
     float shiftWidth = 0.005;
 
     float4 texcolor1 = { 0, 0, 0, 0 };
+
+    //•½‹Ï‚Ú‚©‚µ
     texcolor1 += tex1.Sample(smp, input.uv + (-shiftWidth, -shiftWidth));
     texcolor1 += tex1.Sample(smp, input.uv + (0, -shiftWidth));
     texcolor1 += tex1.Sample(smp, input.uv + (+shiftWidth, -shiftWidth));
