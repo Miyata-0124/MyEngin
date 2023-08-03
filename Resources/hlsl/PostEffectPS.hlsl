@@ -28,11 +28,12 @@ float4 main(VSOutput input) : SV_TARGET
     texcolor1.a = 1;
 
     float4 color = texcolor1;
-
+    //•ªŠ„
     if (fmod(input.uv.y, 0.1f) < 0.05f)
     {
+        //”wŒi‚ÌF”½“]
         color = float4(1 - texcolor0.rgb, 1);
     }
-
+    
     return color;
 }

@@ -187,7 +187,7 @@ void GameScene::Draw()
 
 	//オブジェクト
 	//Object3d::PreDraw(directXCom->GetCommandList());
-	//Object3d::PreDraw(directXCom->GetCommandList());
+	//object1->Draw(directXCom->GetCommandList());
 	//obj3d->Draw();
 	//obj3d2->Draw();
 	/*for (auto object : objects) {
