@@ -58,7 +58,7 @@ private: //ゲーム内使用クラス
 	//キー情報
 	Input* input = nullptr;
 	//カメラ
-	ViewProjection* camera = nullptr);
+	ViewProjection* camera = nullptr;
 	//スプライト
 	SpriteCommon* spriteCommon = nullptr;
 	Sprite* sprite = new Sprite();

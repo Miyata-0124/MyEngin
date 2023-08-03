@@ -28,6 +28,7 @@ bool BackGround::Initialize()
 	}
 	//‰ŠúÀ•Ww’è
 	SetSize({ 100,100,100 });
+	SetRotation({ 0,90,0 });
 	SetPosition({ 0,0,0, });
 	return true;
 }
