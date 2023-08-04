@@ -56,10 +56,15 @@ private:
 private:
 	//重力加算量
 	float yadd = 0.0f;
+	float g = 0.80f;
 	//半径
 	float radius = 1.0f;
-	//移動する速度
-	float throwSpeed = 3.0f;
+	//移動する初速度
+	float throwSpeed = 1.2f;
+	//高さ
+	double height;
+	//到達点
+	double length;
 
 	//タイマー,フラグ
 	bool isRetention = false;
