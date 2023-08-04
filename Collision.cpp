@@ -62,7 +62,17 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
     return true;
 }
 
-//bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, XMVECTOR* intetr)
-//{
-//    return false;
-//}
+bool Collision::CheckOBB2OBB(OBB& obb1, OBB& obb2)
+{
+    //各方向ベクトルの確保
+    // (N***:標準化方向ベクトル)
+    XMVECTOR NAe1 = obb1.GetDirect(0), Ae1 = NAe1 * obb1.GetLen(0);
+    XMVECTOR NAe2 = obb1.GetDirect(1), Ae2 = NAe2 * obb1.GetLen(1);
+    XMVECTOR NAe3 = obb1.GetDirect(2), Ae3 = NAe3 * obb1.GetLen(2);
+    XMVECTOR NBe1 = obb2.GetDirect(0), Be1 = NBe1 * obb2.GetLen(0);
+    XMVECTOR NBe2 = obb2.GetDirect(1), Be2 = NBe2 * obb2.GetLen(1);
+    XMVECTOR NBe3 = obb2.GetDirect(2), BE3 = NBe3 * obb2.GetLen(2);
+    XMVECTOR Interval = obb1.GetCenter() - obb2.GetCenter();
+
+    //分離軸
+}

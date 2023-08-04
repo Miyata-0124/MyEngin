@@ -38,10 +38,10 @@ struct Ray
 //直方体の箱
 struct OBB
 {
-	//場所
-	DirectX::XMVECTOR pos = { 0,0,0,0 };
-	//方向軸
-	DirectX::XMVECTOR normalDir = { 0,0,0,0 };
-	//軸の長さ
-	float dirLength[3] = { 1,1,1 };
+	//中心座標
+	DirectX::XMVECTOR center = { 0,0,0,1 };
+	//各座標軸の傾き方向ベクトル
+	DirectX::XMVECTOR rot[3] = { 0,0,0,0 };
+	//OBB座標軸の長さ半分
+	DirectX::XMVECTOR size = { 1,1,1,1 };
 };

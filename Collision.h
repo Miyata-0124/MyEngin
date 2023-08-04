@@ -36,7 +36,6 @@ public:
 	/// <param name="sphere">‹…</param>
 	/// <param name="intetr">Œð“_</param>
 	/// <returns></returns>
-
-	//static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, XMVECTOR* intetr);
+	static bool CheckOBB2OBB(OBB& obb1, OBB& obb2);
 };
 
