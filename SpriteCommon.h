@@ -13,10 +13,11 @@ private://静的メンバ変数
 	static const size_t	maxSRVCount = 2048;
 	static	std::string defaultTextureDirectoryPath;
 public://メンバ関数
+	static SpriteCommon* GetInstance();
 	//初期化
-	void	Initialize(DirectXCommon* ditectXCom_);
+	void Initialize(DirectXCommon* ditectXCom_);
 	//テクスチャ読み込み
-	void	Loadtexture(uint32_t index, std::string fileName);
+	void Loadtexture(uint32_t index, std::string fileName);
 	//描画前処理
 	void PreDraw();
 	//描画後処理
@@ -43,6 +44,6 @@ private://メンバ変数
 	ID3D12RootSignature* rootSignature;
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>comList;
 	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, maxSRVCount>texBuffers;
-	UINT	incrementSize;
+	UINT incrementSize;
 
 };

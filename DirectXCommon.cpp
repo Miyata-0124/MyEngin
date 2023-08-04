@@ -297,6 +297,12 @@ void DirectXCommon::PostDraw() {
 	assert(SUCCEEDED(result));
 }
 
+DirectXCommon* DirectXCommon::GetInstance()
+{
+	static DirectXCommon instance;
+	return &instance;
+}
+
 void DirectXCommon::Initialize(WinApp* winApp_) {
 	//NULLåüèo
 	assert(winApp_);

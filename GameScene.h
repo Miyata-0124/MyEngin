@@ -60,7 +60,7 @@ private: //ゲーム内使用クラス
 	//カメラ
 	ViewProjection* camera = nullptr;
 	//スプライト
-	SpriteCommon* spriteCommon = nullptr;
+	//SpriteCommon* spriteCommon = nullptr;
 	Sprite* sprite = new Sprite();
 	//FBX
 	FbxModel* model = nullptr;

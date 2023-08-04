@@ -9,6 +9,7 @@
 class DirectXCommon
 {
 public://メンバ関数
+	static DirectXCommon* GetInstance();
 	//初期化
 	void Initialize(WinApp* winApp_);
 	//デバイスの初期化
