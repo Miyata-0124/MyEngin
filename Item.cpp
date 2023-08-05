@@ -69,6 +69,7 @@ void Item::RetentionThrow()
 				height = (throwSpeed * sin(30)) * (throwSpeed * sin(30)) / 2*g;
 				//Å‚“’B‹——£
 				length = (throwSpeed * throwSpeed) * sin(30)*2 / g;
+
 				isThrow = true;
 			}
 			if (input->PushKey(DIK_DOWN))
@@ -80,8 +81,18 @@ void Item::RetentionThrow()
 	//“Š±‚³‚ê‚½
 	if (isThrow)
 	{
-		position.y += (float)height;
-		position.x += (float)length;
+		//¶Œü‚«
+		if (isDirection)
+		{
+			position.y += (float)height;
+			position.x += (float)length;
+		}
+		//‰EŒü‚«
+		else
+		{
+			position.y += (float)height;
+			position.x -= (float)length;
+		}
 	}
 
 }

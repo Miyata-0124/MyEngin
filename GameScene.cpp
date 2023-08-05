@@ -98,33 +98,44 @@ void GameScene::Initialize()
 
 void GameScene::Update()
 {
-	///それぞれのクラスのUpdateのみ記述
 	//キー情報
 	input->Update();
 	//カメラ
 	camera->Update();
+
+	switch (scene)
+	{
+	///それぞれのクラスのUpdateのみ記述
+	
+	case 0:
+		if (input->TriggerKey(DIK_SPACE))
+		{
+			scene = 1;	
+		}
+		break;
+	case 1:
 #pragma region パーティクル
-	//パーティクル発生
-	//if (input->TriggerKey(DIK_F))
-	//{
-	//	//パーティクル
-	//	for (int i = 0; i < 100; i++)
-	//	{
-	//		//XYZ全て[-0.05f,+0.05f]でランダムに分布
-	//		const	float	rnd_vel = 0.1f;
-	//		XMFLOAT3	vel{};
-	//		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-	//		vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-	//		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		//パーティクル発生
+		//if (input->TriggerKey(DIK_F))
+		//{
+		//	//パーティクル
+		//	for (int i = 0; i < 100; i++)
+		//	{
+		//		//XYZ全て[-0.05f,+0.05f]でランダムに分布
+		//		const	float	rnd_vel = 0.1f;
+		//		XMFLOAT3	vel{};
+		//		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		//		vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		//		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
-	//		//重力に見立ててYのみ[-0.001f,0]でランダムに分布
-	//		const	float	rnd_acc = 0.001f;
-	//		XMFLOAT3	acc{};
-	//		acc.y = (float)rand() / RAND_MAX * rnd_acc;
+		//		//重力に見立ててYのみ[-0.001f,0]でランダムに分布
+		//		const	float	rnd_acc = 0.001f;
+		//		XMFLOAT3	acc{};
+		//		acc.y = (float)rand() / RAND_MAX * rnd_acc;
 
-	//		particle->Control(100, obj3d->GetPosition(), vel, acc, 1.0f, 0.0f);
-	//	}
-	//}
+		//		particle->Control(100, obj3d->GetPosition(), vel, acc, 1.0f, 0.0f);
+		//	}
+		//}
 #pragma endregion
 #pragma region スプライト移動
 		/*{
@@ -149,71 +160,81 @@ void GameScene::Update()
 			sprite->SetPosition(position);
 		}*/
 #pragma endregion
-	//プレイヤー
-	objPlayer->Update();
-	//アイテム
-	objItem->Update();
-	//地面
-	objFloor->Update();
-	//背景
-	objBackGround->Update();
-	//obj3d->Update();
-	//particle->Update();
+		//プレイヤー
+		objPlayer->Update();
+		//アイテム
+		objItem->Update();
+		//地面
+		objFloor->Update();
+		//背景
+		objBackGround->Update();
+		//obj3d->Update();
+		//particle->Update();
 
-	for (auto object : objects) {
-		object->Update();
-	}
+		for (auto object : objects) {
+			object->Update();
+		}
 
 #pragma region 各クラス間の情報受け渡し
-	//オブジェクト
-	objItem->SetPPosition(objPlayer->GetPosition());
-	objItem->SetRetention(objPlayer->GetRetention());
-	objItem->SetDirection(objPlayer->GetDirection());
-	//スプライト
-
-
+		//オブジェクト
+		objItem->SetPPosition(objPlayer->GetPosition());
+		objItem->SetRetention(objPlayer->GetRetention());
+		objItem->SetDirection(objPlayer->GetDirection());
 #pragma endregion
+		//判定マネージャー
+		collisionManager->CheckAllCollisions();
+		break;
+	case 2:
+		break;
+	}
 	
-	//判定マネージャー
-	collisionManager->CheckAllCollisions();
 }
 
 void GameScene::Draw()
 {
 	//描画処理ここから↓
 	directXCom->PreDraw();
-	//背景
+	switch (scene)
+	{
+	case 0:
+		break;
+	case 1:
+		//背景
 
+		//オブジェクト
+		//object1->Draw(directXCom->GetCommandList());
+		Object3d::PreDraw(directXCom->GetCommandList());
+		//プレイヤー
+		objPlayer->Draw();
+		//アイテム
+		objItem->Draw();
+		//地面
+		//objFloor->Draw();
+		//背景
+		objBackGround->Draw();
+		for (auto object : objects) {
+			object->Draw();
+		}
 
-	//オブジェクト
-	//object1->Draw(directXCom->GetCommandList());
-	Object3d::PreDraw(directXCom->GetCommandList());
-	//プレイヤー
-	objPlayer->Draw();
-	//アイテム
-	objItem->Draw();
-	//地面
-	//objFloor->Draw();
-	//背景
-	objBackGround->Draw();
-	for (auto object : objects) {
-		object->Draw();
-	}
-
-	Object3d::PostDraw();
+		Object3d::PostDraw();
 #pragma region パーティクル
 
-	//Particle::PreDraw(directXCom->GetCommandList());
-	//particle->Draw();
-	//Particle::PostDraw();
+		//Particle::PreDraw(directXCom->GetCommandList());
+		//particle->Draw();
+		//Particle::PostDraw();
 
 #pragma endregion
 
 	// UI関連
-	sprite->SetIsInvisible(false);
-	sprite->SetTexIndex(1);
-	sprite->Draw();
+		sprite->SetIsInvisible(false);
+		sprite->SetTexIndex(1);
+		sprite->Draw();
 
+		break;
+	case 2:
+		break;
+	}
+	
 	directXCom->PostDraw();
 	//ここまで↑
 }

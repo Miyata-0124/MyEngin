@@ -82,5 +82,7 @@ private: //ゲーム内使用クラス
 	BackGround* objBackGround = nullptr;
 
 	CollisionManager* collisionManager = nullptr;
+
+	int scene = 0;
 };
 
