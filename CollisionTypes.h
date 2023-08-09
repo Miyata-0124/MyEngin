@@ -6,4 +6,5 @@ enum CollisionShapeType
 	COLISIONSHAPE_SPHERE,	//ãÖ
 	COLISIONSHAPE_PLANE,	//ïΩñ 
 	COLISIONSHAPE_RAY,		//ÉåÉC
+	COLISIONSHAPE_BOX,		//éläpå`
 };

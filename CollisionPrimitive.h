@@ -34,3 +34,12 @@ struct Ray
 	//•ûŒü
 	DirectX::XMVECTOR dir = { 1,0,0,0 };
 };
+
+/// <summary>
+/// lŠpŒ`
+/// </summary>
+struct Box
+{
+	DirectX::XMVECTOR center = { 0,0,0,1 };
+	float radius = 1.0f;
+};

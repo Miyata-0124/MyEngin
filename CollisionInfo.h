@@ -11,6 +11,7 @@ class BaseCollider;
 class CollisionInfo
 {
 public:
+	//”»’èî•ñ
 	CollisionInfo(Object3d* object, BaseCollider* collider, const DirectX::XMVECTOR& inter) {
 		this->object = object;
 		this->collider = collider;

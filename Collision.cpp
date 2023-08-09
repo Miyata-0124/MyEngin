@@ -19,7 +19,7 @@ bool Collision::CheckSphere2Plane(const Sphere& sphere, const Plane& plane, Dire
     return true;
 }
 //‹…‚Ç‚¤‚µ‚Ì”»’è
-bool Collision::CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, DirectX::XMVECTOR* inter)
+bool Collision::CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2)
 {
     //x
     float x = sphere.center.m128_f32[0] - sphere2.center.m128_f32[0];
@@ -60,4 +60,21 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
     if (inter) { *inter = ray.start + t * ray.dir; }
 
     return true;
+}
+
+bool Collision::CheckBox2Sphere(const Box& box, const Sphere& sphere)
+{
+    //’¸“_
+    DirectX::HXMVECTOR pixel[4] = {
+        {box.center.m128_f32[0] - box.radius, box.center.m128_f32[1] + box.radius, box.center.m128_f32[2]},//¶ã
+        {box.center.m128_f32[0] - box.radius, box.center.m128_f32[1] - box.radius, box.center.m128_f32[2]},//¶‰º
+        {box.center.m128_f32[0] + box.radius, box.center.m128_f32[1] + box.radius, box.center.m128_f32[2]},//‰Eã
+        {box.center.m128_f32[0] + box.radius, box.center.m128_f32[1] - box.radius, box.center.m128_f32[2]},//‰E‰º
+    };
+
+    if (sphere.center.m128_f32[0] - sphere.radius >= pixel[0].m128_f32[0] && sphere.center.m128_f32[0] + sphere.radius <= pixel[2].m128_f32[0])
+    {
+        return true;
+    }
+    return false;
 }

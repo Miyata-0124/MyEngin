@@ -19,7 +19,7 @@ public:
 	/// <param name="sphere2">球2</param>
 	/// <param name="inter">交点</param>
 	/// <returns></returns>
-	static bool CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, DirectX::XMVECTOR* inter);
+	static bool CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2);
 	/// <summary>
 	/// レイと平面
 	/// </summary>
@@ -29,5 +29,12 @@ public:
 	/// <param name="inter">交点</param>
 	/// <returns>交差しているか</returns>
 	static bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
+	/// <summary>
+	/// 四角と球
+	/// </summary>
+	/// <param name="box">四角</param>
+	/// <param name="sphere">球</param>
+	/// <returns></returns>
+	static bool CheckBox2Sphere(const Box& box, const Sphere& sphere);
 };
 
