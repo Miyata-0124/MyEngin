@@ -108,6 +108,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="JsonLoader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="JsonLoader.h" />
+    <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="Particle.h" />

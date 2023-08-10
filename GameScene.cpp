@@ -282,7 +282,7 @@ void GameScene::LoadMap()
 		//DirectX::XMStoreFloat3(&pos, objectData.position);
 		//objBox->SetPosition(pos);
 
-		//////コライダー
+		////コライダー
 		////DirectX::XMFLOAT3 center;
 		//// 配列に登録
 		//objects.push_back(objBox);

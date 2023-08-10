@@ -1,6 +1,8 @@
 #pragma once
 #include "CollisionPrimitive.h"
 
+#include "Vector3.h"
+
 class Collision
 {
 public:
@@ -29,12 +31,8 @@ public:
 	/// <param name="inter">åì_</param>
 	/// <returns>åç∑ÇµÇƒÇ¢ÇÈÇ©</returns>
 	static bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
-	/// <summary>
-	/// éläpÇ∆ãÖ
-	/// </summary>
-	/// <param name="box">éläp</param>
-	/// <param name="sphere">ãÖ</param>
-	/// <returns></returns>
-	static bool CheckBox2Sphere(const Box& box, const Sphere& sphere);
+
+	static float LenOBBToPoint(OBB & obb,Vector3 & p);
+	static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject);
 };
 
