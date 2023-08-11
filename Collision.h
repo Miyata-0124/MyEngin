@@ -1,7 +1,7 @@
 #pragma once
 #include "CollisionPrimitive.h"
 
-#include "Vector3.h"
+#include "Math/Vector3.h"
 
 class Collision
 {
@@ -33,6 +33,6 @@ public:
 	static bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
 
 	static float LenOBBToPoint(OBB & obb,Vector3 & p);
-	static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject);
+	static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* inter, Vector3* reject);
 };
 

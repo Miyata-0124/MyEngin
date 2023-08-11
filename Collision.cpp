@@ -90,7 +90,7 @@ float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
     return Vec.length();   // í∑Ç≥ÇèoóÕ
 }
 
-bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere,DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject)
+bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere,Vector3* inter, Vector3* reject)
 {
     float length; ///
     DirectX::XMVECTOR rejectLen;
