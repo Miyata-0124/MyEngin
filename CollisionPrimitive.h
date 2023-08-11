@@ -2,6 +2,7 @@
 
 #include <DirectXMath.h>
 #include "Math/Vector3.h"
+#include "Math/Matrix4.h"
 
 /// <summary>
 /// ‹…
