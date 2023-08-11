@@ -8,7 +8,7 @@ void PlaneCollider::Update()
 
 	//平面のメンバ変数を更新
 	//法線ベクトル
-	Plane::normal = { 0,1,0,0 };
+	Plane::normal = { 0,1,0 };
 	//原点からの距離()
 	Plane::distance = distance;
 }

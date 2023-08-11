@@ -13,7 +13,7 @@ public:
 	/// <param name="plane">•½–Ê</param>
 	/// <param name="inter">Œğ“_</param>
 	/// <returns></returns>
-	static bool CheckSphere2Plane(const Sphere& sphere, const Plane& plane, DirectX::XMVECTOR* inter = nullptr);
+	static bool CheckSphere2Plane(const Sphere& sphere, const Plane& plane, Vector3* inter = nullptr);
 	/// <summary>
 	/// ‹…‚Æ‹…
 	/// </summary>
@@ -30,7 +30,7 @@ public:
 	/// <param name="distance">‹——£</param>
 	/// <param name="inter">Œğ“_</param>
 	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©</returns>
-	static bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
+	static bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, Vector3* inter = nullptr);
 
 	static float LenOBBToPoint(OBB & obb,Vector3 & p);
 	static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* inter, Vector3* reject);
