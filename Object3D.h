@@ -218,7 +218,8 @@ protected: // メンバ変数
 	// ローカル座標
 	Vector3 position = { 0,0,0 };
 	// ローカルワールド変換行列
-	Matrix4 matWorld;
+	Matrix4 matWorld = Affin::matUnit();
+	Matrix4 matRot_ = Affin::matUnit();
 	Matrix4 matScale, matRot, matTrans;
 	// 親オブジェクト
 	Object3d* parent = nullptr;

@@ -63,59 +63,58 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
 }
 
 //OBBと点の最短距離算出関数
-//float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
-//{
-//    //Vector3 Vec(0,0,0);   // 長さを求めるベクトル
-//
-//    //// 各軸についてはみ出た部分のベクトルを算出
-//    //for (int i = 0; i < 3; i++)
-//    //{
-//    //    float L = obb.fLength[i];
-//    //    // L=0は計算無し
-//    //    if (L <= 0) {
-//    //        continue;
-//    //    }
-//    //    float s = Vector3(p - obb.Pos).dot(obb.NormaDirect[i]) / L;
-//
-//    //    // sの値から、はみ出した部分があったならそのベクトルを加算
-//    //    s = (float)fabs(s);
-//    //    if (s > 1) {
-//    //        Vec += (1 - s) * L * obb.NormaDirect[i];   // はみ出した部分のベクトル算出
-//    //    }
-//    //}
-//    ////result = Vec.length();
-//
-//    //return Vec.length();   // 長さを出力
-//}
-//
-//bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere,Vector3* inter, Vector3* reject)
-//{
-//    //float length; ///
-//    //DirectX::XMVECTOR rejectLen;
-//    //Vector3 inter_;
-//    //OBB obb_ = obb;
-//    //Vector3 spherePos = sphere.center;
-//    //Vector3 obbPos = obb_.Pos;
-//    //Vector3 rejeVec;
-//
-//    //rejeVec = sphere.center - obbPos;
-//    ////正規化
-//    //rejeVec.nomalize();
-//
-//    //length = LenOBBToPoint(obb_, spherePos);
-//
-//    //inter_ = obb_.Pos + (rejeVec * (length - sphere.radius));
-//    //if ((float)fabs(length) > sphere.radius) {
-//    //    rejectLen.m128_f32[0] = length;
-//
-//    //    return false;
-//    //}
-//
-//    ////疑似交点
-//    //if (inter)
-//    //{
-//    //    //平面上の最近接点を疑似交点とする
-//    //    *inter = obb_.Pos + (rejeVec * length);
-//    //}
-//    //return true;
-//}
+float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
+{
+    Vector3 Vec(0,0,0);   // 長さを求めるベクトル
+
+    // 各軸についてはみ出た部分のベクトルを算出
+    for (int i = 0; i < 3; i++)
+    {
+        float L = obb.fLength[i];
+        // L=0は計算無し
+        if (L <= 0) {
+            continue;
+        }
+        float s = Vector3(p - obb.Pos).dot(obb.NormaDirect[i]) / L;
+
+        // sの値から、はみ出した部分があったならそのベクトルを加算
+        s = (float)fabs(s);
+        if (s > 1) {
+            Vec += (1 - s) * L * obb.NormaDirect[i];   // はみ出した部分のベクトル算出
+        }
+    }
+
+    return Vec.length();   // 長さを出力
+}
+
+bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere,Vector3* inter, Vector3* reject)
+{
+    float length; ///
+    DirectX::XMVECTOR rejectLen;
+    Vector3 inter_;
+    OBB obb_ = obb;
+    Vector3 spherePos = sphere.center;
+    Vector3 obbPos = obb_.Pos;
+    Vector3 rejeVec;
+
+    rejeVec = sphere.center - obbPos;
+    //正規化
+    rejeVec.nomalize();
+
+    length = LenOBBToPoint(obb_, spherePos);
+
+    inter_ = obb_.Pos + (rejeVec * (length - sphere.radius));
+    if ((float)fabs(length) > sphere.radius) {
+        rejectLen.m128_f32[0] = length;
+
+        return false;
+    }
+
+    //疑似交点
+    if (inter)
+    {
+        //平面上の最近接点を疑似交点とする
+        *inter = obb_.Pos + (rejeVec * length);
+    }
+    return true;
+}
