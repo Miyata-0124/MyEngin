@@ -52,7 +52,7 @@ public:
 
 private:
 	void Gravity();
-	void ThrowLength();
+
 private:
 	//d—Í‰ÁZ—Ê
 	float yadd = 0.0f;

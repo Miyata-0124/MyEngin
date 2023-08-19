@@ -65,7 +65,11 @@ void Item::RetentionThrow()
 		{
 			if (!isThrow && !input->PushKey(DIK_DOWN))
 			{
-				ThrowLength();
+				//最高到達点
+				height = (throwSpeed * sin(30)) * (throwSpeed * sin(30)) / 2*g;
+				//最高到達距離
+				length = (throwSpeed * throwSpeed) * sin(30)*2 / g;
+
 				isThrow = true;
 			}
 			if (input->PushKey(DIK_DOWN))
@@ -77,9 +81,18 @@ void Item::RetentionThrow()
 	//投擲された
 	if (isThrow)
 	{
-		
-		position.y += (float)height;
-		position.x += (float)length;
+		//左向き
+		if (isDirection)
+		{
+			position.y += (float)height;
+			position.x += (float)length;
+		}
+		//右向き
+		else
+		{
+			position.y += (float)height;
+			position.x -= (float)length;
+		}
 	}
 
 }
@@ -90,25 +103,5 @@ void Item::Gravity()
 	{
 		position.y -= yadd;
 		yadd += 0.2f;
-	}
-}
-
-void Item::ThrowLength()
-{
-	//左向き
-	if (isDirection)
-	{
-		//最高到達点
-		height = (throwSpeed * sin(30)) * (throwSpeed * sin(30)) / 2 * g;
-		//最高到達距離
-		length = (throwSpeed * throwSpeed) * sin(30) * 2 / g;
-	}
-	//右向き
-	else
-	{//最高到達点
-		height = (throwSpeed * sin(30)) * (throwSpeed * sin(30)) / 2 * g;
-		//最高到達距離
-		length = -((throwSpeed * throwSpeed) * sin(30) * 2 / g);
-
 	}
 }
