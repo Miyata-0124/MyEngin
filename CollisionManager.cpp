@@ -25,7 +25,7 @@ void CollisionManager::CheckAllCollisions()
             if (colA->GetShapeType() == COLISIONSHAPE_SPHERE && colB->GetShapeType() == COLISIONSHAPE_PLANE) {
                 Sphere* SphereA = dynamic_cast<Sphere*>(colA);//プレイヤー,アイテム
                 Plane* PlaneA = dynamic_cast<Plane*>(colB);//床
-                DirectX::XMVECTOR inter;//交点
+                Vector3 inter;//交点
                 if (Collision::CheckSphere2Plane(*SphereA, *PlaneA, &inter)) {//球と平面の判定
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
@@ -35,7 +35,7 @@ void CollisionManager::CheckAllCollisions()
             if (colB->GetShapeType() == COLISIONSHAPE_SPHERE && colA->GetShapeType() == COLISIONSHAPE_PLANE) {
                 Sphere* SphereA = dynamic_cast<Sphere*>(colB);//プレイヤー,アイテム
                 Plane* PlaneA = dynamic_cast<Plane*>(colA);//床
-                DirectX::XMVECTOR inter;//交点
+                Vector3 inter;//交点
                 if (Collision::CheckSphere2Plane(*SphereA, *PlaneA, &inter)) {//球と平面の判定
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
@@ -46,12 +46,13 @@ void CollisionManager::CheckAllCollisions()
             {
                 Sphere* SphereA = dynamic_cast<Sphere*>(colA);//球1 プレイヤー
                 Sphere* SphereB = dynamic_cast<Sphere*>(colB);//球2 アイテム
-                DirectX::XMVECTOR inter;//交点
-                if (Collision::CheckSphere2Sphere(*SphereA, *SphereB, &inter)) {
+                Vector3 inter;//交点
+                if (Collision::CheckSphere2Sphere(*SphereA, *SphereB)) {
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
             }
+
         }
     }
 }

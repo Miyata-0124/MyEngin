@@ -76,7 +76,7 @@ void GameScene::Initialize()
 	objPlayer = Player::Create(ground);
 	objPlayer->SetInput(input);
 	//地面
-	objFloor = Floor::Create(ground);
+	objFloor = Floor::Create(playerModel);
 	//アイテム
 	objItem = Item::Create(item_);
 	objItem->SetInput(input);
@@ -209,7 +209,7 @@ void GameScene::Draw()
 		//アイテム
 		objItem->Draw();
 		//地面
-		//objFloor->Draw();
+		objFloor->Draw();
 		//背景
 		objBackGround->Draw();
 		for (auto object : objects) {
@@ -265,27 +265,26 @@ void GameScene::LoadMap()
 		decltype(models)::iterator it = models.find(objectData.fileName);
 		if (it != models.end()) { model = it->second; }
 
-		// モデルを指定して3Dオブジェクトを生成
-		Object3d* newObject = Object3d::Create();
-		newObject->SetModel(model);
-		// 座標
-		DirectX::XMFLOAT3 scale;
-		DirectX::XMStoreFloat3(&scale, objectData.scaling);
-		newObject->SetSize(scale);
+		//// モデルを指定して3Dオブジェクトを生成
+		//objBox = MapBox::Create(model);
+		//// 座標
+		//DirectX::XMFLOAT3 scale;
+		//DirectX::XMStoreFloat3(&scale, objectData.scaling);
+		//objBox->SetSize(scale);
 
-		// 回転角
-		DirectX::XMFLOAT3 rot;
-		DirectX::XMStoreFloat3(&rot, objectData.rotation);
-		newObject->SetRotation(rot);
+		//// 回転角
+		//DirectX::XMFLOAT3 rot;
+		//DirectX::XMStoreFloat3(&rot, objectData.rotation);
+		//objBox->SetRotation(rot);
 
-		// 座標
-		DirectX::XMFLOAT3 pos;
-		DirectX::XMStoreFloat3(&pos, objectData.position);
-		newObject->SetPosition(pos);
+		//// 座標
+		//DirectX::XMFLOAT3 pos;
+		//DirectX::XMStoreFloat3(&pos, objectData.position);
+		//objBox->SetPosition(pos);
 
 		////コライダー
-		//DirectX::XMFLOAT3 center;
-		// 配列に登録
-		objects.push_back(newObject);
+		////DirectX::XMFLOAT3 center;
+		//// 配列に登録
+		//objects.push_back(objBox);
 	}
 }
