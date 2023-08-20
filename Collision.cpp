@@ -62,6 +62,29 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
     return true;
 }
 
+float Collision::LenOBBToPoint(OBB& obb, DirectX::XMVECTOR& p)
+{
+    DirectX::XMVECTOR Vec = { 0,0,0 }; //長さを求めるベクトル
+    //各軸についてはみ出た部分のベクトル算出
+    for (int i = 0; i < 3; i++)
+    {
+        float L = obb.fLength[i];
+        //L=0計算しない
+        if (L <= 0) {
+            continue;
+        }
+        DirectX::XMVECTOR p_pos = (p - obb.pos);
+        DirectX::XMVECTOR s = XMVector3Dot(p_pos, obb.normalDir[i]) / L;
+
+    }
+    return 0.0f;
+}
+
+bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject)
+{
+    return false;
+}
+
 //OBBと点の最短距離算出関数
 //float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
 //{
