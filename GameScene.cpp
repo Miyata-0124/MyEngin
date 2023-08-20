@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Floor.h"
 #include "Item.h"
+#include "Wall.h" 
 #include <sstream>
 #include <iomanip>
 
@@ -80,6 +81,8 @@ void GameScene::Initialize()
 	//ƒAƒCƒeƒ€
 	objItem = Item::Create(item_);
 	objItem->SetInput(input);
+	//•Ç
+	objWall = Wall::Create(ground);
 	//”wŒi
 	objBackGround = BackGround::Create(backGround);
 #pragma endregion
@@ -166,6 +169,8 @@ void GameScene::Update()
 		objItem->Update();
 		//’n–Ê
 		objFloor->Update();
+		//•Ç
+		objWall->Update();
 		//”wŒi
 		objBackGround->Update();
 		//obj3d->Update();
@@ -210,6 +215,8 @@ void GameScene::Draw()
 		objItem->Draw();
 		//’n–Ê
 		objFloor->Draw();
+		//•Ç
+		objWall->Draw();
 		//”wŒi
 		objBackGround->Draw();
 		for (auto object : objects) {

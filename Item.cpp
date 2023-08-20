@@ -54,6 +54,10 @@ void Item::OnCollider(const CollisionInfo& info)
 		yadd = 0.0f;
 		isThrow = false;
 	}
+	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
+	{
+		yadd = 0.0f;
+	}
 }
 
 void Item::RetentionThrow()

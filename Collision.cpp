@@ -82,7 +82,8 @@ float Collision::LenOBBToPoint(OBB& obb, DirectX::XMVECTOR& p)
 
 bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject)
 {
-    return false;
+   
+    return true;
 }
 
 //OBBÇ∆ì_ÇÃç≈íZãóó£éZèoä÷êî

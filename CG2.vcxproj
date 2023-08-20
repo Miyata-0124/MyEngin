@@ -122,6 +122,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteCommon.cpp" />
     <ClCompile Include="ViewProjection.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WinApp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +242,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteCommon.h" />
     <ClInclude Include="ViewProjection.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="WinApp.h" />
   </ItemGroup>
   <ItemGroup>

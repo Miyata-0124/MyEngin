@@ -20,6 +20,7 @@ class Player;
 class BackGround;
 class Floor;
 class Item;
+class Wall;
 
 class GameScene
 {
@@ -78,6 +79,8 @@ private: //ゲーム内使用クラス
 	Floor* objFloor = nullptr;
 	//アイテム
 	Item* objItem = nullptr;
+	//壁
+	Wall* objWall = nullptr;
 	//背景
 	BackGround* objBackGround = nullptr;
 
