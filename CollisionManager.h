@@ -27,4 +27,3 @@ private:
 	std::forward_list<BaseCollider*>colliders;
 
 };
-

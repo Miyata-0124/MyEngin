@@ -5,13 +5,8 @@
 #include <d3d12.h>
 #include <DirectXMath.h>
 #include "DirectXTex/d3dx12.h"
-#include "Model.h"
+#include"Model.h"
 #include "CollisionInfo.h"
-#include "Math/Affin.h"
-#include "Math/Matrix4.h"
-#include "Math/Vector4.h"
-#include "Math/Vector3.h"
-#include "Math/Vector2.h"
 
 class BaseCollider;
 
@@ -34,7 +29,7 @@ public: // サブクラス
 	struct ConstBufferDataB0
 	{
 		//XMFLOAT4 color;	// 色 (RGBA)
-		Matrix4 mat;	// ３Ｄ変換行列
+		XMMATRIX mat;	// ３Ｄ変換行列
 	};
 
 private: // 定数
@@ -74,31 +69,31 @@ public: // 静的メンバ関数
 	/// 視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	static const Vector3& GetEye() { return eye; }
+	static const XMFLOAT3& GetEye() { return eye; }
 
 	/// <summary>
 	/// 視点座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	static void SetEye(Vector3 eye);
+	static void SetEye(XMFLOAT3 eye);
 
 	/// <summary>
 	/// 注視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	static const Vector3& GetTarget() { return target; }
+	static const XMFLOAT3& GetTarget() { return target; }
 
 	/// <summary>
 	/// 注視点座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	static void SetTarget(Vector3 target);
+	static void SetTarget(XMFLOAT3 target);
 
 	/// <summary>
 	/// ベクトルによる移動
 	/// </summary>
 	/// <param name="move">移動量</param>
-	static void CameraMoveVector(Vector3 move);
+	static void CameraMoveVector(XMFLOAT3 move);
 
 private: // 静的メンバ変数
 	// デバイス
@@ -110,15 +105,15 @@ private: // 静的メンバ変数
 	// パイプラインステートオブジェクト
 	static ComPtr<ID3D12PipelineState> pipelinestate;
 	// ビュー行列
-	static Matrix4 matView;
+	static XMMATRIX matView;
 	// 射影行列
-	static Matrix4 matProjection;
+	static XMMATRIX matProjection;
 	// 視点座標
-	static Vector3 eye;
+	static XMFLOAT3 eye;
 	// 注視点座標
-	static Vector3 target;
+	static XMFLOAT3 target;
 	// 上方向ベクトル
-	static Vector3 up;
+	static XMFLOAT3 up;
 
 private:// 静的メンバ関数
 	/// <summary>
@@ -162,35 +157,35 @@ public: // メンバ関数
 	/// 座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const Vector3& GetPosition() const { return position; }
+	const XMFLOAT3& GetPosition() const { return position; }
 
 	/// <summary>
 	/// サイズの取得
 	/// </summary>
 	/// <returns></returns>
-	const Vector3& GetScale()const { return scale; }
+	const XMFLOAT3& GetScale()const { return scale; }
 
 	/// <summary>
 	/// 回転の取得
 	/// </summary>
 	/// <returns></returns>
-	const Vector3& GetRotation()const { return rotation; }
+	const XMFLOAT3& GetRotation()const { return rotation; }
 
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetPosition(const Vector3& position) { this->position = position; }
+	void SetPosition(const XMFLOAT3& position) { this->position = position; }
 	/// <summary>
 	/// オブジェクトサイズの設定
 	/// </summary>
 	/// <param name="size"></param>
-	void SetSize(const Vector3& scale) { this->scale = scale; }
+	void SetSize(const XMFLOAT3& scale) { this->scale = scale; }
 	/// <summary>
 	/// 回転角の設定
 	/// </summary>
 	/// <param name="rotation"></param>
-	void SetRotation(const Vector3& rotation) { this->rotation = rotation; }
+	void SetRotation(const XMFLOAT3& rotation) { this->rotation = rotation; }
 
 	//セッター
 	void SetModel(Model* model_) { model = model_; }
@@ -198,28 +193,28 @@ public: // メンバ関数
 	/// ワールド行列の取得
 	/// </summary>
 	/// <returns></returns>
-	const Matrix4& GetMatWorld() { return matWorld; }
+	const XMMATRIX& GetMatWorld() { return matWorld; }
 	/// <summary>
 	/// コライダーのセット
 	/// </summary>
 	/// <param name="collider"></param>
 	void SetCollider(BaseCollider* collider);
-	
+
 protected: // メンバ変数
 	//ComPtr<ID3D12Resource> constBuff; // 定数バッファ
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 	//ComPtr<ID3D12Resource> constBuffB1; // 定数バッファ
 	// 色
-	Vector4 color = { 1,1,1,1 };
+	XMFLOAT4 color = { 1,1,1,1 };
 	// ローカルスケール
-	Vector3 scale = { 1,1,1 };
+	XMFLOAT3 scale = { 1,1,1 };
 	// X,Y,Z軸回りのローカル回転角
-	Vector3 rotation = { 0,0,0 };
+	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
-	Vector3 position = { 0,0,0 };
+	XMFLOAT3 position = { 0,0,0 };
 	// ローカルワールド変換行列
-	Matrix4 matWorld;
-	Matrix4 matScale, matRot, matTrans;
+	XMMATRIX matWorld;
+	XMMATRIX matScale, matRot, matTrans;
 	// 親オブジェクト
 	Object3d* parent = nullptr;
 	//モデル

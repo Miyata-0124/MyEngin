@@ -39,7 +39,7 @@ public:
 
 	void SetRetention(bool isRetention) { this->isRetention = isRetention; }
 	//プレイヤーの座標取得
-	void SetPPosition(Vector3 position) { this->playerPosition = position; }
+	void SetPPosition(XMFLOAT3 position) { this->playerPosition = position; }
 	//プレイヤーの向き取得
 	void SetDirection(bool isDirection) { this->isDirection = isDirection; }
 
@@ -52,7 +52,7 @@ public:
 
 private:
 	void Gravity();
-
+	void ThrowLength();
 private:
 	//重力加算量
 	float yadd = 0.0f;
@@ -60,7 +60,7 @@ private:
 	//半径
 	float radius = 1.0f;
 	//移動する初速度
-	float throwSpeed = 1.2f;
+	float throwSpeed = 1.25f;
 	//高さ
 	double height;
 	//到達点
@@ -73,7 +73,7 @@ private:
 
 	float throwTimer = 3.0f; //掛かった時間
 
-	Vector3 playerPosition;
+	XMFLOAT3 playerPosition;
 private:
 	Input* input = nullptr;
 

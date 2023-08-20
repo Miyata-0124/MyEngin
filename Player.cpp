@@ -34,7 +34,7 @@ bool Player::Initialize()
 	SetPosition({ -10,-10,0, });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
-	SetCollider(new SphereCollider(Vector3{ 0,radius,0 }, radius));
+	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
 	return true;
 }
 
@@ -110,7 +110,7 @@ void Player::HiJump()
 
 void Player::ChangePosture()
 {
-	if (posture == Posture::Upright &&input->TriggerKey(DIK_DOWN))
+	if (posture == Posture::Upright && input->TriggerKey(DIK_DOWN))
 	{
 		moveSpeed = 0.3f;
 		SetSize({ 1,0.5f,1 });

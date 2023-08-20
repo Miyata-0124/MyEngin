@@ -1,8 +1,6 @@
 #pragma once
 #include "CollisionPrimitive.h"
 
-#include "Math/Vector3.h"
-
 class Collision
 {
 public:
@@ -13,7 +11,7 @@ public:
 	/// <param name="plane">平面</param>
 	/// <param name="inter">交点</param>
 	/// <returns></returns>
-	static bool CheckSphere2Plane(const Sphere& sphere, const Plane& plane, Vector3* inter = nullptr);
+	static bool CheckSphere2Plane(const Sphere& sphere, const Plane& plane, DirectX::XMVECTOR* inter = nullptr);
 	/// <summary>
 	/// 球と球
 	/// </summary>
@@ -21,7 +19,7 @@ public:
 	/// <param name="sphere2">球2</param>
 	/// <param name="inter">交点</param>
 	/// <returns></returns>
-	static bool CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2);
+	static bool CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, DirectX::XMVECTOR* inter);
 	/// <summary>
 	/// レイと平面
 	/// </summary>
@@ -30,9 +28,10 @@ public:
 	/// <param name="distance">距離</param>
 	/// <param name="inter">交点</param>
 	/// <returns>交差しているか</returns>
-	static bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, Vector3* inter = nullptr);
+	static bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
 
-	static float LenOBBToPoint(OBB & obb,Vector3 & p);
-	static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* inter, Vector3* reject);
+	/*static float LenOBBToPoint(OBB& obb, Vector3& p);
+	static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* inter, Vector3* reject);*/
 };
+	
 

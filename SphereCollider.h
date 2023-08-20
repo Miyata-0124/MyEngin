@@ -5,10 +5,13 @@
 
 #include <DirectXMath.h>
 
-class SphereCollider:public BaseCollider,public Sphere
+class SphereCollider :public BaseCollider, public Sphere
 {
+private: //エイリアス
+	//DirectXを省略
+	using XMVECTOR = DirectX::XMVECTOR;
 public:
-	SphereCollider(Vector3 offset = { 0,0,0 }, float radius = 1.0f) :offset(offset), radius(radius)
+	SphereCollider(XMVECTOR offset = { 0,0,0,0 }, float radius = 1.0f) :offset(offset), radius(radius)
 	{
 		//形状セット
 		shapeType = COLISIONSHAPE_SPHERE;
@@ -22,8 +25,7 @@ public:
 
 private:
 	//オブジェクト中心
-	Vector3 offset;
+	XMVECTOR offset;
 	//半径
 	float radius;
 };
-
