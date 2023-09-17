@@ -99,6 +99,7 @@
     <ClCompile Include="CollisionInfo.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DirectXCommon.cpp" />
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="FbxLoader.cpp" />
     <ClCompile Include="FbxModel.cpp" />
     <ClCompile Include="FbxObject3D.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="CollisionPrimitive.h" />
     <ClInclude Include="CollisionTypes.h" />
     <ClInclude Include="DirectXCommon.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="FbxLoader.h" />
     <ClInclude Include="FbxModel.h" />
     <ClInclude Include="FbxObject3D.h" />
