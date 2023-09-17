@@ -35,6 +35,17 @@ struct Ray
 	DirectX::XMVECTOR dir = { 1,0,0,0 };
 };
 
+/// <summary>
+/// 2DBox
+/// </summary>
+struct Box
+{
+	//íÜêSì_
+	DirectX::XMVECTOR center = { 0,0,0,1 };
+	//4í∏ì_
+	float point[4];
+};
+
 struct OBB
 {
 //public:

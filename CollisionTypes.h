@@ -7,4 +7,5 @@ enum CollisionShapeType
 	COLISIONSHAPE_PLANE,	//平面
 	COLISIONSHAPE_RAY,		//レイ
 	COLISIONSHAPE_OBB,		//四角形
+	COLISIONSHAPE_BOX,		//2D四角形
 };
