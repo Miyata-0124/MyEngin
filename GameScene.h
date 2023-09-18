@@ -21,6 +21,7 @@ class BackGround;
 class Floor;
 class Item;
 class Wall;
+class Enemy;
 
 class GameScene
 {
@@ -75,6 +76,8 @@ private: //ゲーム内使用クラス
 
 	//プレイヤー
 	Player* objPlayer = nullptr;
+	//敵
+	Enemy* objEnem = nullptr;
 	//床(仮)
 	Floor* objFloor = nullptr;
 	//アイテム

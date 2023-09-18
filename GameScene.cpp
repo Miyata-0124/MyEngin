@@ -3,6 +3,7 @@
 #include "PlaneCollider.h"
 #include "CollisionManager.h"
 #include "Player.h"
+#include "enemy.h"
 #include "Floor.h"
 #include "Item.h"
 #include "Wall.h" 
@@ -76,6 +77,8 @@ void GameScene::Initialize()
 	//プレイヤー
 	objPlayer = Player::Create(ground);
 	objPlayer->SetInput(input);
+	//敵
+	objEnem = Enemy::Create(ground);
 	//地面
 	objFloor = Floor::Create(playerModel);
 	//アイテム
@@ -165,12 +168,14 @@ void GameScene::Update()
 #pragma endregion
 		//プレイヤー
 		objPlayer->Update();
+		//敵
+		objEnem->Update();
 		//アイテム
 		objItem->Update();
 		//地面
 		objFloor->Update();
 		//壁
-		objWall->Update();
+		//objWall->Update();
 		//背景
 		objBackGround->Update();
 		//obj3d->Update();
@@ -202,6 +207,9 @@ void GameScene::Draw()
 	switch (scene)
 	{
 	case 0:
+		sprite->SetIsInvisible(false);
+		sprite->SetTexIndex(1);
+		sprite->Draw();
 		break;
 	case 1:
 		//背景
@@ -211,6 +219,8 @@ void GameScene::Draw()
 		Object3d::PreDraw(directXCom->GetCommandList());
 		//プレイヤー
 		objPlayer->Draw();
+		//敵
+		objEnem->Draw();
 		//アイテム
 		objItem->Draw();
 		//地面

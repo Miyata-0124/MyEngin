@@ -1,6 +1,12 @@
 #pragma once
 #include "Object3D.h"
 
+enum class EnemyPosture //épê®ä«óù
+{
+	Wait,
+	Move
+};
+
 class Enemy : public Object3d
 {
 public:
@@ -28,5 +34,13 @@ public:
 	/// </summary>
 	/// <param name="info"></param>
 	void OnCollider(const CollisionInfo& info)override;
+
+private:
+	EnemyPosture posture = EnemyPosture::Wait;
+	int ChengeTimer = 50;
+	//îºåa
+	float radius = 1.0f;
+
+	float speed = 0.5f;
 };
 
