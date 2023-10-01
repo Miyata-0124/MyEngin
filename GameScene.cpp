@@ -37,7 +37,7 @@ void GameScene::Initialize()
 	//スプライト共通部分の初期化
 	spriteCommon = new SpriteCommon;
 	spriteCommon->Initialize(directXCom);
-	spriteCommon->Loadtexture(1, "MK.png");
+	spriteCommon->Loadtexture(1, "select.png");
 	spriteCommon->Loadtexture(2, "test.png");
 	//ViewProjection
 	camera = new ViewProjection();
@@ -49,8 +49,8 @@ void GameScene::Initialize()
 	//スプライト
 	sprite->Initialize(spriteCommon, 1);
 	sprite->SetAnchorPoint(XMFLOAT2(0, 0));
-	sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
-	sprite->SetPosition({ -1280,0 });
+	sprite->SetSize(XMFLOAT2(320/*WinApp::window_width*/, 180/*WinApp::window_height*/));
+	sprite->SetPosition({ 0,0 });
 
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
 
@@ -79,11 +79,11 @@ void GameScene::Initialize()
 	objPlayer = Player::Create(ground);
 	objPlayer->SetInput(input);
 	//敵
-	objEnem = Enemy::Create(ground);
+	objEnem = Enemy::Create(item_);
 	//地面
 	objFloor = Floor::Create(playerModel);
 	//アイテム
-	objItem = Item::Create(item_);
+	objItem = Item::Create(playerModel);
 	objItem->SetInput(input);
 	//壁
 	objWall = Wall::Create(ground);
@@ -121,6 +121,7 @@ void GameScene::Update()
 		}
 		break;
 	case 1:
+		
 #pragma region パーティクル
 		//パーティクル発生
 		//if (input->TriggerKey(DIK_F))
@@ -215,6 +216,7 @@ void GameScene::Draw()
 		sprite->Draw();
 		break;
 	case 1:
+		
 		//背景
 
 		//オブジェクト
@@ -227,7 +229,7 @@ void GameScene::Draw()
 		//アイテム
 		objItem->Draw();
 		//地面
-		objFloor->Draw();
+		//objFloor->Draw();
 		//壁
 		//objWall->Draw();
 		//背景
@@ -281,30 +283,31 @@ void GameScene::Finalize()
 void GameScene::LoadMap()
 {
 	for (auto& objectData : jsonLoader->objects) {
-		Model* model = Model::LoadFromOBJ("Box");
+		Model* model = Model::LoadFromOBJ("TestBox");
 		decltype(models)::iterator it = models.find(objectData.fileName);
 		if (it != models.end()) { model = it->second; }
 
-		//// モデルを指定して3Dオブジェクトを生成
-		//objBox = MapBox::Create(model);
-		//// 座標
-		//DirectX::XMFLOAT3 scale;
-		//DirectX::XMStoreFloat3(&scale, objectData.scaling);
-		//objBox->SetSize(scale);
+		// モデルを指定して3Dオブジェクトを生成
+		Object3d* mapObject = Object3d::Create();
+		mapObject->SetModel(model);
+		// 座標
+		DirectX::XMFLOAT3 scale;
+		DirectX::XMStoreFloat3(&scale, objectData.scaling);
+		mapObject->SetSize(scale);
 
-		//// 回転角
-		//DirectX::XMFLOAT3 rot;
-		//DirectX::XMStoreFloat3(&rot, objectData.rotation);
-		//objBox->SetRotation(rot);
+		// 回転角
+		DirectX::XMFLOAT3 rot;
+		DirectX::XMStoreFloat3(&rot, objectData.rotation);
+		mapObject->SetRotation(rot);
 
-		//// 座標
-		//DirectX::XMFLOAT3 pos;
-		//DirectX::XMStoreFloat3(&pos, objectData.position);
-		//objBox->SetPosition(pos);
+		// 座標
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMStoreFloat3(&pos, objectData.position);
+		mapObject->SetPosition(pos);
 
-		////コライダー
-		////DirectX::XMFLOAT3 center;
-		//// 配列に登録
-		//objects.push_back(objBox);
+		//コライダー
+		//DirectX::XMFLOAT3 center;
+		// 配列に登録
+		objects.push_back(mapObject);
 	}
 }

@@ -3,8 +3,6 @@
 #include <DirectXMath.h>
 #pragma once
 
-#include <DirectXMath.h>
-
 class Object3d;
 class BaseCollider;
 

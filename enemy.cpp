@@ -54,6 +54,10 @@ void Enemy::Update()
 		{
 			position.x += 0.1f;
 		}
+		else
+		{
+
+		}
 
 
 		if (playerPosition.x < position.x + (radius * 10) && playerPosition.x > position.x - (radius * 10))
