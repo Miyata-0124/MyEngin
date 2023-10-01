@@ -29,6 +29,13 @@ public:
 	/// <param name="inter">åì_</param>
 	/// <returns>åç∑ÇµÇƒÇ¢ÇÈÇ©</returns>
 	static bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
+	/// <summary>
+	/// ãÖÇ∆éläp
+	/// </summary>
+	/// <param name="sphere"></param>
+	/// <param name="box"></param>
+	/// <returns></returns>
+	static bool CheckSphere2Box2D(const Sphere& sphere, const Box& box);
 
 	static float LenOBBToPoint(OBB& obb, DirectX::XMVECTOR& p);
 	static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject);

@@ -43,36 +43,24 @@ void Enemy::Update()
 	switch (posture)
 	{
 	case EnemyPosture::Wait:
-		if (position.x > 0)
-		{
-			position.x -= 0.1f;
-		}
-		else if (position.x < 0)
-		{
-			position.x += 0.1f;
-		}
-		else
-		{
-
-		}
+		speed = 0.0f;
 		break;
 	case EnemyPosture::Move:
-		if (position.x >= 10)
+		/*if (playerPosition.x > position.x)
 		{
-			speed = -speed;
+			speed = 0.2f;
 		}
-		else if (position.x <= -10)
+		else if (playerPosition.x < position.x)
 		{
-			speed = -speed;
+			speed = -0.2f;
 		}
-
-		position.x += speed;
+		position.x += speed;*/
 		break;
 	default:
 		break;
 	}
 
-	if (ChengeTimer >= 0)
+	if (ChengeTimer > 0)
 	{
 		ChengeTimer--;
 	}
@@ -80,17 +68,46 @@ void Enemy::Update()
 	{
 		if (posture == EnemyPosture::Wait)
 		{
+			ChengeTimer = 100;
 			posture = EnemyPosture::Move;
 		}
-		else if(posture==EnemyPosture::Move)
+		else
 		{
+			ChengeTimer = 50;
 			posture = EnemyPosture::Wait;
 		}
-		ChengeTimer = 50;
 	}
+
+	Gravity();
 	Object3d::Update();
 }
 
 void Enemy::OnCollider(const CollisionInfo& info)
 {
+	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE)
+	{
+		yadd = 0.0f;
+	}
+	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
+	{
+		/*if (playerPosition.x > position.x)
+		{
+			move = - 0.5f;
+		}
+		else if (playerPosition.x < position.x)
+		{
+			move = 0.5f;
+		}
+		else
+		{
+			move = 0;
+		}
+		position.x += move;*/
+	}
+}
+
+void Enemy::Gravity()
+{
+	position.y -= yadd;
+	yadd += 0.2f;
 }

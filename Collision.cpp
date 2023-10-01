@@ -62,6 +62,22 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
     return true;
 }
 
+bool Collision::CheckSphere2Box2D(const Sphere& sphere, const Box& box)
+{
+    // X 球のXがboxのX2点の間
+    if (sphere.center.m128_f32[0] < box.center.m128_f32[0]+box.radius && sphere.center.m128_f32[0] > box.center.m128_f32[0] - box.radius)
+    {
+        // Y 球のYがboxのYの間
+        if (sphere.center.m128_f32[1] < box.center.m128_f32[1] + box.radius && sphere.center.m128_f32[1] > box.center.m128_f32[1] - box.radius)
+        {
+            //ならヒット
+            return true;
+        }
+    }
+    //それ以外ハズレ
+    return false;
+}
+
 float Collision::LenOBBToPoint(OBB& obb, DirectX::XMVECTOR& p)
 {
     DirectX::XMVECTOR Vec = { 0,0,0 }; //長さを求めるベクトル

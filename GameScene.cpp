@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "SphereCollider.h"
 #include "PlaneCollider.h"
+#include "BoxCollider.h"
 #include "CollisionManager.h"
 #include "Player.h"
 #include "enemy.h"
@@ -169,13 +170,14 @@ void GameScene::Update()
 		//プレイヤー
 		objPlayer->Update();
 		//敵
-		objEnem->Update();
+		//objEnem->Update();
 		//アイテム
-		objItem->Update();
+		objItem -> Update();
 		//地面
-		objFloor->Update();
+		objFloor -> Update();
 		//壁
-		//objWall->Update();
+		objWall -> Update();
+		
 		//背景
 		objBackGround->Update();
 		//obj3d->Update();
@@ -187,6 +189,7 @@ void GameScene::Update()
 
 #pragma region 各クラス間の情報受け渡し
 		//オブジェクト
+		objEnem->SetPPosition(objPlayer->GetPosition());
 		objItem->SetPPosition(objPlayer->GetPosition());
 		objItem->SetRetention(objPlayer->GetRetention());
 		objItem->SetDirection(objPlayer->GetDirection());

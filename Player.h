@@ -47,7 +47,8 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	float GetRadius() { return radius; }
-
+	//À•Wó‚¯“n‚µ
+	XMFLOAT3 GetPosition() { return position; }
 	//Œ»İ‚Ìp¨ó‚¯“n‚µ
 	Posture GetPosture() { return posture; }
 	//ƒtƒ‰ƒO‚Ìó‚¯“n‚µ

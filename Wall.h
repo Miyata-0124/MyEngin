@@ -31,6 +31,6 @@ public:
 
 private:
 	//”¼Œa
-	float radius = 3.0f;
+	float radius = 1.0f;
 };
 

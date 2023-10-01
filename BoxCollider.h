@@ -10,7 +10,7 @@ private: //エイリアス
 	//DirectXを省略
 	using XMVECTOR = DirectX::XMVECTOR;
 public:
-	BoxCollider(XMVECTOR center = { 0,0,0,1 } , float radius = 1.0f) :center(center),radius(radius)
+	BoxCollider(XMVECTOR center = { 0,0,0,0 } , float radius = 1.0f) :center(center),radius(radius)
 	{
 		//形状セット
 		shapeType = COLISIONSHAPE_BOX;
@@ -25,8 +25,7 @@ public:
 private:
 	//オブジェクト中心
 	XMVECTOR center;
-	//原点からの距離
-	float point[4];
+	//半径
 	float radius;
 };
 

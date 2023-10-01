@@ -42,8 +42,8 @@ struct Box
 {
 	//中心点
 	DirectX::XMVECTOR center = { 0,0,0,1 };
-	//4頂点
-	float point[4];
+	//各線のスケール
+	float radius = 1.0f;
 };
 
 struct OBB

@@ -30,7 +30,7 @@ bool Item::Initialize()
 	}
 	//初期座標指定
 	SetSize({ 0.5f,0.5f,0.5f });
-	SetPosition({ 0,-10,0, });
+	SetPosition({ -12,-10,0, });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
@@ -64,7 +64,7 @@ void Item::RetentionThrow()
 {
 	if (isRetention)
 	{
-		SetPosition({ playerPosition.x,playerPosition.y + radius,playerPosition.z });
+		SetPosition({ playerPosition.x,playerPosition.y + (radius + 0.5f),playerPosition.z });
 		if (input->TriggerKey(DIK_X))
 		{
 			if (!isThrow && !input->PushKey(DIK_DOWN))
