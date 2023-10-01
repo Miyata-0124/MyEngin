@@ -43,41 +43,53 @@ void Enemy::Update()
 	switch (posture)
 	{
 	case EnemyPosture::Wait:
-		speed = 0.0f;
+		posture = EnemyPosture::Serch;
+		break;
+	case EnemyPosture::Serch:
+		if (position.x > 0.5f)
+		{
+			position.x -= 0.1f;
+		}
+		else if (position.x < -0.5f)
+		{
+			position.x += 0.1f;
+		}
+
+
+		if (playerPosition.x < position.x + (radius * 10) && playerPosition.x > position.x - (radius * 10))
+		{
+			if (playerPosition.y < position.y + (radius * 10) && playerPosition.y > position.y - (radius * 10))
+			{
+				posture = EnemyPosture::Move;
+			}
+		}
 		break;
 	case EnemyPosture::Move:
-		/*if (playerPosition.x > position.x)
+		if (playerPosition.x < position.x + (radius * 10) && playerPosition.x > position.x - (radius * 10))
 		{
-			speed = 0.2f;
+			if (playerPosition.y < position.y + (radius * 10) && playerPosition.y > position.y - (radius * 10))
+			{
+				if (playerPosition.x > position.x)
+				{
+					speed = 0.2f;
+				}
+				else if (playerPosition.x < position.x)
+				{
+					speed = -0.2f;
+				}
+			}
 		}
-		else if (playerPosition.x < position.x)
+		else
 		{
-			speed = -0.2f;
+			posture = EnemyPosture::Serch;
 		}
-		position.x += speed;*/
+		position.x += speed;
 		break;
 	default:
 		break;
 	}
 
-	if (ChengeTimer > 0)
-	{
-		ChengeTimer--;
-	}
-	else
-	{
-		if (posture == EnemyPosture::Wait)
-		{
-			ChengeTimer = 100;
-			posture = EnemyPosture::Move;
-		}
-		else
-		{
-			ChengeTimer = 50;
-			posture = EnemyPosture::Wait;
-		}
-	}
-
+	//èdóÕâ¡éZ
 	Gravity();
 	Object3d::Update();
 }

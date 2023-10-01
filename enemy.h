@@ -5,6 +5,7 @@
 enum class EnemyPosture //Žp¨ŠÇ—
 {
 	Wait,
+	Serch,
 	Move
 };
 
@@ -44,7 +45,6 @@ public:
 	void SetPPosition(XMFLOAT3 position) { this->playerPosition = position; }
 private:
 	EnemyPosture posture = EnemyPosture::Wait;
-	int ChengeTimer = 50;
 	//”¼Œa
 	float radius = 1.0f;
 	//ˆÚ“®‘¬“x

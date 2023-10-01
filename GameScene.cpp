@@ -170,13 +170,13 @@ void GameScene::Update()
 		//ƒvƒŒƒCƒ„[
 		objPlayer->Update();
 		//“G
-		//objEnem->Update();
+		objEnem->Update();
 		//ƒAƒCƒeƒ€
 		objItem -> Update();
 		//’n–Ê
 		objFloor -> Update();
 		//•Ç
-		objWall -> Update();
+		//objWall -> Update();
 		
 		//”wŒi
 		objBackGround->Update();
@@ -229,7 +229,7 @@ void GameScene::Draw()
 		//’n–Ê
 		objFloor->Draw();
 		//•Ç
-		objWall->Draw();
+		//objWall->Draw();
 		//”wŒi
 		objBackGround->Draw();
 		for (auto object : objects) {
