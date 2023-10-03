@@ -11,6 +11,11 @@
 #include <sstream>
 #include <iomanip>
 
+double EZ(double x)
+{
+	return 1 - cos((x * 3.14) / 2);
+}
+
 void GameScene::Initialize()
 {
 #pragma region WindowsAPIの初期化
@@ -38,7 +43,7 @@ void GameScene::Initialize()
 	spriteCommon = new SpriteCommon;
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "select.png");
-	spriteCommon->Loadtexture(2, "test.png");
+	spriteCommon->Loadtexture(2, "white1x1.png");
 	//ViewProjection
 	camera = new ViewProjection();
 	camera->Initialeze();
@@ -49,7 +54,7 @@ void GameScene::Initialize()
 	//スプライト
 	sprite->Initialize(spriteCommon, 1);
 	sprite->SetAnchorPoint(XMFLOAT2(0, 0));
-	sprite->SetSize(XMFLOAT2(320/*WinApp::window_width*/, 180/*WinApp::window_height*/));
+	sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
 	sprite->SetPosition({ 0,0 });
 
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
@@ -115,10 +120,19 @@ void GameScene::Update()
 	///それぞれのクラスのUpdateのみ記述
 	
 	case 0:
-		if (input->TriggerKey(DIK_SPACE))
+		//動かすために座標を取得
+		XMFLOAT2 position = sprite->GetPosition();
+		if (input->TriggerKey(DIK_SPACE) && !ChengeScene)
 		{
-			scene = 1;	
+			scene = 1;
+			ChengeScene = true;
 		}
+		if (ChengeScene)//シーン切り替えが押されたなら
+		{
+
+		}
+		//移動後の座標を入れる
+		sprite->SetPosition(position);
 		break;
 	case 1:
 		
@@ -145,29 +159,7 @@ void GameScene::Update()
 		//	}
 		//}
 #pragma endregion
-#pragma region スプライト移動
-		/*{
-			XMFLOAT2 position = sprite->GetPosition();
-			if (input->PushKey(DIK_UP))
-			{
-				position.y -= 10.0f;
-			}
-			else if (input->PushKey(DIK_DOWN))
-			{
-				position.y += 10.0f;
-			}
-			if (input->PushKey(DIK_LEFT))
-			{
-				position.x -= 10.0f;
-			}
-			else if (input->PushKey(DIK_RIGHT))
-			{
-				position.x += 10.0f;
 
-			}
-			sprite->SetPosition(position);
-		}*/
-#pragma endregion
 		//プレイヤー
 		objPlayer->Update();
 		//敵
@@ -197,6 +189,15 @@ void GameScene::Update()
 #pragma endregion
 		//判定マネージャー
 		collisionManager->CheckAllCollisions();
+
+		//説明スプライト移動
+#pragma region  スプライトの移動演出
+		////動かすために座標を取得
+		//XMFLOAT2 position = sprite->GetPosition();
+		////移動後の座標を入れる
+		//sprite->SetPosition(position);
+#pragma endregion
+		
 		break;
 	case 2:
 		break;
@@ -249,7 +250,8 @@ void GameScene::Draw()
 
 	// UI関連
 		sprite->SetIsInvisible(false);
-		sprite->SetTexIndex(1);
+		sprite->SetTexIndex(2);
+		sprite->SetSize({ 320, 180 });
 		sprite->Draw();
 
 		break;

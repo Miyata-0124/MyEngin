@@ -89,6 +89,9 @@ private: //ゲーム内使用クラス
 
 	CollisionManager* collisionManager = nullptr;
 
+	//シーン切り替え要情報
 	int scene = 0;
+	//タイトルなどのUI情報
+	bool ChengeScene = false;
 };
 
