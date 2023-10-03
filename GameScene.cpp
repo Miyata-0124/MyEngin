@@ -19,7 +19,7 @@ double EZ(double x)
 void GameScene::Initialize()
 {
 #pragma region WindowsAPI‚Ì‰Šú‰»
-	winApp = new	WinApp;
+	winApp = new WinApp;
 	winApp->Initialize();
 #pragma endregion
 
