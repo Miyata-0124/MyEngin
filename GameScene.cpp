@@ -55,7 +55,7 @@ void GameScene::Initialize()
 	sprite->Initialize(spriteCommon, 1);
 	sprite->SetAnchorPoint(XMFLOAT2(0, 0));
 	sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
-	sprite->SetPosition({ 0,0 });
+	sprite->SetPosition({0,0});
 
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
 
@@ -98,13 +98,12 @@ void GameScene::Initialize()
 	LoadMap();
 	
 	#pragma region パーティクル関係
-		//パーティクル
-		//Particle::LoadTexture(1, "MK.png");
-		//Particle::LoadTexture(2, "testpar1.png");
-		//Particle* particle = nullptr;
-		//// 引数の数字はテクスチャ読み込みのインデックスナンバー
-		//particle = Particle::Create(1);
-		//particle->Update();
+	//	パーティクル
+	//	Particle::LoadTexture(1, "white1x1.png");
+	//	Particle::LoadTexture(2, "testpar1.png");
+	//	引数の数字はテクスチャ読み込みのインデックスナンバー
+	//	particle = Particle::Create(1);
+	//	particle->Update();*/
 	#pragma	endregion
 }
 
@@ -117,25 +116,10 @@ void GameScene::Update()
 
 	switch (scene)
 	{
-	///それぞれのクラスのUpdateのみ記述
-	
-	case 0:
-		//動かすために座標を取得
-		XMFLOAT2 position = sprite->GetPosition();
-		if (input->TriggerKey(DIK_SPACE) && !ChengeScene)
-		{
-			scene = 1;
-			ChengeScene = true;
-		}
-		if (ChengeScene)//シーン切り替えが押されたなら
-		{
+		///それぞれのクラスのUpdateのみ記述
 
-		}
-		//移動後の座標を入れる
-		sprite->SetPosition(position);
-		break;
-	case 1:
-		
+	case 0: //タイトル画面 雨が降っているように見えるタイトル
+
 #pragma region パーティクル
 		//パーティクル発生
 		//if (input->TriggerKey(DIK_F))
@@ -155,10 +139,65 @@ void GameScene::Update()
 		//		XMFLOAT3	acc{};
 		//		acc.y = (float)rand() / RAND_MAX * rnd_acc;
 
-		//		particle->Control(100, obj3d->GetPosition(), vel, acc, 1.0f, 0.0f);
+		//		particle->Control(100, {WinApp::window_width / 2,0,0}, vel, acc, 1.0f, 0.0f);
 		//	}
 		//}
+		//particle->Update();
 #pragma endregion
+#pragma region シーン切り替え時の処理
+		//動かすために座標を取得
+		XMFLOAT2 position = sprite->GetPosition();
+		
+
+		if (!UIFlag) {
+			if (position.x < 10)
+			{
+				UIspeed.x = 0.1f;
+			}
+			else
+			{
+				UIFlag = true;
+			}
+			if (position.y < 10)
+			{
+				UIspeed.y = 0.1f;
+			}
+		}
+		else
+		{
+			if (position.x > -10)
+			{
+				UIspeed.x = -0.1f;
+			}
+			else
+			{
+				UIFlag=false;
+			}
+			if (position.y > -10) {
+				UIspeed.y = -0.1f;
+			}
+		}
+
+
+		position.x += UIspeed.x;
+		position.y += UIspeed.y;
+		if (input->TriggerKey(DIK_SPACE) && !ChengeScene)
+		{
+			scene = 1;
+			ChengeScene = true;
+		}
+		if (ChengeScene)//シーン切り替えが押されたなら
+		{
+
+		}
+		//移動後の座標を入れる
+		sprite->SetPosition(position);
+#pragma endregion
+		
+		break;
+	case 1:
+		
+
 
 		//プレイヤー
 		objPlayer->Update();
@@ -174,7 +213,7 @@ void GameScene::Update()
 		//背景
 		objBackGround->Update();
 		//obj3d->Update();
-		//particle->Update();
+		
 
 		for (auto object : objects) {
 			object->Update();
@@ -242,16 +281,16 @@ void GameScene::Draw()
 		Object3d::PostDraw();
 #pragma region パーティクル
 
-		//Particle::PreDraw(directXCom->GetCommandList());
-		//particle->Draw();
-		//Particle::PostDraw();
+		/*Particle::PreDraw(directXCom->GetCommandList());
+		particle->Draw();
+		Particle::PostDraw();*/
 
 #pragma endregion
 
 	// UI関連
 		sprite->SetIsInvisible(false);
 		sprite->SetTexIndex(2);
-		sprite->SetSize({ 320, 180 });
+		sprite->SetSize({320, 180});
 		sprite->Draw();
 
 		break;
