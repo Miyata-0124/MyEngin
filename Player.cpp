@@ -50,7 +50,7 @@ void Player::Update()
 		break;
 	case Posture::Croching://しゃがみ
 		//ハイジャンプ
-		HiJump();
+		//HiJump();
 		break;
 	}
 	//移動

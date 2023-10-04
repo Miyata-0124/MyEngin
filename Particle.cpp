@@ -247,7 +247,7 @@ void Particle::StaticInitialize(ID3D12Device* device, ViewProjection* camera_)
 	InitializeGraphicsPipeline();
 
 	// テクスチャ読み込み
-	//LoadTexture();
+	//zLoadTexture();
 
 	// モデル生成
 	CreateModel();

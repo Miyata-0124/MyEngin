@@ -11,11 +11,6 @@
 #include <sstream>
 #include <iomanip>
 
-double EZ(double x)
-{
-	return 1 - cos((x * 3.14) / 2);
-}
-
 void GameScene::Initialize()
 {
 #pragma region WindowsAPIの初期化
@@ -42,7 +37,7 @@ void GameScene::Initialize()
 	//スプライト共通部分の初期化
 	spriteCommon = new SpriteCommon;
 	spriteCommon->Initialize(directXCom);
-	spriteCommon->Loadtexture(1, "select.png");
+	spriteCommon->Loadtexture(1, "test.png");
 	spriteCommon->Loadtexture(2, "white1x1.png");
 	//ViewProjection
 	camera = new ViewProjection();
@@ -50,7 +45,7 @@ void GameScene::Initialize()
 //一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
-	//Particle::StaticInitialize(directXCom->GetDevice(), camera.get());
+	//Particle::StaticInitialize(directXCom->GetDevice(),camera);
 	//スプライト
 	sprite->Initialize(spriteCommon, 1);
 	sprite->SetAnchorPoint(XMFLOAT2(0, 0));
@@ -99,11 +94,10 @@ void GameScene::Initialize()
 	
 	#pragma region パーティクル関係
 	//	パーティクル
-	//	Particle::LoadTexture(1, "white1x1.png");
-	//	Particle::LoadTexture(2, "testpar1.png");
-	//	引数の数字はテクスチャ読み込みのインデックスナンバー
-	//	particle = Particle::Create(1);
-	//	particle->Update();*/
+	//Particle::LoadTexture(1, "white1x1.png");
+	////引数の数字はテクスチャ読み込みのインデックスナンバー
+	//particle = Particle::Create(1);
+	//particle->Update();
 	#pragma	endregion
 }
 
@@ -139,7 +133,7 @@ void GameScene::Update()
 		//		XMFLOAT3	acc{};
 		//		acc.y = (float)rand() / RAND_MAX * rnd_acc;
 
-		//		particle->Control(100, {WinApp::window_width / 2,0,0}, vel, acc, 1.0f, 0.0f);
+		//		particle->Control(100, {WinApp::window_width / 2,/*-(WinApp::window_height)*/0,0}, vel, acc, 1.0f, 0.0f);
 		//	}
 		//}
 		//particle->Update();
@@ -147,8 +141,6 @@ void GameScene::Update()
 #pragma region シーン切り替え時の処理
 		//動かすために座標を取得
 		XMFLOAT2 position = sprite->GetPosition();
-		
-
 		if (!UIFlag) {
 			if (position.x < 10)
 			{
@@ -177,10 +169,9 @@ void GameScene::Update()
 				UIspeed.y = -0.1f;
 			}
 		}
-
-
 		position.x += UIspeed.x;
 		position.y += UIspeed.y;
+
 		if (input->TriggerKey(DIK_SPACE) && !ChengeScene)
 		{
 			scene = 1;
@@ -188,7 +179,9 @@ void GameScene::Update()
 		}
 		if (ChengeScene)//シーン切り替えが押されたなら
 		{
-
+			UIspeed = { 0,0 };
+			position = { 0,0 };
+			ChengeScene = false;
 		}
 		//移動後の座標を入れる
 		sprite->SetPosition(position);
@@ -251,9 +244,14 @@ void GameScene::Draw()
 	switch (scene)
 	{
 	case 0:
+
 		sprite->SetIsInvisible(false);
 		sprite->SetTexIndex(1);
 		sprite->Draw();
+
+		/*Particle::PreDraw(directXCom->GetCommandList());
+		particle->Draw();
+		Particle::PostDraw();*/
 		break;
 	case 1:
 		
@@ -279,18 +277,11 @@ void GameScene::Draw()
 		}
 
 		Object3d::PostDraw();
-#pragma region パーティクル
-
-		/*Particle::PreDraw(directXCom->GetCommandList());
-		particle->Draw();
-		Particle::PostDraw();*/
-
-#pragma endregion
-
 	// UI関連
 		sprite->SetIsInvisible(false);
 		sprite->SetTexIndex(2);
 		sprite->SetSize({320, 180});
+		sprite->SetPosition({ -320,0 });
 		sprite->Draw();
 
 		break;

@@ -31,7 +31,7 @@ bool Enemy::Initialize()
 	}
 	//初期座標指定
 	SetSize({ 1,1,1 });
-	SetPosition({ 0,0,0, });
+	SetPosition({ 15,0,0 });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
@@ -46,11 +46,11 @@ void Enemy::Update()
 		posture = EnemyPosture::Serch;
 		break;
 	case EnemyPosture::Serch:
-		if (position.x > 0.5f)
+		if (position.x > 10.5f)
 		{
 			position.x -= 0.1f;
 		}
-		else if (position.x < -0.5f)
+		else if (position.x < 9.5f)
 		{
 			position.x += 0.1f;
 		}
