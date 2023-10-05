@@ -16,9 +16,6 @@
     <Filter Include="hlsl&amp;hlsli">
       <UniqueIdentifier>{abad5199-e88e-4fe3-a557-8205c244cb20}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ViewProjection">
-      <UniqueIdentifier>{76c921d4-8c12-41d0-8e55-ee9d33884fac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\3d">
       <UniqueIdentifier>{8bc2cc79-ef6a-4643-b0de-e80cc5d0fbb8}</UniqueIdentifier>
     </Filter>
@@ -58,81 +55,63 @@
     <Filter Include="Math">
       <UniqueIdentifier>{56e6b64e-03a3-4f61-b1fa-8f1ab2d8439f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\enginBase\ViewProjection">
+      <UniqueIdentifier>{76c921d4-8c12-41d0-8e55-ee9d33884fac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="source\Game\main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ViewProjection.cpp">
-      <Filter>ViewProjection</Filter>
+    <ClCompile Include="source\Engin\ViewProjection.cpp">
+      <Filter>ソース ファイル\enginBase\ViewProjection</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene.cpp">
+    <ClCompile Include="source\Game\GameScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="FbxLoader.cpp">
+    <ClCompile Include="source\3D\FbxLoader.cpp">
       <Filter>ソース ファイル\3d\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="FbxObject3D.cpp">
+    <ClCompile Include="source\3D\FbxObject3D.cpp">
       <Filter>ソース ファイル\3d\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="FbxModel.cpp">
+    <ClCompile Include="source\3D\FbxModel.cpp">
       <Filter>ソース ファイル\3d\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="Object3D.cpp">
+    <ClCompile Include="source\3D\Object3D.cpp">
       <Filter>ソース ファイル\3d\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
+    <ClCompile Include="source\3D\Model.cpp">
       <Filter>ソース ファイル\3d\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
+    <ClCompile Include="source\2D\Sprite.cpp">
       <Filter>ソース ファイル\2d\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteCommon.cpp">
+    <ClCompile Include="source\2D\SpriteCommon.cpp">
       <Filter>ソース ファイル\2d\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Particle.cpp">
+    <ClCompile Include="source\2D\Particle.cpp">
       <Filter>ソース ファイル\2d\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="source\Game\Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXCommon.cpp">
+    <ClCompile Include="source\Engin\DirectXCommon.cpp">
       <Filter>ソース ファイル\enginBase</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
+    <ClCompile Include="source\Engin\Input.cpp">
       <Filter>ソース ファイル\enginBase</Filter>
     </ClCompile>
-    <ClCompile Include="WinApp.cpp">
+    <ClCompile Include="source\Engin\WinApp.cpp">
       <Filter>ソース ファイル\enginBase</Filter>
     </ClCompile>
-    <ClCompile Include="Floor.cpp">
+    <ClCompile Include="source\Game\Floor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
+    <ClCompile Include="source\Game\Item.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="BaseCollider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionInfo.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SphereCollider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PlaneCollider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="JsonLoader.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="BackGround.cpp">
+    <ClCompile Include="source\Game\BackGround.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Math\Vector3.cpp">
@@ -153,14 +132,35 @@
     <ClCompile Include="Math\Vector2.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="Wall.cpp">
+    <ClCompile Include="source\Game\Wall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
+    <ClCompile Include="source\Game\enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="enemy.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="source\Collider\Collision.cpp">
+      <Filter>ソース ファイル\enginBase</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collider\CollisionInfo.cpp">
+      <Filter>ソース ファイル\enginBase</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collider\CollisionManager.cpp">
+      <Filter>ソース ファイル\enginBase</Filter>
+    </ClCompile>
+    <ClCompile Include="source\3D\JsonLoader.cpp">
+      <Filter>ソース ファイル\enginBase</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collider\PlaneCollider.cpp">
+      <Filter>ソース ファイル\enginBase</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collider\SphereCollider.cpp">
+      <Filter>ソース ファイル\enginBase</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collider\BoxCollider.cpp">
+      <Filter>ソース ファイル\enginBase</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collider\BaseCollider.cpp">
+      <Filter>ソース ファイル\enginBase</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -225,85 +225,85 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ViewProjection.h">
-      <Filter>ViewProjection</Filter>
+    <ClInclude Include="header\Engin\ViewProjection.h">
+      <Filter>ソース ファイル\enginBase\ViewProjection</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene.h">
+    <ClInclude Include="header\Game\GameScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="FbxLoader.h">
+    <ClInclude Include="header\3D\FbxLoader.h">
       <Filter>ヘッダー ファイル\3d\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="FbxModel.h">
+    <ClInclude Include="header\3D\FbxModel.h">
       <Filter>ヘッダー ファイル\3d\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="FbxObject3D.h">
+    <ClInclude Include="header\3D\FbxObject3D.h">
       <Filter>ヘッダー ファイル\3d\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
+    <ClInclude Include="header\3D\Model.h">
       <Filter>ヘッダー ファイル\3d\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object3D.h">
+    <ClInclude Include="header\3D\Object3D.h">
       <Filter>ヘッダー ファイル\3d\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
+    <ClInclude Include="header\2D\Sprite.h">
       <Filter>ヘッダー ファイル\2d\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteCommon.h">
+    <ClInclude Include="header\2D\SpriteCommon.h">
       <Filter>ヘッダー ファイル\2d\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Particle.h">
+    <ClInclude Include="header\2D\Particle.h">
       <Filter>ヘッダー ファイル\2d\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXCommon.h">
+    <ClInclude Include="header\Engin\DirectXCommon.h">
       <Filter>ヘッダー ファイル\enginBase</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
+    <ClInclude Include="header\Engin\Input.h">
       <Filter>ヘッダー ファイル\enginBase</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="x64\resource.h">
       <Filter>ヘッダー ファイル\enginBase</Filter>
     </ClInclude>
-    <ClInclude Include="WinApp.h">
+    <ClInclude Include="header\Engin\WinApp.h">
       <Filter>ヘッダー ファイル\enginBase</Filter>
     </ClInclude>
-    <ClInclude Include="Floor.h">
+    <ClInclude Include="header\Game\Floor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionPrimitive.h">
+    <ClInclude Include="header\Collider\CollisionPrimitive.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Collision.h">
+    <ClInclude Include="header\Collider\Collision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionTypes.h">
+    <ClInclude Include="header\Collider\CollisionTypes.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="BaseCollider.h">
+    <ClInclude Include="header\Collider\BaseCollider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionInfo.h">
+    <ClInclude Include="header\Collider\CollisionInfo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SphereCollider.h">
+    <ClInclude Include="header\Collider\SphereCollider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionManager.h">
+    <ClInclude Include="header\Collider\CollisionManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
+    <ClInclude Include="header\Game\Item.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="PlaneCollider.h">
+    <ClInclude Include="header\Collider\PlaneCollider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="JsonLoader.h">
+    <ClInclude Include="header\3D\JsonLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="BackGround.h">
+    <ClInclude Include="header\Game\BackGround.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="header\Game\Player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Math\Vector3.h">
@@ -324,18 +324,18 @@
     <ClInclude Include="Math\Vector2.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Wall.h">
+    <ClInclude Include="header\Game\Wall.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="BoxCollider.h">
+    <ClInclude Include="header\Collider\BoxCollider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="enemy.h">
+    <ClInclude Include="header\Game\enemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="CG2.rc">
+    <ResourceCompile Include="x64\CG2.rc">
       <Filter>リソース ファイル</Filter>
     </ResourceCompile>
   </ItemGroup>
