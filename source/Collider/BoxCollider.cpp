@@ -1,4 +1,4 @@
-#include "BoxCollider.h"
+#include "header/Collider/BoxCollider.h"
 
 using namespace DirectX;
 void BoxCollider::Update()
