@@ -3,35 +3,35 @@
 #include <DirectXMath.h>
 
 /// <summary>
-/// ‹…
+/// çƒ
 /// </summary>
 struct Sphere
 {
-	//’†S“_
+	//ä¸­å¿ƒç‚¹
 	DirectX::XMVECTOR center = { 0,0,0,1 };
-	//”¼Œa
+	//åŠå¾„
 	float radius = 1.0f;
 };
 
 /// <summary>
-/// •½–Ê
+/// å¹³é¢
 /// </summary>
 struct Plane
 {
-	//–@üƒxƒNƒgƒ‹
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	DirectX::XMVECTOR normal = { 0,1,0,0 };
-	//Œ´“_‚©‚ç‚Ì‹——£
+	//åŸç‚¹ã‹ã‚‰ã®è·é›¢
 	float distance = 0.0f;
 };
 
 /// <summary>
-/// ƒŒƒC(”¼’¼ü)
+/// ãƒ¬ã‚¤(åŠç›´ç·š)
 /// </summary>
 struct Ray
 {
-	//‹“_À•W
+	//è¦–ç‚¹åº§æ¨™
 	DirectX::XMVECTOR start = { 0,0,0,1 };
-	//•ûŒü
+	//æ–¹å‘
 	DirectX::XMVECTOR dir = { 1,0,0,0 };
 };
 
@@ -40,9 +40,9 @@ struct Ray
 /// </summary>
 struct Box
 {
-	//’†S“_
+	//ä¸­å¿ƒç‚¹
 	DirectX::XMVECTOR center = { 0,0,0,1 };
-	//Šeü‚ÌƒXƒP[ƒ‹
+	//å„ç·šã®ã‚¹ã‚±ãƒ¼ãƒ«
 	float radius = 1.0f;
 };
 
@@ -55,14 +55,14 @@ struct OBB
 //
 //	OBBPlane plane[6];
 
-	DirectX::XMVECTOR pos = { 0,0,0,0 };	// ˆÊ’u
-	DirectX::XMVECTOR normalDir[3];			// •ûŒüƒxƒNƒgƒ‹
-	float fLength[3];					    // Še²•ûŒü‚Ì’·‚³
+	DirectX::XMVECTOR pos = { 0,0,0,0 };	// ä½ç½®
+	DirectX::XMVECTOR normalDir[3];			// æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
+	float fLength[3];					    // å„è»¸æ–¹å‘ã®é•·ã•
 };
 struct OBBPlane {
-	////–@üƒxƒNƒgƒ‹
+	////æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	//Vector3 normal = { 0,1,0 };
-	////Œ´“_(0,0,0)‚©‚ç‚Ì‹——£
+	////åŸç‚¹(0,0,0)ã‹ã‚‰ã®è·é›¢
 	//float distance = 0.0f;
 
 	//Vector3 vertex[4];

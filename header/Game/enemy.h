@@ -2,7 +2,7 @@
 #include "header/3D/Object3D.h"
 #include "Player.h"
 
-enum class EnemyPosture //p¨ŠÇ—
+enum class EnemyPosture //å§¿å‹¢ç®¡ç†
 {
 	Wait,
 	Serch,
@@ -13,7 +13,7 @@ class Enemy : public Object3d
 {
 public:
 	/// <summary>
-	/// ƒIƒuƒWƒFƒNƒg¶¬
+	/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	/// </summary>
 	/// <param name="model"></param>
 	/// <returns></returns>
@@ -21,18 +21,18 @@ public:
 
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	/// <returns></returns>
 	bool Initialize() override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update()override;
 
 	/// <summary>
-	/// ƒR[ƒ‹ƒoƒbƒN
+	/// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 	/// </summary>
 	/// <param name="info"></param>
 	void OnCollider(const CollisionInfo& info)override;
@@ -41,18 +41,18 @@ private:
 	void Gravity();
 
 public:
-	//ƒvƒŒƒCƒ„[‚ÌÀ•Wæ“¾
-	void SetPPosition(XMFLOAT3 position) { this->playerPosition = position; }
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™å–å¾—
+	void SetPPosition(XMFLOAT3 position_) { this->playerPosition = position_; }
 private:
 	EnemyPosture posture = EnemyPosture::Wait;
-	//”¼Œa
+	//åŠå¾„
 	float radius = 1.0f;
-	//ˆÚ“®‘¬“x
+	//ç§»å‹•é€Ÿåº¦
 	float speed = 0.0f;
-	//d—Í‰ÁZ—Ê
+	//é‡åŠ›åŠ ç®—é‡
 	float yadd = 0.0f;
 
-	//ˆÚ“®—Ê
+	//ç§»å‹•é‡
 	float move = 0.0f;
 
 	XMFLOAT3 playerPosition;

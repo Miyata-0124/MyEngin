@@ -2,16 +2,16 @@
 using namespace DirectX;
 
 /// <summary>
-/// Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ì
+/// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®å®Ÿä½“
 /// </summary>
 const std::string FbxLoader::baseDirectory = "Resources/";
 const std::string FbxLoader::defaultTextureFileName = "white1x1.png";
 
 void FbxLoader::ConvertMatrixFromFbx(DirectX::XMMATRIX* dst, const FbxAMatrix& src)
 {
-    //s
+    //è¡Œ
     for (int i = 0; i < 4; i++) {
-        //—ñ
+        //åˆ—
         for (int j = 0; j < 4; j++) {
             dst->r[i].m128_f32[j] = (float)src.Get(i, j);
         }
@@ -24,61 +24,61 @@ FbxLoader* FbxLoader::GetInstance()
     return &instance;
 }
 
-void FbxLoader::Initialize(ID3D12Device* device)
+void FbxLoader::Initialize(ID3D12Device* device_)
 {
-    //Å‰Šúƒ`ƒFƒbƒN
+    //æœ€åˆæœŸãƒã‚§ãƒƒã‚¯
     assert(fbxManager == nullptr);
-    //ƒƒ“ƒo‚É‘ã“ü
-    this->device = device;
-    //FBXƒ}ƒl[ƒWƒƒ[¶¬
+    //ãƒ¡ãƒ³ãƒã«ä»£å…¥
+    this->device = device_;
+    //FBXãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ç”Ÿæˆ
     fbxManager = FbxManager::Create();
-    //“üo—Íİ’è
+    //å…¥å‡ºåŠ›è¨­å®š
     FbxIOSettings* ios = FbxIOSettings::Create(fbxManager, IOSROOT);
     fbxManager->SetIOSettings(ios);
-    //FBXƒCƒ“ƒ|[ƒ^[‚Ì¶¬
+    //FBXã‚¤ãƒ³ãƒãƒ¼ã‚¿ãƒ¼ã®ç”Ÿæˆ
     fbxImporter = FbxImporter::Create(fbxManager, "");
 }
 
 void FbxLoader::Finalize()
 {
-    //ŠeƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”jŠü
+    //å„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ç ´æ£„
     fbxImporter->Destroy();
     fbxManager->Destroy();
 }
 
 FbxModel* FbxLoader::LoadModelFromFile(const string& modelName)
 {
-    //ƒ‚ƒfƒ‹‚Æ“¯‚¶–¼‘O‚ÌƒtƒHƒ‹ƒ_‚ğ“Ç‚İ‚Ş
+    //ãƒ¢ãƒ‡ãƒ«ã¨åŒã˜åå‰ã®ãƒ•ã‚©ãƒ«ãƒ€ã‚’èª­ã¿è¾¼ã‚€
     const string directoryPath = baseDirectory + modelName + "/";
-    //Šg’£q
+    //æ‹¡å¼µå­
     const string fileName = modelName + ".fbx";
-    //˜AŒ‹Œãƒtƒ‹ƒpƒX‚ğæ“¾
+    //é€£çµå¾Œãƒ•ãƒ«ãƒ‘ã‚¹ã‚’å–å¾—
     const string fullpath = directoryPath + fileName;
 
-    //ƒtƒ@ƒCƒ‹–¼w’è&“Ç‚İ‚İ
+    //ãƒ•ã‚¡ã‚¤ãƒ«åæŒ‡å®š&èª­ã¿è¾¼ã¿
     if (!fbxImporter->Initialize(fullpath.c_str(), -1, fbxManager->GetIOSettings())) {
         assert(0);
     }
 
-    //ƒV[ƒ“¶¬
+    //ã‚·ãƒ¼ãƒ³ç”Ÿæˆ
     FbxScene* fbxScene = FbxScene::Create(fbxManager, "fbxScene");
 
-    //ƒtƒ@ƒCƒ‹‚©‚çƒ[ƒh‚µ‚½FBX‚Ìî•ñ‚ğƒV[ƒ“‚ÉƒCƒ“ƒ|[ƒg
+    //ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ­ãƒ¼ãƒ‰ã—ãŸFBXã®æƒ…å ±ã‚’ã‚·ãƒ¼ãƒ³ã«ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
     fbxImporter->Import(fbxScene);
 
-    //ƒ‚ƒfƒ‹¶¬
+    //ãƒ¢ãƒ‡ãƒ«ç”Ÿæˆ
     FbxModel* model = new FbxModel();
     model->name = modelName;
-    //FBXƒm[ƒh‚Ì”‚ğæ“¾
+    //FBXãƒãƒ¼ãƒ‰ã®æ•°ã‚’å–å¾—
     int nodeCount = fbxScene->GetNodeCount();
-    //•K—v”•ª‚Ìƒƒ‚ƒŠ‚ğŠm•ÛAƒAƒhƒŒƒX‚ª‚¸‚ê‚é‚Ì‚ğ—\–h
+    //å¿…è¦æ•°åˆ†ã®ãƒ¡ãƒ¢ãƒªã‚’ç¢ºä¿ã€ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒãšã‚Œã‚‹ã®ã‚’äºˆé˜²
     model->nodes.reserve(nodeCount);
-    //ƒ‹[ƒgƒm[ƒh‹ó‰ğÍƒ‚ƒfƒ‹‚É—¬‚·
+    //ãƒ«ãƒ¼ãƒˆãƒãƒ¼ãƒ‰ç©ºè§£æãƒ¢ãƒ‡ãƒ«ã«æµã™
     ParseNodeRecursive(model, fbxScene->GetRootNode());
-    //FbxƒV[ƒ“‚Ì‰ğ•ú
+    //Fbxã‚·ãƒ¼ãƒ³ã®è§£æ”¾
     //fbxScene->Destroy();
     model->fbxScene = fbxScene;
-    //ƒoƒbƒtƒ@¶¬
+    //ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
     model->CreateBuffers(device);
 
     return model;
@@ -86,47 +86,47 @@ FbxModel* FbxLoader::LoadModelFromFile(const string& modelName)
 
 void FbxLoader::ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* parent)
 {
-    //ƒm[ƒh–¼æ“¾
+    //ãƒãƒ¼ãƒ‰åå–å¾—
     string name = fbxNode->GetName();
 
-    //ƒ‚ƒfƒ‹‚Éƒm[ƒh’Ç‰Á
+    //ãƒ¢ãƒ‡ãƒ«ã«ãƒãƒ¼ãƒ‰è¿½åŠ 
     model->nodes.emplace_back();
     Node& node = model->nodes.back();
-    //ƒm[ƒh–¼‚ğæ“¾
+    //ãƒãƒ¼ãƒ‰åã‚’å–å¾—
     node.name = fbxNode->GetName();
 
-    //FBXƒm[ƒh‚Ìƒ[ƒJƒ‹ˆÚ“®î•ñ
+    //FBXãƒãƒ¼ãƒ‰ã®ãƒ­ãƒ¼ã‚«ãƒ«ç§»å‹•æƒ…å ±
     FbxDouble3 rotation = fbxNode->LclRotation.Get();
     FbxDouble3 scaling = fbxNode->LclScaling.Get();
     FbxDouble3 translation = fbxNode->LclTranslation.Get();
 
-    //Œ`®•Ï‰»‚µ‚Ä‘ã“ü
+    //å½¢å¼å¤‰åŒ–ã—ã¦ä»£å…¥
     node.rotation = { (float)rotation[0],(float)rotation[1],(float)rotation[2],0.0f };
     node.scaling = { (float)scaling[0],(float)scaling[1],(float)scaling[2],0.0f };
     node.translation = { (float)translation[0],(float)translation[1],(float)translation[2],1.0f };
 
-    //‰ñ“]Šp‚ğDegree(“x)‚©‚çƒ‰ƒWƒAƒ“‚É•ÏŠ·
+    //å›è»¢è§’ã‚’Degree(åº¦)ã‹ã‚‰ãƒ©ã‚¸ã‚¢ãƒ³ã«å¤‰æ›
     node.rotation.m128_f32[0] = XMConvertToRadians(node.rotation.m128_f32[0]);
     node.rotation.m128_f32[1] = XMConvertToRadians(node.rotation.m128_f32[1]);
     node.rotation.m128_f32[2] = XMConvertToRadians(node.rotation.m128_f32[2]);
 
-    //ƒXƒP[ƒ‹,‰ñ“]•½sˆÚ“®s—ñ‚ÌŒvZ
+    //ã‚¹ã‚±ãƒ¼ãƒ«,å›è»¢å¹³è¡Œç§»å‹•è¡Œåˆ—ã®è¨ˆç®—
     XMMATRIX matScaling, matRotation, matTranslation;
     matScaling = XMMatrixScalingFromVector(node.scaling);
     matRotation = XMMatrixRotationRollPitchYawFromVector(node.rotation);
     matTranslation = XMMatrixTranslationFromVector(node.translation);
 
-    //ƒ[ƒJƒ‹•ÏŒ`s—ñ‚ÌŒvZ
+    //ãƒ­ãƒ¼ã‚«ãƒ«å¤‰å½¢è¡Œåˆ—ã®è¨ˆç®—
     node.transform = XMMatrixIdentity();
     node.transform *= matScaling;
     node.transform *= matRotation;
     node.transform *= matTranslation;
 
-    //ƒOƒ[ƒoƒ‹•Ï”Œn‚ÌŒvZ
+    //ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ç³»ã®è¨ˆç®—
     node.globalTransform = node.transform;
     if (parent) {
         node.parent = parent;
-        //e‚Ì•ÏŒ`‚ğæZ
+        //è¦ªã®å¤‰å½¢ã‚’ä¹—ç®—
         node.globalTransform *= parent->globalTransform;
     }
     FbxNodeAttribute* fbxNodeAtrribute = fbxNode->GetNodeAttribute();
@@ -138,7 +138,7 @@ void FbxLoader::ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* pare
         }
     }
 
-    //Ä‹AŒÄ‚Ño‚µ
+    //å†å¸°å‘¼ã³å‡ºã—
     for (int i = 0; i < fbxNode->GetChildCount(); i++) {
         ParseNodeRecursive(model, fbxNode->GetChild(i), &node);
     }
@@ -146,16 +146,16 @@ void FbxLoader::ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* pare
 
 void FbxLoader::ParseMesh(FbxModel* model, FbxNode* fbxNode)
 {
-    //ƒm[ƒhƒƒbƒVƒ…æ“¾
+    //ãƒãƒ¼ãƒ‰ãƒ¡ãƒƒã‚·ãƒ¥å–å¾—
     FbxMesh* fbxMesh = fbxNode->GetMesh();
 
-    //’¸“_À•W“Ç‚İæ‚è
+    //é ‚ç‚¹åº§æ¨™èª­ã¿å–ã‚Š
     ParseMeshVertices(model, fbxMesh);
-    //–Ê‚Ì\¬ƒf[ƒ^“Ç‚İæ‚è
+    //é¢ã®æ§‹æˆãƒ‡ãƒ¼ã‚¿èª­ã¿å–ã‚Š
     ParseMeshFaces(model, fbxMesh);
-    //ƒ}ƒeƒŠƒAƒ‹‚Ì“Ç‚İæ‚è
+    //ãƒãƒ†ãƒªã‚¢ãƒ«ã®èª­ã¿å–ã‚Š
     ParseMaterial(model, fbxNode);
-    //ƒXƒLƒjƒ“ƒOî•ñ‚Ì“Ç‚İæ‚è
+    //ã‚¹ã‚­ãƒ‹ãƒ³ã‚°æƒ…å ±ã®èª­ã¿å–ã‚Š
     ParseSkin(model, fbxMesh);
 }
 
@@ -163,18 +163,18 @@ void FbxLoader::ParseMeshVertices(FbxModel* model, FbxMesh* fbxMesh)
 {
     auto& vertices = model->vertices;
 
-    //’¸“_ƒf[ƒ^‚Ì”
+    //é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®æ•°
     const int ControlPointCount = fbxMesh->GetControlPointsCount();
-    //•K—v”‚¾‚¯”z—ñ‚ğŠm’è‚·‚é
+    //å¿…è¦æ•°ã ã‘é…åˆ—ã‚’ç¢ºå®šã™ã‚‹
     FbxModel::VertexPosNormalUvSkin vert{};
     model->vertices.resize(ControlPointCount, vert);
 
-    //FBXƒƒbƒVƒ…‚Ì’¸“_À•W”z—ñ‚ğæ“¾
+    //FBXãƒ¡ãƒƒã‚·ãƒ¥ã®é ‚ç‚¹åº§æ¨™é…åˆ—ã‚’å–å¾—
     FbxVector4* pCoord = fbxMesh->GetControlPoints();
-    //ƒƒbƒVƒ…‚Ì‘S’¸“_À•W‚ğƒ‚ƒfƒ‹“à•”‚ÉƒRƒs[‚·‚é
+    //ãƒ¡ãƒƒã‚·ãƒ¥ã®å…¨é ‚ç‚¹åº§æ¨™ã‚’ãƒ¢ãƒ‡ãƒ«å†…éƒ¨ã«ã‚³ãƒ”ãƒ¼ã™ã‚‹
     for (int i = 0; i < ControlPointCount; i++) {
         FbxModel::VertexPosNormalUvSkin& vertex = vertices[i];
-        //À•WƒRƒs[
+        //åº§æ¨™ã‚³ãƒ”ãƒ¼
         vertex.pos.x = (float)pCoord[i][0];
         vertex.pos.y = (float)pCoord[i][1];
         vertex.pos.z = (float)pCoord[i][2];
@@ -186,23 +186,23 @@ void FbxLoader::ParseMeshFaces(FbxModel* model, FbxMesh* fbxMesh)
     auto& vertices = model->vertices;
     auto& indices = model->indices;
 
-    //1ƒtƒ@ƒCƒ‹‚É•¡”ƒƒbƒVƒ…‚Ìƒ‚ƒfƒ‹‚Í”ñ‘Î‰
+    //1ãƒ•ã‚¡ã‚¤ãƒ«ã«è¤‡æ•°ãƒ¡ãƒƒã‚·ãƒ¥ã®ãƒ¢ãƒ‡ãƒ«ã¯éå¯¾å¿œ
     const int polygonCount = fbxMesh->GetPolygonCount();
-    //UVƒf[ƒ^‚Ì”
+    //UVãƒ‡ãƒ¼ã‚¿ã®æ•°
     const int textureUVCount = fbxMesh->GetTextureUVCount();
-    //UV–¼ƒŠƒXƒg
+    //UVåãƒªã‚¹ãƒˆ
     FbxStringList uvNames;
     fbxMesh->GetUVSetNames(uvNames);
 
-    //–Ê‚²‚Æ‚Ìî•ñ“Ç‚İæ‚è
+    //é¢ã”ã¨ã®æƒ…å ±èª­ã¿å–ã‚Š
     for (int i = 0; i < polygonCount; i++) {
-        //–Ê‚ğ\¬‚·‚é’¸“_‚Ì”‚ğæ“¾
+        //é¢ã‚’æ§‹æˆã™ã‚‹é ‚ç‚¹ã®æ•°ã‚’å–å¾—
         const int polygonSize = fbxMesh->GetPolygonSize(i);
         assert(polygonSize <= 4);
 
-        //1’¸“_‚¸‚Â‘Î‰
+        //1é ‚ç‚¹ãšã¤å¯¾å¿œ
         for (int j = 0; j < polygonSize; j++) {
-            //’¸“_”z—ñ
+            //é ‚ç‚¹é…åˆ—
             int index = fbxMesh->GetPolygonVertex(i, j);
             assert(index >= 0);
 
@@ -214,20 +214,20 @@ void FbxLoader::ParseMeshFaces(FbxModel* model, FbxMesh* fbxMesh)
                 vertex.normal.y = (float)normal[1];
                 vertex.normal.z = (float)normal[2];
             }
-            //ƒeƒNƒXƒ`ƒƒUV“Ç‚İ‚İ
+            //ãƒ†ã‚¯ã‚¹ãƒãƒ£UVèª­ã¿è¾¼ã¿
             if (textureUVCount > 0) {
                 FbxVector2 uvs;
                 bool lUnmappedUV;
-                //0”Ô‚ğŒˆ‚ß‘Å‚¿‚Å‘ã“ü
+                //0ç•ªã‚’æ±ºã‚æ‰“ã¡ã§ä»£å…¥
                 if (fbxMesh->GetPolygonVertexUV(i, j, uvNames[0], uvs, lUnmappedUV)) {
                     vertex.uv.x = (float)uvs[0];
                     vertex.uv.y = (float)uvs[1];
                 }
             }
-            //ƒCƒ“ƒfƒbƒNƒX”z—ñ‚É’¸“_ƒCƒ“ƒfƒbƒNƒX’Ç‰Á
-            //3’¸“_‚Ü‚Å‚È‚ç
+            //ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ã«é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹è¿½åŠ 
+            //3é ‚ç‚¹ã¾ã§ãªã‚‰
             if (j < 3) {
-                //1“_’Ç‰Á ‘¼2“_‚ÆOŠpŒ`‚ğ\’z‚·‚é
+                //1ç‚¹è¿½åŠ  ä»–2ç‚¹ã¨ä¸‰è§’å½¢ã‚’æ§‹ç¯‰ã™ã‚‹
                 indices.push_back(index);
             }
             else
@@ -262,7 +262,7 @@ void FbxLoader::ParseMaterial(FbxModel* model, FbxNode* fbxNode)
             model->diffuse.x = (float)diffuse.Get()[0];
             model->diffuse.y = (float)diffuse.Get()[1];
             model->diffuse.z = (float)diffuse.Get()[2];
-            //ƒfƒBƒtƒ…[ƒYƒeƒNƒXƒ`ƒƒŒÄ‚Ño‚µ
+            //ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºãƒ†ã‚¯ã‚¹ãƒãƒ£å‘¼ã³å‡ºã—
             const FbxProperty diffuseProperty = material->FindProperty(FbxSurfaceMaterial::sDiffuse);
             if (diffuseProperty.IsValid())
             {
@@ -278,7 +278,7 @@ void FbxLoader::ParseMaterial(FbxModel* model, FbxNode* fbxNode)
                 }
             }
         }
-        //ƒeƒNƒXƒ`ƒƒ‚ª–³‚¢ê‡‚±‚Á‚¿”’‰æ‘œ
+        //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãŒç„¡ã„å ´åˆã“ã£ã¡ç™½ç”»åƒ
         if (!textureLoaded) {
             LoadTexture(model, baseDirectory + defaultTextureFileName);
         }
@@ -304,49 +304,49 @@ void FbxLoader::LoadTexture(FbxModel* model, const std::string& fullpath)
 
 void FbxLoader::ParseSkin(FbxModel* model, FbxMesh* fbxMesh)
 {
-    //ƒXƒLƒjƒ“ƒOî•ñ
+    //ã‚¹ã‚­ãƒ‹ãƒ³ã‚°æƒ…å ±
     FbxSkin* fbxSkin = static_cast<FbxSkin*>(fbxMesh->GetDeformer(0, FbxDeformer::eSkin));
-    //ƒXƒLƒjƒ“ƒOî•ñ‚ª–³‚¯‚ê‚ÎI—¹
+    //ã‚¹ã‚­ãƒ‹ãƒ³ã‚°æƒ…å ±ãŒç„¡ã‘ã‚Œã°çµ‚äº†
     if (fbxSkin == nullptr) {
 
-        //Še’¸“_‚É‚Â‚¢‚Ä
+        //å„é ‚ç‚¹ã«ã¤ã„ã¦
         //for (int i = 0; i < model->vertices.size(); i++) {
-        //    //Å‰‚Ìƒ{[ƒ“(’PˆÊs—ñ)‚Ì‰e‹¿100%‚É‚·‚é
+        //    //æœ€åˆã®ãƒœãƒ¼ãƒ³(å˜ä½è¡Œåˆ—)ã®å½±éŸ¿100%ã«ã™ã‚‹
         //    model->vertices[i].boneIndex[0] = 0;
         //    model->vertices[i].boneWeight[0] = 1.0f;
         //}
         return;
     }
 
-    //ƒ{[ƒ“”z—ñ‚ÌQŠÏ
+    //ãƒœãƒ¼ãƒ³é…åˆ—ã®å‚è¦³
     std::vector<FbxModel::Bone>& bones = model->bones;
 
-    //ƒ{[ƒ“‚Ì”
+    //ãƒœãƒ¼ãƒ³ã®æ•°
     int clusterCount = fbxSkin->GetClusterCount();
     bones.reserve(clusterCount);
 
-    //‘S‚Ä‚Ìƒ{[ƒ“‚É‚Â‚¢‚Ä
+    //å…¨ã¦ã®ãƒœãƒ¼ãƒ³ã«ã¤ã„ã¦
     for (int i = 0; i < clusterCount; i++) {
-        //FBXƒ{[ƒ“î•ñ
+        //FBXãƒœãƒ¼ãƒ³æƒ…å ±
         FbxCluster* fbxCluster = fbxSkin->GetCluster(i);
-        //ƒ{[ƒ“©‘Ì‚Ìƒm[ƒh‚Ì–¼‘O‚ğæ“¾
+        //ãƒœãƒ¼ãƒ³è‡ªä½“ã®ãƒãƒ¼ãƒ‰ã®åå‰ã‚’å–å¾—
         const char* boneName = fbxCluster->GetLink()->GetName();
-        //V‚µ‚­ƒ{[ƒ“‚ğ’Ç‰Á,’Ç‰Á‚µ‚½ƒ{[ƒ“‚ÌQÆ‚ğ“¾‚é
+        //æ–°ã—ããƒœãƒ¼ãƒ³ã‚’è¿½åŠ ,è¿½åŠ ã—ãŸãƒœãƒ¼ãƒ³ã®å‚ç…§ã‚’å¾—ã‚‹
         bones.emplace_back(FbxModel::Bone(boneName));
         FbxModel::Bone& bone = bones.back();
-        //©ìƒ{[ƒ“‚ÆFBX‚Ìƒ{[ƒ“‚ğ•R‚Ã‚¯‚é
+        //è‡ªä½œãƒœãƒ¼ãƒ³ã¨FBXã®ãƒœãƒ¼ãƒ³ã‚’ç´ã¥ã‘ã‚‹
         bone.fbxCluster = fbxCluster;
-        //FBX‚©‚ç‰Šúp¨§Œä‚ğæ“¾
+        //FBXã‹ã‚‰åˆæœŸå§¿å‹¢åˆ¶å¾¡ã‚’å–å¾—
         FbxAMatrix fbxMat;
         fbxCluster->GetTransformLinkMatrix(fbxMat);
-        //XMMATRIXŒ^‚É•ÏŠ·
+        //XMMATRIXå‹ã«å¤‰æ›
         XMMATRIX initiaPose;
         ConvertMatrixFromFbx(&initiaPose, fbxMat);
-        //‰Šúp¨§Œä‚Ì‹ts—ñ‚ğ“¾‚é
+        //åˆæœŸå§¿å‹¢åˆ¶å¾¡ã®é€†è¡Œåˆ—ã‚’å¾—ã‚‹
         bone.invInitialPose = XMMatrixInverse(nullptr, initiaPose);
     }
 
-    //ƒ{[ƒ“”Ô†‚ÆƒXƒLƒ“ƒEƒFƒCƒg‚ÌƒyƒA
+    //ãƒœãƒ¼ãƒ³ç•ªå·ã¨ã‚¹ã‚­ãƒ³ã‚¦ã‚§ã‚¤ãƒˆã®ãƒšã‚¢
     struct WeightSet
     {
         UINT index;
@@ -354,52 +354,52 @@ void FbxLoader::ParseSkin(FbxModel* model, FbxMesh* fbxMesh)
     };
     std::vector<std::list<WeightSet>>weightLists(model->vertices.size());
 
-    //‘S‚Ä‚Ìƒ{[ƒ“‚É‚Â‚¢‚Ä
+    //å…¨ã¦ã®ãƒœãƒ¼ãƒ³ã«ã¤ã„ã¦
     for (int i = 0; i < clusterCount; i++) {
-        //FBXƒ{[ƒ“î•ñ
+        //FBXãƒœãƒ¼ãƒ³æƒ…å ±
         FbxCluster* fbxCluster = fbxSkin->GetCluster(i);
-        //‚±‚Ìƒ{[ƒ“‚É‰e‹¿‚ğó‚¯‚é’¸“_‚Ì”
+        //ã“ã®ãƒœãƒ¼ãƒ³ã«å½±éŸ¿ã‚’å—ã‘ã‚‹é ‚ç‚¹ã®æ•°
         int controlPointIndicesCount = fbxCluster->GetControlPointIndicesCount();
-        //‚±‚Ìƒ{[ƒ“‚ª‰e‹¿‚ğó‚¯‚é’¸“_”z—ñ
+        //ã“ã®ãƒœãƒ¼ãƒ³ãŒå½±éŸ¿ã‚’å—ã‘ã‚‹é ‚ç‚¹é…åˆ—
         int* controlPointIndices = fbxCluster->GetControlPointIndices();
         double* controlPointWeights = fbxCluster->GetControlPointWeights();
-        //‰e‹¿‚ğó‚¯‚é‘S’·“_‚É‚Â‚¢‚Ä
+        //å½±éŸ¿ã‚’å—ã‘ã‚‹å…¨é•·ç‚¹ã«ã¤ã„ã¦
         for (int j = 0; j < controlPointIndicesCount; j++) {
-            //’¸“_”Ô†
+            //é ‚ç‚¹ç•ªå·
             int vertIndex = controlPointIndices[j];
-            //ƒXƒLƒ“ƒEƒFƒCƒg
+            //ã‚¹ã‚­ãƒ³ã‚¦ã‚§ã‚¤ãƒˆ
             float weight = (float)controlPointWeights[j];
-            //‚»‚Ì‘¼‚Ì‰e‹¿‚ğó‚¯‚éƒ{[ƒ“ƒŠƒXƒg‚É,ƒ{[ƒ“ƒEƒFƒCƒg‚ÌƒyƒA‚ğ’Ç‰Á
+            //ãã®ä»–ã®å½±éŸ¿ã‚’å—ã‘ã‚‹ãƒœãƒ¼ãƒ³ãƒªã‚¹ãƒˆã«,ãƒœãƒ¼ãƒ³ã‚¦ã‚§ã‚¤ãƒˆã®ãƒšã‚¢ã‚’è¿½åŠ 
             weightLists[vertIndex].emplace_back(WeightSet{ (UINT)i,weight });
         }
     }
 
-    //’¸“_”z—ñ‘‚«Š·‚¦—p
+    //é ‚ç‚¹é…åˆ—æ›¸ãæ›ãˆç”¨
     auto& vertices = model->vertices;
-    //Še’¸“_‚É‚Â‚¢‚Äˆ—
+    //å„é ‚ç‚¹ã«ã¤ã„ã¦å‡¦ç†
     for (int i = 0; i < vertices.size(); i++) {
-        //’¸“_‚ÌƒEƒFƒCƒg‚©‚çÅ‚à‘å‚«‚¢4‚Â‚ğ‘I‘ğ
+        //é ‚ç‚¹ã®ã‚¦ã‚§ã‚¤ãƒˆã‹ã‚‰æœ€ã‚‚å¤§ãã„4ã¤ã‚’é¸æŠ
         auto& weightList = weightLists[i];
-        //‘å¬”äŠr—p‚Ìƒ‰ƒ€ƒ_®‚ğw’è‚µ~‡‚Éƒ\[ƒg
+        //å¤§å°æ¯”è¼ƒç”¨ã®ãƒ©ãƒ ãƒ€å¼ã‚’æŒ‡å®šã—é™é †ã«ã‚½ãƒ¼ãƒˆ
         weightList.sort([](auto const& lhs, auto const& rhs) {
-            //¶‚Ì—v‘f‚Ì•û‚ª‘å‚«‚¯‚ê‚Îtrue ‚»‚ê‚Å‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+            //å·¦ã®è¦ç´ ã®æ–¹ãŒå¤§ãã‘ã‚Œã°true ãã‚Œã§ãªã‘ã‚Œã°falseã‚’è¿”ã™
             return lhs.weight > rhs.weight;
             });
 
         int weightArrayIndex = 0;
-        //~‡ƒ\[ƒgÏ‚İ‚ÌƒEƒFƒCƒgƒŠƒXƒg‚©‚ç
+        //é™é †ã‚½ãƒ¼ãƒˆæ¸ˆã¿ã®ã‚¦ã‚§ã‚¤ãƒˆãƒªã‚¹ãƒˆã‹ã‚‰
         for (auto& weightSet : weightList) {
-            //’¸“_ƒf[ƒ^‚É‘‚«‚İ
+            //é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã«æ›¸ãè¾¼ã¿
             vertices[i].boneIndex[weightArrayIndex] = weightSet.index;
             vertices[i].boneWeight[weightArrayIndex] = weightSet.weight;
-            //4‚Â‚É‚µ‚½‚çI—¹
+            //4ã¤ã«ã—ãŸã‚‰çµ‚äº†
             if (++weightArrayIndex >= FbxModel::MAX_BONE_INDICES) {
                 float weight = 0.0f;
-                //2”Ô–ÚˆÈ~‚ÌƒEƒFƒCƒg‚ğ‡Œv
+                //2ç•ªç›®ä»¥é™ã®ã‚¦ã‚§ã‚¤ãƒˆã‚’åˆè¨ˆ
                 for (int j = 1; j < FbxModel::MAX_BONE_INDICES; j++) {
                     weight += vertices[i].boneWeight[j];
                 }
-                //‡Œv‚Å1.0f(100%)‚É‚È‚é‚æ‚¤‚É’²®
+                //åˆè¨ˆã§1.0f(100%)ã«ãªã‚‹ã‚ˆã†ã«èª¿æ•´
                 vertices[i].boneWeight[0] = 1.0f - weight;
                 break;
             }
@@ -410,7 +410,7 @@ void FbxLoader::ParseSkin(FbxModel* model, FbxMesh* fbxMesh)
 std::string FbxLoader::ExtractFileName(const std::string& path)
 {
     size_t pos1;
-    //‹æØ‚è•¶šŒŸõ
+    //åŒºåˆ‡ã‚Šæ–‡å­—æ¤œç´¢
     pos1 = path.rfind('\\');
     if (pos1 != string::npos) {
         return path.substr(pos1 + 1, path.size() - pos1 - 1);

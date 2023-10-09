@@ -6,26 +6,26 @@
 
 class PlaneCollider :public BaseCollider, public Plane
 {
-private: //ƒGƒCƒŠƒAƒX
-	//DirectX‚ğÈ—ª
+private: //ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//DirectXã‚’çœç•¥
 	using XMVECTOR = DirectX::XMVECTOR;
 public:
 	PlaneCollider(XMVECTOR offset = { 0,0,0,0 }, float distance = 0.0f) :offset(offset), distance(distance)
 	{
-		//Œ`óƒZƒbƒg
+		//å½¢çŠ¶ã‚»ãƒƒãƒˆ
 		shapeType = COLISIONSHAPE_PLANE;
 	}
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update()override;
 
-	inline void SetDistance(float distance) { this->distance = distance; }
+	inline void SetDistance(float distance_) { this->distance = distance_; }
 
 private:
-	//ƒIƒuƒWƒFƒNƒg’†S
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä¸­å¿ƒ
 	XMVECTOR offset;
-	//Œ´“_‚©‚ç‚Ì‹——£
+	//åŸç‚¹ã‹ã‚‰ã®è·é›¢
 	float distance;
 };
 

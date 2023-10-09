@@ -11,56 +11,56 @@ Input* Input::GetInstance()
 	return &instance;
 }
 
-void Input::Initialize(WinApp* winApp)
+void Input::Initialize(WinApp* winApp_)
 {
 	HRESULT result;
-	this->winApp = winApp;
-	//DirectInput‚ÌƒCƒ“ƒXƒ^ƒ“ƒX¶¬
-	result = DirectInput8Create(winApp->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
+	this->winApp = winApp_;
+	//DirectInputã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
+	result = DirectInput8Create(winApp_->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
 
-	//ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
 	assert(SUCCEEDED(result));
-	//“ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	result = keyboard->SetDataFormat(&c_dfDIKeyboard);//•W€Œ`®
+	//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ
+	result = keyboard->SetDataFormat(&c_dfDIKeyboard);//æ¨™æº–å½¢å¼
 	assert(SUCCEEDED(result));
-	//”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
-	result = keyboard->SetCooperativeLevel(winApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	//æ’ä»–åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
+	result = keyboard->SetCooperativeLevel(winApp_->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 
 }
 
 void Input::Update()
 {
-#pragma region ƒL[ƒ{[ƒh
-	// ‘O‚ÌƒL[î•ñ•Û‘¶
+#pragma region ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
+	// å‰ã®ã‚­ãƒ¼æƒ…å ±ä¿å­˜
 	memcpy(keyPre, key, sizeof(key));
 
-	// ƒL[ƒ{[ƒhî•ñ‚Ìæ“¾ŠJn
+	// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æƒ…å ±ã®å–å¾—é–‹å§‹
 	keyboard->Acquire();
-	// ‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+	// å…¨ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 	keyboard->GetDeviceState(sizeof(key), key);
 #pragma endregion
 }
 
 bool Input::PushKey(BYTE keyNumber)
 {
-	// w’èƒL[‚ğ“ü—Í‚µ‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‚·
+	// æŒ‡å®šã‚­ãƒ¼ã‚’å…¥åŠ›ã—ã¦ã„ã‚Œã°trueã‚’è¿”ã™
 	if (key[keyNumber]) {
 		return true;
 	}
-	// ‚»‚êˆÈŠO‚Åfalse
+	// ãã‚Œä»¥å¤–ã§false
 	return false;
 }
 
 bool Input::TriggerKey(BYTE keyNumber)
 {
-	// ƒgƒŠƒK[”»’è@‘O‚Å‰Ÿ‚µ‚Ä‚¢‚È‚¢&&¡‰Ÿ‚µ‚Ä‚¢‚é
+	// ãƒˆãƒªã‚¬ãƒ¼åˆ¤å®šã€€å‰ã§æŠ¼ã—ã¦ã„ãªã„&&ä»ŠæŠ¼ã—ã¦ã„ã‚‹
 	if (key[keyNumber] && !keyPre[keyNumber])
 	{
 		return true;
 	}
-	// ‚»‚êˆÈŠO‚Åfalse
+	// ãã‚Œä»¥å¤–ã§false
 	return false;
 }

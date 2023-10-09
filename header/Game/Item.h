@@ -2,14 +2,14 @@
 #include "header/Engin/Input.h"
 #include "header/3D/Object3D.h"
 /// <summary>
-/// “Š±o—ˆ‚éƒAƒCƒeƒ€(Î‚â‘„‚È‚Ç)
+/// æŠ•æ“²å‡ºæ¥ã‚‹ã‚¢ã‚¤ãƒ†ãƒ (çŸ³ã‚„æ§ãªã©)
 /// </summary>
 
 class Item : public Object3d
 {
 public:
 	/// <summary>
-	/// ƒIƒuƒWƒFƒNƒg¶¬
+	/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	/// </summary>
 	/// <param name="model"></param>
 	/// <returns></returns>
@@ -17,18 +17,18 @@ public:
 
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	/// <returns></returns>
 	bool Initialize() override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update()override;
 
 	/// <summary>
-	/// ƒR[ƒ‹ƒoƒbƒN
+	/// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 	/// </summary>
 	/// <param name="info"></param>
 	void OnCollider(const CollisionInfo& info)override;
@@ -37,41 +37,41 @@ public:
 
 	float GetRadius() { return radius; }
 
-	void SetRetention(bool isRetention) { this->isRetention = isRetention; }
-	//ƒvƒŒƒCƒ„[‚ÌÀ•Wæ“¾
-	void SetPPosition(XMFLOAT3 position) { this->playerPosition = position; }
-	//ƒvƒŒƒCƒ„[‚ÌŒü‚«æ“¾
-	void SetDirection(bool isDirection) { this->isDirection = isDirection; }
+	void SetRetention(bool isRetention_) { this->isRetention = isRetention_; }
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™å–å¾—
+	void SetPPosition(XMFLOAT3 position_) { this->playerPosition = position_; }
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‘ãå–å¾—
+	void SetDirection(bool isDirection_) { this->isDirection = isDirection_; }
 
 	/// <summary>
-	/// ƒL[î•ñƒZƒbƒg
+	/// ã‚­ãƒ¼æƒ…å ±ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="input">ƒL[î•ñ</param>
+	/// <param name="input">ã‚­ãƒ¼æƒ…å ±</param>
 	/// <returns></returns>
-	Input* SetInput(Input* input) { return this->input = input; }
+	Input* SetInput(Input* input_) { return this->input = input_; }
 
 private:
 	void Gravity();
 	void ThrowLength();
 private:
-	//d—Í‰ÁZ—Ê
+	//é‡åŠ›åŠ ç®—é‡
 	float yadd = 0.0f;
 	float g = 0.80f;
-	//”¼Œa
+	//åŠå¾„
 	float radius = 1.0f;
-	//ˆÚ“®‚·‚é‰‘¬“x
+	//ç§»å‹•ã™ã‚‹åˆé€Ÿåº¦
 	float throwSpeed = 1.25f;
-	//‚‚³
+	//é«˜ã•
 	double height;
-	//“’B“_
+	//åˆ°é”ç‚¹
 	double length;
 
-	//ƒ^ƒCƒ}[,ƒtƒ‰ƒO
+	//ã‚¿ã‚¤ãƒãƒ¼,ãƒ•ãƒ©ã‚°
 	bool isRetention = false;
 	bool isThrow = false;
 	bool isDirection = false;
 
-	float throwTimer = 3.0f; //Š|‚©‚Á‚½ŠÔ
+	float throwTimer = 3.0f; //æ›ã‹ã£ãŸæ™‚é–“
 
 	XMFLOAT3 playerPosition;
 private:

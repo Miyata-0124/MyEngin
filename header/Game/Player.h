@@ -2,7 +2,7 @@
 #include "header/3D/Object3D.h"
 #include "header/Engin/Input.h"
 
-enum class Posture //p¨ŠÇ—
+enum class Posture //å§¿å‹¢ç®¡ç†
 {
 	Upright,
 	Croching
@@ -12,7 +12,7 @@ class Player : public Object3d
 {
 public:
 	/// <summary>
-	/// ƒIƒuƒWƒFƒNƒg¶¬
+	/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	/// </summary>
 	/// <param name="model"></param>
 	/// <returns></returns>
@@ -20,74 +20,74 @@ public:
 
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	/// <returns></returns>
 	bool Initialize() override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update()override;
 
 	/// <summary>
-	/// ƒR[ƒ‹ƒoƒbƒN
+	/// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 	/// </summary>
 	/// <param name="info"></param>
 	void OnCollider(const CollisionInfo& info)override;
 
 	/// <summary>
-	/// ƒL[î•ñƒZƒbƒg
+	/// ã‚­ãƒ¼æƒ…å ±ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="input">ƒL[î•ñ</param>
+	/// <param name="input">ã‚­ãƒ¼æƒ…å ±</param>
 	/// <returns></returns>
-	Input* SetInput(Input* input) { return this->input = input; }
+	Input* SetInput(Input* input_) { return this->input = input_; }
 	/// <summary>
-	/// ‚Í‚ñ‚¯‚¢‚ğ“n‚µ‚Ä‚¢‚é
+	/// ã¯ã‚“ã‘ã„ã‚’æ¸¡ã—ã¦ã„ã‚‹
 	/// </summary>
 	/// <returns></returns>
 	float GetRadius() { return radius; }
-	//À•Wó‚¯“n‚µ
+	//åº§æ¨™å—ã‘æ¸¡ã—
 	XMFLOAT3 GetPosition() { return position; }
-	//Œ»İ‚Ìp¨ó‚¯“n‚µ
+	//ç¾åœ¨ã®å§¿å‹¢å—ã‘æ¸¡ã—
 	Posture GetPosture() { return posture; }
-	//ƒtƒ‰ƒO‚Ìó‚¯“n‚µ
+	//ãƒ•ãƒ©ã‚°ã®å—ã‘æ¸¡ã—
 	bool GetRetention() { return isRetention; }
 	bool GetThrow() { return isThrow; }
 	bool GetDirection() { return isDirection; }
 private:
-	//¶‰EˆÚ“®
+	//å·¦å³ç§»å‹•
 	void Move();
-	//ƒWƒƒƒ“ƒv
+	//ã‚¸ãƒ£ãƒ³ãƒ—
 	void Jump();
-	//ƒnƒCƒWƒƒƒ“ƒv
+	//ãƒã‚¤ã‚¸ãƒ£ãƒ³ãƒ—
 	void HiJump();
-	//p¨•ÏX
+	//å§¿å‹¢å¤‰æ›´
 	void ChangePosture();
-	//d—Í
+	//é‡åŠ›
 	void Gravity();
-	//ƒAƒCƒeƒ€‚É‘Î‚·‚és“®
+	//ã‚¢ã‚¤ãƒ†ãƒ ã«å¯¾ã™ã‚‹è¡Œå‹•
 	void Retention();
 private:
 	Input* input = nullptr;
 	Posture posture = Posture::Upright;
 private:
-	//d—Í‰ÁZ—Ê
+	//é‡åŠ›åŠ ç®—é‡
 	float yadd = 0.0f;
-	//”¼Œa
+	//åŠå¾„
 	float radius = 1.0f;
-	//ˆÚ“®‘¬“x
+	//ç§»å‹•é€Ÿåº¦
 	float moveSpeed = 0.4f;
 
-	//ƒtƒ‰ƒO,ƒ^ƒCƒ}[( false=‰E , true=¶)
+	//ãƒ•ãƒ©ã‚°,ã‚¿ã‚¤ãƒãƒ¼( false=å³ , true=å·¦)
 	bool isDirection = false;
-	//ƒWƒƒƒ“ƒv
+	//ã‚¸ãƒ£ãƒ³ãƒ—
 	bool isJamp = false;
-	//‰¡‚ÉƒnƒCƒWƒƒƒ“ƒv
+	//æ¨ªã«ãƒã‚¤ã‚¸ãƒ£ãƒ³ãƒ—
 	float hiJumpTimer = 5.0f;
-	//ƒAƒCƒeƒ€‚ğ•Û
+	//ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä¿æŒ
 	bool isRetention = false;
-	//“Š±ƒtƒ‰ƒO
+	//æŠ•æ“²ãƒ•ãƒ©ã‚°
 	bool isThrow = false;
 
 };

@@ -11,73 +11,73 @@
 
 class FbxLoader
 {
-private: //ƒGƒCƒŠƒAƒX
-	//stdÈ—ª
+private: //ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//stdçœç•¥
 	using string = std::string;
-public: //’è”
-	//ƒ‚ƒfƒ‹Ši”[ƒpƒX
+public: //å®šæ•°
+	//ãƒ¢ãƒ‡ãƒ«æ ¼ç´ãƒ‘ã‚¹
 	static const string baseDirectory;
 	static const string defaultTextureFileName;
 public:
 	static void ConvertMatrixFromFbx(DirectX::XMMATRIX* dst, const FbxAMatrix& src);
 public:
 	/// <summary>
-	/// ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìæ“¾
+	/// ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å–å¾—
 	/// </summary>
-	/// <returns>ƒCƒ“ƒXƒ^ƒ“ƒX</returns>
+	/// <returns>ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹</returns>
 	static FbxLoader* GetInstance();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	/// <param name="device"></param>
-	void Initialize(ID3D12Device* device);
+	void Initialize(ID3D12Device* device_);
 
 	/// <summary>
-	/// Œãn––
+	/// å¾Œå§‹æœ«
 	/// </summary>
 	void Finalize();
 
 	FbxModel* LoadModelFromFile(const string& modelName);
 
 	/// <summary>
-	/// ƒm[ƒh\¬‚ğ‰ğÍ
+	/// ãƒãƒ¼ãƒ‰æ§‹æˆã‚’è§£æ
 	/// </summary>
 	/// <param name="model"></param>
 	/// <param name="fbxNode"></param>
 	void ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* parent = nullptr);
 
 	/// <summary>
-	/// ƒƒbƒVƒ…“Ç‚İæ‚è
+	/// ãƒ¡ãƒƒã‚·ãƒ¥èª­ã¿å–ã‚Š
 	/// </summary>
 	/// <param name="model"></param>
 	/// <param name="fbxNode"></param>
 	void ParseMesh(FbxModel* model, FbxNode* fbxNode);
-	//’¸“_À•W“Ç‚İæ‚è
+	//é ‚ç‚¹åº§æ¨™èª­ã¿å–ã‚Š
 	void ParseMeshVertices(FbxModel* model, FbxMesh* fbxMesh);
-	//–Êî•ñ“Ç‚İæ‚è
+	//é¢æƒ…å ±èª­ã¿å–ã‚Š
 	void ParseMeshFaces(FbxModel* model, FbxMesh* fbxMesh);
-	//ƒ}ƒeƒŠƒAƒ‹“Ç‚İæ‚è
+	//ãƒãƒ†ãƒªã‚¢ãƒ«èª­ã¿å–ã‚Š
 	void ParseMaterial(FbxModel* model, FbxNode* fbxNode);
-	//ƒeƒNƒXƒ`ƒƒ“Ç‚İæ‚è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿å–ã‚Š
 	void LoadTexture(FbxModel* model, const std::string& fullpath);
-	//ƒXƒLƒjƒ“ƒOî•ñ‚Ì“Ç‚İæ‚è
+	//ã‚¹ã‚­ãƒ‹ãƒ³ã‚°æƒ…å ±ã®èª­ã¿å–ã‚Š
 	void ParseSkin(FbxModel* model, FbxMesh* fbxMesh);
 private:
-	// private‚ÈƒRƒ“ƒXƒgƒ‰ƒNƒ^iƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“j
+	// privateãªã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ï¼ˆã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼‰
 	FbxLoader() = default;
-	// private‚ÈƒfƒXƒgƒ‰ƒNƒ^iƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“j
+	// privateãªãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ï¼ˆã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼‰
 	~FbxLoader() = default;
-	// ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ‹Ö~iƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“j
+	// ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç¦æ­¢ï¼ˆã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼‰
 	FbxLoader(const FbxLoader& obj) = delete;
-	// ƒRƒs[‘ã“ü‰‰Zq‚ğ‹Ö~iƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“j
+	// ã‚³ãƒ”ãƒ¼ä»£å…¥æ¼”ç®—å­ã‚’ç¦æ­¢ï¼ˆã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼‰
 	void operator=(const FbxLoader& obj) = delete;
 
-	//ID3D12ƒfƒoƒCƒX
+	//ID3D12ãƒ‡ãƒã‚¤ã‚¹
 	ID3D12Device* device = nullptr;
-	//FBXƒ}ƒl[ƒWƒƒ[
+	//FBXãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	FbxManager* fbxManager = nullptr;
-	//FBXƒCƒ“ƒ|[ƒ^[
+	//FBXã‚¤ãƒ³ãƒãƒ¼ã‚¿ãƒ¼
 	FbxImporter* fbxImporter = nullptr;
 
 	std::string ExtractFileName(const std::string& path);

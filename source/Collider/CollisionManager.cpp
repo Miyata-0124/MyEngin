@@ -10,53 +10,53 @@ CollisionManager* CollisionManager::GetInstance()
 
 void CollisionManager::CheckAllCollisions()
 {
-    std::forward_list<BaseCollider*>::iterator colliderA;//”»’è—p‚ÌƒŠƒXƒg
+    std::forward_list<BaseCollider*>::iterator colliderA;//åˆ¤å®šç”¨ã®ãƒªã‚¹ãƒˆ
     std::forward_list<BaseCollider*>::iterator colliderB;
-    //‘“–‚½‚èƒ`ƒFƒbƒN
+    //ç·å½“ãŸã‚Šãƒã‚§ãƒƒã‚¯
     colliderA = colliders.begin();
     for (; colliderA != colliders.end(); ++colliderA) {
         colliderB = colliderA;
         ++colliderB;
         for (; colliderB != colliders.end(); ++colliderB) {
-            BaseCollider* colA = *colliderA; //”»’è1
-            BaseCollider* colB = *colliderB; //”»’è2
+            BaseCollider* colA = *colliderA; //åˆ¤å®š1
+            BaseCollider* colB = *colliderB; //åˆ¤å®š2
 
-            //‹…‚Æ•½–Ê
+            //çƒã¨å¹³é¢
             if (colA->GetShapeType() == COLISIONSHAPE_SPHERE && colB->GetShapeType() == COLISIONSHAPE_PLANE) {
-                Sphere* SphereA = dynamic_cast<Sphere*>(colA);//ƒvƒŒƒCƒ„[,ƒAƒCƒeƒ€
-                Plane* PlaneA = dynamic_cast<Plane*>(colB);//°
-                DirectX::XMVECTOR inter;//Œğ“_
-                if (Collision::CheckSphere2Plane(*SphereA, *PlaneA, &inter)) {//‹…‚Æ•½–Ê‚Ì”»’è
+                Sphere* SphereA = dynamic_cast<Sphere*>(colA);//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼,ã‚¢ã‚¤ãƒ†ãƒ 
+                Plane* PlaneA = dynamic_cast<Plane*>(colB);//åºŠ
+                DirectX::XMVECTOR inter;//äº¤ç‚¹
+                if (Collision::CheckSphere2Plane(*SphereA, *PlaneA, &inter)) {//çƒã¨å¹³é¢ã®åˆ¤å®š
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
             }
-            //‹…‚Æ•½–Ê 
+            //çƒã¨å¹³é¢ 
             if (colB->GetShapeType() == COLISIONSHAPE_SPHERE && colA->GetShapeType() == COLISIONSHAPE_PLANE) {
-                Sphere* SphereA = dynamic_cast<Sphere*>(colB);//ƒvƒŒƒCƒ„[,ƒAƒCƒeƒ€
-                Plane* PlaneA = dynamic_cast<Plane*>(colA);//°
-                DirectX::XMVECTOR inter;//Œğ“_
-                if (Collision::CheckSphere2Plane(*SphereA, *PlaneA, &inter)) {//‹…‚Æ•½–Ê‚Ì”»’è
+                Sphere* SphereA = dynamic_cast<Sphere*>(colB);//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼,ã‚¢ã‚¤ãƒ†ãƒ 
+                Plane* PlaneA = dynamic_cast<Plane*>(colA);//åºŠ
+                DirectX::XMVECTOR inter;//äº¤ç‚¹
+                if (Collision::CheckSphere2Plane(*SphereA, *PlaneA, &inter)) {//çƒã¨å¹³é¢ã®åˆ¤å®š
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
             }
-            //‹…‚Æ‹…
+            //çƒã¨çƒ
             if (colA->GetShapeType() == COLISIONSHAPE_SPHERE && colB->GetShapeType() == COLISIONSHAPE_SPHERE)
             {
-                Sphere* SphereA = dynamic_cast<Sphere*>(colA);//‹…1 ƒvƒŒƒCƒ„[
-                Sphere* SphereB = dynamic_cast<Sphere*>(colB);//‹…2 ƒAƒCƒeƒ€
-                DirectX::XMVECTOR inter;//Œğ“_
-                if (Collision::CheckSphere2Sphere(*SphereA, *SphereB, &inter)) {
+                Sphere* SphereA = dynamic_cast<Sphere*>(colA);//çƒ1 ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
+                Sphere* SphereB = dynamic_cast<Sphere*>(colB);//çƒ2 ã‚¢ã‚¤ãƒ†ãƒ 
+                DirectX::XMVECTOR inter;//äº¤ç‚¹
+                if (Collision::CheckSphere2Sphere(*SphereA, *SphereB)) {
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
             }
-            //‹…‚Æ2DlŠp
+            //çƒã¨2Då››è§’
             if (colA->GetShapeType() == COLISIONSHAPE_SPHERE && colB->GetShapeType() == COLISIONSHAPE_BOX) {
                 Sphere* SphereA = dynamic_cast<Sphere*>(colB);
                 Box* BoxA = dynamic_cast<Box*>(colA);
-                DirectX::XMVECTOR inter;//Œğ“_
+                DirectX::XMVECTOR inter;//äº¤ç‚¹
                 if (Collision::CheckSphere2Box2D(*SphereA, *BoxA)){
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));

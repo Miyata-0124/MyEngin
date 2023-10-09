@@ -6,26 +6,26 @@
 
 class BoxCollider :public BaseCollider, public Box
 {
-private: //ƒGƒCƒŠƒAƒX
-	//DirectX‚ğÈ—ª
+private: //ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//DirectXã‚’çœç•¥
 	using XMVECTOR = DirectX::XMVECTOR;
 public:
 	BoxCollider(XMVECTOR center = { 0,0,0,0 } , float radius = 1.0f) :center(center),radius(radius)
 	{
-		//Œ`óƒZƒbƒg
+		//å½¢çŠ¶ã‚»ãƒƒãƒˆ
 		shapeType = COLISIONSHAPE_BOX;
 	}
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update()override;
 
-	inline void SetRadius(float radius) { this->radius = radius; }
+	inline void SetRadius(float radius_) { this->radius = radius_; }
 
 private:
-	//ƒIƒuƒWƒFƒNƒg’†S
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä¸­å¿ƒ
 	XMVECTOR center;
-	//”¼Œa
+	//åŠå¾„
 	float radius;
 };
 

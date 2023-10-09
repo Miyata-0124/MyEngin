@@ -5,30 +5,30 @@ using namespace DirectX;
 class ViewProjection
 {
 public:
-	// ƒrƒ…[s—ñ
+	// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—
 	XMMATRIX matView;
-	// ŽË‰es—ñ
+	// å°„å½±è¡Œåˆ—
 	XMMATRIX matProjection;
-	// Ž‹“_À•W
+	// è¦–ç‚¹åº§æ¨™
 	XMFLOAT3 eye;
-	// ’Ž‹“_À•W
+	// æ³¨è¦–ç‚¹åº§æ¨™
 	XMFLOAT3 target;
-	// ã•ûŒüƒxƒNƒgƒ‹
+	// ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	XMFLOAT3 up;
 
 public:
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialeze();
-	//XV
+	//æ›´æ–°
 	void Update();
 	void UpdateView();
 	void UpdateProjection();
 	//setter
-	void SetEye(XMFLOAT3 eye) { this->eye = eye; }
-	void SetTarget(XMFLOAT3 target) { this->target = target; }
-	void SetUp(XMFLOAT3 up) { this->up = up; }
-	void SetView(XMMATRIX matView) { this->matView = matView; }
-	void SetProjection(XMMATRIX matProjection) { this->matProjection = matProjection; }
+	void SetEye(XMFLOAT3 eye_) { this->eye = eye_; }
+	void SetTarget(XMFLOAT3 target_) { this->target = target_; }
+	void SetUp(XMFLOAT3 up_) { this->up = up_; }
+	void SetView(XMMATRIX matView_) { this->matView = matView_; }
+	void SetProjection(XMMATRIX matProjection_) { this->matProjection = matProjection_; }
 	//getter
 	const XMMATRIX& GetView() { return matView; }
 	const XMMATRIX& GetProjection() { return matProjection; }

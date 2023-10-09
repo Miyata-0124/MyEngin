@@ -4,22 +4,22 @@ using namespace DirectX;
 
 bool Collision::CheckSphere2Plane(const Sphere& sphere, const Plane& plane, DirectX::XMVECTOR* inter)
 {
-    //À•W“_‚ÌŒ´“_‚©‚ç‹…‚Ì’†S“_À•W
+    //ï¿½ï¿½ï¿½Wï¿½_ï¿½ÌŒï¿½ï¿½_ï¿½ï¿½ï¿½ç‹…ï¿½Ì’ï¿½ï¿½Sï¿½_ï¿½ï¿½ï¿½W
     XMVECTOR distV = XMVector3Dot(sphere.center, plane.normal);
-    //•½–Ê‚Æ‹…‚Ì’†S‚Æ‚Ì‹——£
+    //ï¿½ï¿½ï¿½Ê‚Æ‹ï¿½ï¿½Ì’ï¿½ï¿½Sï¿½Æ‚Ì‹ï¿½ï¿½ï¿½
     float dist = distV.m128_f32[0] - plane.distance;
-    //‹——£‚Ìâ‘Î’l‚ª”¼Œa‚æ‚è‘å‚«‚¯‚ê‚ÎƒnƒYƒŒ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½Î’lï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½å‚«ï¿½ï¿½ï¿½ï¿½Îƒnï¿½Yï¿½ï¿½
     if (fabsf(dist) > sphere.radius)return false;
 
-    //‹^—Œğ“_‚ğì¬
+    //ï¿½^ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ì¬
     if (inter) {
-        //•½–Êã‚ÌÅ‹ßÚ“_‚ğ‹^—‚Éİ’è
+        //ï¿½ï¿½ï¿½Êï¿½ÌÅ‹ßÚ“_ï¿½ï¿½^ï¿½ï¿½ï¿½Éİ’ï¿½
         *inter = -dist * plane.normal + sphere.center;
     }
     return true;
 }
-//‹…‚Ç‚¤‚µ‚Ì”»’è
-bool Collision::CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, DirectX::XMVECTOR* inter)
+//ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
+bool Collision::CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2)
 {
     //x
     float x = sphere.center.m128_f32[0] - sphere2.center.m128_f32[0];
@@ -27,36 +27,36 @@ bool Collision::CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, 
     float y = sphere.center.m128_f32[1] - sphere2.center.m128_f32[1];
     //z
     float z = sphere.center.m128_f32[2] - sphere2.center.m128_f32[2];
-    //‹…‚Ç‚¤‚µ‚Ì‹——£
+    //ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½Ì‹ï¿½ï¿½ï¿½
     double d = sqrt((x * x) + (y * y) + (z * z));
-    //‹——£‚ª”¼Œa‚ğ‘«‚µ‚½‚à‚Ì‚æ‚è¬‚³‚¢(”¼Œa‚Ì’†‚É‚¢‚é)‚È‚çƒAƒ^ƒŠ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ğ‘«‚ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½è¬ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½aï¿½Ì’ï¿½ï¿½É‚ï¿½ï¿½ï¿½)ï¿½È‚ï¿½Aï¿½^ï¿½ï¿½
     if (d <= sphere.radius + sphere2.radius)
     {
         return true;
     }
-    //‚»‚êˆÈŠO‚Å‚ÍƒnƒYƒŒ‚Æ‚µ‚Ä•Ô‚·
+    //ï¿½ï¿½ï¿½ï¿½ÈŠOï¿½Å‚Íƒnï¿½Yï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Ä•Ô‚ï¿½
     return false;
 }
 
 bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance, DirectX::XMVECTOR* inter)
 {
-    const float epsilon = 1.0e-5f;//Œë·‹zû—p‚Ì”÷¬‚È’l
-    //–Ê–@ü‚ÆƒŒƒC‚Ì•ûŒüƒxƒNƒgƒ‹
+    const float epsilon = 1.0e-5f;//ï¿½ë·ï¿½zï¿½ï¿½ï¿½pï¿½Ì”ï¿½ï¿½ï¿½ï¿½È’l
+    //ï¿½Ê–@ï¿½ï¿½ï¿½Æƒï¿½ï¿½Cï¿½Ì•ï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½
     float d1 = XMVector3Dot(plane.normal, ray.dir).m128_f32[0];
-    //— –Ê‚É“–‚½‚ç‚È‚¢
+    //ï¿½ï¿½ï¿½Ê‚É“ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
     if (d1 > -epsilon) { return false; }
-    //n“_‚ÆŒ´“_‚Ì‹——£(•½–Ê‚Ì–@üƒxƒNƒgƒ‹)
-    //–Ê–@ü‚ÆƒŒƒC‚Ìn“_À•W(ˆÊ’uƒxƒNƒgƒ‹)‚Ì“àÏ
+    //ï¿½nï¿½_ï¿½ÆŒï¿½ï¿½_ï¿½Ì‹ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Ê‚Ì–@ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½)
+    //ï¿½Ê–@ï¿½ï¿½ï¿½Æƒï¿½ï¿½Cï¿½Ìnï¿½_ï¿½ï¿½ï¿½W(ï¿½Ê’uï¿½xï¿½Nï¿½gï¿½ï¿½)ï¿½Ì“ï¿½ï¿½
     float d2 = XMVector3Dot(plane.normal, ray.start).m128_f32[0];
-    //n“_‚Æ•½–Ê‚Ì‹——£(•½–Ê‚Ì–@ü•ûŒü)
+    //ï¿½nï¿½_ï¿½Æ•ï¿½ï¿½Ê‚Ì‹ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Ê‚Ì–@ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
     float dist = d2 - plane.distance;
-    //n“_‚Æ•½–Ê‚Ì‹——£(ƒŒƒC•ûŒü)
+    //ï¿½nï¿½_ï¿½Æ•ï¿½ï¿½Ê‚Ì‹ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½)
     float t = dist / -d1;
-    //Œğ“_‚ªn“_‚æ‚èŒã‚ë‚É‚ ‚é‚½‚ßƒnƒYƒŒ
+    //ï¿½ï¿½_ï¿½ï¿½ï¿½nï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½É‚ï¿½ï¿½é‚½ï¿½ßƒnï¿½Yï¿½ï¿½
     if (t < 0)return false;
-    //‹——£
+    //ï¿½ï¿½ï¿½ï¿½
     if (distance) { *distance = t; }
-    //Œğ“_‚ÌŒvZ
+    //ï¿½ï¿½_ï¿½ÌŒvï¿½Z
     if (inter) { *inter = ray.start + t * ray.dir; }
 
     return true;
@@ -72,70 +72,70 @@ bool Collision::CheckSphere2Box2D(const Sphere& sphere, const Box& box)
         box.center.m128_f32[1] - box.radius   //w y2
     };
 
-    //x,y‚Ì2²‚Ì‚İ
+    //x,yï¿½ï¿½2ï¿½ï¿½ï¿½Ì‚ï¿½
 
-    // X ‹…‚ÌX‚ªbox‚ÌX2“_‚ÌŠÔ
+    // X ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½boxï¿½ï¿½X2ï¿½_ï¿½ÌŠï¿½
     if (sphere_.x < box_.x && sphere_.x > box_.y)
     {
-        // Y ‹…‚ÌY‚ªbox‚ÌY‚ÌŠÔ
+        // Y ï¿½ï¿½ï¿½ï¿½Yï¿½ï¿½boxï¿½ï¿½Yï¿½ÌŠï¿½
         if (sphere_.y<box_.z && sphere_.y>box_.w)
         {
-            //‚È‚çƒqƒbƒg
+            //ï¿½È‚ï¿½qï¿½bï¿½g
             return true;
         }
     }
-    //‚»‚êˆÈŠOƒnƒYƒŒ
+    //ï¿½ï¿½ï¿½ï¿½ÈŠOï¿½nï¿½Yï¿½ï¿½
     return false;
 }
 
-float Collision::LenOBBToPoint(OBB& obb, DirectX::XMVECTOR& p)
-{
-    DirectX::XMVECTOR Vec = { 0,0,0 }; //’·‚³‚ğ‹‚ß‚éƒxƒNƒgƒ‹
-    //Še²‚É‚Â‚¢‚Ä‚Í‚İo‚½•”•ª‚ÌƒxƒNƒgƒ‹Zo
-    for (int i = 0; i < 3; i++)
-    {
-        float L = obb.fLength[i];
-        //L=0ŒvZ‚µ‚È‚¢
-        if (L <= 0) {
-            continue;
-        }
-        DirectX::XMVECTOR p_pos = (p - obb.pos);
-        DirectX::XMVECTOR s = XMVector3Dot(p_pos, obb.normalDir[i]) / L;
+//float Collision::LenOBBToPoint(OBB& obb, DirectX::XMVECTOR& p)
+//{
+//    DirectX::XMVECTOR Vec = { 0,0,0 }; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½xï¿½Nï¿½gï¿½ï¿½
+//    //ï¿½eï¿½ï¿½ï¿½É‚Â‚ï¿½ï¿½Ä‚Í‚İoï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìƒxï¿½Nï¿½gï¿½ï¿½ï¿½Zï¿½o
+//    for (int i = 0; i < 3; i++)
+//    {
+//        float L = obb.fLength[i];
+//        //L=0ï¿½vï¿½Zï¿½ï¿½ï¿½È‚ï¿½
+//        if (L <= 0) {
+//            continue;
+//        }
+//        DirectX::XMVECTOR p_pos = (p - obb.pos);
+//        DirectX::XMVECTOR s = XMVector3Dot(p_pos, obb.normalDir[i]) / L;
+//
+//    }
+//    return 0.0f;
+//}
 
-    }
-    return 0.0f;
-}
+//bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject)
+//{
+//   
+//    return true;
+//}
 
-bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject)
-{
-   
-    return true;
-}
-
-//OBB‚Æ“_‚ÌÅ’Z‹——£ZoŠÖ”
+//OBBï¿½Æ“_ï¿½ÌÅ’Zï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½oï¿½Öï¿½
 //float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
 //{
-//    //Vector3 Vec(0,0,0);   // ’·‚³‚ğ‹‚ß‚éƒxƒNƒgƒ‹
+//    //Vector3 Vec(0,0,0);   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½xï¿½Nï¿½gï¿½ï¿½
 //
-//    //// Še²‚É‚Â‚¢‚Ä‚Í‚İo‚½•”•ª‚ÌƒxƒNƒgƒ‹‚ğZo
+//    //// ï¿½eï¿½ï¿½ï¿½É‚Â‚ï¿½ï¿½Ä‚Í‚İoï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìƒxï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½Zï¿½o
 //    //for (int i = 0; i < 3; i++)
 //    //{
 //    //    float L = obb.fLength[i];
-//    //    // L=0‚ÍŒvZ–³‚µ
+//    //    // L=0ï¿½ÍŒvï¿½Zï¿½ï¿½ï¿½ï¿½
 //    //    if (L <= 0) {
 //    //        continue;
 //    //    }
 //    //    float s = Vector3(p - obb.Pos).dot(obb.NormaDirect[i]) / L;
 //
-//    //    // s‚Ì’l‚©‚çA‚Í‚İo‚µ‚½•”•ª‚ª‚ ‚Á‚½‚È‚ç‚»‚ÌƒxƒNƒgƒ‹‚ğ‰ÁZ
+//    //    // sï¿½Ì’lï¿½ï¿½ï¿½ï¿½Aï¿½Í‚İoï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ç‚»ï¿½Ìƒxï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Z
 //    //    s = (float)fabs(s);
 //    //    if (s > 1) {
-//    //        Vec += (1 - s) * L * obb.NormaDirect[i];   // ‚Í‚İo‚µ‚½•”•ª‚ÌƒxƒNƒgƒ‹Zo
+//    //        Vec += (1 - s) * L * obb.NormaDirect[i];   // ï¿½Í‚İoï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìƒxï¿½Nï¿½gï¿½ï¿½ï¿½Zï¿½o
 //    //    }
 //    //}
 //    ////result = Vec.length();
 //
-//    //return Vec.length();   // ’·‚³‚ğo—Í
+//    //return Vec.length();   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½
 //}
 //
 //bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere,Vector3* inter, Vector3* reject)
@@ -149,7 +149,7 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::X
 //    //Vector3 rejeVec;
 //
 //    //rejeVec = sphere.center - obbPos;
-//    ////³‹K‰»
+//    ////ï¿½ï¿½ï¿½Kï¿½ï¿½
 //    //rejeVec.nomalize();
 //
 //    //length = LenOBBToPoint(obb_, spherePos);
@@ -161,10 +161,10 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::X
 //    //    return false;
 //    //}
 //
-//    ////‹^—Œğ“_
+//    ////ï¿½^ï¿½ï¿½ï¿½ï¿½_
 //    //if (inter)
 //    //{
-//    //    //•½–Êã‚ÌÅ‹ßÚ“_‚ğ‹^—Œğ“_‚Æ‚·‚é
+//    //    //ï¿½ï¿½ï¿½Êï¿½ÌÅ‹ßÚ“_ï¿½ï¿½^ï¿½ï¿½ï¿½ï¿½_ï¿½Æ‚ï¿½ï¿½ï¿½
 //    //    *inter = obb_.Pos + (rejeVec * length);
 //    //}
 //    //return true;

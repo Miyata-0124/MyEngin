@@ -13,28 +13,28 @@
 
 void GameScene::Initialize()
 {
-#pragma region WindowsAPI‚Ì‰Šú‰»
+#pragma region WindowsAPIã®åˆæœŸåŒ–
 	winApp = new WinApp;
 	winApp->Initialize();
 #pragma endregion
 
-#pragma region DirectX‰Šú‰»ˆ—
-	//DirectX‰Šú‰»ˆ—@@‚±‚±‚©‚ç
+#pragma region DirectXåˆæœŸåŒ–å‡¦ç†
+	//DirectXåˆæœŸåŒ–å‡¦ç†ã€€ã€€ã“ã“ã‹ã‚‰
 	directXCom = new DirectXCommon;
 	directXCom->Initialize(winApp);
 
-	//FBXŠÖ˜A
+	//FBXé–¢é€£
 	FbxLoader::GetInstance()->Initialize(directXCom->GetDevice());
 
-	//ƒL[î•ñ
+	//ã‚­ãƒ¼æƒ…å ±
 	input = new	Input;
 	input->Initialize(winApp);
 
-	//DirectX‰Šú‰»ˆ—@@‚±‚±‚Ü‚Å
+	//DirectXåˆæœŸåŒ–å‡¦ç†ã€€ã€€ã“ã“ã¾ã§
 #pragma endregion
 #pragma	endregion
-//ƒXƒvƒ‰ƒCƒg
-	//ƒXƒvƒ‰ƒCƒg‹¤’Ê•”•ª‚Ì‰Šú‰»
+//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå…±é€šéƒ¨åˆ†ã®åˆæœŸåŒ–
 	spriteCommon = new SpriteCommon;
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "test.png");
@@ -42,11 +42,11 @@ void GameScene::Initialize()
 	//ViewProjection
 	camera = new ViewProjection();
 	camera->Initialeze();
-//ˆê“x‚µ‚©éŒ¾‚µ‚È‚¢
+//ä¸€åº¦ã—ã‹å®£è¨€ã—ãªã„
 	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	//Particle::StaticInitialize(directXCom->GetDevice(),camera);
-	//ƒXƒvƒ‰ƒCƒg
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	sprite->Initialize(spriteCommon, 1);
 	sprite->SetAnchorPoint(XMFLOAT2(0, 0));
 	sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
@@ -63,39 +63,39 @@ void GameScene::Initialize()
 	object1->SetPosition({ 0,-3,0 });
 	object1->PlayAnimation();*/
 #pragma endregion
-#pragma region ƒ‚ƒfƒ‹
-	//	//ƒ‚ƒfƒ‹
+#pragma region ãƒ¢ãƒ‡ãƒ«
+	//	//ãƒ¢ãƒ‡ãƒ«
 	//Model* model1 = Model::LoadFromOBJ("wall");
-	//ƒvƒŒƒCƒ„[ƒ‚ƒfƒ‹
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒ¢ãƒ‡ãƒ«
 	Model* playerModel = Model::LoadFromOBJ("Box");
 	Model* ground = Model::LoadFromOBJ("blue");
 	Model* item_ = Model::LoadFromOBJ("Item");
 	Model* backGround = Model::LoadFromOBJ("BG");
 #pragma endregion
-#pragma region Player“™‚ÌƒIƒuƒWƒFƒNƒg
+#pragma region Playerç­‰ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 	collisionManager = CollisionManager::GetInstance();
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	objPlayer = Player::Create(ground);
 	objPlayer->SetInput(input);
-	//“G
+	//æ•µ
 	objEnem = Enemy::Create(item_);
-	//’n–Ê
+	//åœ°é¢
 	objFloor = Floor::Create(playerModel);
-	//ƒAƒCƒeƒ€
+	//ã‚¢ã‚¤ãƒ†ãƒ 
 	objItem = Item::Create(playerModel);
 	objItem->SetInput(input);
-	//•Ç
+	//å£
 	objWall = Wall::Create(ground);
-	//”wŒi
+	//èƒŒæ™¯
 	objBackGround = BackGround::Create(backGround);
 #pragma endregion
 	LoadMap();
 	
-	#pragma region ƒp[ƒeƒBƒNƒ‹ŠÖŒW
-	//	ƒp[ƒeƒBƒNƒ‹
+	#pragma region ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é–¢ä¿‚
+	//	ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	//Particle::LoadTexture(1, "white1x1.png");
-	////ˆø”‚Ì”š‚ÍƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ‚ÌƒCƒ“ƒfƒbƒNƒXƒiƒ“ƒo[
+	////å¼•æ•°ã®æ•°å­—ã¯ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒŠãƒ³ãƒãƒ¼
 	//particle = Particle::Create(1);
 	//particle->Update();
 	#pragma	endregion
@@ -103,32 +103,32 @@ void GameScene::Initialize()
 
 void GameScene::Update()
 {
-	//ƒL[î•ñ
+	//ã‚­ãƒ¼æƒ…å ±
 	input->Update();
-	//ƒJƒƒ‰
+	//ã‚«ãƒ¡ãƒ©
 	camera->Update();
 
 	switch (scene)
 	{
-		///‚»‚ê‚¼‚ê‚ÌƒNƒ‰ƒX‚ÌUpdate‚Ì‚İ‹Lq
+		///ãã‚Œãã‚Œã®ã‚¯ãƒ©ã‚¹ã®Updateã®ã¿è¨˜è¿°
 
-	case 0: //ƒ^ƒCƒgƒ‹‰æ–Ê ‰J‚ª~‚Á‚Ä‚¢‚é‚æ‚¤‚ÉŒ©‚¦‚éƒ^ƒCƒgƒ‹
+	case 0: //ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ é›¨ãŒé™ã£ã¦ã„ã‚‹ã‚ˆã†ã«è¦‹ãˆã‚‹ã‚¿ã‚¤ãƒˆãƒ«
 
-#pragma region ƒp[ƒeƒBƒNƒ‹
-		//ƒp[ƒeƒBƒNƒ‹”­¶
+#pragma region ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
+		//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç™ºç”Ÿ
 		//if (input->TriggerKey(DIK_F))
 		//{
-		//	//ƒp[ƒeƒBƒNƒ‹
+		//	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 		//	for (int i = 0; i < 100; i++)
 		//	{
-		//		//XYZ‘S‚Ä[-0.05f,+0.05f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//		//XYZå…¨ã¦[-0.05f,+0.05f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		//		const	float	rnd_vel = 0.1f;
 		//		XMFLOAT3	vel{};
 		//		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 		//		vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 		//		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
-		//		//d—Í‚ÉŒ©—§‚Ä‚ÄY‚Ì‚İ[-0.001f,0]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//		//é‡åŠ›ã«è¦‹ç«‹ã¦ã¦Yã®ã¿[-0.001f,0]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		//		const	float	rnd_acc = 0.001f;
 		//		XMFLOAT3	acc{};
 		//		acc.y = (float)rand() / RAND_MAX * rnd_acc;
@@ -138,8 +138,8 @@ void GameScene::Update()
 		//}
 		//particle->Update();
 #pragma endregion
-#pragma region ƒV[ƒ“Ø‚è‘Ö‚¦‚Ìˆ—
-		//“®‚©‚·‚½‚ß‚ÉÀ•W‚ğæ“¾
+#pragma region ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆæ™‚ã®å‡¦ç†
+		//å‹•ã‹ã™ãŸã‚ã«åº§æ¨™ã‚’å–å¾—
 		XMFLOAT2 position = sprite->GetPosition();
 		if (!UIFlag) {
 			if (position.x < 10)
@@ -170,13 +170,13 @@ void GameScene::Update()
 			scene = 1;
 			ChengeScene = true;
 		}
-		if (ChengeScene)//ƒV[ƒ“Ø‚è‘Ö‚¦‚ª‰Ÿ‚³‚ê‚½‚È‚ç
+		if (ChengeScene)//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆãŒæŠ¼ã•ã‚ŒãŸãªã‚‰
 		{
 			UIspeed = { 0,0 };
 			position = { 0,0 };
 			ChengeScene = false;
 		}
-		//ˆÚ“®Œã‚ÌÀ•W‚ğ“ü‚ê‚é
+		//ç§»å‹•å¾Œã®åº§æ¨™ã‚’å…¥ã‚Œã‚‹
 		sprite->SetPosition(position);
 #pragma endregion
 		break;
@@ -184,18 +184,18 @@ void GameScene::Update()
 		
 
 
-		//ƒvƒŒƒCƒ„[
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 		objPlayer->Update();
-		//“G
+		//æ•µ
 		objEnem->Update();
-		//ƒAƒCƒeƒ€
+		//ã‚¢ã‚¤ãƒ†ãƒ 
 		objItem -> Update();
-		//’n–Ê
+		//åœ°é¢
 		objFloor -> Update();
-		//•Ç
+		//å£
 		//objWall -> Update();
 		
-		//”wŒi
+		//èƒŒæ™¯
 		objBackGround->Update();
 		//obj3d->Update();
 		
@@ -204,21 +204,21 @@ void GameScene::Update()
 			object->Update();
 		}
 
-#pragma region ŠeƒNƒ‰ƒXŠÔ‚Ìî•ñó‚¯“n‚µ
-		//ƒIƒuƒWƒFƒNƒg
+#pragma region å„ã‚¯ãƒ©ã‚¹é–“ã®æƒ…å ±å—ã‘æ¸¡ã—
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		objEnem->SetPPosition(objPlayer->GetPosition());
 		objItem->SetPPosition(objPlayer->GetPosition());
 		objItem->SetRetention(objPlayer->GetRetention());
 		objItem->SetDirection(objPlayer->GetDirection());
 #pragma endregion
-		//”»’èƒ}ƒl[ƒWƒƒ[
+		//åˆ¤å®šãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 		collisionManager->CheckAllCollisions();
 
-		//à–¾ƒXƒvƒ‰ƒCƒgˆÚ“®
-#pragma region  ƒXƒvƒ‰ƒCƒg‚ÌˆÚ“®‰‰o
-		////“®‚©‚·‚½‚ß‚ÉÀ•W‚ğæ“¾
+		//èª¬æ˜ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç§»å‹•
+#pragma region  ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®ç§»å‹•æ¼”å‡º
+		////å‹•ã‹ã™ãŸã‚ã«åº§æ¨™ã‚’å–å¾—
 		//XMFLOAT2 position = sprite->GetPosition();
-		////ˆÚ“®Œã‚ÌÀ•W‚ğ“ü‚ê‚é
+		////ç§»å‹•å¾Œã®åº§æ¨™ã‚’å…¥ã‚Œã‚‹
 		//sprite->SetPosition(position);
 #pragma endregion
 		
@@ -231,7 +231,7 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
-	//•`‰æˆ—‚±‚±‚©‚ç«
+	//æç”»å‡¦ç†ã“ã“ã‹ã‚‰â†“
 	directXCom->PreDraw();
 	Object3d::PreDraw(directXCom->GetCommandList());
 	switch (scene)
@@ -247,29 +247,29 @@ void GameScene::Draw()
 		break;
 	case 1:
 		
-		//”wŒi
+		//èƒŒæ™¯
 
-		//ƒIƒuƒWƒFƒNƒg
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		//object1->Draw(directXCom->GetCommandList());
 		
-		//ƒvƒŒƒCƒ„[
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 		objPlayer->Draw();
-		//“G
+		//æ•µ
 		objEnem->Draw();
-		//ƒAƒCƒeƒ€
+		//ã‚¢ã‚¤ãƒ†ãƒ 
 		objItem->Draw();
-		//’n–Ê
+		//åœ°é¢
 		//objFloor->Draw();
-		//•Ç
+		//å£
 		//objWall->Draw();
-		//”wŒi
+		//èƒŒæ™¯
 		objBackGround->Draw();
 		for (auto object : objects) {
 			object->Draw();
 		}
 
 	
-	// UIŠÖ˜A
+	// UIé–¢é€£
 		sprite->SetIsInvisible(false);
 		sprite->SetTexIndex(2);
 		sprite->SetSize({320, 180});
@@ -283,7 +283,7 @@ void GameScene::Draw()
 
 	Object3d::PostDraw();
 	directXCom->PostDraw();
-	//‚±‚±‚Ü‚Åª
+	//ã“ã“ã¾ã§â†‘
 }
 
 void GameScene::Finalize()
@@ -308,31 +308,31 @@ void GameScene::Finalize()
 void GameScene::LoadMap()
 {
 	for (auto& objectData : jsonLoader->objects) {
-		Model* model = Model::LoadFromOBJ("TestBox");
+		Model* mapModel = Model::LoadFromOBJ("TestBox");
 		decltype(models)::iterator it = models.find(objectData.fileName);
-		if (it != models.end()) { model = it->second; }
+		if (it != models.end()) { mapModel = it->second; }
 
-		// ƒ‚ƒfƒ‹‚ğw’è‚µ‚Ä3DƒIƒuƒWƒFƒNƒg‚ğ¶¬
+		// ãƒ¢ãƒ‡ãƒ«ã‚’æŒ‡å®šã—ã¦3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 		Object3d* mapObject = Object3d::Create();
-		mapObject->SetModel(model);
-		// À•W
+		mapObject->SetModel(mapModel);
+		// åº§æ¨™
 		DirectX::XMFLOAT3 scale;
 		DirectX::XMStoreFloat3(&scale, objectData.scaling);
 		mapObject->SetSize(scale);
 
-		// ‰ñ“]Šp
+		// å›è»¢è§’
 		DirectX::XMFLOAT3 rot;
 		DirectX::XMStoreFloat3(&rot, objectData.rotation);
 		mapObject->SetRotation(rot);
 
-		// À•W
+		// åº§æ¨™
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMStoreFloat3(&pos, objectData.position);
 		mapObject->SetPosition(pos);
 
-		//ƒRƒ‰ƒCƒ_[
+		//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 		//DirectX::XMFLOAT3 center;
-		// ”z—ñ‚É“o˜^
+		// é…åˆ—ã«ç™»éŒ²
 		objects.push_back(mapObject);
 	}
 }

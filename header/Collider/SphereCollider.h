@@ -7,25 +7,25 @@
 
 class SphereCollider :public BaseCollider, public Sphere
 {
-private: //ƒGƒCƒŠƒAƒX
-	//DirectX‚ğÈ—ª
+private: //ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//DirectXã‚’çœç•¥
 	using XMVECTOR = DirectX::XMVECTOR;
 public:
 	SphereCollider(XMVECTOR offset = { 0,0,0,0 }, float radius = 1.0f) :offset(offset), radius(radius)
 	{
-		//Œ`óƒZƒbƒg
+		//å½¢çŠ¶ã‚»ãƒƒãƒˆ
 		shapeType = COLISIONSHAPE_SPHERE;
 	}
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update()override;
 
-	inline void SetRadius(float radius) { this->radius = radius; }
+	inline void SetRadius(float radius_) { this->radius = radius_; }
 
 private:
-	//ƒIƒuƒWƒFƒNƒg’†S
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä¸­å¿ƒ
 	XMVECTOR offset;
-	//”¼Œa
+	//åŠå¾„
 	float radius;
 };

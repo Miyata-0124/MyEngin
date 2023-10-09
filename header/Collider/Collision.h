@@ -5,32 +5,32 @@ class Collision
 {
 public:
 	/// <summary>
-	/// ‹…‚Æ•½–Ê
+	/// çƒã¨å¹³é¢
 	/// </summary>
-	/// <param name="sphere">‹…</param>
-	/// <param name="plane">•½–Ê</param>
-	/// <param name="inter">Œğ“_</param>
+	/// <param name="sphere">çƒ</param>
+	/// <param name="plane">å¹³é¢</param>
+	/// <param name="inter">äº¤ç‚¹</param>
 	/// <returns></returns>
 	static bool CheckSphere2Plane(const Sphere& sphere, const Plane& plane, DirectX::XMVECTOR* inter = nullptr);
 	/// <summary>
-	/// ‹…‚Æ‹…
+	/// çƒã¨çƒ
 	/// </summary>
-	/// <param name="sphere">‹…1</param>
-	/// <param name="sphere2">‹…2</param>
-	/// <param name="inter">Œğ“_</param>
+	/// <param name="sphere">çƒ1</param>
+	/// <param name="sphere2">çƒ2</param>
+	/// <param name="inter">äº¤ç‚¹</param>
 	/// <returns></returns>
-	static bool CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, DirectX::XMVECTOR* inter);
+	static bool CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2);
 	/// <summary>
-	/// ƒŒƒC‚Æ•½–Ê
+	/// ãƒ¬ã‚¤ã¨å¹³é¢
 	/// </summary>
-	/// <param name="ray">ƒŒƒC</param>
-	/// <param name="plane">•½–Ê</param>
-	/// <param name="distance">‹——£</param>
-	/// <param name="inter">Œğ“_</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©</returns>
+	/// <param name="ray">ãƒ¬ã‚¤</param>
+	/// <param name="plane">å¹³é¢</param>
+	/// <param name="distance">è·é›¢</param>
+	/// <param name="inter">äº¤ç‚¹</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹</returns>
 	static bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
 	/// <summary>
-	/// ‹…‚ÆlŠp
+	/// çƒã¨å››è§’
 	/// </summary>
 	/// <param name="sphere"></param>
 	/// <param name="box"></param>

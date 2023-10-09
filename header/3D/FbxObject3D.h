@@ -11,179 +11,179 @@
 //#include "FbxLoader.h"
 
 /// <summary>
-/// 3DƒIƒuƒWƒFƒNƒg
+/// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 /// </summary>
 class FbxObject3d
 {
-protected: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+protected: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
-public: //Ã“I’è”
-	//ƒ{[ƒ“‚ÌÅ‘å’l
+public: //é™çš„å®šæ•°
+	//ãƒœãƒ¼ãƒ³ã®æœ€å¤§å€¤
 	static const int MAX_BONES = 32;
 
-public: //ƒTƒuƒNƒ‰ƒX
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì (À•W•ÏŠ·s—ñ—p)
+public: //ã‚µãƒ–ã‚¯ãƒ©ã‚¹
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ (åº§æ¨™å¤‰æ›è¡Œåˆ—ç”¨)
 	struct ConstBufferDataTransform
 	{
-		XMMATRIX viewproj;	//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-		XMMATRIX world;		//ƒ[ƒ‹ƒhs—ñ
-		XMFLOAT3 cameraPos;	//ƒJƒƒ‰À•W(ƒ[ƒ‹ƒhÀ•W)
+		XMMATRIX viewproj;	//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+		XMMATRIX world;		//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+		XMFLOAT3 cameraPos;	//ã‚«ãƒ¡ãƒ©åº§æ¨™(ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™)
 	};
 
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì(ƒXƒLƒjƒ“ƒO)
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“(ã‚¹ã‚­ãƒ‹ãƒ³ã‚°)
 	struct ConstBufferDataSkin
 	{
 		XMMATRIX bones[MAX_BONES];
 	};
 
-public: // Ã“Iƒƒ“ƒo•Ï”
-	static void SetDevice(ID3D12Device* device) { FbxObject3d::device = device; }
+public: // é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	static void SetDevice(ID3D12Device* device_) { FbxObject3d::device = device_; }
 	/// <summary>
-/// Ã“I‰Šú‰»
+/// é™çš„åˆæœŸåŒ–
 /// </summary>
-/// <param name="device">ƒfƒoƒCƒX</param>
-/// <param name="window_width">‰æ–Ê•</param>
-/// <param name="window_height">‰æ–Ê‚‚³</param>
+/// <param name="device">ãƒ‡ãƒã‚¤ã‚¹</param>
+/// <param name="window_width">ç”»é¢å¹…</param>
+/// <param name="window_height">ç”»é¢é«˜ã•</param>
 	static void StaticInitialize(ID3D12Device* device, int window_width, int window_height);
 
 	/// <summary>
-	/// ƒJƒƒ‰‰Šú‰»
+	/// ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="window_width">‰æ–Ê‰¡•</param>
-	/// <param name="window_height">‰æ–Êc•</param>
+	/// <param name="window_width">ç”»é¢æ¨ªå¹…</param>
+	/// <param name="window_height">ç”»é¢ç¸¦å¹…</param>
 	static void InitializeCamera(int window_width, int window_height);
 
 	/// <summary>
-	/// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“‚Ì¶¬
+	/// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®ç”Ÿæˆ
 	/// </summary>
 	static void InitializeGraphicsPipeline();
 
 
 	/// <summary>
-	/// ƒrƒ…[s—ñ‚ğXV
+	/// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’æ›´æ–°
 	/// </summary>
 	static void UpdateViewMatrix();
 
 	/// <summary>
-	/// ‹“_À•W‚Ìæ“¾
+	/// è¦–ç‚¹åº§æ¨™ã®å–å¾—
 	/// </summary>
-	/// <returns>À•W</returns>
+	/// <returns>åº§æ¨™</returns>
 	static const XMFLOAT3& GetEye() { return eye; }
 
 	/// <summary>
-	/// ‹“_À•W‚Ìİ’è
+	/// è¦–ç‚¹åº§æ¨™ã®è¨­å®š
 	/// </summary>
-	/// <param name="position">À•W</param>
+	/// <param name="position">åº§æ¨™</param>
 	static void SetEye(XMFLOAT3 eye);
 
 	/// <summary>
-	/// ’‹“_À•W‚Ìæ“¾
+	/// æ³¨è¦–ç‚¹åº§æ¨™ã®å–å¾—
 	/// </summary>
-	/// <returns>À•W</returns>
+	/// <returns>åº§æ¨™</returns>
 	static const XMFLOAT3& GetTarget() { return target; }
 
 	/// <summary>
-	/// ’‹“_À•W‚Ìİ’è
+	/// æ³¨è¦–ç‚¹åº§æ¨™ã®è¨­å®š
 	/// </summary>
-	/// <param name="position">À•W</param>
+	/// <param name="position">åº§æ¨™</param>
 	static void SetTarget(XMFLOAT3 target);
 
 	/// <summary>
-	/// ƒxƒNƒgƒ‹‚É‚æ‚éˆÚ“®
+	/// ãƒ™ã‚¯ãƒˆãƒ«ã«ã‚ˆã‚‹ç§»å‹•
 	/// </summary>
-	/// <param name="move">ˆÚ“®—Ê</param>
+	/// <param name="move">ç§»å‹•é‡</param>
 	static void CameraMoveVector(XMFLOAT3 move);
 
-protected: //ƒƒ“ƒo•Ï”
-	//’è”ƒoƒbƒtƒ@
+protected: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource>ConstBufferDataTrans;
-	//’è”ƒoƒbƒtƒ@(ƒXƒLƒ“)
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡(ã‚¹ã‚­ãƒ³)
 	ComPtr<ID3D12Resource> constBufferSkin;
 
 private:
-	//ƒfƒoƒCƒX
+	//ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device* device;
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 	static ComPtr<ID3D12RootSignature> rootsignature;
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	static ComPtr<ID3D12PipelineState> pipelinestate;
-	// ƒrƒ…[s—ñ
+	// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—
 	static XMMATRIX matView;
-	// Ë‰es—ñ
+	// å°„å½±è¡Œåˆ—
 	static XMMATRIX matProjection;
-	// ‹“_À•W
+	// è¦–ç‚¹åº§æ¨™
 	static XMFLOAT3 eye;
-	// ’‹“_À•W
+	// æ³¨è¦–ç‚¹åº§æ¨™
 	static XMFLOAT3 target;
-	// ã•ûŒüƒxƒNƒgƒ‹
+	// ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	static XMFLOAT3 up;
 
 protected:
-	//ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+	//ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
 	XMFLOAT3 scale = { 1,1,1 };
-	//X,Y,Z²ü‚è‚Ìƒ[ƒJƒ‹‰ñ“]Šp
+	//X,Y,Zè»¸å‘¨ã‚Šã®ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢è§’
 	XMFLOAT3 rotation = { 0,0,0 };
-	//ƒ[ƒJƒ‹À•W
+	//ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
 	XMFLOAT3 position = { 0,0,0 };
-	//ƒ[ƒJƒ‹ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	//ãƒ­ãƒ¼ã‚«ãƒ«ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	XMMATRIX matWorld;
-	//ƒ‚ƒfƒ‹
+	//ãƒ¢ãƒ‡ãƒ«
 	FbxModel* model = nullptr;
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“
-	//1ƒtƒŒ[ƒ€‚ÌŠÔ
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	//1ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ™‚é–“
 	FbxTime frameTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ŠJnŠÔ
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹æ™‚é–“
 	FbxTime startTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“I—¹ŠÔ
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†æ™‚é–“
 	FbxTime endTime;
-	//Œ»İŠÔ
+	//ç¾åœ¨æ™‚é–“
 	FbxTime currentTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿ
 	bool isPlay = false;
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void initialize();
 	/// <summary>
-	/// XVˆ—
+	/// æ›´æ–°å‡¦ç†
 	/// </summary>
 	void Update();
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	/// <param name="cmdList"></param>
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 	/// <summary>
-	/// ƒ‚ƒfƒ‹ƒZƒbƒg
+	/// ãƒ¢ãƒ‡ãƒ«ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="model">ƒ‚ƒfƒ‹</param>
-	void SetModel(FbxModel* model) { this->model = model; }
+	/// <param name="model">ãƒ¢ãƒ‡ãƒ«</param>
+	void SetModel(FbxModel* model_) { this->model = model_; }
 	/// <summary>
-	/// À•W‚Ìİ’è
+	/// åº§æ¨™ã®è¨­å®š
 	/// </summary>
-	/// <param name="position">À•W</param>
-	void SetPosition(const XMFLOAT3& position) { this->position = position; }
+	/// <param name="position">åº§æ¨™</param>
+	void SetPosition(const XMFLOAT3& position_) { this->position = position_; }
 	/// <summary>
-	/// ƒIƒuƒWƒFƒNƒgƒTƒCƒY‚Ìİ’è
+	/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚µã‚¤ã‚ºã®è¨­å®š
 	/// </summary>
 	/// <param name="size"></param>
 	void SetSize(const XMFLOAT3& size) { this->scale = size; }
 	/// <summary>
-	/// ‰ñ“]‚Ìİ’è
+	/// å›è»¢ã®è¨­å®š
 	/// </summary>
 	/// <param name="rotation"></param>
-	void SetRotation(const XMFLOAT3& rotation) { this->rotation = rotation; }
+	void SetRotation(const XMFLOAT3& rotation_) { this->rotation = rotation_; }
 
 	/// <summary>
-	/// ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
+	/// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹
 	/// </summary>
 	void PlayAnimation();
 };
