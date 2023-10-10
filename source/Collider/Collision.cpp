@@ -19,7 +19,7 @@ bool Collision::CheckSphere2Plane(const Sphere& sphere, const Plane& plane, Dire
     return true;
 }
 //球どうしの判定
-bool Collision::CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, DirectX::XMVECTOR* inter)
+bool Collision::CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2)
 {
     //x
     float x = sphere.center.m128_f32[0] - sphere2.center.m128_f32[0];
@@ -64,27 +64,25 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
 
 bool Collision::CheckSphere2Box2D(const Sphere& sphere, const Box& box)
 {
-    XMFLOAT2 sphere_ = { sphere.center.m128_f32[0] , sphere.center.m128_f32[1] };
-    XMFLOAT4 box_ = {
-        box.center.m128_f32[0] + box.radius , //x x1
-        box.center.m128_f32[0] - box.radius , //y x2
-        box.center.m128_f32[1] + box.radius , //z y1
-        box.center.m128_f32[1] - box.radius   //w y2
-    };
+    //最大点
+    float Xmax = box.center.m128_f32[0] + box.radius;
+    float Ymax = box.center.m128_f32[1] + box.radius;
+    DirectX::XMFLOAT2 Pmax = { Xmax,Ymax };
+    //最小点
+    float Xmin = box.center.m128_f32[0] - box.radius;
+    float Ymin = box.center.m128_f32[1] - box.radius;
+    DirectX::XMFLOAT2 Pmin = { Xmin,Ymin };
 
-    //x,yの2軸のみ
+    DirectX::XMFLOAT2 SpherePos = { sphere.center.m128_f32[0],sphere.center.m128_f32[1] };
 
-    // X 球のXがboxのX2点の間
-    if (sphere_.x < box_.x && sphere_.x > box_.y)
+    if (SpherePos.y + sphere.radius > Pmin.y && SpherePos.y - sphere.radius < Pmax.y)
     {
-        // Y 球のYがboxのYの間
-        if (sphere_.y<box_.z && sphere_.y>box_.w)
+        if (SpherePos.x + sphere.radius > Pmin.x && SpherePos.x - sphere.radius < Pmax.x)
         {
-            //ならヒット
             return true;
         }
     }
-    //それ以外ハズレ
+
     return false;
 }
 

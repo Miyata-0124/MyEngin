@@ -47,7 +47,7 @@ void CollisionManager::CheckAllCollisions()
                 Sphere* SphereA = dynamic_cast<Sphere*>(colA);//球1 プレイヤー
                 Sphere* SphereB = dynamic_cast<Sphere*>(colB);//球2 アイテム
                 DirectX::XMVECTOR inter;//交点
-                if (Collision::CheckSphere2Sphere(*SphereA, *SphereB, &inter)) {
+                if (Collision::CheckSphere2Sphere(*SphereA, *SphereB)) {
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
@@ -58,6 +58,15 @@ void CollisionManager::CheckAllCollisions()
                 Box* BoxA = dynamic_cast<Box*>(colA);
                 DirectX::XMVECTOR inter;//交点
                 if (Collision::CheckSphere2Box2D(*SphereA, *BoxA)){
+                    colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
+                    colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
+                }
+            }
+            if (colB->GetShapeType() == COLISIONSHAPE_SPHERE && colA->GetShapeType() == COLISIONSHAPE_BOX) {
+                Sphere* SphereA = dynamic_cast<Sphere*>(colB);
+                Box* BoxA = dynamic_cast<Box*>(colA);
+                DirectX::XMVECTOR inter;//交点
+                if (Collision::CheckSphere2Box2D(*SphereA, *BoxA)) {
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }

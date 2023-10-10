@@ -31,9 +31,7 @@ void GameScene::Initialize()
 	input->Initialize(winApp);
 
 	//DirectX初期化処理　　ここまで
-#pragma endregion
 #pragma	endregion
-//スプライト
 	//スプライト共通部分の初期化
 	spriteCommon = new SpriteCommon;
 	spriteCommon->Initialize(directXCom);
@@ -79,7 +77,7 @@ void GameScene::Initialize()
 	objPlayer = Player::Create(ground);
 	objPlayer->SetInput(input);
 	//敵
-	objEnem = Enemy::Create(item_);
+	//objEnem = Enemy::Create(item_);
 	//地面
 	objFloor = Floor::Create(playerModel);
 	//アイテム
@@ -184,13 +182,13 @@ void GameScene::Update()
 		//プレイヤー
 		objPlayer->Update();
 		//敵
-		objEnem->Update();
+		//objEnem->Update();
 		//アイテム
 		objItem -> Update();
 		//地面
 		objFloor -> Update();
 		//壁
-		//objWall -> Update();
+		objWall -> Update();
 		
 		//背景
 		objBackGround->Update();
@@ -203,7 +201,7 @@ void GameScene::Update()
 
 #pragma region 各クラス間の情報受け渡し
 		//オブジェクト
-		objEnem->SetPPosition(objPlayer->GetPosition());
+		//objEnem->SetPPosition(objPlayer->GetPosition());
 		objItem->SetPPosition(objPlayer->GetPosition());
 		objItem->SetRetention(objPlayer->GetRetention());
 		objItem->SetDirection(objPlayer->GetDirection());
@@ -252,13 +250,13 @@ void GameScene::Draw()
 		//プレイヤー
 		objPlayer->Draw();
 		//敵
-		objEnem->Draw();
+		//objEnem->Draw();
 		//アイテム
 		objItem->Draw();
 		//地面
 		//objFloor->Draw();
 		//壁
-		//objWall->Draw();
+		objWall->Draw();
 		//背景
 		objBackGround->Draw();
 		for (auto object : objects) {

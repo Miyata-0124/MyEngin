@@ -19,7 +19,7 @@ public:
 	/// <param name="sphere2">‹…2</param>
 	/// <param name="inter">Œð“_</param>
 	/// <returns></returns>
-	static bool CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, DirectX::XMVECTOR* inter);
+	static bool CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2);
 	/// <summary>
 	/// ƒŒƒC‚Æ•½–Ê
 	/// </summary>

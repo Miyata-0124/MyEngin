@@ -106,19 +106,7 @@ void Enemy::OnCollider(const CollisionInfo& info)
 	}
 	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
 	{
-		/*if (playerPosition.x > position.x)
-		{
-			move = - 0.5f;
-		}
-		else if (playerPosition.x < position.x)
-		{
-			move = 0.5f;
-		}
-		else
-		{
-			move = 0;
-		}
-		position.x += move;*/
+
 	}
 }
 
