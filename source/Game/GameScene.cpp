@@ -142,9 +142,9 @@ void GameScene::Update()
 		//“®‚©‚·‚½‚ß‚ÉÀ•W‚ðŽæ“¾
 		XMFLOAT2 position = sprite->GetPosition();
 		if (!UIFlag) {
-			if (position.x < 10)
+			if (position.x < 15)
 			{
-				UIspeed.x = 0.1f;
+				UIspeed.x = 0.4f;
 			}
 			else
 			{
@@ -153,9 +153,9 @@ void GameScene::Update()
 		}
 		else
 		{
-			if (position.x > -10)
+			if (position.x > -15)
 			{
-				UIspeed.x = -0.1f;
+				UIspeed.x = -0.4f;
 			}
 			else
 			{
