@@ -23,7 +23,7 @@ void WinApp::Initialize()
 	//ウィンドウクラスの設定
 	windowOption.cbSize = sizeof(WNDCLASSEX);
 	windowOption.lpfnWndProc = (WNDPROC)WindowProc;	 //ウィンドウプロシージャ設定
-	windowOption.lpszClassName = L"DirectXGame";		 //ウィンドウクラス名
+	windowOption.lpszClassName = L"あまやどり";		 //ウィンドウクラス名
 	windowOption.hInstance = GetModuleHandle(nullptr);	 //ウィンドウハンドル
 	windowOption.hCursor = LoadCursor(NULL, IDC_ARROW); //カーソル指定
 
@@ -36,7 +36,7 @@ void WinApp::Initialize()
 
 	//ウィンドウオブジェクトの生成
 		hwnd = CreateWindow(windowOption.lpszClassName,
-		L"DirectXGame",
+		L"あまやどり",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,

@@ -181,9 +181,6 @@ void GameScene::Update()
 #pragma endregion
 		break;
 	case 1:
-		
-
-
 		//ƒvƒŒƒCƒ„[
 		objPlayer->Update();
 		//“G
