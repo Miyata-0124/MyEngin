@@ -121,10 +121,10 @@ void GameScene::Update()
 			rainTimer = 0;
 		}
 		//雨の基盤
-		if (rainTimer < 15)//←時間で雨が出るように変える
+		if (rainTimer < 10)
 		{
 			//パーティクル
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 15; i++)
 			{
 				//XYZ全て[-0.05f,+0.05f]でランダムに分布
 				const	float	rnd_vel = 1.5f;
@@ -144,7 +144,7 @@ void GameScene::Update()
 #pragma region シーン切り替え時の処理
 		//動かすために座標を取得
 		XMFLOAT2 position = sprite->GetPosition();
-		/*if (!UIFlag) {
+		if (!UIFlag) {
 			if (position.x < 15)
 			{
 				UIspeed.x = 0.4f;
@@ -166,21 +166,18 @@ void GameScene::Update()
 			}
 		}
 		position.x += UIspeed.x;
-		position.y += UIspeed.y;*/
+		position.y += UIspeed.y;
 
 		//切り替え
 		if (input->TriggerKey(DIK_SPACE) && !ChengeScene)
 		{
 			ChengeScene = true;
-			
 		}
 
 		if (ChengeScene)
 		{
-			
 			scene = 1;
 			ChengeScene = false;
-			
 		}
 		//移動後の座標を入れる
 		sprite->SetPosition(position);
@@ -237,6 +234,7 @@ void GameScene::Draw()
 	//描画処理ここから↓
 	directXCom->PreDraw();
 	Object3d::PreDraw(directXCom->GetCommandList());
+	
 	switch (scene)
 	{
 	case 0:
@@ -284,7 +282,7 @@ void GameScene::Draw()
 	case 2:
 		break;
 	}
-
+	
 	Object3d::PostDraw();
 	directXCom->PostDraw();
 	//ここまで↑

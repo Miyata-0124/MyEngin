@@ -98,5 +98,8 @@ private: //ゲーム内使用クラス
 	//雨を管理する時計
 	float rainTimer = 0.0f;
 	bool rainFlag = false;
+	//UI関連
+	bool UIFlag = false;
+	DirectX::XMFLOAT2 UIspeed = { 0,0 };
 };
 
