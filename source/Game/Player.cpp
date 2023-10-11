@@ -31,7 +31,7 @@ bool Player::Initialize()
 	}
 	//初期座標指定
 	SetSize({ 1,1,1 });
-	SetPosition({ 0,0,0 });
+	SetPosition({ -20,0,0 });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));

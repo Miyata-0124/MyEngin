@@ -11,6 +11,8 @@
 #include <sstream>
 #include <iomanip>
 
+
+
 void GameScene::Initialize()
 {
 #pragma region WindowsAPIの初期化
@@ -97,6 +99,9 @@ void GameScene::Initialize()
 	particle = Particle::Create(1);
 	particle->Update();
 	#pragma	endregion
+
+	frame = 0;
+	endframe = 10;
 }
 
 void GameScene::Update()
@@ -114,7 +119,7 @@ void GameScene::Update()
 
 #pragma region パーティクル
 		//パーティクル発生
-		if (input->TriggerKey(DIK_F))
+		if (input->TriggerKey(DIK_F))//←時間で雨が出るように変える
 		{
 			//パーティクル
 			for (int i = 0; i < 100; i++)
@@ -122,14 +127,14 @@ void GameScene::Update()
 				//XYZ全て[-0.05f,+0.05f]でランダムに分布
 				const	float	rnd_vel = 1.5f;
 				XMFLOAT3	vel{};
-				vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+				//vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
 				//重力に見立ててYのみ[-0.001f,0]でランダムに分布
-				const	float	rnd_acc = -0.05f;
+				const	float	rnd_acc = -0.1f;
 				XMFLOAT3	acc{};
 				acc.y = (float)rand() / RAND_MAX * rnd_acc;
 
-				particle->Control(100, {0,20,0}, vel, acc, 1.0f, 0.0f);
+				particle->Control(100, { (float)rand() / RAND_MAX * 100.0f - 100.0f / 2.0f,40,0}, vel, acc, 1.0f, 0.0f);
 			}
 		}
 		particle->Update();
@@ -165,12 +170,26 @@ void GameScene::Update()
 		if (input->TriggerKey(DIK_SPACE) && !ChengeScene)
 		{
 			ChengeScene = true;
-			scene = 1;
+			
 		}
 
 		if (ChengeScene)
 		{
-			ChengeScene = false;
+			if (frame < endframe)
+			{
+				frame++;
+				Nframe = frame / endframe;
+			}
+			
+			else if (frame >= endframe)
+			{
+				scene = 1;
+				ChengeScene = false;
+			}
+
+
+
+			//pos.y = startY + (endX - startY) * (EZ(y));
 		}
 		//移動後の座標を入れる
 		sprite->SetPosition(position);
