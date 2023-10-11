@@ -30,11 +30,11 @@ bool Wall::Initialize()
 		return false;
 	}
 	//初期座標指定
-	SetSize({ 1.0f,1.0f,1.0f });
+	SetSize({ 1.0f,3.0f,1.0f });
 	SetPosition({ 0,-12,0, });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
-	SetCollider(new BoxCollider(XMVECTOR({ 0,radius,0,0 }), radius));
+	SetCollider(new BoxCollider(XMVECTOR({ 0,radius.y,0,0 }), radius));
 	return true;
 }
 

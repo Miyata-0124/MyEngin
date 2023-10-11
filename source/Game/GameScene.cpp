@@ -35,7 +35,7 @@ void GameScene::Initialize()
 	//スプライト共通部分の初期化
 	spriteCommon = new SpriteCommon;
 	spriteCommon->Initialize(directXCom);
-	spriteCommon->Loadtexture(1, "test.png");
+	spriteCommon->Loadtexture(1, "taitle.png");
 	spriteCommon->Loadtexture(2, "white1x1.png");
 	//ViewProjection
 	camera = new ViewProjection();
@@ -43,12 +43,12 @@ void GameScene::Initialize()
 //一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
-	//Particle::StaticInitialize(directXCom->GetDevice(),camera);
+	Particle::StaticInitialize(directXCom->GetDevice(),camera);
 	//スプライト
 	sprite->Initialize(spriteCommon, 1);
 	sprite->SetAnchorPoint(XMFLOAT2(0, 0));
 	sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
-	sprite->SetPosition({0,-85});
+	sprite->SetPosition({0,0});
 
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
 
@@ -84,7 +84,7 @@ void GameScene::Initialize()
 	objItem = Item::Create(playerModel);
 	objItem->SetInput(input);
 	//壁
-	objWall = Wall::Create(ground);
+	objWall = Wall::Create(item_);
 	//背景
 	objBackGround = BackGround::Create(backGround);
 #pragma endregion
@@ -92,10 +92,10 @@ void GameScene::Initialize()
 	
 	#pragma region パーティクル関係
 	//	パーティクル
-	//Particle::LoadTexture(1, "white1x1.png");
-	////引数の数字はテクスチャ読み込みのインデックスナンバー
-	//particle = Particle::Create(1);
-	//particle->Update();
+	Particle::LoadTexture(1, "white1x1.png");
+	//引数の数字はテクスチャ読み込みのインデックスナンバー
+	particle = Particle::Create(1);
+	particle->Update();
 	#pragma	endregion
 }
 
@@ -114,32 +114,30 @@ void GameScene::Update()
 
 #pragma region パーティクル
 		//パーティクル発生
-		//if (input->TriggerKey(DIK_F))
-		//{
-		//	//パーティクル
-		//	for (int i = 0; i < 100; i++)
-		//	{
-		//		//XYZ全て[-0.05f,+0.05f]でランダムに分布
-		//		const	float	rnd_vel = 0.1f;
-		//		XMFLOAT3	vel{};
-		//		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		//		vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		//		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		if (input->TriggerKey(DIK_F))
+		{
+			//パーティクル
+			for (int i = 0; i < 100; i++)
+			{
+				//XYZ全て[-0.05f,+0.05f]でランダムに分布
+				const	float	rnd_vel = 1.5f;
+				XMFLOAT3	vel{};
+				vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
-		//		//重力に見立ててYのみ[-0.001f,0]でランダムに分布
-		//		const	float	rnd_acc = 0.001f;
-		//		XMFLOAT3	acc{};
-		//		acc.y = (float)rand() / RAND_MAX * rnd_acc;
+				//重力に見立ててYのみ[-0.001f,0]でランダムに分布
+				const	float	rnd_acc = -0.05f;
+				XMFLOAT3	acc{};
+				acc.y = (float)rand() / RAND_MAX * rnd_acc;
 
-		//		particle->Control(100, {WinApp::window_width / 2,/*-(WinApp::window_height)*/0,0}, vel, acc, 1.0f, 0.0f);
-		//	}
-		//}
-		//particle->Update();
+				particle->Control(100, {0,20,0}, vel, acc, 1.0f, 0.0f);
+			}
+		}
+		particle->Update();
 #pragma endregion
 #pragma region シーン切り替え時の処理
 		//動かすために座標を取得
 		XMFLOAT2 position = sprite->GetPosition();
-		if (!UIFlag) {
+		/*if (!UIFlag) {
 			if (position.x < 15)
 			{
 				UIspeed.x = 0.4f;
@@ -161,17 +159,17 @@ void GameScene::Update()
 			}
 		}
 		position.x += UIspeed.x;
-		position.y += UIspeed.y;
+		position.y += UIspeed.y;*/
 
+		//切り替え
 		if (input->TriggerKey(DIK_SPACE) && !ChengeScene)
 		{
-			scene = 1;
 			ChengeScene = true;
+			scene = 1;
 		}
-		if (ChengeScene)//シーン切り替えが押されたなら
+
+		if (ChengeScene)
 		{
-			UIspeed = { 0,0 };
-			position = { 0,0 };
 			ChengeScene = false;
 		}
 		//移動後の座標を入れる
@@ -235,10 +233,11 @@ void GameScene::Draw()
 		sprite->SetIsInvisible(false);
 		sprite->SetTexIndex(1);
 		sprite->Draw();
+		//objPlayer->Draw();
 		
-		/*Particle::PreDraw(directXCom->GetCommandList());
+		Particle::PreDraw(directXCom->GetCommandList());
 		particle->Draw();
-		Particle::PostDraw();*/
+		Particle::PostDraw();
 		break;
 	case 1:
 		

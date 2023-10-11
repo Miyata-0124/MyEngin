@@ -95,9 +95,5 @@ private: //ゲーム内使用クラス
 	int scene = 0;
 	//タイトルなどのUI情報
 	bool ChengeScene = false;
-	//タイトルの文字を動かす変数
-	XMFLOAT2 UIspeed = { 0,0 };
-	//もじをどちらに動かすか確認するフラグ
-	bool UIFlag = false;;
 };
 

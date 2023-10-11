@@ -24,5 +24,7 @@ public:
 	BaseCollider* collider = nullptr;
 	//Õ“Ë“_
 	DirectX::XMVECTOR inter;
+	//‘Šè‚Ì‘®«
+
 };
 

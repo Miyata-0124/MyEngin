@@ -31,6 +31,6 @@ public:
 
 private:
 	//”¼Œa
-	float radius = 1.0f;
+	DirectX::XMFLOAT2 radius = { 1.0f,2.0f };
 };
 

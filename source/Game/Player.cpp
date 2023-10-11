@@ -31,7 +31,7 @@ bool Player::Initialize()
 	}
 	//初期座標指定
 	SetSize({ 1,1,1 });
-	SetPosition({ -18,-10,0 });
+	SetPosition({ 0,0,0 });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
@@ -84,7 +84,7 @@ void Player::OnCollider(const CollisionInfo& info)
 		isJamp = false;
 		if (input->PushKey(DIK_UP))
 		{
-			position.y ++;
+			position.y +=0.03f;
 		}
 	}
 }
@@ -159,7 +159,10 @@ void Player::ChangePosture()
 void Player::Gravity()
 {  
 	position.y -= yadd;
-	yadd += 0.2f;
+	if (yadd <= 2.0f)
+	{
+		yadd += 0.2f;
+	}
 }
 
 void Player::Retention()

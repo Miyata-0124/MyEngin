@@ -65,16 +65,17 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
 bool Collision::CheckSphere2Box2D(const Sphere& sphere, const Box& box)
 {
     //最大点
-    float Xmax = box.center.m128_f32[0] + box.radius;
-    float Ymax = box.center.m128_f32[1] + box.radius;
+    float Xmax = box.center.m128_f32[0] + box.radius.x;
+    float Ymax = box.center.m128_f32[1] + box.radius.y;
     DirectX::XMFLOAT2 Pmax = { Xmax,Ymax };
     //最小点
-    float Xmin = box.center.m128_f32[0] - box.radius;
-    float Ymin = box.center.m128_f32[1] - box.radius;
+    float Xmin = box.center.m128_f32[0] - box.radius.x;
+    float Ymin = box.center.m128_f32[1] - box.radius.y;
     DirectX::XMFLOAT2 Pmin = { Xmin,Ymin };
-
+    //プレイヤーの座標
     DirectX::XMFLOAT2 SpherePos = { sphere.center.m128_f32[0],sphere.center.m128_f32[1] };
 
+    //もしプレイヤーの座標( +,- radius)と2DBoxの2頂点の座標で判定を取る
     if (SpherePos.y + sphere.radius > Pmin.y && SpherePos.y - sphere.radius < Pmax.y)
     {
         if (SpherePos.x + sphere.radius > Pmin.x && SpherePos.x - sphere.radius < Pmax.x)
@@ -86,29 +87,29 @@ bool Collision::CheckSphere2Box2D(const Sphere& sphere, const Box& box)
     return false;
 }
 
-float Collision::LenOBBToPoint(OBB& obb, DirectX::XMVECTOR& p)
-{
-    DirectX::XMVECTOR Vec = { 0,0,0 }; //長さを求めるベクトル
-    //各軸についてはみ出た部分のベクトル算出
-    for (int i = 0; i < 3; i++)
-    {
-        float L = obb.fLength[i];
-        //L=0計算しない
-        if (L <= 0) {
-            continue;
-        }
-        DirectX::XMVECTOR p_pos = (p - obb.pos);
-        DirectX::XMVECTOR s = XMVector3Dot(p_pos, obb.normalDir[i]) / L;
+//float Collision::LenOBBToPoint(OBB& obb, DirectX::XMVECTOR& p)
+//{
+//    DirectX::XMVECTOR Vec = { 0,0,0 }; //長さを求めるベクトル
+//    //各軸についてはみ出た部分のベクトル算出
+//    for (int i = 0; i < 3; i++)
+//    {
+//        float L = obb.fLength[i];
+//        //L=0計算しない
+//        if (L <= 0) {
+//            continue;
+//        }
+//        DirectX::XMVECTOR p_pos = (p - obb.pos);
+//        DirectX::XMVECTOR s = XMVector3Dot(p_pos, obb.normalDir[i]) / L;
+//
+//    }
+//    return 0.0f;
+//}
 
-    }
-    return 0.0f;
-}
-
-bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject)
-{
-   
-    return true;
-}
+//bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject)
+//{
+//   
+//    return true;
+//}
 
 //OBBと点の最短距離算出関数
 //float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
