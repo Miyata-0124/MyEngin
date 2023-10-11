@@ -94,14 +94,11 @@ void GameScene::Initialize()
 	
 	#pragma region パーティクル関係
 	//	パーティクル
-	Particle::LoadTexture(1, "white1x1.png");
+	Particle::LoadTexture(1, "blue1x1.png");
 	//引数の数字はテクスチャ読み込みのインデックスナンバー
 	particle = Particle::Create(1);
 	particle->Update();
 	#pragma	endregion
-
-	frame = 0;
-	endframe = 10;
 }
 
 void GameScene::Update()
@@ -113,16 +110,21 @@ void GameScene::Update()
 
 	switch (scene)
 	{
-		///それぞれのクラスのUpdateのみ記述
-
 	case 0: //タイトル画面 雨が降っているように見えるタイトル
-
 #pragma region パーティクル
-		//パーティクル発生
-		if (input->TriggerKey(DIK_F))//←時間で雨が出るように変える
+		if (rainTimer < 10)
+		{
+			rainTimer++;
+		}
+		else
+		{
+			rainTimer = 0;
+		}
+		//雨の基盤
+		if (rainTimer < 15)//←時間で雨が出るように変える
 		{
 			//パーティクル
-			for (int i = 0; i < 100; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				//XYZ全て[-0.05f,+0.05f]でランダムに分布
 				const	float	rnd_vel = 1.5f;
@@ -134,7 +136,7 @@ void GameScene::Update()
 				XMFLOAT3	acc{};
 				acc.y = (float)rand() / RAND_MAX * rnd_acc;
 
-				particle->Control(100, { (float)rand() / RAND_MAX * 100.0f - 100.0f / 2.0f,40,0}, vel, acc, 1.0f, 0.0f);
+				particle->Control(75, { (float)rand() / RAND_MAX * 100.0f - 100.0f / 2.0f,40,0}, vel, acc, 1.0f, 0.0f);
 			}
 		}
 		particle->Update();
@@ -175,21 +177,10 @@ void GameScene::Update()
 
 		if (ChengeScene)
 		{
-			if (frame < endframe)
-			{
-				frame++;
-				Nframe = frame / endframe;
-			}
 			
-			else if (frame >= endframe)
-			{
-				scene = 1;
-				ChengeScene = false;
-			}
-
-
-
-			//pos.y = startY + (endX - startY) * (EZ(y));
+			scene = 1;
+			ChengeScene = false;
+			
 		}
 		//移動後の座標を入れる
 		sprite->SetPosition(position);

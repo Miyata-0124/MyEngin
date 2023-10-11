@@ -95,26 +95,8 @@ private: //ゲーム内使用クラス
 	int scene = 0;
 	//タイトルなどのUI情報
 	bool ChengeScene = false;
-
-	/// <summary>
-	/// シーン転換
-	/// </summary>
-	/// <param name="x">始点と終点のフレーム情報</param>
-	/// <returns></returns>
-	double Nframe;
-	double frame;
-	double endframe;
-
-	
-
-	double EZ(double x)
-	{
-		double c1 = 1.70158;
-		double c2 = c1 * 1.525;
-
-		return x < 0.5
-			? (pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2
-			: (pow(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2;
-	}
+	//雨を管理する時計
+	float rainTimer = 0.0f;
+	bool rainFlag = false;
 };
 
