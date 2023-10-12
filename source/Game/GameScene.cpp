@@ -97,7 +97,6 @@ void GameScene::Initialize()
 	Particle::LoadTexture(1, "blue1x1.png");
 	//引数の数字はテクスチャ読み込みのインデックスナンバー
 	particle = Particle::Create(1);
-	particle->Update();
 	#pragma	endregion
 }
 
