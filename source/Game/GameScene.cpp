@@ -126,7 +126,7 @@ void GameScene::Update()
 			for (int i = 0; i < 15; i++)
 			{
 				//XYZ全て[-0.05f,+0.05f]でランダムに分布
-				const	float	rnd_vel = 1.5f;
+				//const	float	rnd_vel = 1.5f;
 				XMFLOAT3	vel{};
 				//vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
@@ -309,13 +309,13 @@ void GameScene::Finalize()
 void GameScene::LoadMap()
 {
 	for (auto& objectData : jsonLoader->objects) {
-		Model* model = Model::LoadFromOBJ("TestBox");
+		Model* model_ = Model::LoadFromOBJ("TestBox");
 		decltype(models)::iterator it = models.find(objectData.fileName);
-		if (it != models.end()) { model = it->second; }
+		if (it != models.end()) { model_ = it->second; }
 
 		// モデルを指定して3Dオブジェクトを生成
 		Object3d* mapObject = Object3d::Create();
-		mapObject->SetModel(model);
+		mapObject->SetModel(model_);
 		// 座標
 		DirectX::XMFLOAT3 scale;
 		DirectX::XMStoreFloat3(&scale, objectData.scaling);

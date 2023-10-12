@@ -11,12 +11,12 @@ Input* Input::GetInstance()
 	return &instance;
 }
 
-void Input::Initialize(WinApp* winApp)
+void Input::Initialize(WinApp* winApp_)
 {
 	HRESULT result;
-	this->winApp = winApp;
+	this->winApp = winApp_;
 	//DirectInputのインスタンス生成
-	result = DirectInput8Create(winApp->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
+	result = DirectInput8Create(winApp_->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
 
 	//キーボードデバイスの生成
@@ -26,7 +26,7 @@ void Input::Initialize(WinApp* winApp)
 	result = keyboard->SetDataFormat(&c_dfDIKeyboard);//標準形式
 	assert(SUCCEEDED(result));
 	//排他制御レベルのセット
-	result = keyboard->SetCooperativeLevel(winApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	result = keyboard->SetCooperativeLevel(winApp_->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 
 }

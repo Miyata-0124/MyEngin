@@ -16,12 +16,12 @@ XMFLOAT3 FbxObject3d::eye = { 0, 0, -10.0f };
 XMFLOAT3 FbxObject3d::target = { 0, 0, 0 };
 XMFLOAT3 FbxObject3d::up = { 0, 1, 0 };
 
-void FbxObject3d::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
+void FbxObject3d::StaticInitialize(ID3D12Device* device_, int window_width, int window_height)
 {
 	// nullptrチェック
-	assert(device);
+	assert(device_);
 
-	FbxObject3d::device = device;
+	FbxObject3d::device = device_;
 
 	// カメラ初期化
 	InitializeCamera(window_width, window_height);
@@ -216,16 +216,16 @@ void FbxObject3d::UpdateViewMatrix()
 	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 }
 
-void FbxObject3d::SetEye(XMFLOAT3 eye)
+void FbxObject3d::SetEye(XMFLOAT3 eye_)
 {
-	FbxObject3d::eye = eye;
+	FbxObject3d::eye = eye_;
 
 	UpdateViewMatrix();
 }
 
-void FbxObject3d::SetTarget(XMFLOAT3 target)
+void FbxObject3d::SetTarget(XMFLOAT3 target_)
 {
-	FbxObject3d::eye = eye;
+	FbxObject3d::target = target_;
 
 	UpdateViewMatrix();
 }

@@ -43,7 +43,7 @@ public: //サブクラス
 	};
 
 public: // 静的メンバ変数
-	static void SetDevice(ID3D12Device* device) { FbxObject3d::device = device; }
+	static void SetDevice(ID3D12Device* device_) { FbxObject3d::device = device_; }
 	/// <summary>
 /// 静的初期化
 /// </summary>
@@ -165,12 +165,12 @@ public:
 	/// モデルセット
 	/// </summary>
 	/// <param name="model">モデル</param>
-	void SetModel(FbxModel* model) { this->model = model; }
+	void SetModel(FbxModel* model_) { this->model = model_; }
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetPosition(const XMFLOAT3& position) { this->position = position; }
+	void SetPosition(const XMFLOAT3& position_) { this->position = position_; }
 	/// <summary>
 	/// オブジェクトサイズの設定
 	/// </summary>
@@ -180,7 +180,7 @@ public:
 	/// 回転の設定
 	/// </summary>
 	/// <param name="rotation"></param>
-	void SetRotation(const XMFLOAT3& rotation) { this->rotation = rotation; }
+	void SetRotation(const XMFLOAT3& rotation_) { this->rotation = rotation_; }
 
 	/// <summary>
 	/// アニメーション開始

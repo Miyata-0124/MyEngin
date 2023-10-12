@@ -229,12 +229,12 @@ void	Particle::SetTextureCommands(uint32_t index) {
 
 }
 
-void Particle::StaticInitialize(ID3D12Device* device, ViewProjection* camera_)
+void Particle::StaticInitialize(ID3D12Device* device_, ViewProjection* camera_)
 {
 	// nullptrチェック
-	assert(device);
+	assert(device_);
 
-	Particle::device = device;
+	Particle::device = device_;
 	incrementSize = Particle::device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	// デスクリプタヒープの初期化
@@ -667,21 +667,21 @@ void Particle::Draw()
 	cmdList->DrawInstanced((UINT)std::distance(particles.begin(), particles.end()), 1, 0, 0);
 }
 
-void Particle::PreDraw(ID3D12GraphicsCommandList* cmdList)
+void Particle::PreDraw(ID3D12GraphicsCommandList* cmdList_)
 {
 	// PreDrawとPostDrawがペアで呼ばれていなければエラー
 	assert(Particle::cmdList == nullptr);
 
 	// コマンドリストをセット
-	Particle::cmdList = cmdList;
+	Particle::cmdList = cmdList_;
 
 	// パイプラインステートの設定
-	cmdList->SetPipelineState(pipelinestate.Get());
+	cmdList_->SetPipelineState(pipelinestate.Get());
 	// ルートシグネチャの設定
-	cmdList->SetGraphicsRootSignature(rootsignature.Get());
+	cmdList_->SetGraphicsRootSignature(rootsignature.Get());
 	// プリミティブ形状を設定
 	//cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+	cmdList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 }
 void Particle::PostDraw()
 {

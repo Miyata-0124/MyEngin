@@ -45,4 +45,8 @@ void Wall::Update()
 
 void Wall::OnCollider(const CollisionInfo& info)
 {
+	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
+	{
+
+	}
 }

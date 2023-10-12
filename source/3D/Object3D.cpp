@@ -29,13 +29,13 @@ XMFLOAT3 Object3d::eye = { 0, 0, -50.0f };
 XMFLOAT3 Object3d::target = { 0, 0, 0 };
 XMFLOAT3 Object3d::up = { 0, 1, 0 };
 
-void Object3d::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
+void Object3d::StaticInitialize(ID3D12Device* device_, int window_width, int window_height)
 {
 	// nullptrチェック
-	assert(device);
+	assert(device_);
 
-	Object3d::device = device;
-	Model::SetDevice(device);
+	Object3d::device = device_;
+	Model::SetDevice(device_);
 
 	// カメラ初期化
 	InitializeCamera(window_width, window_height);
@@ -44,20 +44,20 @@ void Object3d::StaticInitialize(ID3D12Device* device, int window_width, int wind
 	InitializeGraphicsPipeline();
 }
 
-void Object3d::PreDraw(ID3D12GraphicsCommandList* cmdList)
+void Object3d::PreDraw(ID3D12GraphicsCommandList* cmdList_)
 {
 	// PreDrawとPostDrawがペアで呼ばれていなければエラー
 	assert(Object3d::cmdList == nullptr);
 
 	// コマンドリストをセット
-	Object3d::cmdList = cmdList;
+	Object3d::cmdList = cmdList_;
 
 	// パイプラインステートの設定
-	cmdList->SetPipelineState(pipelinestate.Get());
+	cmdList_->SetPipelineState(pipelinestate.Get());
 	// ルートシグネチャの設定
-	cmdList->SetGraphicsRootSignature(rootsignature.Get());
+	cmdList_->SetGraphicsRootSignature(rootsignature.Get());
 	// プリミティブ形状を設定
-	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	cmdList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
 void Object3d::PostDraw()
@@ -88,16 +88,16 @@ Object3d* Object3d::Create()
 	return object3d;
 }
 
-void Object3d::SetEye(XMFLOAT3 eye)
+void Object3d::SetEye(XMFLOAT3 eye_)
 {
-	Object3d::eye = eye;
+	Object3d::eye = eye_;
 
 	UpdateViewMatrix();
 }
 
-void Object3d::SetTarget(XMFLOAT3 target)
+void Object3d::SetTarget(XMFLOAT3 target_)
 {
-	Object3d::target = target;
+	Object3d::target = target_;
 
 	UpdateViewMatrix();
 }
@@ -377,12 +377,12 @@ void Object3d::Draw() {
 	model->Draw(cmdList, 1);
 }
 
-void Object3d::SetCollider(BaseCollider* collider)
+void Object3d::SetCollider(BaseCollider* collider_)
 {
-	collider->SetObject(this);
-	this->collider = collider;
+	collider_->SetObject(this);
+	this->collider = collider_;
 	//コリジョンマネージャに保存
-	CollisionManager::GetInstance()->AddCollider(collider);
+	CollisionManager::GetInstance()->AddCollider(collider_);
 	//コライダーの更新
-	collider->Update();
+	collider_->Update();
 }

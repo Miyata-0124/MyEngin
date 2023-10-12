@@ -20,7 +20,7 @@ public:
 	/// </summary>
 	void Update()override;
 
-	inline void SetDistance(float distance) { this->distance = distance; }
+	inline void SetDistance(float distance_) { this->distance = distance_; }
 
 private:
 	//オブジェクト中心

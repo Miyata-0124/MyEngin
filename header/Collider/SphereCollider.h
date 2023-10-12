@@ -21,7 +21,7 @@ public:
 	/// </summary>
 	void Update()override;
 
-	inline void SetRadius(float radius) { this->radius = radius; }
+	inline void SetRadius(float radius_) { this->radius = radius_; }
 
 private:
 	//オブジェクト中心

@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
@@ -151,7 +152,8 @@ public: // メンバ関数
 	/// </summary>
 	virtual void Draw();
 
-	virtual void OnCollider(const CollisionInfo& info) {}
+	#pragma warning(suppress: 4100)
+	virtual void OnCollider(const CollisionInfo& info) {};
 
 	/// <summary>
 	/// 座標の取得
@@ -175,17 +177,17 @@ public: // メンバ関数
 	/// 座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetPosition(const XMFLOAT3& position) { this->position = position; }
+	void SetPosition(const XMFLOAT3& position_) { this->position = position_; }
 	/// <summary>
 	/// オブジェクトサイズの設定
 	/// </summary>
 	/// <param name="size"></param>
-	void SetSize(const XMFLOAT3& scale) { this->scale = scale; }
+	void SetSize(const XMFLOAT3& scale_) { this->scale = scale_; }
 	/// <summary>
 	/// 回転角の設定
 	/// </summary>
 	/// <param name="rotation"></param>
-	void SetRotation(const XMFLOAT3& rotation) { this->rotation = rotation; }
+	void SetRotation(const XMFLOAT3& rotation_) { this->rotation = rotation_; }
 
 	//セッター
 	void SetModel(Model* model_) { model = model_; }

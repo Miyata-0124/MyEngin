@@ -108,10 +108,10 @@ void Model::LoadFromOBJInternal(const std::string& modelname) {
 		if (key == "mtllib")
 		{
 			//マテリアルのファイル名読み込み
-			std::string filename;
-			line_stream >> filename;
+			std::string filename_;
+			line_stream >> filename_;
 			//マテリアル読み込み
-			LoadMaterial(directoryPath, filename);
+			LoadMaterial(directoryPath, filename_);
 		}
 	}
 	file.close();
@@ -128,6 +128,7 @@ void Model::LoadTexture(const	std::string& directoryPath, const std::string& fil
 
 	//ユニコード文字列に変更する
 	wchar_t	wfilepath[128];
+	#pragma warning(suppress: 4189)
 	int	iBufferSize = MultiByteToWideChar(
 		CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
 

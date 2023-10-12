@@ -42,7 +42,7 @@ private:
 
 public:
 	//プレイヤーの座標取得
-	void SetPPosition(XMFLOAT3 position) { this->playerPosition = position; }
+	void SetPPosition(XMFLOAT3 position_) { this->playerPosition = position_; }
 private:
 	EnemyPosture posture = EnemyPosture::Wait;
 	//半径

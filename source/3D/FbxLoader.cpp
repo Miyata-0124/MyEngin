@@ -24,12 +24,12 @@ FbxLoader* FbxLoader::GetInstance()
     return &instance;
 }
 
-void FbxLoader::Initialize(ID3D12Device* device)
+void FbxLoader::Initialize(ID3D12Device* device_)
 {
     //最初期チェック
     assert(fbxManager == nullptr);
     //メンバに代入
-    this->device = device;
+    this->device = device_;
     //FBXマネージャー生成
     fbxManager = FbxManager::Create();
     //入出力設定

@@ -41,7 +41,7 @@ public:
 	/// </summary>
 	/// <param name="input">ƒL[î•ñ</param>
 	/// <returns></returns>
-	Input* SetInput(Input* input) { return this->input = input; }
+	Input* SetInput(Input* input_) { return this->input = input_; }
 	/// <summary>
 	/// ‚Í‚ñ‚¯‚¢‚ğ“n‚µ‚Ä‚¢‚é
 	/// </summary>

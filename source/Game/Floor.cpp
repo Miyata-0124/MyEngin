@@ -42,5 +42,8 @@ void Floor::Update()
 
 void Floor::OnCollider(const CollisionInfo& info)
 {
+	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
+	{
 
+	}
 }

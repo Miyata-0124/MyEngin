@@ -37,18 +37,18 @@ public:
 
 	float GetRadius() { return radius; }
 
-	void SetRetention(bool isRetention) { this->isRetention = isRetention; }
+	void SetRetention(bool isRetention_) { this->isRetention = isRetention_; }
 	//プレイヤーの座標取得
-	void SetPPosition(XMFLOAT3 position) { this->playerPosition = position; }
+	void SetPPosition(XMFLOAT3 position_) { this->playerPosition = position_; }
 	//プレイヤーの向き取得
-	void SetDirection(bool isDirection) { this->isDirection = isDirection; }
+	void SetDirection(bool isDirection_) { this->isDirection = isDirection_; }
 
 	/// <summary>
 	/// キー情報セット
 	/// </summary>
 	/// <param name="input">キー情報</param>
 	/// <returns></returns>
-	Input* SetInput(Input* input) { return this->input = input; }
+	Input* SetInput(Input* input_) { return this->input = input_; }
 
 private:
 	void Gravity();

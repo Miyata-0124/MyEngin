@@ -36,9 +36,6 @@ public:
 	/// <param name="box"></param>
 	/// <returns></returns>
 	static bool CheckSphere2Box2D(const Sphere& sphere, const Box& box);
-
-	static float LenOBBToPoint(OBB& obb, DirectX::XMVECTOR& p);
-	static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject);
 };
 	
 

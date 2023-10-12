@@ -20,7 +20,7 @@ public:
 	/// </summary>
 	void Update()override;
 
-	inline void SetRadius(XMFLOAT2 radius) { this->radius = radius; }
+	inline void SetRadius(XMFLOAT2 radius_) { this->radius = radius_; }
 
 private:
 	//オブジェクト中心
