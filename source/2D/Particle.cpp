@@ -1,6 +1,6 @@
 #include "header/2D/Particle.h"
 #include <d3dcompiler.h>
-#include "DirectXTex/DirectXTex.h"
+#include "DirectXTex/include/DirectXTex.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 

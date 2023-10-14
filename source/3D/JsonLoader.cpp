@@ -1,5 +1,5 @@
 #include "header/3D/JsonLoader.h"
-#include "DirectXTex/DirectXTex.h"
+#include "DirectXTex/include/DirectXTex.h"
 
 using namespace nlohmann;
 

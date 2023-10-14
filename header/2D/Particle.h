@@ -2,7 +2,7 @@
 #include <wrl.h>
 #include <d3d12.h>
 #include <DirectXMath.h>
-#include "DirectXTex/d3dx12.h"
+#include "DirectXTex/include/d3dx12.h"
 #include <forward_list>
 #include "header/Engin/ViewProjection.h"
 

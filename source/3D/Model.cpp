@@ -1,5 +1,5 @@
 #include "header/3D/Model.h"
-#include "DirectXTex/DirectXTex.h"
+#include "DirectXTex/include/DirectXTex.h"
 
 //Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ì
 ID3D12Device* Model::device = nullptr;

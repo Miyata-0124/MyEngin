@@ -2,7 +2,7 @@
 #include "header/Collider/BaseCollider.h"
 #include "header/Collider/CollisionManager.h"
 #include <d3dcompiler.h>
-#include "DirectXTex/DirectXTex.h"
+#include "DirectXTex/include/DirectXTex.h"
 #include<fstream>
 #include<sstream>
 #include<string>

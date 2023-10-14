@@ -5,7 +5,7 @@
 #include <d3d12.h>
 #include <DirectXMath.h>
 #include <string>
-#include "DirectXTex/d3dx12.h"
+#include "DirectXTex/include/d3dx12.h"
 #include "FbxModel.h"
 #include "FbxLoader.h"
 //#include "FbxLoader.h"

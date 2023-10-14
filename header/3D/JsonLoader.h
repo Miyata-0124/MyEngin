@@ -9,7 +9,7 @@
 #include <wrl.h>
 #include <d3d12.h>
 #include <DirectXMath.h>
-#include "DirectXTex/d3dx12.h"
+#include "DirectXTex/include/d3dx12.h"
 #include <nlohmann/json.hpp>
 #include "Model.h"
 #include "Object3D.h"
