@@ -45,34 +45,36 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)imgui;$(SolutionDir)DirectXTex;$(ProjectDir)lib\fbx_sdk\include;C:\json-3.11.2\include;C:\imgui-1.89.6\imgui-1.89.6\imgui;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)DirectXTex\include;$(SolutionDir)DirectXTex;$(SolutionDir)imgui;$(ProjectDir)lib\fbx_sdk\include;C:\json-3.11.2\include;C:\imgui-1.89.6\imgui-1.89.6\imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)DirectXTex\lib\Debug;$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)DirectXTex;$(ProjectDir)lib\fbx_sdk\include;C:\json-3.11.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\KO21G1124\Desktop\CG2\CG2\DirectXTex\include;$(SolutionDir)DirectXTex;$(ProjectDir)lib\fbx_sdk\include;C:\json-3.11.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\KO21G1124\Desktop\CG2\CG2\DirectXTex\lib\Release;$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>C:\Users\KO21G1124\Desktop\CG2\CG2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4244;4324;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -80,51 +82,54 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>C:\Users\KO21G1124\Desktop\CG2\CG2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4244;4324;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libfbxsdk-mt.lib;libxml2-mt.lib;zlib-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libfbxsdk-mt.lib;libxml2-mt.lib;zlib-mt.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
       <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BackGround.cpp" />
-    <ClCompile Include="BaseCollider.cpp" />
-    <ClCompile Include="BoxCollider.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="CollisionInfo.cpp" />
-    <ClCompile Include="CollisionManager.cpp" />
-    <ClCompile Include="DirectXCommon.cpp" />
-    <ClCompile Include="FbxLoader.cpp" />
-    <ClCompile Include="FbxModel.cpp" />
-    <ClCompile Include="FbxObject3D.cpp" />
-    <ClCompile Include="Floor.cpp" />
-    <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="JsonLoader.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="source\Game\BackGround.cpp" />
+    <ClCompile Include="source\Collider\BaseCollider.cpp" />
+    <ClCompile Include="source\Collider\BoxCollider.cpp" />
+    <ClCompile Include="source\Collider\Collision.cpp" />
+    <ClCompile Include="source\Collider\CollisionInfo.cpp" />
+    <ClCompile Include="source\Collider\CollisionManager.cpp" />
+    <ClCompile Include="source\Engin\DirectXCommon.cpp" />
+    <ClCompile Include="source\Game\enemy.cpp" />
+    <ClCompile Include="source\3D\FbxLoader.cpp" />
+    <ClCompile Include="source\3D\FbxModel.cpp" />
+    <ClCompile Include="source\3D\FbxObject3D.cpp" />
+    <ClCompile Include="source\Game\Floor.cpp" />
+    <ClCompile Include="source\Game\GameScene.cpp" />
+    <ClCompile Include="source\Engin\Input.cpp" />
+    <ClCompile Include="source\Game\Item.cpp" />
+    <ClCompile Include="source\3D\JsonLoader.cpp" />
+    <ClCompile Include="source\Game\main.cpp" />
     <ClCompile Include="Math\Affin.cpp" />
     <ClCompile Include="Math\Convert.cpp" />
     <ClCompile Include="Math\Matrix4.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Math\Vector4.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Object3D.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="PlaneCollider.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="SphereCollider.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="SpriteCommon.cpp" />
-    <ClCompile Include="ViewProjection.cpp" />
-    <ClCompile Include="Wall.cpp" />
-    <ClCompile Include="WinApp.cpp" />
+    <ClCompile Include="source\3D\Model.cpp" />
+    <ClCompile Include="source\3D\Object3D.cpp" />
+    <ClCompile Include="source\2D\Particle.cpp" />
+    <ClCompile Include="source\Collider\PlaneCollider.cpp" />
+    <ClCompile Include="source\Game\Player.cpp" />
+    <ClCompile Include="source\Collider\SphereCollider.cpp" />
+    <ClCompile Include="source\2D\Sprite.cpp" />
+    <ClCompile Include="source\2D\SpriteCommon.cpp" />
+    <ClCompile Include="source\Engin\ViewProjection.cpp" />
+    <ClCompile Include="source\Game\Wall.cpp" />
+    <ClCompile Include="source\Engin\WinApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\hlsl\Basic.hlsli" />
@@ -211,49 +216,45 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BackGround.h" />
-    <ClInclude Include="BaseCollider.h" />
-    <ClInclude Include="BoxCollider.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="CollisionInfo.h" />
-    <ClInclude Include="CollisionManager.h" />
-    <ClInclude Include="CollisionPrimitive.h" />
-    <ClInclude Include="CollisionTypes.h" />
-    <ClInclude Include="DirectXCommon.h" />
-    <ClInclude Include="FbxLoader.h" />
-    <ClInclude Include="FbxModel.h" />
-    <ClInclude Include="FbxObject3D.h" />
-    <ClInclude Include="Floor.h" />
-    <ClInclude Include="GameScene.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="JsonLoader.h" />
+    <ClInclude Include="header\Game\BackGround.h" />
+    <ClInclude Include="header\Collider\BaseCollider.h" />
+    <ClInclude Include="header\Collider\BoxCollider.h" />
+    <ClInclude Include="header\Collider\Collision.h" />
+    <ClInclude Include="header\Collider\CollisionInfo.h" />
+    <ClInclude Include="header\Collider\CollisionManager.h" />
+    <ClInclude Include="header\Collider\CollisionPrimitive.h" />
+    <ClInclude Include="header\Collider\CollisionTypes.h" />
+    <ClInclude Include="header\Engin\DirectXCommon.h" />
+    <ClInclude Include="header\Game\enemy.h" />
+    <ClInclude Include="header\3D\FbxLoader.h" />
+    <ClInclude Include="header\3D\FbxModel.h" />
+    <ClInclude Include="header\3D\FbxObject3D.h" />
+    <ClInclude Include="header\Game\Floor.h" />
+    <ClInclude Include="header\Game\GameScene.h" />
+    <ClInclude Include="header\Engin\Input.h" />
+    <ClInclude Include="header\Game\Item.h" />
+    <ClInclude Include="header\3D\JsonLoader.h" />
     <ClInclude Include="Math\Affin.h" />
     <ClInclude Include="Math\Convert.h" />
     <ClInclude Include="Math\Matrix4.h" />
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Math\Vector4.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Object3D.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="PlaneCollider.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="SphereCollider.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="SpriteCommon.h" />
-    <ClInclude Include="ViewProjection.h" />
-    <ClInclude Include="Wall.h" />
-    <ClInclude Include="WinApp.h" />
+    <ClInclude Include="header\3D\Model.h" />
+    <ClInclude Include="header\3D\Object3D.h" />
+    <ClInclude Include="header\2D\Particle.h" />
+    <ClInclude Include="header\Collider\PlaneCollider.h" />
+    <ClInclude Include="header\Game\Player.h" />
+    <ClInclude Include="x64\resource.h" />
+    <ClInclude Include="header\Collider\SphereCollider.h" />
+    <ClInclude Include="header\2D\Sprite.h" />
+    <ClInclude Include="header\2D\SpriteCommon.h" />
+    <ClInclude Include="header\Engin\ViewProjection.h" />
+    <ClInclude Include="header\Game\Wall.h" />
+    <ClInclude Include="header\Engin\WinApp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="CG2.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\DirectXTex-feb2022\DirectXTex-feb2022\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
-      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
-    </ProjectReference>
+    <ResourceCompile Include="x64\CG2.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
