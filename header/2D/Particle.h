@@ -1,3 +1,11 @@
+/**
+ * @file  Particle.h
+ * @brief パーティクル機能のクラス 
+ *		  簡単なパーティクル発生処理
+ * @author ミヤタ_コウキ
+ * @date 2023/04/08
+ */
+
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>

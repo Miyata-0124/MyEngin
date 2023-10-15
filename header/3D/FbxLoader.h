@@ -1,3 +1,10 @@
+/**
+ * @file FbxLoader.h
+ * @brief FBXのモデルを読み込む為の機能
+ * @author ミヤタ_コウキ
+ * @date 2023/05/31
+ */
+
 #pragma once
 
 #include "fbxsdk.h"

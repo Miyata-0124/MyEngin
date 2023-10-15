@@ -1,3 +1,10 @@
+/**
+ * @file CollisionPrimitive.h
+ * @brief それぞれのコライダーの基盤
+ * @author ミヤタ_コウキ
+ * @date 2023/07/25
+ */
+
 #pragma once
 
 #include <DirectXMath.h>

@@ -1,3 +1,10 @@
+/**
+ * @file Player.h
+ * @brief 操作可能なプレイヤーオブジェクト
+ * @author ミヤタ_コウキ
+ * @date 2023/06/15
+ */
+
 #pragma once
 #include "header/3D/Object3D.h"
 #include "header/Engin/Input.h"

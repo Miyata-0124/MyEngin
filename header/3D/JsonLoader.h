@@ -1,3 +1,10 @@
+/**
+ * @file JsonLoader.h
+ * @brief Jsonファイルを読み込み利用できる機能
+ * @author ミヤタ_コウキ
+ * @date 2023/07/14
+ */
+
 #pragma once
 #include<Windows.h>
 #include<fstream>

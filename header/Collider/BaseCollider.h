@@ -1,3 +1,10 @@
+/**
+ * @file BaseCollider.h
+ * @brief ゲーム内のオブジェクトを取得しそれぞれに判定のタイプを決める物
+ * @author ミヤタ_コウキ
+ * @date 2023/07/11
+ */
+
 #pragma once
 #include "CollisionTypes.h"
 #include "CollisionInfo.h"

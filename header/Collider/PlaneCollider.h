@@ -1,3 +1,10 @@
+/**
+ * @file PlaneCollider.h
+ * @brief 平面判定用コライダー
+ * @author ミヤタ_コウキ
+ * @date 2023/07/25
+ */
+
 #pragma once
 #include "BaseCollider.h"
 #include "CollisionPrimitive.h"

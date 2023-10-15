@@ -1,3 +1,10 @@
+/**
+ * @file SphereCollider.h
+ * @brief 球状のコライダー判定
+ * @author ミヤタ_コウキ
+ * @date 2023/07/25
+ */
+
 #pragma once
 
 #include "BaseCollider.h"

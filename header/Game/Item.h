@@ -1,3 +1,10 @@
+/**
+ * @file Item.h
+ * @brief プレイヤーが持ち運び出来るオブジェクトクラス
+ * @author ミヤタ_コウキ
+ * @date 2023/07/27
+ */
+
 #pragma once
 #include "header/Engin/Input.h"
 #include "header/3D/Object3D.h"

@@ -1,3 +1,10 @@
+/**
+ * @file Wall.h
+ * @brief 壁の機能
+ * @author ミヤタ_コウキ
+ * @date 2023/10/10
+ */
+
 #pragma once
 #include "header/3D/Object3D.h"
 

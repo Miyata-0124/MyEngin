@@ -1,5 +1,11 @@
-#pragma once
+/**
+ * @file Object3D.h
+ * @brief OBJモデルをゲーム内で扱う為の機能
+ * @author ミヤタ_コウキ
+ * @date 2022/07/20
+ */
 
+#pragma once
 
 #include <Windows.h>
 #include <wrl.h>

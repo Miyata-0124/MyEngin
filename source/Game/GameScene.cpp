@@ -233,18 +233,17 @@ void GameScene::Draw()
 	//•`‰æˆ—‚±‚±‚©‚ç«
 	directXCom->PreDraw();
 	Object3d::PreDraw(directXCom->GetCommandList());
-	
+	Particle::PreDraw(directXCom->GetCommandList());
 	switch (scene)
 	{
 	case 0:
 		sprite->SetIsInvisible(false);
 		sprite->SetTexIndex(1);
 		sprite->Draw();
-		//objPlayer->Draw();
-		
-		Particle::PreDraw(directXCom->GetCommandList());
+
+
 		particle->Draw();
-		Particle::PostDraw();
+		
 		break;
 	case 1:
 		
@@ -281,7 +280,7 @@ void GameScene::Draw()
 	case 2:
 		break;
 	}
-	
+	Particle::PostDraw();
 	Object3d::PostDraw();
 	directXCom->PostDraw();
 	//‚±‚±‚Ü‚Åª

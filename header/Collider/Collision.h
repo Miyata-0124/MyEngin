@@ -1,3 +1,10 @@
+/**
+ * @file Collision.h
+ * @brief 各判定をそれぞれ取る為の機能
+ * @author ミヤタ_コウキ
+ * @date 2023/07/25
+ */
+
 #pragma once
 #include "CollisionPrimitive.h"
 

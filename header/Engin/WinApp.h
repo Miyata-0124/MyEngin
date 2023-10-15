@@ -1,3 +1,10 @@
+/**
+ * @file WinApp.h
+ * @brief ウィンドウ機能をまとめた物
+ * @author ミヤタ_コウキ
+ * @date 2022/04/13
+ */
+
 #pragma once
 #include <Windows.h>
 class WinApp

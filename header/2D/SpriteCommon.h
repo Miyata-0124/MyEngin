@@ -1,3 +1,10 @@
+/**
+ * @file SpriteCommon.h
+ * @brief 画像の書き込みなどに必要な処理をまとめたもの
+ * @author ミヤタ_コウキ
+ * @date 2023/04/07
+ */
+
 #pragma once
 #include"header/Engin/DirectXCommon.h"
 #include<DirectXMath.h>

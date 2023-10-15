@@ -1,3 +1,10 @@
+/**
+ * @file FbxObject3D.h
+ * @brief FBXモデルを使用するオブジェクトの機能(アニメーションなども追加出来る)
+ * @author ミヤタ_コウキ
+ * @date 2023/05/31
+ */
+
 #pragma once
 
 #include <Windows.h>

@@ -1,3 +1,10 @@
+/**
+ * @file CollisionTypes.h
+ * @brief 各オブジェクトが持っているコライダーの判別をするためのタイプ
+ * @author ミヤタ_コウキ
+ * @date 2023_07_25
+ */
+
 #pragma once
 
 enum CollisionShapeType

@@ -1,3 +1,10 @@
+
+/**
+ * @file FbxModel.h
+ * @brief FBXのモデル情報を扱う機能
+ * @author ミヤタ_コウキ
+ * @date 2023/05/31
+ */
 #pragma once
 #include <string>
 #include <vector>

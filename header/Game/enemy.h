@@ -1,3 +1,10 @@
+/**
+ * @file enemy.h
+ * @brief 敵の機能
+ * @author ミヤタ_コウキ
+ * @date 2023/09/17
+ */
+
 #pragma once
 #include "header/3D/Object3D.h"
 #include "Player.h"

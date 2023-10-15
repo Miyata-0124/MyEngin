@@ -1,3 +1,10 @@
+/**
+ * @file ViewProjection.h
+ * @brief カメラ機能
+ * @author ミヤタ_コウキ
+ * @date 2022/05/30
+ */
+
 #pragma once
 #include<DirectXMath.h>
 using namespace DirectX;

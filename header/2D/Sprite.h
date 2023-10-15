@@ -1,3 +1,10 @@
+/**
+ * @file Sprite.h
+ * @brief UIなどに利用可能な画像関連の機能
+ * @author ミヤタ_コウキ
+ * @date 2023/04/07
+ */
+
 #pragma once
 #include"SpriteCommon.h"
 #include"header/Engin/DirectXCommon.h"

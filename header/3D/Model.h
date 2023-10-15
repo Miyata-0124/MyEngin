@@ -1,3 +1,10 @@
+/**
+ * @file Model.h
+ * @brief 3Dモデルを扱うためのものOBJを利用できる
+ * @author ミヤタ_コウキ
+ * @date 2022/07/06
+ */
+
 #pragma once
 #include<Windows.h>
 #include<fstream>

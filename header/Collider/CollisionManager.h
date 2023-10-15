@@ -1,3 +1,10 @@
+/**
+ * @file CollisionManager.h
+ * @brief コライダーを管理するための機能
+ * @author ミヤタ_コウキ
+ * @date 2023_07_25
+ */
+
 #pragma once
 #include <forward_list>
 

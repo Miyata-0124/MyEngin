@@ -1,3 +1,10 @@
+/**
+ * @file Input.h
+ * @brief キーボード情報機能をまとめた物
+ * @author ミヤタ_コウキ
+ * @date 2022/04/25
+ */
+
 #pragma once
 #include <Windows.h>
 #include <wrl.h>

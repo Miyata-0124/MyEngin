@@ -1,3 +1,10 @@
+/**
+ * @file Floor.h
+ * @brief 世界の底の判定機能
+ * @author ミヤタ_コウキ
+ * @date 2023/07/09
+ */
+
 #pragma once
 #include "header/3D/Object3D.h"
 #include "header/3D/Model.h"

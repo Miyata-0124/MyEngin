@@ -1,3 +1,10 @@
+/**
+ * @file GameScene.h
+ * @brief ゲーム関連の基盤 ここに書き込んでいく
+ * @author ミヤタ_コウキ
+ * @date 2022/04/13
+ */
+
 #pragma once
 //自作クラス
 #include <list>

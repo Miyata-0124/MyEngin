@@ -1,3 +1,10 @@
+/**
+ * @file BoxCollider.h
+ * @brief 2D四角形のアタリ判定
+ * @author ミヤタ_コウキ
+ * @date 2023/10/10
+ */
+
 #pragma once
 #include "BaseCollider.h"
 #include "CollisionPrimitive.h"
