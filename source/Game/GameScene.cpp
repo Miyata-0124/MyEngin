@@ -7,7 +7,8 @@
 #include "header/Game/enemy.h"
 #include "header/Game/Floor.h"
 #include "header/Game/Item.h"
-#include "header/Game/Wall.h" 
+#include "header/Game/Wall.h"
+#include "easing/Easing.h"
 #include <sstream>
 #include <iomanip>
 
@@ -172,14 +173,22 @@ void GameScene::Update()
 		{
 			ChengeScene = true;
 		}
-
 		if (ChengeScene)
 		{
-			scene = 1;
-			ChengeScene = false;
+			min += 0.1f;;
+			y = min / max;
+			position.y = startY + (endY - startY) * Easing::easeInSine(y);
+
+			if (min>max)
+			{
+				min = 0.0f;
+				ChengeScene = false;
+				scene = 1;
+			}
 		}
 		//à⁄ìÆå„ÇÃç¿ïWÇì¸ÇÍÇÈ
 		sprite->SetPosition(position);
+
 #pragma endregion
 		break;
 	case 1:
@@ -233,7 +242,7 @@ void GameScene::Draw()
 	//ï`âÊèàóùÇ±Ç±Ç©ÇÁÅ´
 	directXCom->PreDraw();
 	Object3d::PreDraw(directXCom->GetCommandList());
-	Particle::PreDraw(directXCom->GetCommandList());
+	
 	switch (scene)
 	{
 	case 0:
@@ -241,9 +250,10 @@ void GameScene::Draw()
 		sprite->SetTexIndex(1);
 		sprite->Draw();
 
-
+		Particle::PreDraw(directXCom->GetCommandList());
 		particle->Draw();
-		
+		Particle::PostDraw();
+
 		break;
 	case 1:
 		
@@ -280,8 +290,9 @@ void GameScene::Draw()
 	case 2:
 		break;
 	}
-	Particle::PostDraw();
+	
 	Object3d::PostDraw();
+	
 	directXCom->PostDraw();
 	//Ç±Ç±Ç‹Ç≈Å™
 }

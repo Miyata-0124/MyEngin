@@ -96,6 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="easing\Easing.cpp" />
     <ClCompile Include="source\Game\BackGround.cpp" />
     <ClCompile Include="source\Collider\BaseCollider.cpp" />
     <ClCompile Include="source\Collider\BoxCollider.cpp" />
@@ -216,6 +217,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="easing\Easing.h" />
     <ClInclude Include="header\Game\BackGround.h" />
     <ClInclude Include="header\Collider\BaseCollider.h" />
     <ClInclude Include="header\Collider\BoxCollider.h" />

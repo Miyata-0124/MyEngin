@@ -108,5 +108,13 @@ private: //ゲーム内使用クラス
 	//UI関連
 	bool UIFlag = false;
 	DirectX::XMFLOAT2 UIspeed = { 0,0 };
+
+	//拡縮フラグ
+	//暗転
+	float min = 0.0f;
+	float max = 1.0f;
+	float startY = 0.0f;
+	float endY = 720.0f;
+	float y;
 };
 

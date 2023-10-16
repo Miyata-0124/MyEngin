@@ -162,6 +162,9 @@
     <ClCompile Include="source\Collider\BaseCollider.cpp">
       <Filter>ソース ファイル\enginBase</Filter>
     </ClCompile>
+    <ClCompile Include="easing\Easing.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\hlsl\Basic.hlsli">
@@ -331,6 +334,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="header\Game\enemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="easing\Easing.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
