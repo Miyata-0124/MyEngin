@@ -66,12 +66,9 @@ void Player::OnCollider(const CollisionInfo& info)
 {
 	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE)
 	{
-		if (position.y > info.object->GetPosition().y)
-		{
-			position.y += 0.2f;
-		}
+		SetPosition({ position.x,-13,0 });
 		yadd = 0.0f;
-		isJamp = false;
+		isJamp = false;	
 	}
 	else if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
 	{

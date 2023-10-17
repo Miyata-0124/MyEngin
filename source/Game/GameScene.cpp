@@ -194,6 +194,8 @@ void GameScene::Update()
 	case 1:
 		if (input->TriggerKey(DIK_R))
 		{
+			sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
+			sprite->SetPosition({ 0,0 });
 			scene = 0;
 		}
 		//ƒvƒŒƒCƒ„[
