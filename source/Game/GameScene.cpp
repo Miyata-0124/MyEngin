@@ -175,7 +175,7 @@ void GameScene::Update()
 		}
 		if (ChengeScene)
 		{
-			min += 0.1f;;
+			min += 0.03f;;
 			y = min / max;
 			position.y = startY + (endY - startY) * Easing::easeInSine(y);
 
@@ -192,6 +192,10 @@ void GameScene::Update()
 #pragma endregion
 		break;
 	case 1:
+		if (input->TriggerKey(DIK_R))
+		{
+			scene = 0;
+		}
 		//ƒvƒŒƒCƒ„[
 		objPlayer->Update();
 		//“G
