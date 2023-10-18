@@ -118,6 +118,7 @@ private: //ゲーム内使用クラス
 	float endY = 720.0f;
 	float y;
 	bool isBlackOut = false;
+	float blackOutTimer = 300.0f;
 	float minalpha = 0.0f;
 	float maxalpha = 1.0f;
 };

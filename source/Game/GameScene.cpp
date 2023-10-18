@@ -177,19 +177,29 @@ void GameScene::Update()
 		//切り替え
 		if (input->TriggerKey(DIK_SPACE) && !ChengeScene)
 		{
+			startY = position.y;
+			endY = startY + 720;
 			ChengeScene = true;
 		}
 		if (ChengeScene)
 		{
-			min += 0.03f;
+			if (min <= max)
+			{
+				min += 0.03f;
+			}
 			y = min / max;
 			position.y = startY + (endY - startY) * Easing::easeInSine(y);
+		
 
 			if (min>max)
 			{
-				min = 0.0f;
-				ChengeScene = false;
-				isBlackOut = true;
+				blackOutTimer--;
+				if (blackOutTimer <= 0.0f)
+				{
+					blackOutTimer = 300.0f;
+					ChengeScene = false;
+					isBlackOut = true;
+				}
 			}
 		}
 		//暗転させるのか判断
@@ -203,6 +213,7 @@ void GameScene::Update()
 			sprite2->SetColor({ 0, 0, 0, minalpha });
 			if (minalpha>maxalpha)
 			{
+				min = 0.0f;
 				ChengeScene = false;
 				scene = 1;
 			}
@@ -224,7 +235,6 @@ void GameScene::Update()
 		//フェードアウト
 		if (isBlackOut)
 		{
-			//フェードイン追加
 			minalpha -= 0.01f;
 			sprite2->SetColor({ 0, 0, 0, minalpha });
 			if (minalpha <= 0.0f)
@@ -300,6 +310,7 @@ void GameScene::Draw()
 		sprite2->SetTexIndex(2);
 		sprite2->Draw();
 		break;
+
 	case 1:
 		Object3d::PreDraw(directXCom->GetCommandList());
 		//背景
