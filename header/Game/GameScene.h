@@ -71,6 +71,7 @@ private: //ゲーム内使用クラス
 	//スプライト
 	SpriteCommon* spriteCommon = nullptr;
 	Sprite* sprite = new Sprite();
+	Sprite* sprite2 = new Sprite();
 	//FBX
 	FbxModel* model = nullptr;
 	FbxObject3d* object1 = new FbxObject3d();
@@ -116,5 +117,8 @@ private: //ゲーム内使用クラス
 	float startY = 0.0f;
 	float endY = 720.0f;
 	float y;
+	bool isBlackOut = false;
+	float minalpha = 0.0f;
+	float maxalpha = 1.0f;
 };
 

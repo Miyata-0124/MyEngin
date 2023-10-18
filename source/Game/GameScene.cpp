@@ -53,7 +53,13 @@ void GameScene::Initialize()
 	sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
 	sprite->SetPosition({0,0});
 
-	jsonLoader = JsonLoader::LoadFlomJSONInternal("test");
+	sprite2->Initialize(spriteCommon, 2);
+	sprite2->SetAnchorPoint(XMFLOAT2(0, 0));
+	sprite2->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
+	sprite2->SetPosition({ 0,0 });
+	sprite2->SetColor({ 0,0,0,0 });
+
+	jsonLoader = JsonLoader::LoadFlomJSONInternal("map");
 
 #pragma region FBX
 	/*model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
@@ -175,7 +181,7 @@ void GameScene::Update()
 		}
 		if (ChengeScene)
 		{
-			min += 0.03f;;
+			min += 0.03f;
 			y = min / max;
 			position.y = startY + (endY - startY) * Easing::easeInSine(y);
 
@@ -183,8 +189,24 @@ void GameScene::Update()
 			{
 				min = 0.0f;
 				ChengeScene = false;
+				isBlackOut = true;
+			}
+		}
+		//暗転させるのか判断
+		if (isBlackOut)
+		{
+			//フェードイン追加
+			if (minalpha < maxalpha)
+			{
+				minalpha += 0.01f;
+			}
+			sprite2->SetColor({ 0, 0, 0, minalpha });
+			if (minalpha>maxalpha)
+			{
+				ChengeScene = false;
 				scene = 1;
 			}
+
 		}
 		//移動後の座標を入れる
 		sprite->SetPosition(position);
@@ -196,8 +218,23 @@ void GameScene::Update()
 		{
 			sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
 			sprite->SetPosition({ 0,0 });
+			isBlackOut = false;
 			scene = 0;
 		}
+		//フェードアウト
+		if (isBlackOut)
+		{
+			//フェードイン追加
+			minalpha -= 0.01f;
+			sprite2->SetColor({ 0, 0, 0, minalpha });
+			if (minalpha <= 0.0f)
+			{
+				minalpha = 0.0f;
+				isBlackOut = false;
+			}
+
+		}
+
 		//プレイヤー
 		objPlayer->Update();
 		//敵
@@ -247,7 +284,6 @@ void GameScene::Draw()
 {
 	//描画処理ここから↓
 	directXCom->PreDraw();
-	Object3d::PreDraw(directXCom->GetCommandList());
 	
 	switch (scene)
 	{
@@ -260,11 +296,14 @@ void GameScene::Draw()
 		particle->Draw();
 		Particle::PostDraw();
 
+		sprite2->SetIsInvisible(false);
+		sprite2->SetTexIndex(2);
+		sprite2->Draw();
 		break;
 	case 1:
-		
+		Object3d::PreDraw(directXCom->GetCommandList());
 		//背景
-
+		
 		//オブジェクト
 		//object1->Draw(directXCom->GetCommandList());
 		
@@ -284,20 +323,18 @@ void GameScene::Draw()
 			object->Draw();
 		}
 
-	
+		Object3d::PostDraw();
+
+		sprite2->SetIsInvisible(false);
+		sprite2->SetTexIndex(2);
+		sprite2->Draw();
+
 	// UI関連
-		sprite->SetIsInvisible(false);
-		sprite->SetTexIndex(2);
-		sprite->SetSize({320, 180});
-		sprite->SetPosition({ -320,0 });
-		sprite->Draw();
 
 		break;
 	case 2:
 		break;
 	}
-	
-	Object3d::PostDraw();
 	
 	directXCom->PostDraw();
 	//ここまで↑
@@ -312,6 +349,7 @@ void GameScene::Finalize()
 	delete directXCom;
 	delete spriteCommon;
 	delete sprite;
+	delete sprite2;
 	delete model;
 	delete objPlayer;
 	delete objFloor;
@@ -348,7 +386,10 @@ void GameScene::LoadMap()
 		mapObject->SetPosition(pos);
 
 		//コライダー
-		//DirectX::XMFLOAT3 center;
+		DirectX::XMFLOAT3 center;
+		DirectX::XMStoreFloat3(&center, objectData.center);
+ 		mapObject->SetCollider(new BoxCollider({0,pos.y-2.0f,0}, {2.0f,2.0f}));
+
 		// 配列に登録
 		objects.push_back(mapObject);
 	}

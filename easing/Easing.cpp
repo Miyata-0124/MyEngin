@@ -14,12 +14,36 @@ float Easing::easeOutBack(float num) {
 	return 1 + c2 * pow(num - 1.0f, 3.0f) + c1 * pow(num - 1.0f, 2.0f);
 }
 
+float Easing::easeOutBounce(float x)
+{
+	const float n1 = 7.5625;
+	const float d1 = 2.75;
+
+	if (x < 1 / d1) {
+		return n1 * x * x;
+	}
+	else if (x < 2.0f / d1) {
+		return n1 * (x -= 1.5f / d1) * x + 0.75f;
+	}
+	else if (x < 2.5f / d1) {
+		return n1 * (x -= 2.25f / d1) * x + 0.9375f;
+	}
+	else {
+		return n1 * (x -= 2.625f / d1) * x + 0.984375f;
+	}
+}
+
 float Easing::easeOutCubic(float x) {
 	return 1 - (float)pow(1 - x, 3);
 }
 
 float Easing::easeOutQuint(float x) {
 	return 1 - (float)pow(1 - x, 5);
+}
+
+float Easing::easeInBounce(float x)
+{
+	return 1 - easeOutBounce(1 - x);
 }
 
 float Easing::easeInOutCirc(float x) {
