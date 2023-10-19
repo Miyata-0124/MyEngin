@@ -182,7 +182,7 @@ public:
 	/// オブジェクトサイズの設定
 	/// </summary>
 	/// <param name="size"></param>
-	void SetSize(const XMFLOAT3& size) { this->scale = size; }
+	void SetSize(const XMFLOAT3& scale_) { this->scale = scale_; }
 	/// <summary>
 	/// 回転の設定
 	/// </summary>

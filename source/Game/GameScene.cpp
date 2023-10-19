@@ -298,17 +298,22 @@ void GameScene::Draw()
 	switch (scene)
 	{
 	case 0:
+		Object3d::PreDraw(directXCom->GetCommandList());
+		Particle::PreDraw(directXCom->GetCommandList());
+		//タイトル
 		sprite->SetIsInvisible(false);
 		sprite->SetTexIndex(1);
 		sprite->Draw();
-
-		Particle::PreDraw(directXCom->GetCommandList());
+		
 		particle->Draw();
-		Particle::PostDraw();
 
+		//暗転用
 		sprite2->SetIsInvisible(false);
 		sprite2->SetTexIndex(2);
 		sprite2->Draw();
+
+		Object3d::PostDraw();
+		Particle::PostDraw();
 		break;
 
 	case 1:
@@ -330,18 +335,18 @@ void GameScene::Draw()
 		objWall->Draw();
 		//背景
 		objBackGround->Draw();
+		//
 		for (auto object : objects) {
 			object->Draw();
 		}
 
-		Object3d::PostDraw();
 
+		// UI,演出関連
 		sprite2->SetIsInvisible(false);
 		sprite2->SetTexIndex(2);
 		sprite2->Draw();
 
-	// UI関連
-
+		Object3d::PostDraw();
 		break;
 	case 2:
 		break;
@@ -398,9 +403,11 @@ void GameScene::LoadMap()
 
 		//コライダー
 		DirectX::XMFLOAT3 center;
+		DirectX::XMFLOAT2 radius;
 		DirectX::XMStoreFloat3(&center, objectData.center);
- 		mapObject->SetCollider(new BoxCollider({0,pos.y-2.0f,0}, {2.0f,2.0f}));
+		DirectX::XMStoreFloat2(&radius, objectData.size);
 
+		mapObject->SetCollider(new BoxCollider({ center.x,center.y+radius.y,center.z }, { radius.x,radius.y }));
 		// 配列に登録
 		objects.push_back(mapObject);
 	}
