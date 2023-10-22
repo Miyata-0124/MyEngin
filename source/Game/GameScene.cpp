@@ -206,26 +206,8 @@ void GameScene::Update()
 		}
 		sprite->SetPosition(position);
 		//暗転させるのか判断
-		blackOut->Update(scene,isBlackOut);
-		scene = blackOut->GetScene();
-		//if (isBlackOut)
-		//{
-		//	//フェードイン追加
-		//	if (minalpha < maxalpha)
-		//	{
-		//		minalpha += 0.01f;
-		//	}
-		//	sprite2->SetColor({ 0, 0, 0, minalpha });
-		//	if (minalpha>maxalpha)
-		//	{
-		//		min = 0.0f;
-		//		ChengeScene = false;
-		//		scene = 1;
-		//	}
-
-		//}
-		//移動後の座標を入れる
-
+		blackOut->Update(scene,isBlackOut);//暗転後シーン切り替えをする
+		scene = blackOut->GetScene();//切り替えた情報を渡す->切り替わる
 
 #pragma endregion
 		break;
@@ -239,18 +221,7 @@ void GameScene::Update()
 		}
 		//フェードアウト
 		blackOut->Update(scene,isBlackOut);
-		//if (isBlackOut)
-		//{
-		//	minalpha -= 0.01f;
-		//	sprite2->SetColor({ 0, 0, 0, minalpha });
-		//	if (minalpha <= 0.0f)
-		//	{
-		//		minalpha = 0.0f;
-		//		isBlackOut = false;
-		//	}
-
-		//}
-
+		
 		//プレイヤー
 		objPlayer->Update();
 		//敵
@@ -315,10 +286,7 @@ void GameScene::Draw()
 
 		//暗転用
 		blackOut->Draw();
-		/*sprite2->SetIsInvisible(false);
-		sprite2->SetTexIndex(2);
-		sprite2->Draw();*/
-
+		
 		Object3d::PostDraw();
 		Particle::PostDraw();
 		break;
@@ -350,10 +318,7 @@ void GameScene::Draw()
 
 		// UI,演出関連
 		blackOut->Draw();
-		/*sprite2->SetIsInvisible(false);
-		sprite2->SetTexIndex(2);
-		sprite2->Draw();*/
-
+	
 		Object3d::PostDraw();
 		break;
 	case 2:

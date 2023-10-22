@@ -30,7 +30,6 @@ void BlackOut::Update(int sceneNum_, bool isBlackOut_)
 			if (minalpha > maxalpha)
 			{
 				min = 0.0f;
-				ChengeScene = false;
 				sceneNum = 1;
 			}
 
@@ -52,8 +51,6 @@ void BlackOut::Update(int sceneNum_, bool isBlackOut_)
 		}
 		sprite->Update();
 	}
-
-	
 }
 
 void BlackOut::Draw()
