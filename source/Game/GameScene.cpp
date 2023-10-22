@@ -53,11 +53,12 @@ void GameScene::Initialize()
 	sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
 	sprite->SetPosition({0,0});
 
-	sprite2->Initialize(spriteCommon, 2);
+	blackOut->Initialize(spriteCommon);
+	/*sprite2->Initialize(spriteCommon, 2);
 	sprite2->SetAnchorPoint(XMFLOAT2(0, 0));
 	sprite2->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
 	sprite2->SetPosition({ 0,0 });
-	sprite2->SetColor({ 0,0,0,0 });
+	sprite2->SetColor({ 0,0,0,0 });*/
 
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("map");
 
@@ -148,6 +149,7 @@ void GameScene::Update()
 		particle->Update();
 #pragma endregion
 #pragma region シーン切り替え時の処理
+		//blackOut->Update(input, scene);
 		//動かすために座標を取得
 		XMFLOAT2 position = sprite->GetPosition();
 		if (!UIFlag) {
@@ -202,25 +204,28 @@ void GameScene::Update()
 				}
 			}
 		}
-		//暗転させるのか判断
-		if (isBlackOut)
-		{
-			//フェードイン追加
-			if (minalpha < maxalpha)
-			{
-				minalpha += 0.01f;
-			}
-			sprite2->SetColor({ 0, 0, 0, minalpha });
-			if (minalpha>maxalpha)
-			{
-				min = 0.0f;
-				ChengeScene = false;
-				scene = 1;
-			}
-
-		}
-		//移動後の座標を入れる
 		sprite->SetPosition(position);
+		//暗転させるのか判断
+		blackOut->Update(scene,isBlackOut);
+		scene = blackOut->GetScene();
+		//if (isBlackOut)
+		//{
+		//	//フェードイン追加
+		//	if (minalpha < maxalpha)
+		//	{
+		//		minalpha += 0.01f;
+		//	}
+		//	sprite2->SetColor({ 0, 0, 0, minalpha });
+		//	if (minalpha>maxalpha)
+		//	{
+		//		min = 0.0f;
+		//		ChengeScene = false;
+		//		scene = 1;
+		//	}
+
+		//}
+		//移動後の座標を入れる
+
 
 #pragma endregion
 		break;
@@ -233,17 +238,18 @@ void GameScene::Update()
 			scene = 0;
 		}
 		//フェードアウト
-		if (isBlackOut)
-		{
-			minalpha -= 0.01f;
-			sprite2->SetColor({ 0, 0, 0, minalpha });
-			if (minalpha <= 0.0f)
-			{
-				minalpha = 0.0f;
-				isBlackOut = false;
-			}
+		blackOut->Update(scene,isBlackOut);
+		//if (isBlackOut)
+		//{
+		//	minalpha -= 0.01f;
+		//	sprite2->SetColor({ 0, 0, 0, minalpha });
+		//	if (minalpha <= 0.0f)
+		//	{
+		//		minalpha = 0.0f;
+		//		isBlackOut = false;
+		//	}
 
-		}
+		//}
 
 		//プレイヤー
 		objPlayer->Update();
@@ -308,9 +314,10 @@ void GameScene::Draw()
 		particle->Draw();
 
 		//暗転用
-		sprite2->SetIsInvisible(false);
+		blackOut->Draw();
+		/*sprite2->SetIsInvisible(false);
 		sprite2->SetTexIndex(2);
-		sprite2->Draw();
+		sprite2->Draw();*/
 
 		Object3d::PostDraw();
 		Particle::PostDraw();
@@ -342,9 +349,10 @@ void GameScene::Draw()
 
 
 		// UI,演出関連
-		sprite2->SetIsInvisible(false);
+		blackOut->Draw();
+		/*sprite2->SetIsInvisible(false);
 		sprite2->SetTexIndex(2);
-		sprite2->Draw();
+		sprite2->Draw();*/
 
 		Object3d::PostDraw();
 		break;
@@ -365,7 +373,7 @@ void GameScene::Finalize()
 	delete directXCom;
 	delete spriteCommon;
 	delete sprite;
-	delete sprite2;
+	delete blackOut;
 	delete model;
 	delete objPlayer;
 	delete objFloor;

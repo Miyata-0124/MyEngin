@@ -21,6 +21,7 @@
 #include "header/3D/Model.h"
 #include "header/3D/JsonLoader.h"
 #include "header/Game/BackGround.h"
+#include "header/Game/BlackOut.h"
 
 class CollisionManager;
 class Player;
@@ -72,6 +73,8 @@ private: //ゲーム内使用クラス
 	SpriteCommon* spriteCommon = nullptr;
 	Sprite* sprite = new Sprite();
 	Sprite* sprite2 = new Sprite();
+
+	BlackOut* blackOut = new BlackOut();
 	//FBX
 	FbxModel* model = nullptr;
 	FbxObject3d* object1 = new FbxObject3d();
