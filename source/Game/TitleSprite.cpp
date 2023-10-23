@@ -3,11 +3,11 @@
 
 void TitleSprite::Initialize(SpriteCommon* spriteCommon)
 {
-	sprite = new Sprite();
-	sprite->Initialize(spriteCommon, 1);
-	sprite->SetAnchorPoint(XMFLOAT2(0, 0));
-	sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
-	sprite->SetPosition({ 0,0 });
+	titleSprite = new Sprite();
+	titleSprite->Initialize(spriteCommon, 1);
+	titleSprite->SetAnchorPoint(XMFLOAT2(0, 0));
+	titleSprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
+	titleSprite->SetPosition({ 0,0 });
 }
 
 void TitleSprite::Update(Input* input, int sceneNum_, bool isBlackOut_)
@@ -17,7 +17,7 @@ void TitleSprite::Update(Input* input, int sceneNum_, bool isBlackOut_)
 	if (sceneNum == 0)
 	{
 		//“®‚©‚·‚½‚ß‚ÉÀ•W‚ðŽæ“¾
-		XMFLOAT2 position = sprite->GetPosition();
+		XMFLOAT2 position = titleSprite->GetPosition();
 		if (!UIFlag) {
 			if (position.x < 15)
 			{
@@ -70,13 +70,13 @@ void TitleSprite::Update(Input* input, int sceneNum_, bool isBlackOut_)
 				}
 			}
 		}
-		sprite->SetPosition(position);
+		titleSprite->SetPosition(position);
 	}
 }
 
 void TitleSprite::Draw()
 {
-	sprite->SetIsInvisible(false);
-	sprite->SetTexIndex(1);
-	sprite->Draw();
+	titleSprite->SetIsInvisible(false);
+	titleSprite->SetTexIndex(1);
+	titleSprite->Draw();
 }

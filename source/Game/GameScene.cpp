@@ -208,7 +208,6 @@ void GameScene::Draw()
 	switch (scene)
 	{
 	case 0:
-		Object3d::PreDraw(directXCom->GetCommandList());
 		Particle::PreDraw(directXCom->GetCommandList());
 		//ƒ^ƒCƒgƒ‹
 		titleSprite->Draw();
@@ -217,8 +216,7 @@ void GameScene::Draw()
 
 		//ˆÃ“]—p
 		blackOut->Draw();
-		
-		Object3d::PostDraw();
+
 		Particle::PostDraw();
 		break;
 
@@ -238,7 +236,7 @@ void GameScene::Draw()
 		//’n–Ê
 		//objFloor->Draw();
 		//•Ç
-		objWall->Draw();
+		//objWall->Draw();
 		//”wŒi
 		objBackGround->Draw();
 		//

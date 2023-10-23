@@ -30,7 +30,7 @@ public:
 	//シーン切り替えに使用する情報
 	bool GetBlackOut() { return isBlackOut; }
 private:
-	Sprite* sprite;
+	Sprite* titleSprite;
 private:
 	//タイトルなどのUI情報
 	bool ChengeScene = false;

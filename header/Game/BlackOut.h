@@ -6,6 +6,12 @@
  * @author ミヤタ_コウキ
  * @date 2023/10/23
  */
+enum Blink
+{
+	slowOpen,
+	slowClose,
+	Open
+};
 
 class BlackOut
 {
@@ -29,7 +35,9 @@ public:
 	//シーン切り替えに使用する情報
 	int GetScene() { return sceneNum; }
 private:
-	Sprite* sprite;
+	Sprite* blackOut;
+
+	Blink blink = slowOpen;
 private:
 	//タイトルなどのUI情報
 	int sceneNum = 0;
@@ -41,5 +49,6 @@ private:
 	bool isBlackOut = false;
 	float minalpha = 0.0f;
 	float maxalpha = 1.0f;
+	int blinkCount = 0;
 };
 
