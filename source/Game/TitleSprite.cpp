@@ -80,3 +80,29 @@ void TitleSprite::Draw()
 	titleSprite->SetTexIndex(1);
 	titleSprite->Draw();
 }
+
+void TitleSprite::Reset()
+{
+	titleSprite->SetAnchorPoint(XMFLOAT2(0, 0));
+	titleSprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
+	titleSprite->SetPosition({ 0,0 });
+
+	//タイトルなどのUI情報
+	ChengeScene = false;
+	//UI関連
+	UIFlag = false;
+	UIspeed = { 0,0 };
+
+	sceneNum = 0;
+	//拡縮フラグ
+	//暗転
+	min = 0.0f;
+	max = 1.0f;
+	startY = 0.0f;
+	endY = 720.0f;
+	y;
+	isBlackOut = false;
+	blackOutTimer = 300.0f;
+	minalpha = 0.0f;
+	maxalpha = 1.0f;
+}

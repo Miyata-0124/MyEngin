@@ -142,6 +142,8 @@ void GameScene::Update()
 		particle->Update();
 #pragma endregion
 #pragma region シーン切り替え時の処理
+		
+
 		titleSprite->Update(input,scene,isBlackOut);
 		isBlackOut = titleSprite->GetBlackOut();
 
@@ -152,6 +154,13 @@ void GameScene::Update()
 #pragma endregion
 		break;
 	case 1:
+		if (input->TriggerKey(DIK_R))//リセット
+		{
+			titleSprite->Reset();
+			blackOut->Reset();
+			scene = 0;
+		}
+
 		//フェードアウト
 		blackOut->Update(scene,isBlackOut);
 		

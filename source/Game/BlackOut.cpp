@@ -76,6 +76,7 @@ void BlackOut::Update(int sceneNum_, bool isBlackOut_)
 			{
 				minalpha = 0.0f;
 				isBlackOut = false;
+				blinkCount = 0;
 			}
 
 		}
@@ -88,4 +89,23 @@ void BlackOut::Draw()
 	blackOut->SetIsInvisible(false);
 	blackOut->SetTexIndex(2);
 	blackOut->Draw();
+}
+
+void BlackOut::Reset()
+{
+	blackOut->SetColor({ 0,0,0,0 });
+	
+	blink = slowOpen;
+
+	//タイトルなどのUI情報
+	sceneNum = 0;
+
+	//拡縮フラグ
+	//暗転
+	min = 0.0f;
+	max = 1.0f;
+	isBlackOut = false;
+	minalpha = 0.0f;
+	maxalpha = 1.0f;
+	blinkCount = 0;
 }

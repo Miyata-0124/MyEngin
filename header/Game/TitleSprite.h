@@ -27,6 +27,8 @@ public:
 	/// </summary>
 	void Draw();
 
+	void Reset();
+
 	//シーン切り替えに使用する情報
 	bool GetBlackOut() { return isBlackOut; }
 private:

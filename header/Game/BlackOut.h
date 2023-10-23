@@ -32,6 +32,8 @@ public:
 	/// </summary>
 	void Draw();
 
+	void Reset();
+
 	//シーン切り替えに使用する情報
 	int GetScene() { return sceneNum; }
 private:
