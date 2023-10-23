@@ -130,6 +130,7 @@
     <ClCompile Include="source\2D\Sprite.cpp" />
     <ClCompile Include="source\2D\SpriteCommon.cpp" />
     <ClCompile Include="source\Engin\ViewProjection.cpp" />
+    <ClCompile Include="source\Game\TitleSprite.cpp" />
     <ClCompile Include="source\Game\Wall.cpp" />
     <ClCompile Include="source\Engin\WinApp.cpp" />
   </ItemGroup>
@@ -238,6 +239,7 @@
     <ClInclude Include="header\Engin\Input.h" />
     <ClInclude Include="header\Game\Item.h" />
     <ClInclude Include="header\3D\JsonLoader.h" />
+    <ClInclude Include="header\Game\TitleSprite.h" />
     <ClInclude Include="Math\Affin.h" />
     <ClInclude Include="Math\Convert.h" />
     <ClInclude Include="Math\Matrix4.h" />

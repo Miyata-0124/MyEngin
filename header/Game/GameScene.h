@@ -22,6 +22,7 @@
 #include "header/3D/JsonLoader.h"
 #include "header/Game/BackGround.h"
 #include "header/Game/BlackOut.h"
+#include "header/Game/TitleSprite.h"
 
 class CollisionManager;
 class Player;
@@ -71,9 +72,8 @@ private: //ゲーム内使用クラス
 	ViewProjection* camera = nullptr;
 	//スプライト
 	SpriteCommon* spriteCommon = nullptr;
-	Sprite* sprite = new Sprite();
-	Sprite* sprite2 = new Sprite();
 
+	TitleSprite* titleSprite = new TitleSprite();
 	BlackOut* blackOut = new BlackOut();
 	//FBX
 	FbxModel* model = nullptr;
@@ -104,25 +104,11 @@ private: //ゲーム内使用クラス
 	Particle* particle = nullptr;
 	//シーン切り替え要情報
 	int scene = 0;
-	//タイトルなどのUI情報
-	bool ChengeScene = false;
 	//雨を管理する時計
 	float rainTimer = 0.0f;
 	bool rainFlag = false;
-	//UI関連
-	bool UIFlag = false;
-	DirectX::XMFLOAT2 UIspeed = { 0,0 };
-
-	//拡縮フラグ
-	//暗転
-	float min = 0.0f;
-	float max = 1.0f;
-	float startY = 0.0f;
-	float endY = 720.0f;
-	float y;
+	////UI関連
 	bool isBlackOut = false;
-	float blackOutTimer = 300.0f;
-	float minalpha = 0.0f;
-	float maxalpha = 1.0f;
+	
 };
 

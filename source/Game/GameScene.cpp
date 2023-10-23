@@ -48,17 +48,10 @@ void GameScene::Initialize()
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	Particle::StaticInitialize(directXCom->GetDevice(),camera);
 	//スプライト
-	sprite->Initialize(spriteCommon, 1);
-	sprite->SetAnchorPoint(XMFLOAT2(0, 0));
-	sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
-	sprite->SetPosition({0,0});
-
+	//タイトル
+	titleSprite->Initialize(spriteCommon);
+	//暗転
 	blackOut->Initialize(spriteCommon);
-	/*sprite2->Initialize(spriteCommon, 2);
-	sprite2->SetAnchorPoint(XMFLOAT2(0, 0));
-	sprite2->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
-	sprite2->SetPosition({ 0,0 });
-	sprite2->SetColor({ 0,0,0,0 });*/
 
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("map");
 
@@ -149,62 +142,9 @@ void GameScene::Update()
 		particle->Update();
 #pragma endregion
 #pragma region シーン切り替え時の処理
-		//blackOut->Update(input, scene);
-		//動かすために座標を取得
-		XMFLOAT2 position = sprite->GetPosition();
-		if (!UIFlag) {
-			if (position.x < 15)
-			{
-				UIspeed.x = 0.4f;
-			}
-			else
-			{
-				UIFlag = true;
-			}
-		}
-		else
-		{
-			if (position.x > -15)
-			{
-				UIspeed.x = -0.4f;
-			}
-			else
-			{
-				UIFlag=false;
-			}
-		}
-		position.x += UIspeed.x;
-		position.y += UIspeed.y;
+		titleSprite->Update(input,scene,isBlackOut);
+		isBlackOut = titleSprite->GetBlackOut();
 
-		//切り替え
-		if (input->TriggerKey(DIK_SPACE) && !ChengeScene)
-		{
-			startY = position.y;
-			endY = startY + 720;
-			ChengeScene = true;
-		}
-		if (ChengeScene)
-		{
-			if (min <= max)
-			{
-				min += 0.03f;
-			}
-			y = min / max;
-			position.y = startY + (endY - startY) * Easing::easeInSine(y);
-		
-
-			if (min>max)
-			{
-				blackOutTimer--;
-				if (blackOutTimer <= 0.0f)
-				{
-					blackOutTimer = 300.0f;
-					ChengeScene = false;
-					isBlackOut = true;
-				}
-			}
-		}
-		sprite->SetPosition(position);
 		//暗転させるのか判断
 		blackOut->Update(scene,isBlackOut);//暗転後シーン切り替えをする
 		scene = blackOut->GetScene();//切り替えた情報を渡す->切り替わる
@@ -212,13 +152,6 @@ void GameScene::Update()
 #pragma endregion
 		break;
 	case 1:
-		if (input->TriggerKey(DIK_R))
-		{
-			sprite->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
-			sprite->SetPosition({ 0,0 });
-			isBlackOut = false;
-			scene = 0;
-		}
 		//フェードアウト
 		blackOut->Update(scene,isBlackOut);
 		
@@ -278,9 +211,7 @@ void GameScene::Draw()
 		Object3d::PreDraw(directXCom->GetCommandList());
 		Particle::PreDraw(directXCom->GetCommandList());
 		//タイトル
-		sprite->SetIsInvisible(false);
-		sprite->SetTexIndex(1);
-		sprite->Draw();
+		titleSprite->Draw();
 		
 		particle->Draw();
 
@@ -337,7 +268,7 @@ void GameScene::Finalize()
 	delete winApp;
 	delete directXCom;
 	delete spriteCommon;
-	delete sprite;
+	delete titleSprite;
 	delete blackOut;
 	delete model;
 	delete objPlayer;
