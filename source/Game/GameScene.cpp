@@ -8,6 +8,7 @@
 #include "header/Game/Floor.h"
 #include "header/Game/Item.h"
 #include "header/Game/Wall.h"
+#include "header/Game/Rain.h"
 #include "easing/Easing.h"
 #include <sstream>
 #include <iomanip>
@@ -68,7 +69,7 @@ void GameScene::Initialize()
 	//	//モデル
 	//Model* model1 = Model::LoadFromOBJ("wall");
 	//プレイヤーモデル
-	Model* playerModel = Model::LoadFromOBJ("Box");
+	Model* playerModel = Model::LoadFromOBJ("player");
 	Model* ground = Model::LoadFromOBJ("blue");
 	Model* item_ = Model::LoadFromOBJ("Item");
 	Model* backGround = Model::LoadFromOBJ("BG");
@@ -77,27 +78,28 @@ void GameScene::Initialize()
 
 	collisionManager = CollisionManager::GetInstance();
 	//プレイヤー
-	objPlayer = Player::Create(ground);
+	objPlayer = Player::Create(playerModel);
 	objPlayer->SetInput(input);
 	//敵
 	//objEnem = Enemy::Create(item_);
 	//地面
 	objFloor = Floor::Create(playerModel);
 	//アイテム
-	objItem = Item::Create(playerModel);
+	objItem = Item::Create(item_);
 	objItem->SetInput(input);
 	//壁
-	objWall = Wall::Create(item_);
+	objWall = Wall::Create(ground);
 	//背景
 	objBackGround = BackGround::Create(backGround);
 #pragma endregion
 	LoadMap();
 	
 	#pragma region パーティクル関係
+	rain = Rain::Create(1);
 	//	パーティクル
-	Particle::LoadTexture(1, "blue1x1.png");
-	//引数の数字はテクスチャ読み込みのインデックスナンバー
-	particle = Particle::Create(1);
+	//Particle::LoadTexture(1, "blue1x1.png");
+	////引数の数字はテクスチャ読み込みのインデックスナンバー
+	//particle = Particle::Create(1);
 	#pragma	endregion
 }
 
@@ -105,41 +107,41 @@ void GameScene::Update()
 {
 	//キー情報
 	input->Update();
-	//カメラ
-	camera->Update();
+	
 
 	switch (scene)
 	{
 	case 0: //タイトル画面 雨が降っているように見えるタイトル
 #pragma region パーティクル
-		if (rainTimer < 10)
-		{
-			rainTimer++;
-		}
-		else
-		{
-			rainTimer = 0;
-		}
-		//雨の基盤
-		if (rainTimer < 10)
-		{
-			//パーティクル
-			for (int i = 0; i < 15; i++)
-			{
-				//XYZ全て[-0.05f,+0.05f]でランダムに分布
-				//const	float	rnd_vel = 1.5f;
-				XMFLOAT3	vel{};
-				//vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		//if (rainTimer < 10)
+		//{
+		//	rainTimer++;
+		//}
+		//else
+		//{
+		//	rainTimer = 0;
+		//}
+		////雨の基盤
+		//if (rainTimer < 10)
+		//{
+		//	//パーティクル
+		//	for (int i = 0; i < 15; i++)
+		//	{
+		//		//XYZ全て[-0.05f,+0.05f]でランダムに分布
+		//		//const	float	rnd_vel = 1.5f;
+		//		XMFLOAT3	vel{};
+		//		//vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
-				//重力に見立ててYのみ[-0.001f,0]でランダムに分布
-				const	float	rnd_acc = -0.1f;
-				XMFLOAT3	acc{};
-				acc.y = (float)rand() / RAND_MAX * rnd_acc;
+		//		//重力に見立ててYのみ[-0.001f,0]でランダムに分布
+		//		const	float	rnd_acc = -0.1f;
+		//		XMFLOAT3	acc{};
+		//		acc.y = (float)rand() / RAND_MAX * rnd_acc;
 
-				particle->Control(75, { (float)rand() / RAND_MAX * 100.0f - 100.0f / 2.0f,40,0}, vel, acc, 1.0f, 0.0f);
-			}
-		}
-		particle->Update();
+		//		particle->Control(75, { (float)rand() / RAND_MAX * 100.0f - 100.0f / 2.0f,40,0}, vel, acc, 1.0f, 0.0f);
+		//	}
+		//}
+		//particle->Update();
+		rain->Update();
 #pragma endregion
 #pragma region シーン切り替え時の処理
 		
@@ -171,13 +173,12 @@ void GameScene::Update()
 		//アイテム
 		objItem -> Update();
 		//地面
-		objFloor -> Update();
+		//objFloor -> Update();
 		//壁
-		objWall -> Update();
+		//objWall -> Update();
 		
 		//背景
 		objBackGround->Update();
-		//obj3d->Update();
 		
 
 		for (auto object : objects) {
@@ -206,7 +207,9 @@ void GameScene::Update()
 	case 2:
 		break;
 	}
-	
+
+	//カメラ
+	camera->Update();
 }
 
 void GameScene::Draw()
@@ -214,19 +217,21 @@ void GameScene::Draw()
 	//描画処理ここから↓
 	directXCom->PreDraw();
 	
+	Particle::PreDraw(directXCom->GetCommandList());
+
 	switch (scene)
 	{
 	case 0:
-		Particle::PreDraw(directXCom->GetCommandList());
+		
 		//タイトル
 		titleSprite->Draw();
 		
-		particle->Draw();
-
+		//particle->Draw();
+		rain->Draw();
 		//暗転用
 		blackOut->Draw();
 
-		Particle::PostDraw();
+		
 		break;
 
 	case 1:
@@ -262,8 +267,10 @@ void GameScene::Draw()
 	case 2:
 		break;
 	}
-	
+
 	directXCom->PostDraw();
+	
+	Particle::PostDraw();
 	//ここまで↑
 }
 
@@ -282,6 +289,7 @@ void GameScene::Finalize()
 	delete objFloor;
 	delete objItem;
 	delete objBackGround;
+	delete rain;
 	//delete object1;
 	/*delete model1;
 	delete obj3d;*/
@@ -318,7 +326,7 @@ void GameScene::LoadMap()
 		DirectX::XMStoreFloat3(&center, objectData.center);
 		DirectX::XMStoreFloat2(&radius, objectData.size);
 
-		mapObject->SetCollider(new BoxCollider({ center.x,center.y+radius.y,center.z }, { radius.x,radius.y }));
+		mapObject->SetCollider(new BoxCollider({ center.x,center.y+radius.y/2,center.z }, { radius.x/2,radius.y/2 }));
 		// 配列に登録
 		objects.push_back(mapObject);
 	}

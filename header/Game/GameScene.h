@@ -14,7 +14,6 @@
 #include "header/Engin/ViewProjection.h"
 #include "header/2D/SpriteCommon.h"
 #include "header/2D/Sprite.h"
-#include "header/2D/Particle.h"
 #include "header/3D/Object3D.h"
 #include "header/3D/FbxObject3D.h"
 #include "header/3D/FbxModel.h"
@@ -31,6 +30,7 @@ class Floor;
 class Item;
 class Wall;
 class Enemy;
+class Rain;
 
 class GameScene
 {
@@ -101,7 +101,8 @@ private: //ゲーム内使用クラス
 	CollisionManager* collisionManager = nullptr;
 
 	//パーティクル
-	Particle* particle = nullptr;
+	//Particle* particle = nullptr;
+	Rain* rain = nullptr;
 	//シーン切り替え要情報
 	int scene = 0;
 	//雨を管理する時計

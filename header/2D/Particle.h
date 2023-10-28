@@ -179,20 +179,22 @@ private:// 静的メンバ関数
 
 
 public: // メンバ関数
-	bool Initialize(uint32_t texIndex_);
+	Particle() = default;
+
+	virtual bool Initialize(uint32_t texIndex_);
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update();
+	virtual void Update();
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	virtual void Draw();
 
 	void Control(int life, XMFLOAT3	position, XMFLOAT3	velocity, XMFLOAT3	accel
 		, float	start_scale, float	end_scale);
-private: // メンバ変数
+protected: // メンバ変数
 	ComPtr<ID3D12Resource> constBuff; // 定数バッファ
 	// 色
 	//XMFLOAT4 color = { 1,1,1,1 };

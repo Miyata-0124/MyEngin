@@ -52,14 +52,22 @@ void BlackOut::Update(int sceneNum_, bool isBlackOut_)
 			}
 			else if (blink == slowClose)
 			{
-				minalpha += 0.01f;
+				if (blinkCount >= 3)
+				{
+					minalpha += 0.03f;
+				}
+				else
+				{
+					minalpha += 0.01f;
+				}
+				
 				if (minalpha >= 0.9f)
 				{
 					if (blinkCount < 3)
 					{
 						blink = slowOpen;
 					}
-					else
+					else 
 					{
 						blink = Open;
 					}
