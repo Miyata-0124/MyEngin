@@ -96,10 +96,6 @@ void GameScene::Initialize()
 	
 	#pragma region パーティクル関係
 	rain = Rain::Create(1);
-	//	パーティクル
-	//Particle::LoadTexture(1, "blue1x1.png");
-	////引数の数字はテクスチャ読み込みのインデックスナンバー
-	//particle = Particle::Create(1);
 	#pragma	endregion
 }
 
@@ -113,34 +109,6 @@ void GameScene::Update()
 	{
 	case 0: //タイトル画面 雨が降っているように見えるタイトル
 #pragma region パーティクル
-		//if (rainTimer < 10)
-		//{
-		//	rainTimer++;
-		//}
-		//else
-		//{
-		//	rainTimer = 0;
-		//}
-		////雨の基盤
-		//if (rainTimer < 10)
-		//{
-		//	//パーティクル
-		//	for (int i = 0; i < 15; i++)
-		//	{
-		//		//XYZ全て[-0.05f,+0.05f]でランダムに分布
-		//		//const	float	rnd_vel = 1.5f;
-		//		XMFLOAT3	vel{};
-		//		//vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-
-		//		//重力に見立ててYのみ[-0.001f,0]でランダムに分布
-		//		const	float	rnd_acc = -0.1f;
-		//		XMFLOAT3	acc{};
-		//		acc.y = (float)rand() / RAND_MAX * rnd_acc;
-
-		//		particle->Control(75, { (float)rand() / RAND_MAX * 100.0f - 100.0f / 2.0f,40,0}, vel, acc, 1.0f, 0.0f);
-		//	}
-		//}
-		//particle->Update();
 		rain->Update();
 #pragma endregion
 #pragma region シーン切り替え時の処理
@@ -195,14 +163,6 @@ void GameScene::Update()
 		//判定マネージャー
 		collisionManager->CheckAllCollisions();
 
-		//説明スプライト移動
-#pragma region  スプライトの移動演出
-		////動かすために座標を取得
-		//XMFLOAT2 position = sprite->GetPosition();
-		////移動後の座標を入れる
-		//sprite->SetPosition(position);
-#pragma endregion
-		
 		break;
 	case 2:
 		break;
@@ -225,8 +185,7 @@ void GameScene::Draw()
 		
 		//タイトル
 		titleSprite->Draw();
-		
-		//particle->Draw();
+
 		rain->Draw();
 		//暗転用
 		blackOut->Draw();
