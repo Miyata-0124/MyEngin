@@ -83,10 +83,6 @@ void Player::OnCollider(const CollisionInfo& info)
 	{
 		yadd = 0.0f;
 		isJamp = false;
-		if (input->PushKey(DIK_UP))
-		{
-			position.y +=0.03f;
-		}
 	}
 }
 

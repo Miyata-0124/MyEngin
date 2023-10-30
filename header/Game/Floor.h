@@ -39,23 +39,8 @@ public:
 	void OnCollider(const CollisionInfo& info)override;
 private:
 	//Œ´“_‚©‚ç‚Ì‹——£
-	XMVECTOR distance = { 0,-13.0f,0 };
+	//XMVECTOR distance = { 0,-13.0f,0 };
 	//”¼Œa
-	XMVECTOR radius = { 40.0f, 1.0f,10.0f };
-//public:
-//	void Initialize(Model* model);
-//	void Update();
-//	void Draw();
-//
-//	//Getter,Setter
-//	XMFLOAT3 GetPosition() { return position; }
-//
-//	XMMATRIX GetMatWorld() { return obj3d->GetMatWorld(); }
-//private:
-//	Object3d* obj3d;
-//	//î•ñ(‘å‚«‚³,‰ñ“]Šp,À•W)
-//	XMFLOAT3 scale;
-//	XMFLOAT3 rotation;
-//	XMFLOAT3 position;
+	DirectX::XMFLOAT2 radius = { 80.0f,1.0f };
 };
 

@@ -81,18 +81,18 @@ void GameScene::Initialize()
 	objPlayer = Player::Create(playerModel);
 	objPlayer->SetInput(input);
 	//敵
-	//objEnem = Enemy::Create(item_);
+	objEnem = Enemy::Create(playerModel);
 	//地面
-	objFloor = Floor::Create(playerModel);
+	objFloor = Floor::Create(item_);
 	//アイテム
-	objItem = Item::Create(item_);
+	objItem = Item::Create(ground);
 	objItem->SetInput(input);
 	//壁
-	objWall = Wall::Create(ground);
+	//objWall = Wall::Create(ground);
 	//背景
 	objBackGround = BackGround::Create(backGround);
 #pragma endregion
-	LoadMap();
+	//LoadMap();
 	
 	#pragma region パーティクル関係
 	rain = Rain::Create(1);
@@ -137,11 +137,11 @@ void GameScene::Update()
 		//プレイヤー
 		objPlayer->Update();
 		//敵
-		//objEnem->Update();
+		objEnem->Update();
 		//アイテム
-		objItem -> Update();
+		//objItem -> Update();
 		//地面
-		//objFloor -> Update();
+		objFloor -> Update();
 		//壁
 		//objWall -> Update();
 		
@@ -149,9 +149,9 @@ void GameScene::Update()
 		objBackGround->Update();
 		
 
-		for (auto object : objects) {
+		/*for (auto object : objects) {
 			object->Update();
-		}
+		}*/
 
 #pragma region 各クラス間の情報受け渡し
 		//オブジェクト
@@ -165,6 +165,8 @@ void GameScene::Update()
 
 		break;
 	case 2:
+		rain->Update();
+
 		break;
 	}
 
@@ -203,19 +205,19 @@ void GameScene::Draw()
 		//プレイヤー
 		objPlayer->Draw();
 		//敵
-		//objEnem->Draw();
+		objEnem->Draw();
 		//アイテム
 		objItem->Draw();
 		//地面
-		//objFloor->Draw();
+		objFloor->Draw();
 		//壁
 		//objWall->Draw();
 		//背景
 		objBackGround->Draw();
 		//
-		for (auto object : objects) {
+		/*for (auto object : objects) {
 			object->Draw();
-		}
+		}*/
 
 
 		// UI,演出関連
@@ -224,6 +226,7 @@ void GameScene::Draw()
 		Object3d::PostDraw();
 		break;
 	case 2:
+		rain->Draw();
 		break;
 	}
 

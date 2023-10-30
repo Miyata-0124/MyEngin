@@ -108,6 +108,10 @@ void Enemy::OnCollider(const CollisionInfo& info)
 	{
 
 	}
+	if (info.collider->GetShapeType() == COLISIONSHAPE_BOX)
+	{
+		yadd = 0.0f;
+	}
 }
 
 void Enemy::Gravity()

@@ -62,6 +62,8 @@ public:
 	bool GetRetention() { return isRetention; }
 	bool GetThrow() { return isThrow; }
 	bool GetDirection() { return isDirection; }
+	//シーン切り替えに使用する情報
+	int GetScene() { return sceneNum; }
 private:
 	//左右移動
 	void Move();
@@ -97,4 +99,5 @@ private:
 	//投擲フラグ
 	bool isThrow = false;
 
+	int sceneNum = 0;
 };
