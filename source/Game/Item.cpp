@@ -34,6 +34,7 @@ bool Item::Initialize()
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
+	//識別を設定する
 	SetIdentification(IDENT_ITEM);
 	return true;
 }
