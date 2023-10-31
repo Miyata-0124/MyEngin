@@ -156,7 +156,7 @@ public: // ƒƒ“ƒoŠÖ”
 	/// <summary>
 	/// •`‰æ
 	/// </summary>
-	virtual void Draw();
+	virtual void Draw(ID3D12GraphicsCommandList* cmdList_);
 
 	#pragma warning(suppress: 4100)
 	virtual void OnCollider(const CollisionInfo& info) {};

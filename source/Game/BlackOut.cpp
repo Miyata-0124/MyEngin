@@ -30,7 +30,7 @@ void BlackOut::Update(int sceneNum_, bool isBlackOut_)
 			if (minalpha > maxalpha)
 			{
 				min = 0.0f;
-				sceneNum = 2;
+				sceneNum = 1;
 			}
 
 		}

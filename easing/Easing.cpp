@@ -55,3 +55,14 @@ float Easing::easeInOutCirc(float x) {
 float Easing::easeInOutSine(float x) {
 	return -(std::cos(3.14f * x) - 1.0f) / 2.0f;
 }
+
+float Easing::easeOutElastic(float x)
+{
+	const float c4 = (2 * 3.14f) / 3;
+
+	return x == 0
+		? 0
+		: x == 1
+		? 1
+		: pow(2, -10 * x) * sin((x * 10 - 0.75) * c4) + 1;
+}

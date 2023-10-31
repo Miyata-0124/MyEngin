@@ -365,7 +365,9 @@ void Object3d::Update()
 	}
 }
 
-void Object3d::Draw() {
+void Object3d::Draw(ID3D12GraphicsCommandList* cmdList_) {
+	PreDraw(cmdList_);
+
 	// nullptrチェック
 	assert(device);
 	assert(Object3d::cmdList);
@@ -375,6 +377,8 @@ void Object3d::Draw() {
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
 
 	model->Draw(cmdList, 1);
+
+	PostDraw();
 }
 
 void Object3d::SetCollider(BaseCollider* collider_)

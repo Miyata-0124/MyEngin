@@ -64,6 +64,8 @@ public:
 	bool GetDirection() { return isDirection; }
 	//シーン切り替えに使用する情報
 	int GetScene() { return sceneNum; }
+
+	//仲間認識の確認用
 private:
 	//左右移動
 	void Move();

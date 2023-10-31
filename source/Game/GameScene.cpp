@@ -41,6 +41,8 @@ void GameScene::Initialize()
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "taitle.png");
 	spriteCommon->Loadtexture(2, "white1x1.png");
+	spriteCommon->Loadtexture(3, "GameOver.png");
+	spriteCommon->Loadtexture(4, "GameTelop.png");
 	//ViewProjection
 	camera = new ViewProjection();
 	camera->Initialeze();
@@ -51,6 +53,8 @@ void GameScene::Initialize()
 	//スプライト
 	//タイトル
 	titleSprite->Initialize(spriteCommon);
+	//ゲームオーバー
+	overSprite->Initialize(spriteCommon);
 	//暗転
 	blackOut->Initialize(spriteCommon);
 
@@ -81,7 +85,7 @@ void GameScene::Initialize()
 	objPlayer = Player::Create(playerModel);
 	objPlayer->SetInput(input);
 	//敵
-	objEnem = Enemy::Create(playerModel);
+	objEnem = Enemy::Create(ground);
 	//地面
 	objFloor = Floor::Create(item_);
 	//アイテム
@@ -165,8 +169,13 @@ void GameScene::Update()
 
 		break;
 	case 2:
+		if (input->TriggerKey(DIK_R))//リセット
+		{
+			scene = 0;
+			overSprite->Reset();
+		}
 		rain->Update();
-
+		overSprite->Update();
 		break;
 	}
 
@@ -196,24 +205,24 @@ void GameScene::Draw()
 		break;
 
 	case 1:
-		Object3d::PreDraw(directXCom->GetCommandList());
+		//Object3d::PreDraw(directXCom->GetCommandList());
 		//背景
 		
 		//オブジェクト
 		//object1->Draw(directXCom->GetCommandList());
 		
 		//プレイヤー
-		objPlayer->Draw();
+		objPlayer->Draw(directXCom->GetCommandList());
 		//敵
-		objEnem->Draw();
+		objEnem->Draw(directXCom->GetCommandList());
 		//アイテム
-		objItem->Draw();
+		objItem->Draw(directXCom->GetCommandList());
 		//地面
-		objFloor->Draw();
+		objFloor->Draw(directXCom->GetCommandList());
 		//壁
 		//objWall->Draw();
 		//背景
-		objBackGround->Draw();
+		objBackGround->Draw(directXCom->GetCommandList());
 		//
 		/*for (auto object : objects) {
 			object->Draw();
@@ -223,10 +232,11 @@ void GameScene::Draw()
 		// UI,演出関連
 		blackOut->Draw();
 	
-		Object3d::PostDraw();
+		//Object3d::PostDraw();
 		break;
 	case 2:
 		rain->Draw();
+		overSprite->Draw();
 		break;
 	}
 
@@ -245,6 +255,7 @@ void GameScene::Finalize()
 	delete directXCom;
 	delete spriteCommon;
 	delete titleSprite;
+	delete overSprite;
 	delete blackOut;
 	delete model;
 	delete objPlayer;
@@ -252,6 +263,7 @@ void GameScene::Finalize()
 	delete objItem;
 	delete objBackGround;
 	delete rain;
+	
 	//delete object1;
 	/*delete model1;
 	delete obj3d;*/
