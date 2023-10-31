@@ -34,6 +34,7 @@ bool Item::Initialize()
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
+	SetIdentification(IDENT_ITEM);
 	return true;
 }
 
@@ -51,12 +52,66 @@ void Item::OnCollider(const CollisionInfo& info)
 	//床に当たったなら
 	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE)
 	{
-		yadd = 0.0f;
-		isThrow = false;
+		//中立なオブジェクトに当たった時
+		if (info.object->GetIdentification() == IDENT_NEUTRAL)
+		{
+			yadd = 0.0f;
+			isThrow = false;
+		}
+		//アイテムに当たった時
+		if (info.object->GetIdentification() == IDENT_ITEM)
+		{
+
+		}
+		//敵性オブジェクトor敵に当たった時
+		if (info.object->GetIdentification() == IDENT_ENEMY)
+		{
+
+		}
+		
 	}
 	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
 	{
-		yadd = 0.0f;
+		//中立なオブジェクトに当たった時
+		if (info.object->GetIdentification() == IDENT_NEUTRAL)
+		{
+			yadd = 0.0f;
+			isThrow = false;
+		}
+		//アイテムに当たった時
+		if (info.object->GetIdentification() == IDENT_ITEM)
+		{
+
+		}
+		//敵性オブジェクトor敵に当たった時
+		if (info.object->GetIdentification() == IDENT_ENEMY)
+		{
+
+		}
+		if (info.object->GetIdentification() == IDENT_PLAYER)
+		{
+			yadd = 0.0f;
+			isThrow = false;
+		}
+	}
+	if (info.collider->GetShapeType() == COLISIONSHAPE_BOX)
+	{
+		//中立なオブジェクトに当たった時
+		if (info.object->GetIdentification() == IDENT_NEUTRAL)
+		{
+			yadd = 0.0f;
+			isThrow = false;
+		}
+		//アイテムに当たった時
+		if (info.object->GetIdentification() == IDENT_ITEM)
+		{
+
+		}
+		//敵性オブジェクトor敵に当たった時
+		if (info.object->GetIdentification() == IDENT_ENEMY)
+		{
+
+		}
 	}
 }
 

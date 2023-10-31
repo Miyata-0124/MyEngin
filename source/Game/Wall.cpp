@@ -35,6 +35,7 @@ bool Wall::Initialize()
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new BoxCollider(XMVECTOR({ 0,radius.y,0,0 }), radius));
+	SetIdentification(IDENT_NEUTRAL);
 	return true;
 }
 

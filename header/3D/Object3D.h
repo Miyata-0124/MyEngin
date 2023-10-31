@@ -16,6 +16,16 @@
 #include "header/Collider/CollisionInfo.h"
 
 class BaseCollider;
+enum Identification
+{
+	IDENT_UNKNOWN = -1,
+	IDENT_NEUTRAL,		//中立
+	IDENT_PLAYER,		//プレイヤー
+	IDENT_ENEMY,		//敵対
+	IDENT_FREND,		//友好
+	IDENT_ITEM,			//アイテム
+	IDENT_GATE,			//イベント
+};
 
 /// <summary>
 /// 3Dオブジェクト
@@ -207,7 +217,12 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="collider"></param>
 	void SetCollider(BaseCollider* collider);
-
+	/// <summary>
+	/// 識別コード
+	/// </summary>
+	/// <param name="ident_"></param>
+	void SetIdentification(Identification ident_);
+	const Identification& GetIdentification() { return ident; }
 protected: // メンバ変数
 	//ComPtr<ID3D12Resource> constBuff; // 定数バッファ
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
@@ -230,4 +245,6 @@ protected: // メンバ変数
 
 	const char* name = nullptr;
 	BaseCollider* collider = nullptr;
+	//それぞれが持つ識別コード
+	Identification ident = IDENT_UNKNOWN;
 };

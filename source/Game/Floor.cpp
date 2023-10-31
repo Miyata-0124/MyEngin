@@ -32,6 +32,7 @@ bool Floor::Initialize()
 	//コライダーの追加
 	//中心座標と原点からの距離
 	SetCollider(new BoxCollider(XMVECTOR({ 0,radius.y,0,0 }), radius));
+	SetIdentification(IDENT_NEUTRAL);
 	return true;
 }
 

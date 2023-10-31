@@ -390,3 +390,8 @@ void Object3d::SetCollider(BaseCollider* collider_)
 	//コライダーの更新
 	collider_->Update();
 }
+
+void Object3d::SetIdentification(Identification ident_)
+{
+	this->ident = ident_;
+}
