@@ -31,10 +31,13 @@ bool Player::Initialize()
 	}
 	//初期座標指定
 	SetSize({ 1,1,1 });
-	SetPosition({ -20,0,0 });
+	SetRotation({ 0,-90,0 });
+	SetPosition({ -20,-13,0 });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
+	//識別を設定する
+	SetIdentification(IDENT_PLAYER);
 	return true;
 }
 
@@ -72,20 +75,43 @@ void Player::OnCollider(const CollisionInfo& info)
 	}
 	else if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
 	{
-		//アイテムに当たった時
-		if (input->TriggerKey(DIK_Z) && !isRetention)
+		//中立なオブジェクトに当たった時
+		if (info.object->GetIdentification() == IDENT_NEUTRAL)
 		{
-			//保持フラグを真にする
-			isRetention = true;
+
+		}
+		//アイテムに当たった時
+		if (info.object->GetIdentification() == IDENT_ITEM)
+		{
+			if (input->TriggerKey(DIK_Z) && !isRetention)
+			{
+				//保持フラグを真にする
+				isRetention = true;
+			}
+		}
+		//敵性オブジェクトor敵に当たった時
+		if (info.object->GetIdentification() == IDENT_ENEMY)
+		{
+
 		}
 	}
 	else if (info.collider->GetShapeType() == COLISIONSHAPE_BOX)
 	{
-		yadd = 0.0f;
-		isJamp = false;
-		if (input->PushKey(DIK_UP))
+		//中立なオブジェクトに当たった時
+		if (info.object->GetIdentification() == IDENT_NEUTRAL)
 		{
-			position.y +=0.03f;
+			yadd = 0.0f;
+			isJamp = false;
+		}
+		//アイテムに当たった時
+		if (info.object->GetIdentification() == IDENT_ITEM)
+		{
+
+		}
+		//敵性オブジェクトor敵に当たった時
+		if (info.object->GetIdentification() == IDENT_ENEMY)
+		{
+
 		}
 	}
 }

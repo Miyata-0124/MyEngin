@@ -32,7 +32,7 @@ void CollisionManager::CheckAllCollisions()
                 }
             }
             //球と平面 
-            if (colB->GetShapeType() == COLISIONSHAPE_SPHERE && colA->GetShapeType() == COLISIONSHAPE_PLANE) {
+            else if (colB->GetShapeType() == COLISIONSHAPE_SPHERE && colA->GetShapeType() == COLISIONSHAPE_PLANE) {
                 Sphere* SphereA = dynamic_cast<Sphere*>(colB);//プレイヤー,アイテム
                 Plane* PlaneA = dynamic_cast<Plane*>(colA);//床
                 DirectX::XMVECTOR inter;//交点
@@ -54,15 +54,15 @@ void CollisionManager::CheckAllCollisions()
             }
             //球と2D四角
             if (colA->GetShapeType() == COLISIONSHAPE_SPHERE && colB->GetShapeType() == COLISIONSHAPE_BOX) {
-                Sphere* SphereA = dynamic_cast<Sphere*>(colB);
-                Box* BoxA = dynamic_cast<Box*>(colA);
+                Sphere* SphereA = dynamic_cast<Sphere*>(colA);
+                Box* BoxA = dynamic_cast<Box*>(colB);
                 DirectX::XMVECTOR inter;//交点
                 if (Collision::CheckSphere2Box2D(*SphereA, *BoxA)){
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
             }
-            if (colB->GetShapeType() == COLISIONSHAPE_SPHERE && colA->GetShapeType() == COLISIONSHAPE_BOX) {
+            else if (colB->GetShapeType() == COLISIONSHAPE_SPHERE && colA->GetShapeType() == COLISIONSHAPE_BOX) {
                 Sphere* SphereA = dynamic_cast<Sphere*>(colB);
                 Box* BoxA = dynamic_cast<Box*>(colA);
                 DirectX::XMVECTOR inter;//交点

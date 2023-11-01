@@ -22,6 +22,7 @@
 #include "header/Game/BackGround.h"
 #include "header/Game/BlackOut.h"
 #include "header/Game/TitleSprite.h"
+#include "header/Game/OverSprite.h"
 
 class CollisionManager;
 class Player;
@@ -74,6 +75,7 @@ private: //ゲーム内使用クラス
 	SpriteCommon* spriteCommon = nullptr;
 
 	TitleSprite* titleSprite = new TitleSprite();
+	OverSprite* overSprite = new OverSprite();
 	BlackOut* blackOut = new BlackOut();
 	//FBX
 	FbxModel* model = nullptr;

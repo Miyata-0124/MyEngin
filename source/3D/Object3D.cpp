@@ -365,7 +365,9 @@ void Object3d::Update()
 	}
 }
 
-void Object3d::Draw() {
+void Object3d::Draw(ID3D12GraphicsCommandList* cmdList_) {
+	PreDraw(cmdList_);
+
 	// nullptrチェック
 	assert(device);
 	assert(Object3d::cmdList);
@@ -375,6 +377,8 @@ void Object3d::Draw() {
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
 
 	model->Draw(cmdList, 1);
+
+	PostDraw();
 }
 
 void Object3d::SetCollider(BaseCollider* collider_)
@@ -385,4 +389,9 @@ void Object3d::SetCollider(BaseCollider* collider_)
 	CollisionManager::GetInstance()->AddCollider(collider_);
 	//コライダーの更新
 	collider_->Update();
+}
+
+void Object3d::SetIdentification(Identification ident_)
+{
+	this->ident = ident_;
 }
