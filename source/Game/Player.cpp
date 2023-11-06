@@ -69,11 +69,25 @@ void Player::OnCollider(const CollisionInfo& info)
 {
 	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE)
 	{
-		//SetPosition({ position.x,-13,0 });
-		yadd = 0.0f;
-		isJamp = false;	
+		//中立なオブジェクトに当たった時
+		if (info.object->GetIdentification() == IDENT_NEUTRAL)
+		{
+			yadd = 0.0f;
+			isJamp = false;
+		}
+		//アイテムに当たった時
+		if (info.object->GetIdentification() == IDENT_ITEM)
+		{
+			
+		}
+		//敵性オブジェクトor敵に当たった時
+		if (info.object->GetIdentification() == IDENT_ENEMY)
+		{
+
+		}
 	}
-	else if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
+
+	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
 	{
 		//中立なオブジェクトに当たった時
 		if (info.object->GetIdentification() == IDENT_NEUTRAL)
@@ -95,13 +109,13 @@ void Player::OnCollider(const CollisionInfo& info)
 
 		}
 	}
-	else if (info.collider->GetShapeType() == COLISIONSHAPE_BOX)
+
+	if (info.collider->GetShapeType() == COLISIONSHAPE_BOX)
 	{
 		//中立なオブジェクトに当たった時
 		if (info.object->GetIdentification() == IDENT_NEUTRAL)
 		{
-			yadd = 0.0f;
-			isJamp = false;
+
 		}
 		//アイテムに当たった時
 		if (info.object->GetIdentification() == IDENT_ITEM)
@@ -120,7 +134,7 @@ void Player::Move()
 {
 	if (input->PushKey(DIK_LEFT))
 	{
-		if (position.x > -42)
+		if (isMove)
 		{
 			moveSpeed = -0.4f;
 		}
@@ -133,7 +147,7 @@ void Player::Move()
 	}
 	else if (input->PushKey(DIK_RIGHT))
 	{
-		if (position.x < 42)
+		if (isMove)
 		{
 			moveSpeed = 0.4f;
 		}
@@ -186,7 +200,7 @@ void Player::ChangePosture()
 void Player::Gravity()
 {  
 	position.y -= yadd;
-	if (yadd <= 2.0f)
+	if (yadd <= 1.8f)
 	{
 		yadd += 0.2f;
 	}

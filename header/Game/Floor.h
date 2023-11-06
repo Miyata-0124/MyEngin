@@ -39,7 +39,7 @@ public:
 	void OnCollider(const CollisionInfo& info)override;
 private:
 	//Œ´“_‚©‚ç‚Ì‹——£
-	//XMVECTOR distance = { 0,-13.0f,0 };
+	XMVECTOR distance = { 0,-13.0f,0 };
 	//”¼Œa
 	DirectX::XMFLOAT2 radius = { 80.0f,1.0f };
 };

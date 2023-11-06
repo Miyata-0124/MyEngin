@@ -16,7 +16,8 @@
 #include "header/Collider/CollisionInfo.h"
 
 class BaseCollider;
-enum Identification
+
+enum Identification //‘®«
 {
 	IDENT_UNKNOWN = -1,
 	IDENT_NEUTRAL,		//’†—§
@@ -166,7 +167,7 @@ public: // ƒƒ“ƒoŠÖ”
 	/// <summary>
 	/// •`‰æ
 	/// </summary>
-	virtual void Draw(ID3D12GraphicsCommandList* cmdList_);
+	virtual void Draw();
 
 	#pragma warning(suppress: 4100)
 	virtual void OnCollider(const CollisionInfo& info) {};
