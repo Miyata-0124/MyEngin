@@ -78,10 +78,11 @@ void GameScene::Initialize()
 	//Model* model1 = Model::LoadFromOBJ("wall");
 	//プレイヤーモデル
 	Model* playerModel = Model::LoadFromOBJ("player");
-	Model* ground = Model::LoadFromOBJ("blue");
+	//Model* ground = Model::LoadFromOBJ("blue");
 	Model* item_ = Model::LoadFromOBJ("Item");
 	Model* backGround = Model::LoadFromOBJ("BG");
 	Model* clear = Model::LoadFromOBJ("clear");
+	Model* gate = Model::LoadFromOBJ("gate");
 #pragma endregion
 #pragma region Player等のオブジェクト
 
@@ -102,7 +103,7 @@ void GameScene::Initialize()
 
 	for (int i = 0; i < 2; i++)
 	{
-		objGate[i] = Gate::Create(ground);
+		objGate[i] = Gate::Create(gate);
 	}
 	objGate[0]->SetPosition({ -25,-40,0 });
 	objGate[1]->SetPosition({ -23, 40,0 });
