@@ -22,6 +22,7 @@
 #include "header/Game/BackGround.h"
 #include "header/Game/BlackOut.h"
 #include "header/Game/TitleSprite.h"
+#include "header/Game/ClearSprite.h"
 #include "header/Game/OverSprite.h"
 
 class CollisionManager;
@@ -32,6 +33,8 @@ class Item;
 class Wall;
 class Enemy;
 class Rain;
+class Gate;
+class ClearBox;
 
 class GameScene
 {
@@ -75,6 +78,7 @@ private: //ゲーム内使用クラス
 	SpriteCommon* spriteCommon = nullptr;
 
 	TitleSprite* titleSprite = new TitleSprite();
+	ClearSprite* clearSprite = new ClearSprite();
 	OverSprite* overSprite = new OverSprite();
 	BlackOut* blackOut = new BlackOut();
 	//FBX
@@ -92,11 +96,14 @@ private: //ゲーム内使用クラス
 	//敵
 	Enemy* objEnem = nullptr;
 	//床(仮)
-	Floor* objFloor = nullptr;
+	Floor* objFloor[3] = {};
 	//アイテム
 	Item* objItem = nullptr;
 	//壁
 	Wall* objWall = nullptr;
+	//ゴールゲート
+	Gate* objGate[2] = {};
+	ClearBox* objClearBox = nullptr;
 	//背景
 	BackGround* objBackGround = nullptr;
 

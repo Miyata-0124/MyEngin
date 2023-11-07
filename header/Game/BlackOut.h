@@ -36,6 +36,8 @@ public:
 
 	//シーン切り替えに使用する情報
 	int GetScene() { return sceneNum; }
+
+	void SetIsGoal(bool isGoal_) { this->isGoal = isGoal_; }
 private:
 	Sprite* blackOut;
 
@@ -49,8 +51,12 @@ private:
 	float min = 0.0f;
 	float max = 1.0f;
 	bool isBlackOut = false;
+	bool checkOut = false;
 	float minalpha = 0.0f;
 	float maxalpha = 1.0f;
 	int blinkCount = 0;
+
+	//ゴール用
+	bool isGoal = false;
 };
 

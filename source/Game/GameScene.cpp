@@ -8,7 +8,9 @@
 #include "header/Game/Floor.h"
 #include "header/Game/Item.h"
 #include "header/Game/Wall.h"
+#include "header/Game/Gate.h"
 #include "header/Game/Rain.h"
+#include "header/Game/ClearBox.h"
 #include "easing/Easing.h"
 #include <sstream>
 #include <iomanip>
@@ -42,7 +44,7 @@ void GameScene::Initialize()
 	spriteCommon->Loadtexture(1, "taitle.png");
 	spriteCommon->Loadtexture(2, "white1x1.png");
 	spriteCommon->Loadtexture(3, "GameOver.png");
-	spriteCommon->Loadtexture(4, "GameTelop.png");
+	spriteCommon->Loadtexture(4, "GameClear.png");
 	//ViewProjection
 	camera = new ViewProjection();
 	camera->Initialeze();
@@ -53,6 +55,8 @@ void GameScene::Initialize()
 	//スプライト
 	//タイトル
 	titleSprite->Initialize(spriteCommon);
+	//クリア
+	clearSprite->Initialize(spriteCommon);
 	//ゲームオーバー
 	overSprite->Initialize(spriteCommon);
 	//暗転
@@ -77,6 +81,7 @@ void GameScene::Initialize()
 	Model* ground = Model::LoadFromOBJ("blue");
 	Model* item_ = Model::LoadFromOBJ("Item");
 	Model* backGround = Model::LoadFromOBJ("BG");
+	Model* clear = Model::LoadFromOBJ("clear");
 #pragma endregion
 #pragma region Player等のオブジェクト
 
@@ -87,12 +92,29 @@ void GameScene::Initialize()
 	//敵
 	//objEnem = Enemy::Create(ground);
 	//地面
-	objFloor = Floor::Create(item_);
+	for (int i = 0; i < 3; i++)
+	{
+		objFloor[i] = Floor::Create(item_);
+	}
+	objFloor[1]->SetPosition({ 0, 15, 0 });
+	objFloor[2]->SetSize({ 1,80,20 });
+	objFloor[2]->SetPosition({ 30,0,0 });
+
+	for (int i = 0; i < 2; i++)
+	{
+		objGate[i] = Gate::Create(ground);
+	}
+	objGate[0]->SetPosition({ -25,-40,0 });
+	objGate[1]->SetPosition({ -23, 40,0 });
+	objGate[0]->SetGateNum(0);
+	objGate[1]->SetGateNum(1);
+
+	objClearBox = ClearBox::Create(clear);
 	//アイテム
-	objItem = Item::Create(ground);
-	objItem->SetInput(input);
+	//objItem = Item::Create(ground);
+	//objItem->SetInput(input);
 	//壁	
-	objWall = Wall::Create(ground);
+	//objWall = Wall::Create(ground);
 	
 	//背景
 	objBackGround = BackGround::Create(backGround);
@@ -141,7 +163,7 @@ void GameScene::Update()
 		}
 
 		//フェードアウト
-		blackOut->Update(scene,isBlackOut);
+		blackOut->Update(scene, isBlackOut);
 		
 		//プレイヤー
 		objPlayer->Update();
@@ -150,9 +172,18 @@ void GameScene::Update()
 		//アイテム
 		//objItem -> Update();
 		//地面
-		objFloor -> Update();
+		for (int i = 0; i < 3; i++)
+		{
+			objFloor[i]->Update();
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			objGate[i]->Update();
+		}
+		objClearBox->Update();
 		//壁
-		objWall->Update();
+		//objWall->Update();
+		clearSprite->Update(objGate[1]->GetIsBlackOut());
 		//背景
 		objBackGround->Update();
 		
@@ -164,9 +195,13 @@ void GameScene::Update()
 #pragma region 各クラス間の情報受け渡し
 		//オブジェクト
 		//objEnem->SetPPosition(objPlayer->GetPosition());
-		objItem->SetPPosition(objPlayer->GetPosition());
+		/*objItem->SetPPosition(objPlayer->GetPosition());
 		objItem->SetRetention(objPlayer->GetRetention());
-		objItem->SetDirection(objPlayer->GetDirection());
+		objItem->SetDirection(objPlayer->GetDirection());*/
+		for (int i = 0; i < 2; i++) {
+			objGate[i]->SetIsGoal(objClearBox->GetIsGoal());
+		}
+		blackOut->SetIsGoal(objGate[1]->GetIsBlackOut());
 #pragma endregion
 		//判定マネージャー
 		collisionManager->CheckAllCollisions();
@@ -215,9 +250,18 @@ void GameScene::Draw()
 		//アイテム
 		//objItem->Draw();
 		//地面
-		objFloor->Draw();
+		for (int i = 0; i < 3; i++)
+		{
+			objFloor[i]->Draw();
+		}
+		//ゴールゲート
+		for (int i = 0; i < 2; i++)
+		{
+			objGate[i]->Draw();
+		}
+		objClearBox->Draw();
 		//壁
-		objWall->Draw();
+		//objWall->Draw();
 		//背景
 		objBackGround->Draw();
 		//
@@ -228,6 +272,7 @@ void GameScene::Draw()
 
 		// UI,演出関連
 		blackOut->Draw();
+		clearSprite->Draw();
 		Object3d::PostDraw();
 		break;
 	case 2:
@@ -250,11 +295,20 @@ void GameScene::Finalize()
 	delete directXCom;
 	delete spriteCommon;
 	delete titleSprite;
+	delete clearSprite;
 	delete overSprite;
 	delete blackOut;
 	delete model;
 	delete objPlayer;
-	delete objFloor;
+	for (int i = 0; i < 3; i++)
+	{
+		delete objFloor[i];
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		delete objGate[i];
+	}
+	delete objClearBox;
 	delete objItem;
 	delete objBackGround;
 	delete rain;

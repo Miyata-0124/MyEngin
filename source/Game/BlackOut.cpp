@@ -14,7 +14,10 @@ void BlackOut::Initialize(SpriteCommon* spriteCommon)
 void BlackOut::Update(int sceneNum_, bool isBlackOut_)
 {
 	sceneNum = sceneNum_;
-	isBlackOut = isBlackOut_;
+	if (!checkOut)
+	{
+		isBlackOut = isBlackOut_;
+	}
 
 	if (sceneNum == 0)//タイトル
 	{
@@ -30,6 +33,7 @@ void BlackOut::Update(int sceneNum_, bool isBlackOut_)
 			if (minalpha > maxalpha)
 			{
 				min = 0.0f;
+				checkOut = true;
 				sceneNum = 1;
 			}
 
@@ -85,6 +89,21 @@ void BlackOut::Update(int sceneNum_, bool isBlackOut_)
 				minalpha = 0.0f;
 				isBlackOut = false;
 				blinkCount = 0;
+			}
+		}
+
+		if (isGoal)
+		{
+			//フェードイン追加
+			if (minalpha < maxalpha)
+			{
+				minalpha += 0.01f;
+			}
+			blackOut->SetColor({ 0, 0, 0, minalpha });
+			if (minalpha > maxalpha)
+			{
+				min = 0.0f;
+				sceneNum = 1;
 			}
 
 		}

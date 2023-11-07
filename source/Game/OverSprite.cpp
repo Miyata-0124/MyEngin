@@ -71,8 +71,6 @@ void OverSprite::Update()
 
 	overSprite->SetRotation(rotation);
 	overSprite->SetPosition(position);
-
-
 }
 
 void OverSprite::Draw()
