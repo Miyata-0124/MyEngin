@@ -2,7 +2,7 @@
 #include "header/Engin/WinApp.h"
 
 void ViewProjection::Initialeze() {
-	eye = { 0, 0, -50.0f };
+	eye = { 50, 0, -50.0f };
 	target = { 0, 0, 0 };
 	up = { 0, 1, 0 };
 

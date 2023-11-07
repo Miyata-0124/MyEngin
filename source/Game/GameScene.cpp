@@ -49,7 +49,7 @@ void GameScene::Initialize()
 	camera = new ViewProjection();
 	camera->Initialeze();
 //一度しか宣言しない
-	Object3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
+	Object3d::StaticInitialize(directXCom->GetDevice(),camera);
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	Particle::StaticInitialize(directXCom->GetDevice(),camera);
 	//スプライト
@@ -104,11 +104,10 @@ void GameScene::Initialize()
 	for (int i = 0; i < 2; i++)
 	{
 		objGate[i] = Gate::Create(gate);
+		objGate[i]->SetGateNum(i);
 	}
 	objGate[0]->SetPosition({ -25,-40,0 });
 	objGate[1]->SetPosition({ -23, 40,0 });
-	objGate[0]->SetGateNum(0);
-	objGate[1]->SetGateNum(1);
 
 	objClearBox = ClearBox::Create(clear);
 	//アイテム
@@ -140,13 +139,13 @@ void GameScene::Update()
 		rain->Update();
 #pragma endregion
 #pragma region シーン切り替え時の処理
-		
 
-		titleSprite->Update(input,scene,isBlackOut);
+
+		titleSprite->Update(input, scene, isBlackOut);
 		isBlackOut = titleSprite->GetBlackOut();
 
 		//暗転させるのか判断
-		blackOut->Update(scene,isBlackOut);//暗転後シーン切り替えをする
+		blackOut->Update(scene, isBlackOut);//暗転後シーン切り替えをする
 		scene = blackOut->GetScene();//切り替えた情報を渡す->切り替わる
 
 #pragma endregion
@@ -165,7 +164,7 @@ void GameScene::Update()
 
 		//フェードアウト
 		blackOut->Update(scene, isBlackOut);
-		
+
 		//プレイヤー
 		objPlayer->Update();
 		//敵
@@ -187,7 +186,7 @@ void GameScene::Update()
 		clearSprite->Update(objGate[1]->GetIsBlackOut());
 		//背景
 		objBackGround->Update();
-		
+
 
 		/*for (auto object : objects) {
 			object->Update();
@@ -213,7 +212,6 @@ void GameScene::Update()
 		overSprite->Update();
 		break;
 	}
-
 	//カメラ
 	camera->Update();
 }

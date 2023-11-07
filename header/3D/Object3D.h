@@ -14,6 +14,7 @@
 #include "DirectXTex/include/d3dx12.h"
 #include "Model.h"
 #include "header/Collider/CollisionInfo.h"
+#include "header/Engin/ViewProjection.h"
 
 class BaseCollider;
 
@@ -64,7 +65,7 @@ public: // 静的メンバ関数
 	/// <param name="device">デバイス</param>
 	/// <param name="window_width">画面幅</param>
 	/// <param name="window_height">画面高さ</param>
-	static void StaticInitialize(ID3D12Device* device, int window_width, int window_height);
+	static void StaticInitialize(ID3D12Device* device, ViewProjection* camera_);
 
 	/// <summary>
 	/// 描画前処理
@@ -133,13 +134,15 @@ private: // 静的メンバ変数
 	// 上方向ベクトル
 	static XMFLOAT3 up;
 
+	//カメラ
+	static ViewProjection* camera;
 private:// 静的メンバ関数
 	/// <summary>
 	/// カメラ初期化
 	/// </summary>
 	/// <param name="window_width">画面横幅</param>
 	/// <param name="window_height">画面縦幅</param>
-	static void InitializeCamera(int window_width, int window_height);
+	static void InitializeCamera(ViewProjection* camera_);
 
 	/// <summary>
 	/// グラフィックパイプライン生成

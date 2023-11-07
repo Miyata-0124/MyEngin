@@ -28,8 +28,9 @@ XMMATRIX Object3d::matProjection{};
 XMFLOAT3 Object3d::eye = { 0, 0, -50.0f };
 XMFLOAT3 Object3d::target = { 0, 0, 0 };
 XMFLOAT3 Object3d::up = { 0, 1, 0 };
+ViewProjection* Object3d::camera = nullptr;
 
-void Object3d::StaticInitialize(ID3D12Device* device_, int window_width, int window_height)
+void Object3d::StaticInitialize(ID3D12Device* device_, ViewProjection* camera_)
 {
 	// nullptrチェック
 	assert(device_);
@@ -38,7 +39,7 @@ void Object3d::StaticInitialize(ID3D12Device* device_, int window_width, int win
 	Model::SetDevice(device_);
 
 	// カメラ初期化
-	InitializeCamera(window_width, window_height);
+	InitializeCamera(camera_);
 
 	// パイプライン初期化
 	InitializeGraphicsPipeline();
@@ -119,13 +120,37 @@ void Object3d::CameraMoveVector(XMFLOAT3 move)
 	SetTarget(target_moved);
 }
 
-void Object3d::InitializeCamera(int window_width, int window_height)
+void Object3d::InitializeCamera(ViewProjection* camera_)
 {
+	//// ビュー行列の生成
+	//matView = XMMatrixLookAtLH(
+	//	XMLoadFloat3(&eye),
+	//	XMLoadFloat3(&target),
+	//	XMLoadFloat3(&up));
+
+	//// 平行投影による射影行列の生成
+	////constMap->mat = XMMatrixOrthographicOffCenterLH(
+	////	0, window_width,
+	////	window_height, 0,
+	////	0, 1);
+	//// 透視投影による射影行列の生成
+	//matProjection = XMMatrixPerspectiveFovLH(
+	//	XMConvertToRadians(60.0f),
+	//	(float)window_width / window_height,
+	//	0.1f, 1000.0f
+	//);
+
 	// ビュー行列の生成
-	matView = XMMatrixLookAtLH(
-		XMLoadFloat3(&eye),
-		XMLoadFloat3(&target),
-		XMLoadFloat3(&up));
+	//matView = XMMatrixLookAtLH(
+	//	XMLoadFloat3(&eye),
+	//	XMLoadFloat3(&target),
+	//	XMLoadFloat3(&up));
+
+	camera = camera_;
+	SetEye(camera->eye);
+	SetTarget(camera->target);
+	//ビュー行列の計算
+	UpdateViewMatrix();
 
 	// 平行投影による射影行列の生成
 	//constMap->mat = XMMatrixOrthographicOffCenterLH(
@@ -133,11 +158,7 @@ void Object3d::InitializeCamera(int window_width, int window_height)
 	//	window_height, 0,
 	//	0, 1);
 	// 透視投影による射影行列の生成
-	matProjection = XMMatrixPerspectiveFovLH(
-		XMConvertToRadians(60.0f),
-		(float)window_width / window_height,
-		0.1f, 1000.0f
-	);
+	matProjection = camera_->GetProjection();
 }
 
 void Object3d::InitializeGraphicsPipeline()
