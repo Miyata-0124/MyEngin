@@ -66,7 +66,6 @@ public:
 	//シーン切り替えに使用する情報
 	int GetScene() { return sceneNum; }
 
-	//仲間認識の確認用
 private:
 	//左右移動
 	void Move();
@@ -86,6 +85,8 @@ private:
 private:
 	//重力加算量
 	float yadd = 0.0f;
+	//ジャンプ時の反重力
+	float antiYadd = -1.5f;
 	//半径
 	float radius = 1.0f;
 	//移動速度

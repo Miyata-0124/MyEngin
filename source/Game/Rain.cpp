@@ -1,6 +1,6 @@
 #include "header/Game/Rain.h"
 
-Rain* Rain::Create(uint32_t texIndex_)
+Rain* Rain::Create()
 {
 	//インスタンス生成
 	Rain* instance = new Rain();
@@ -9,10 +9,10 @@ Rain* Rain::Create(uint32_t texIndex_)
 		return nullptr;
 	}
 	//モデルセット
-	instance->LoadTexture(1, "blue1x1.png");
+	instance->LoadTexture(texIndex, "blue1x1.png");
 
 	//初期化
-	if (!instance->Initialize(texIndex_)) {
+	if (!instance->Initialize(texIndex)) {
 		delete instance;
 		assert(0);
 	}
@@ -56,7 +56,7 @@ void Rain::Update()
 			DirectX::XMFLOAT3	acc{};
 			acc.y = (float)rand() / RAND_MAX * rnd_acc;
 
-			Particle::Control(75, { (float)rand() / RAND_MAX * 100.0f - 100.0f / 2.0f,40,0 }, vel, acc, 1.0f, 0.0f);
+			Particle::Control(particleLife, { (float)rand() / RAND_MAX * 100.0f - 100.0f / 2.0f,40,0 }, vel, acc, 1.0f, 0.0f);
 		}
 	}
 

@@ -26,6 +26,7 @@ enum Identification //属性
 	IDENT_ENEMY,		//敵対
 	IDENT_FREND,		//友好
 	IDENT_ITEM,			//アイテム
+	IDENT_GOAL,			//ゴール
 	IDENT_GATE,			//イベント
 };
 

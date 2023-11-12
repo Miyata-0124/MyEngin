@@ -9,6 +9,7 @@
 #include "header/Game/Item.h"
 #include "header/Game/Wall.h"
 #include "header/Game/Gate.h"
+#include "header/Game/StageGate.h"
 #include "header/Game/Rain.h"
 #include "header/Game/ClearBox.h"
 #include "easing/Easing.h"
@@ -78,11 +79,12 @@ void GameScene::Initialize()
 	//Model* model1 = Model::LoadFromOBJ("wall");
 	//プレイヤーモデル
 	Model* playerModel = Model::LoadFromOBJ("player");
-	//Model* ground = Model::LoadFromOBJ("blue");
+	Model* ground = Model::LoadFromOBJ("blue");
 	Model* item_ = Model::LoadFromOBJ("Item");
-	Model* backGround = Model::LoadFromOBJ("BG");
-	Model* clear = Model::LoadFromOBJ("clear");
-	Model* gate = Model::LoadFromOBJ("gate");
+	//Model* pipe = Model::LoadFromOBJ("pipe");
+	//Model* backGround = Model::LoadFromOBJ("BG");
+	//Model* clear = Model::LoadFromOBJ("clear");
+	//Model* gate = Model::LoadFromOBJ("gate");
 #pragma endregion
 #pragma region Player等のオブジェクト
 
@@ -92,16 +94,11 @@ void GameScene::Initialize()
 	objPlayer->SetInput(input);
 	//敵
 	//objEnem = Enemy::Create(ground);
+	objGate = StageGate::Create(ground);
 	//地面
-	for (int i = 0; i < 3; i++)
-	{
-		objFloor[i] = Floor::Create(item_);
-	}
-	objFloor[1]->SetPosition({ 0, 15, 0 });
-	objFloor[2]->SetSize({ 1,80,20 });
-	objFloor[2]->SetPosition({ 30,0,0 });
+	objFloor = Floor::Create(item_);
 
-	for (int i = 0; i < 2; i++)
+	/*for (int i = 0; i < 2; i++)
 	{
 		objGate[i] = Gate::Create(gate);
 		objGate[i]->SetGateNum(i);
@@ -109,7 +106,7 @@ void GameScene::Initialize()
 	objGate[0]->SetPosition({ -25,-40,0 });
 	objGate[1]->SetPosition({ -23, 40,0 });
 
-	objClearBox = ClearBox::Create(clear);
+	objClearBox = ClearBox::Create(clear);*/
 	//アイテム
 	//objItem = Item::Create(ground);
 	//objItem->SetInput(input);
@@ -117,12 +114,12 @@ void GameScene::Initialize()
 	//objWall = Wall::Create(ground);
 	
 	//背景
-	objBackGround = BackGround::Create(backGround);
+	//objBackGround = BackGround::Create(backGround);
 #pragma endregion
 	//LoadMap();
 	
 	#pragma region パーティクル関係
-	rain = Rain::Create(1);
+	rain = Rain::Create();
 	#pragma	endregion
 }
 
@@ -157,10 +154,6 @@ void GameScene::Update()
 			blackOut->Reset();
 			scene = 0;
 		}
-		if (input->TriggerKey(DIK_2))
-		{
-			scene = 2;
-		}
 
 		//フェードアウト
 		blackOut->Update(scene, isBlackOut);
@@ -171,21 +164,21 @@ void GameScene::Update()
 		//objEnem->Update();
 		//アイテム
 		//objItem -> Update();
+		//ステージ移動用
+		objGate->Update();
 		//地面
-		for (int i = 0; i < 3; i++)
-		{
-			objFloor[i]->Update();
-		}
-		for (int i = 0; i < 2; i++)
+		objFloor->Update();
+		
+		/*for (int i = 0; i < 2; i++)
 		{
 			objGate[i]->Update();
 		}
-		objClearBox->Update();
+		objClearBox->Update();*/
 		//壁
 		//objWall->Update();
-		clearSprite->Update(objGate[1]->GetIsBlackOut());
+		//clearSprite->Update(objGate[1]->GetIsBlackOut());
 		//背景
-		objBackGround->Update();
+		//objBackGround->Update();
 
 
 		/*for (auto object : objects) {
@@ -198,10 +191,10 @@ void GameScene::Update()
 		/*objItem->SetPPosition(objPlayer->GetPosition());
 		objItem->SetRetention(objPlayer->GetRetention());
 		objItem->SetDirection(objPlayer->GetDirection());*/
-		for (int i = 0; i < 2; i++) {
+		/*for (int i = 0; i < 2; i++) {
 			objGate[i]->SetIsGoal(objClearBox->GetIsGoal());
 		}
-		blackOut->SetIsGoal(objGate[1]->GetIsBlackOut());
+		blackOut->SetIsGoal(objGate[1]->GetIsBlackOut());*/
 #pragma endregion
 		//判定マネージャー
 		collisionManager->CheckAllCollisions();
@@ -248,21 +241,20 @@ void GameScene::Draw()
 		//objEnem->Draw();
 		//アイテム
 		//objItem->Draw();
+		objGate->Draw();
 		//地面
-		for (int i = 0; i < 3; i++)
-		{
-			objFloor[i]->Draw();
-		}
+		objFloor->Draw();
+		
 		//ゴールゲート
-		for (int i = 0; i < 2; i++)
+		/*for (int i = 0; i < 2; i++)
 		{
 			objGate[i]->Draw();
 		}
-		objClearBox->Draw();
+		objClearBox->Draw();*/
 		//壁
 		//objWall->Draw();
 		//背景
-		objBackGround->Draw();
+		//objBackGround->Draw();
 		//
 		/*for (auto object : objects) {
 			object->Draw();
@@ -299,14 +291,12 @@ void GameScene::Finalize()
 	delete blackOut;
 	delete model;
 	delete objPlayer;
-	for (int i = 0; i < 3; i++)
-	{
-		delete objFloor[i];
-	}
-	for (int i = 0; i < 2; i++)
+	delete objFloor;
+	delete objGate;
+	/*for (int i = 0; i < 2; i++)
 	{
 		delete objGate[i];
-	}
+	}*/
 	delete objClearBox;
 	delete objItem;
 	delete objBackGround;

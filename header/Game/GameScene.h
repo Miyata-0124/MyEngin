@@ -34,6 +34,7 @@ class Wall;
 class Enemy;
 class Rain;
 class Gate;
+class StageGate;
 class ClearBox;
 
 class GameScene
@@ -96,13 +97,14 @@ private: //ゲーム内使用クラス
 	//敵
 	Enemy* objEnem = nullptr;
 	//床(仮)
-	Floor* objFloor[3] = {};
+	Floor* objFloor = nullptr;
 	//アイテム
 	Item* objItem = nullptr;
 	//壁
 	Wall* objWall = nullptr;
 	//ゴールゲート
-	Gate* objGate[2] = {};
+	Gate* objGoalGate[2] = {};
+	StageGate* objGate = nullptr;
 	ClearBox* objClearBox = nullptr;
 	//背景
 	BackGround* objBackGround = nullptr;

@@ -34,7 +34,7 @@ bool ClearBox::Initialize()
 	//’†SÀ•W‚ÆŒ´“_‚©‚ç‚Ì‹——£
 	SetCollider(new BoxCollider(XMVECTOR({ 0,radius.y,0,0 }), radius));
 	//¯•Ê‚ğİ’è‚·‚é
-	SetIdentification(IDENT_GATE);
+	SetIdentification(IDENT_GOAL);
 
 	isGoal = false;
 

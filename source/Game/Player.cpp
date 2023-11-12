@@ -31,7 +31,7 @@ bool Player::Initialize()
 	}
 	//初期座標指定
 	SetSize({ 1,1,1 });
-	SetRotation({ 0,-90,0 });
+	SetRotation({ 0,0,0 });
 	SetPosition({ -20,-13,0 });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
@@ -127,6 +127,14 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 
 		}
+		//移動用ゲートに当たった時
+		if (info.object->GetIdentification() == IDENT_GATE)
+		{
+			if (input->TriggerKey(DIK_V))
+			{
+
+			}
+		}
 	}
 }
 
@@ -169,7 +177,7 @@ void Player::Jump()
 {
 	if (!isJamp && input->TriggerKey(DIK_SPACE))
 	{
-		yadd -= 1.5f;
+		yadd -= antiYadd;
 		isJamp = true;
 	}
 }

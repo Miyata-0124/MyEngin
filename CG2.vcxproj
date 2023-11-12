@@ -137,6 +137,7 @@
     <ClCompile Include="source\2D\SpriteCommon.cpp" />
     <ClCompile Include="source\Engin\ViewProjection.cpp" />
     <ClCompile Include="source\Game\Rain.cpp" />
+    <ClCompile Include="source\Game\StageGate.cpp" />
     <ClCompile Include="source\Game\TitleSprite.cpp" />
     <ClCompile Include="source\Game\Wall.cpp" />
     <ClCompile Include="source\Engin\WinApp.cpp" />
@@ -251,6 +252,7 @@
     <ClInclude Include="header\3D\JsonLoader.h" />
     <ClInclude Include="header\Game\OverSprite.h" />
     <ClInclude Include="header\Game\Rain.h" />
+    <ClInclude Include="header\Game\StageGate.h" />
     <ClInclude Include="header\Game\TitleSprite.h" />
     <ClInclude Include="Math\Affin.h" />
     <ClInclude Include="Math\Convert.h" />

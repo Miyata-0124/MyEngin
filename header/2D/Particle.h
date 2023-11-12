@@ -212,7 +212,7 @@ protected: // メンバ変数
 	static	XMMATRIX	matBillboard;
 	//Y軸周りのビルボード行列
 	static	XMMATRIX	matBillboardY;
-
+	const int particleLife = 75;
 	//パーティクル配列
 	std::forward_list<Particles>particles;
 	//テクスチャの番号

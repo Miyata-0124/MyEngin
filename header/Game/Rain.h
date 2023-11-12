@@ -9,7 +9,7 @@ public:
 	/// </summary>
 	/// <param name="model"></param>
 	/// <returns></returns>
-	static Rain* Create(uint32_t texIndex_);
+	static Rain* Create();
 public:
 	/// <summary>
 	/// 初期化
@@ -26,5 +26,7 @@ private:
 	//雨を管理する時計
 	float rainTimer = 0.0f;
 	bool rainFlag = false;
+	//テクスチャのインデックス
+	const static uint32_t texIndex = 1;
 };
 

@@ -1,16 +1,9 @@
-/**
- * @file Floor.h
- * @brief 世界の底の判定機能
- * @author ミヤタ_コウキ
- * @date 2023/07/09
- */
-
 #pragma once
-#include "header/3D/Object3D.h"
-#include "header/3D/Model.h"
-//最も低い地形クラス
+//マップ移動判定用オブジェクト
 
-class Floor : public Object3d
+#include "header/3D/Object3D.h"
+
+class StageGate : public Object3d
 {
 public:
 	/// <summary>
@@ -18,7 +11,7 @@ public:
 	/// </summary>
 	/// <param name="model"></param>
 	/// <returns></returns>
-	static Floor* Create(Model* model = nullptr);
+	static StageGate* Create(Model* model = nullptr);
 
 public:
 	/// <summary>
@@ -38,11 +31,17 @@ public:
 	/// <param name="info"></param>
 	void OnCollider(const CollisionInfo& info)override;
 
-	void SetDistance(XMVECTOR distance_) { distance = distance_; }
 private:
-	//原点からの距離
-	XMVECTOR distance = { 0, 0, 0 };
 	//半径
-	DirectX::XMFLOAT2 radius = { 80.0f,1.0f };
+	DirectX::XMFLOAT2 radius = { Object3d::GetScale().x,Object3d::GetScale().y};
+
+	//移動の初期地点
+	XMVECTOR startPos = {};
+	//移動後の到着店
+	XMVECTOR endPos = {};
+	//最小
+	float min = 0.0f;
+	//最大
+	float max = 1.0f;
 };
 
