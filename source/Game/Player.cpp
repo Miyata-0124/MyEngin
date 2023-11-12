@@ -177,7 +177,7 @@ void Player::Jump()
 {
 	if (!isJamp && input->TriggerKey(DIK_SPACE))
 	{
-		yadd -= antiYadd;
+		yadd = antiYadd;
 		isJamp = true;
 	}
 }

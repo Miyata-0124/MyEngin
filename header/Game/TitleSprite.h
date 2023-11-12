@@ -21,16 +21,13 @@ public:
 	/// </summary>
 	/// <param name="sceneNum_"></param>
 	/// <param name="isBlackOut_"></param>
-	void Update(Input* input,int sceneNum_, bool isBlackOut_);
+	void Update(Input* input,int sceneNum_);
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
 
 	void Reset();
-
-	//シーン切り替えに使用する情報
-	bool GetBlackOut() { return isBlackOut; }
 private:
 	Sprite* titleSprite;
 private:
@@ -48,7 +45,7 @@ private:
 	float startY = 0.0f;
 	float endY = 720.0f;
 	float y;
-	bool isBlackOut = false;
+	//暗転タイム
 	float blackOutTimer = 300.0f;
 	float minalpha = 0.0f;
 	float maxalpha = 1.0f;

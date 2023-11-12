@@ -13,29 +13,14 @@
 #include "header//Engin/DirectXCommon.h"
 #include "header/Engin/ViewProjection.h"
 #include "header/2D/SpriteCommon.h"
-#include "header/2D/Sprite.h"
 #include "header/3D/Object3D.h"
 #include "header/3D/FbxObject3D.h"
 #include "header/3D/FbxModel.h"
 #include "header/3D/Model.h"
 #include "header/3D/JsonLoader.h"
-#include "header/Game/BackGround.h"
-#include "header/Game/BlackOut.h"
-#include "header/Game/TitleSprite.h"
-#include "header/Game/ClearSprite.h"
-#include "header/Game/OverSprite.h"
 
-class CollisionManager;
-class Player;
-class BackGround;
-class Floor;
-class Item;
-class Wall;
-class Enemy;
-class Rain;
-class Gate;
-class StageGate;
-class ClearBox;
+#include "header/Game/GameTitleScene.h"
+#include "header/Game/GamePlayScene.h"
 
 class GameScene
 {
@@ -68,20 +53,14 @@ public: //mainに一部引き渡し用
 
 private: //ゲーム内使用クラス
 	WinApp* winApp = nullptr;
-	DirectXCommon* directXCom = nullptr;
+	DirectXCommon* directXCom = DirectXCommon::GetInstance();
 	//デバッグテキスト
 	//ImguiManager* imgui = nullptr;
 	//キー情報
 	Input* input = nullptr;
 	//カメラ
 	ViewProjection* camera = nullptr;
-	//スプライト
-	SpriteCommon* spriteCommon = nullptr;
-
-	TitleSprite* titleSprite = new TitleSprite();
-	ClearSprite* clearSprite = new ClearSprite();
-	OverSprite* overSprite = new OverSprite();
-	BlackOut* blackOut = new BlackOut();
+	
 	//FBX
 	FbxModel* model = nullptr;
 	FbxObject3d* object1 = new FbxObject3d();
@@ -92,28 +71,7 @@ private: //ゲーム内使用クラス
 	std::map<std::string, Model*> models;
 	std::vector<Object3d*> objects;
 
-	//プレイヤー
-	Player* objPlayer = nullptr;
-	//敵
-	Enemy* objEnem = nullptr;
-	//床(仮)
-	Floor* objFloor = nullptr;
-	//アイテム
-	Item* objItem = nullptr;
-	//壁
-	Wall* objWall = nullptr;
-	//ゴールゲート
-	Gate* objGoalGate[2] = {};
-	StageGate* objGate = nullptr;
-	ClearBox* objClearBox = nullptr;
-	//背景
-	BackGround* objBackGround = nullptr;
 
-	CollisionManager* collisionManager = nullptr;
-
-	//パーティクル
-	//Particle* particle = nullptr;
-	Rain* rain = nullptr;
 	//シーン切り替え要情報
 	int scene = 0;
 	//雨を管理する時計
@@ -121,6 +79,7 @@ private: //ゲーム内使用クラス
 	bool rainFlag = false;
 	////UI関連
 	bool isBlackOut = false;
-	
+
+	GameTitleScene* scene_ = nullptr;
 };
 

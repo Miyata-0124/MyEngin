@@ -15,9 +15,23 @@
 #pragma once
 class DirectXCommon
 {
+private:
+	//コンストラクタ
+	DirectXCommon() = default;
+	//デストラクタ
+	~DirectXCommon() = default;
+public:
+	//コピーインストラクタの無効
+	DirectXCommon(const DirectXCommon& obj) = delete;
+	//代入演算子の無効
+	DirectXCommon& operator=(const DirectXCommon& obj) = delete;
+
+	static DirectXCommon* GetInstance();
 public://メンバ関数
 	//初期化
 	void Initialize(WinApp* winApp_);
+	//後始末
+	void Finalize();
 	//デバイスの初期化
 	void InitializeDevice();
 	//コマンドの初期化

@@ -10,10 +10,9 @@ void TitleSprite::Initialize(SpriteCommon* spriteCommon)
 	titleSprite->SetPosition({ 0,0 });
 }
 
-void TitleSprite::Update(Input* input, int sceneNum_, bool isBlackOut_)
+void TitleSprite::Update(Input* input, int sceneNum_)
 {
 	sceneNum = sceneNum_;
-	isBlackOut = isBlackOut_;
 	if (sceneNum == 0)
 	{
 		//ìÆÇ©Ç∑ÇΩÇﬂÇ…ç¿ïWÇéÊìæ
@@ -66,7 +65,6 @@ void TitleSprite::Update(Input* input, int sceneNum_, bool isBlackOut_)
 				{
 					blackOutTimer = 300.0f;
 					ChengeScene = false;
-					isBlackOut = true;
 				}
 			}
 		}
@@ -101,7 +99,7 @@ void TitleSprite::Reset()
 	startY = 0.0f;
 	endY = 720.0f;
 	y;
-	isBlackOut = false;
+	//isBlackOut = false;
 	blackOutTimer = 300.0f;
 	minalpha = 0.0f;
 	maxalpha = 1.0f;

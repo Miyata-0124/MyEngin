@@ -114,8 +114,10 @@
     <ClCompile Include="source\3D\FbxModel.cpp" />
     <ClCompile Include="source\3D\FbxObject3D.cpp" />
     <ClCompile Include="source\Game\Floor.cpp" />
+    <ClCompile Include="source\Game\GamePlayScene.cpp" />
     <ClCompile Include="source\Game\GameScene.cpp" />
     <ClCompile Include="source\Engin\Input.cpp" />
+    <ClCompile Include="source\Game\GameTitleScene.cpp" />
     <ClCompile Include="source\Game\Gate.cpp" />
     <ClCompile Include="source\Game\Item.cpp" />
     <ClCompile Include="source\3D\JsonLoader.cpp" />
@@ -245,8 +247,10 @@
     <ClInclude Include="header\3D\FbxModel.h" />
     <ClInclude Include="header\3D\FbxObject3D.h" />
     <ClInclude Include="header\Game\Floor.h" />
+    <ClInclude Include="header\Game\GamePlayScene.h" />
     <ClInclude Include="header\Game\GameScene.h" />
     <ClInclude Include="header\Engin\Input.h" />
+    <ClInclude Include="header\Game\GameTitleScene.h" />
     <ClInclude Include="header\Game\Gate.h" />
     <ClInclude Include="header\Game\Item.h" />
     <ClInclude Include="header\3D\JsonLoader.h" />

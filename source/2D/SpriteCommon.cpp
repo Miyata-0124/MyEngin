@@ -131,6 +131,13 @@ void	SpriteCommon::SetTextureCommands(uint32_t index) {
 	comList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 }
 
+SpriteCommon* SpriteCommon::GetInstance()
+{
+	static SpriteCommon instance;
+
+	return &instance;
+}
+
 void	SpriteCommon::Initialize(DirectXCommon* directXCom_) {
 	ID3DBlob* vsBlob = nullptr;
 	ID3DBlob* psBlob = nullptr;
@@ -335,6 +342,11 @@ void	SpriteCommon::Initialize(DirectXCommon* directXCom_) {
 	//ID3D12DescriptorHeap* srvHeap = nullptr;
 	result = directXCom->GetDevice()->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
 	assert(SUCCEEDED(result));
+}
+
+void SpriteCommon::Finalize()
+{
+
 }
 
 void	SpriteCommon::PreDraw() {
