@@ -31,6 +31,7 @@ void GameTitleScene::Update()
 	#pragma region パーティクル
 	rain->Update();
 	#pragma endregion
+
 	#pragma region シーン切り替え時の処理
 
 	titleSprite->Update(input, 0);
