@@ -8,15 +8,13 @@ Rain* Rain::Create()
 	{
 		return nullptr;
 	}
-	//モデルセット
-	instance->LoadTexture(texIndex, "blue1x1.png");
-
 	//初期化
 	if (!instance->Initialize(texIndex)) {
 		delete instance;
 		assert(0);
 	}
-
+	//モデルセット
+	instance->LoadTexture(texIndex, "blue1x1.png");
 	return instance;
 }
 
