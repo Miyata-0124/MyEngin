@@ -107,6 +107,7 @@
     <ClCompile Include="source\Collider\CollisionManager.cpp" />
     <ClCompile Include="source\Engin\DirectXCommon.cpp" />
     <ClCompile Include="source\Game\BlackOut.cpp" />
+    <ClCompile Include="source\Game\ClearSprite.cpp" />
     <ClCompile Include="source\Game\enemy.cpp" />
     <ClCompile Include="source\3D\FbxLoader.cpp" />
     <ClCompile Include="source\3D\FbxModel.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="header\Collider\CollisionTypes.h" />
     <ClInclude Include="header\Engin\DirectXCommon.h" />
     <ClInclude Include="header\Game\BlackOut.h" />
+    <ClInclude Include="header\Game\ClearSprite.h" />
     <ClInclude Include="header\Game\enemy.h" />
     <ClInclude Include="header\3D\FbxLoader.h" />
     <ClInclude Include="header\3D\FbxModel.h" />

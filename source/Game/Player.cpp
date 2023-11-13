@@ -127,6 +127,18 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 
 		}
+		//ƒCƒxƒ“ƒg‚É“–‚½‚Á‚½Žž
+		if (info.object->GetIdentification() == IDENT_GATE)
+		{
+			if (input->TriggerKey(DIK_2))
+			{
+				sceneNum = 2;
+			}
+			if (input->TriggerKey(DIK_V))
+			{
+				sceneNum = 3;
+			}
+		}
 	}
 }
 

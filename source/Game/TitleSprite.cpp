@@ -100,7 +100,7 @@ void TitleSprite::Reset()
 	max = 1.0f;
 	startY = 0.0f;
 	endY = 720.0f;
-	y;
+	y = min / max;
 	isBlackOut = false;
 	blackOutTimer = 300.0f;
 	minalpha = 0.0f;

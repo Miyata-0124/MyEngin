@@ -36,7 +36,7 @@ bool Wall::Initialize()
 	//”¼Œa•ª‘«Œ³‚©‚ç•‚‚¢‚Ä‚¢‚éÀ•W‚ª’†S
 	SetCollider(new BoxCollider(XMVECTOR({ 0,radius.y,0,0 }), radius));
 	//¯•Ê‚ğİ’è‚·‚é
-	SetIdentification(IDENT_NEUTRAL);
+	SetIdentification(IDENT_GATE);
 	return true;
 }
 

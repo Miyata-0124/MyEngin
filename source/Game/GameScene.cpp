@@ -43,6 +43,7 @@ void GameScene::Initialize()
 	spriteCommon->Loadtexture(2, "white1x1.png");
 	spriteCommon->Loadtexture(3, "GameOver.png");
 	spriteCommon->Loadtexture(4, "GameTelop.png");
+	spriteCommon->Loadtexture(5, "GameClear.png");
 	//ViewProjection
 	camera = new ViewProjection();
 	camera->Initialeze();
@@ -57,6 +58,8 @@ void GameScene::Initialize()
 	overSprite->Initialize(spriteCommon);
 	//暗転
 	blackOut->Initialize(spriteCommon);
+
+	clearSprite->Initialize(spriteCommon);
 
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("map");
 
@@ -133,17 +136,15 @@ void GameScene::Update()
 		{
 			titleSprite->Reset();
 			blackOut->Reset();
+			isBlackOut = false;
 			scene = 0;
-		}
-		if (input->TriggerKey(DIK_2))
-		{
-			scene = 2;
 		}
 
 		//フェードアウト
 		blackOut->Update(scene,isBlackOut);
 		
 		//プレイヤー
+		objPlayer->SetScene(scene);
 		objPlayer->Update();
 		//敵
 		//objEnem->Update();
@@ -171,10 +172,36 @@ void GameScene::Update()
 		//判定マネージャー
 		collisionManager->CheckAllCollisions();
 
+		scene = objPlayer->GetScene();
+
 		break;
-	case 2:
+	case 2: //ゲームオーバー
+		if (input->TriggerKey(DIK_R))//リセット
+		{
+			overSprite->Reset();
+			titleSprite->Reset();
+			blackOut->Reset();
+			isBlackOut = false;
+			scene = 0;
+		}
+
 		rain->Update();
 		overSprite->Update();
+		break;
+
+	case 3: //ゲームクリア
+		if (input->TriggerKey(DIK_R))//リセット
+		{
+			clearSprite->Reset();
+			titleSprite->Reset();
+			blackOut->Reset();
+			objPlayer->SetPosition({ -20,-13,0 });
+			isBlackOut = false;
+			scene = 0;
+		}
+
+		clearSprite->Update();
+
 		break;
 	}
 
@@ -187,8 +214,6 @@ void GameScene::Draw()
 	//描画処理ここから↓
 	directXCom->PreDraw();
 
-	Particle::PreDraw(directXCom->GetCommandList());
-
 	switch (scene)
 	{
 	case 0:
@@ -196,7 +221,10 @@ void GameScene::Draw()
 		//タイトル
 		titleSprite->Draw();
 
+		Particle::PreDraw(directXCom->GetCommandList());
 		rain->Draw();
+		Particle::PostDraw();
+
 		//暗転用
 		blackOut->Draw();
 		break;
@@ -231,13 +259,18 @@ void GameScene::Draw()
 		Object3d::PostDraw();
 		break;
 	case 2:
+		Particle::PreDraw(directXCom->GetCommandList());
 		rain->Draw();
+		Particle::PostDraw();
 		overSprite->Draw();
+		break;
+	case 3:
+		clearSprite->Draw();
 		break;
 	}
 
 	directXCom->PostDraw();
-	Particle::PostDraw();
+
 	//ここまで↑
 }
 
@@ -251,6 +284,7 @@ void GameScene::Finalize()
 	delete spriteCommon;
 	delete titleSprite;
 	delete overSprite;
+	delete clearSprite;
 	delete blackOut;
 	delete model;
 	delete objPlayer;
