@@ -5,6 +5,7 @@
  * @date 2022/04/13
  */
 
+//Œ³‚É–ß‚µ‚½
 #pragma once
 //©ìƒNƒ‰ƒX
 #include <list>
