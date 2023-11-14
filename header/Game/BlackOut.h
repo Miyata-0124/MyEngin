@@ -6,12 +6,6 @@
  * @author ミヤタ_コウキ
  * @date 2023/10/23
  */
-enum Blink
-{
-	slowOpen,
-	slowClose,
-	Open
-};
 
 class BlackOut
 {
@@ -24,39 +18,19 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	/// <param name="sceneNum_"></param>
-	/// <param name="isBlackOut_"></param>
-	void Update(int sceneNum_,bool isBlackOut_);
+	void Update();
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
 
 	void Reset();
-
-	//シーン切り替えに使用する情報
-	int GetScene() { return sceneNum; }
-
-	void SetIsGoal(bool isGoal_) { this->isGoal = isGoal_; }
 private:
 	Sprite* blackOut;
-
-	Blink blink = slowOpen;
 private:
-	//タイトルなどのUI情報
-	int sceneNum = 0;
-
 	//拡縮フラグ
 	//暗転
-	float min = 0.0f;
-	float max = 1.0f;
-	bool isBlackOut = false;
-	bool checkOut = false;
-	float minalpha = 0.0f;
-	float maxalpha = 1.0f;
-	int blinkCount = 0;
-
-	//ゴール用
-	bool isGoal = false;
+	float minAlpha = 0.0f;
+	float maxAlpha = 1.0f;
 };
 

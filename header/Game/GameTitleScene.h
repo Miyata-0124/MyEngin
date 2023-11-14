@@ -1,5 +1,6 @@
 #pragma once
 #include "header/Engin/ViewProjection.h"
+#include "header/Game/BlackOut.h"
 #include "header/Game/TitleSprite.h"
 
 class Rain;
@@ -34,8 +35,13 @@ private:
 
 	//ゲーム内スプライト
 	TitleSprite* titleSprite = new TitleSprite();
-
+	//暗転
+	BlackOut* blackOut = new BlackOut();
 	//パーティクル
 	Rain* rain = nullptr;
+
+private:
+	//スプライトの落下地点
+	float landingPoint = 720;
 };
 

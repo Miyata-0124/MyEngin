@@ -8,8 +8,10 @@ void GameTitleScene::Initialize(ViewProjection* camera_,Input* input_)
 	//スプライト共通部分の初期化
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "taitle.png");
+	spriteCommon->Loadtexture(2, "white1x1.png");
 	//タイトル
 	titleSprite->Initialize(spriteCommon);
+	blackOut->Initialize(spriteCommon);
 	//一度だけ宣言する
 	Particle::StaticInitialize(directXCom->GetDevice(), camera_);
 
@@ -24,6 +26,8 @@ void GameTitleScene::Finalize()
 	delete titleSprite;
 	//雨
 	delete rain;
+	//暗転
+	delete blackOut;
 }
 
 void GameTitleScene::Update()
@@ -34,7 +38,12 @@ void GameTitleScene::Update()
 
 	#pragma region シーン切り替え時の処理
 
-	titleSprite->Update(input, 0);
+	titleSprite->Update(input);
+
+	if (titleSprite->GetPosition().y >= landingPoint)
+	{
+		blackOut->Update();
+	}
 }
 
 void GameTitleScene::Draw()
@@ -45,4 +54,7 @@ void GameTitleScene::Draw()
 	Particle::PreDraw(directXCom->GetCommandList());
 	rain->Draw();
 	Particle::PostDraw();
+
+	//暗転
+	blackOut->Draw();
 }

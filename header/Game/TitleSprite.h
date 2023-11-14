@@ -21,13 +21,17 @@ public:
 	/// </summary>
 	/// <param name="sceneNum_"></param>
 	/// <param name="isBlackOut_"></param>
-	void Update(Input* input,int sceneNum_);
+	void Update(Input* input);
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
 
 	void Reset();
+
+public:
+	//ゲッター,セッター
+	XMFLOAT2 GetPosition() { return titleSprite->GetPosition(); }
 private:
 	Sprite* titleSprite;
 private:
@@ -36,8 +40,6 @@ private:
 	//UI関連
 	bool UIFlag = false;
 	DirectX::XMFLOAT2 UIspeed = { 0,0 };
-
-	int sceneNum = 0;
 	//拡縮フラグ
 	//暗転
 	float min = 0.0f;
@@ -45,9 +47,5 @@ private:
 	float startY = 0.0f;
 	float endY = 720.0f;
 	float y;
-	//暗転タイム
-	float blackOutTimer = 300.0f;
-	float minalpha = 0.0f;
-	float maxalpha = 1.0f;
 };
 

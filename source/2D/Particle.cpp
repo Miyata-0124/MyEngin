@@ -629,8 +629,6 @@ void Particle::Update()
 		vertBuff->Unmap(0, nullptr);
 	}
 
-
-
 	// 定数バッファへデータ転送
 	ConstBufferData* constMap = nullptr;
 	result = constBuff->Map(0, nullptr, (void**)&constMap);

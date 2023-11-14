@@ -11,104 +11,85 @@ void BlackOut::Initialize(SpriteCommon* spriteCommon)
 	blackOut ->SetColor({ 0,0,0,0 });
 }
 
-void BlackOut::Update(int sceneNum_, bool isBlackOut_)
+void BlackOut::Update()
 {
-	sceneNum = sceneNum_;
-	if (!checkOut)
+	//フェードイン追加
+	if (minAlpha < maxAlpha)
 	{
-		isBlackOut = isBlackOut_;
+		minAlpha += 0.01f;
 	}
 
-	if (sceneNum == 0)//タイトル
-	{
-		//暗転させるのか判断
-		if (isBlackOut)
-		{
-			//フェードイン追加
-			if (minalpha < maxalpha)
-			{
-				minalpha += 0.01f;
-			}
-			blackOut->SetColor({ 0, 0, 0, minalpha });
-			if (minalpha > maxalpha)
-			{
-				min = 0.0f;
-				checkOut = true;
-				sceneNum = 1;
-			}
+	blackOut->SetColor({ 0, 0, 0, minAlpha });
 
-		}
-	}
-	
 	//開始演出
-	if (sceneNum == 1)//ゲーム内
-	{
-		if (isBlackOut)
-		{
-			if (blink == slowOpen)
-			{
-				minalpha -= 0.01f;
-				if (minalpha <= 0.6f)
-				{
-					blink = slowClose;
-					blinkCount += 1;
-				}
-			}
-			else if (blink == slowClose)
-			{
-				if (blinkCount >= 3)
-				{
-					minalpha += 0.03f;
-				}
-				else
-				{
-					minalpha += 0.01f;
-				}
-				
-				if (minalpha >= 0.9f)
-				{
-					if (blinkCount < 3)
-					{
-						blink = slowOpen;
-					}
-					else 
-					{
-						blink = Open;
-					}
-					blinkCount += 1;
-				}
-			}
-			else if (blink == Open)
-			{
-				minalpha -= 0.02f;
-			}
+	//if (sceneNum == 1)//ゲーム内
+	//{
+	//	if (isBlackOut)
+	//	{
+	//		if (blink == slowOpen)
+	//		{
+	//			minalpha -= 0.01f;
+	//			if (minalpha <= 0.6f)
+	//			{
+	//				blink = slowClose;
+	//				blinkCount += 1;
+	//			}
+	//		}
+	//		else if (blink == slowClose)
+	//		{
+	//			if (blinkCount >= 3)
+	//			{
+	//				minalpha += 0.03f;
+	//			}
+	//			else
+	//			{
+	//				minalpha += 0.01f;
+	//			}
+	//			
+	//			if (minalpha >= 0.9f)
+	//			{
+	//				if (blinkCount < 3)
+	//				{
+	//					blink = slowOpen;
+	//				}
+	//				else 
+	//				{
+	//					blink = Open;
+	//				}
+	//				blinkCount += 1;
+	//			}
+	//		}
+	//		else if (blink == Open)
+	//		{
+	//			minalpha -= 0.02f;
+	//		}
 
-			blackOut->SetColor({ 0, 0, 0, minalpha });
-			if (minalpha <= 0.0f)
-			{
-				minalpha = 0.0f;
-				isBlackOut = false;
-				blinkCount = 0;
-			}
-		}
+	//		blackOut->SetColor({ 0, 0, 0, minalpha });
+	//		if (minalpha <= 0.0f)
+	//		{
+	//			minalpha = 0.0f;
+	//			isBlackOut = false;
+	//			blinkCount = 0;
+	//		}
+	//	}
 
-		if (isGoal)
-		{
-			//フェードイン追加
-			if (minalpha < maxalpha)
-			{
-				minalpha += 0.01f;
-			}
-			blackOut->SetColor({ 0, 0, 0, minalpha });
-			if (minalpha > maxalpha)
-			{
-				min = 0.0f;
-				sceneNum = 1;
-			}
+	//	if (isGoal)
+	//	{
+	//		//フェードイン追加
+	//		if (minalpha < maxalpha)
+	//		{
+	//			minalpha += 0.01f;
+	//		}
+	//		blackOut->SetColor({ 0, 0, 0, minalpha });
+	//		if (minalpha > maxalpha)
+	//		{
+	//			min = 0.0f;
+	//			sceneNum = 1;
+	//		}
 
-		}
-		blackOut->Update();
-	}
+	//	}
+	//	blackOut->Update();
+	//}
 }
 
 void BlackOut::Draw()
@@ -121,18 +102,9 @@ void BlackOut::Draw()
 void BlackOut::Reset()
 {
 	blackOut->SetColor({ 0,0,0,0 });
-	
-	blink = slowOpen;
-
-	//タイトルなどのUI情報
-	sceneNum = 0;
 
 	//拡縮フラグ
 	//暗転
-	min = 0.0f;
-	max = 1.0f;
-	isBlackOut = false;
-	minalpha = 0.0f;
-	maxalpha = 1.0f;
-	blinkCount = 0;
+	minAlpha = 0.0f;
+	maxAlpha = 1.0f;
 }

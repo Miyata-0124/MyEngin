@@ -10,66 +10,52 @@ void TitleSprite::Initialize(SpriteCommon* spriteCommon)
 	titleSprite->SetPosition({ 0,0 });
 }
 
-void TitleSprite::Update(Input* input, int sceneNum_)
+void TitleSprite::Update(Input* input)
 {
-	sceneNum = sceneNum_;
-	if (sceneNum == 0)
-	{
-		//ìÆÇ©Ç∑ÇΩÇﬂÇ…ç¿ïWÇéÊìæ
-		XMFLOAT2 position = titleSprite->GetPosition();
-		if (!UIFlag) {
-			if (position.x < 15)
-			{
-				UIspeed.x = 0.4f;
-			}
-			else
-			{
-				UIFlag = true;
-			}
+	
+	//ìÆÇ©Ç∑ÇΩÇﬂÇ…ç¿ïWÇéÊìæ
+	XMFLOAT2 position = titleSprite->GetPosition();
+	if (!UIFlag) {
+		if (position.x < 15)
+		{
+			UIspeed.x = 0.4f;
 		}
 		else
 		{
-			if (position.x > -15)
-			{
-				UIspeed.x = -0.4f;
-			}
-			else
-			{
-				UIFlag = false;
-			}
+			UIFlag = true;
 		}
-		position.x += UIspeed.x;
-		position.y += UIspeed.y;
-
-		//êÿÇËë÷Ç¶
-		if (input->TriggerKey(DIK_SPACE) && ChengeScene == false)
-		{
-			startY = position.y;
-			endY = startY + 720;
-			ChengeScene = true;
-		}
-		if (ChengeScene)
-		{
-			if (min <= max)
-			{
-				min += 0.03f;
-			}
-			y = min / max;
-			position.y = startY + (endY - startY) * Easing::easeInSine(y);
-
-
-			if (min > max)
-			{
-				blackOutTimer--;
-				if (blackOutTimer <= 0.0f)
-				{
-					blackOutTimer = 300.0f;
-					ChengeScene = false;
-				}
-			}
-		}
-		titleSprite->SetPosition(position);
 	}
+	else
+	{
+		if (position.x > -15)
+		{
+			UIspeed.x = -0.4f;
+		}
+		else
+		{
+			UIFlag = false;
+		}
+	}
+	position.x += UIspeed.x;
+	position.y += UIspeed.y;
+
+	//êÿÇËë÷Ç¶
+	if (input->TriggerKey(DIK_SPACE) && ChengeScene == false)
+	{
+		startY = position.y;
+		endY = startY + 720;
+		ChengeScene = true;
+	}
+	if (ChengeScene)
+	{
+		if (min <= max)
+		{
+			min += 0.03f;
+		}
+		y = min / max;
+		position.y = startY + (endY - startY) * Easing::easeInSine(y);
+	}
+	titleSprite->SetPosition(position);
 }
 
 void TitleSprite::Draw()
@@ -91,7 +77,6 @@ void TitleSprite::Reset()
 	UIFlag = false;
 	UIspeed = { 0,0 };
 
-	sceneNum = 0;
 	//ägèkÉtÉâÉO
 	//à√ì]
 	min = 0.0f;
@@ -99,8 +84,4 @@ void TitleSprite::Reset()
 	startY = 0.0f;
 	endY = 720.0f;
 	y;
-	//isBlackOut = false;
-	blackOutTimer = 300.0f;
-	minalpha = 0.0f;
-	maxalpha = 1.0f;
 }
