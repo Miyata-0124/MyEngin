@@ -1,6 +1,7 @@
 #pragma once
 #include "header/Collider/CollisionManager.h"
 
+#include "header/Game/GameBaseScene.h"
 #include "header/Game/BackGround.h"
 #include "header/Game/BlackOut.h"
 #include "header/Game/ClearSprite.h"
@@ -17,28 +18,28 @@ class Gate;
 class StageGate;
 class ClearBox;
 
-class GamePlayScene
+class GamePlayScene : public GameBaseScene
 {
 public:// メンバ変数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(ViewProjection* camera_ , Input* input_);
+	void Initialize(ViewProjection* camera_, Input* input_) override;
 
 	/// <summary>
 	/// 終了
 	/// </summary>
-	void Finalize();
+	void Finalize()override;
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update()override;
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw()override;
 
 private:
 	//スプライト機能

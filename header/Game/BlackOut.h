@@ -23,8 +23,12 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
-
+	//リセット
 	void Reset();
+
+	//アルファ値
+	float GetMinAlpha() { return minAlpha; }
+	float GetMaxAlpha() { return maxAlpha; }
 private:
 	Sprite* blackOut;
 private:

@@ -99,6 +99,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="easing\Easing.cpp" />
+    <ClCompile Include="source\Game\GameSceneManager.cpp" />
     <ClCompile Include="source\Game\BackGround.cpp" />
     <ClCompile Include="source\Collider\BaseCollider.cpp" />
     <ClCompile Include="source\Collider\BoxCollider.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="source\3D\FbxModel.cpp" />
     <ClCompile Include="source\3D\FbxObject3D.cpp" />
     <ClCompile Include="source\Game\Floor.cpp" />
+    <ClCompile Include="source\Game\GameBaseScene.cpp" />
     <ClCompile Include="source\Game\GamePlayScene.cpp" />
     <ClCompile Include="source\Game\GameScene.cpp" />
     <ClCompile Include="source\Engin\Input.cpp" />
@@ -230,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="easing\Easing.h" />
+    <ClInclude Include="header\Game\GameSceneManager.h" />
     <ClInclude Include="header\Game\BackGround.h" />
     <ClInclude Include="header\Collider\BaseCollider.h" />
     <ClInclude Include="header\Collider\BoxCollider.h" />
@@ -247,6 +250,7 @@
     <ClInclude Include="header\3D\FbxModel.h" />
     <ClInclude Include="header\3D\FbxObject3D.h" />
     <ClInclude Include="header\Game\Floor.h" />
+    <ClInclude Include="header\Game\GameBaseScene.h" />
     <ClInclude Include="header\Game\GamePlayScene.h" />
     <ClInclude Include="header\Game\GameScene.h" />
     <ClInclude Include="header\Engin\Input.h" />

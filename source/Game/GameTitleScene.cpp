@@ -1,5 +1,7 @@
 #include "header/Game/GameTitleScene.h"
+#include "header/Game/GameSceneManager.h"
 #include "header/Game/Rain.h"
+#include "header/Game/GamePlayScene.h"
 
 void GameTitleScene::Initialize(ViewProjection* camera_,Input* input_)
 {
@@ -43,6 +45,11 @@ void GameTitleScene::Update()
 	if (titleSprite->GetPosition().y >= landingPoint)
 	{
 		blackOut->Update();
+		if (blackOut->GetMinAlpha() >= blackOut->GetMaxAlpha())
+		{
+			GameBaseScene* scene = new GamePlayScene();
+			sceneManager->SetNextScene(scene);
+		}
 	}
 }
 

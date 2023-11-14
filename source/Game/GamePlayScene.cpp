@@ -1,4 +1,5 @@
 #include "header/Game/GamePlayScene.h"
+#include "header/Game/GameSceneManager.h"
 
 #include "header/Collider/SphereCollider.h"
 #include "header/Collider/PlaneCollider.h"

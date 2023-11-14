@@ -23,13 +23,18 @@ void GameScene::Initialize()
 	input = new	Input;
 	input->Initialize(winApp);
 
+	//マネージャ生成
+	sceneManager = new GameSceneManager();
+
 	//DirectX初期化処理　　ここまで
 	//ViewProjection
 	camera = new ViewProjection();
 	camera->Initialeze();
 
+	//タイトルシーン
 	scene_ = new GameTitleScene();
-	scene_->Initialize(camera, input);
+	//初期シーンを設定する
+	sceneManager->SetNextScene(scene_);
 #pragma	endregion
 	
 }
@@ -41,7 +46,7 @@ void GameScene::Update()
 	//カメラ
 	camera->Update();
 
-	scene_->Update();
+	sceneManager->Update(camera, input);
 
 //	switch (scene)
 //	{
@@ -78,8 +83,7 @@ void GameScene::Draw()
 	//描画処理ここから↓
 	directXCom->PreDraw();
 
-	scene_->Draw();
-
+	sceneManager->Draw();
 
 	directXCom->PostDraw();
 	//ここまで↑
@@ -111,13 +115,14 @@ void GameScene::Draw()
 void GameScene::Finalize()
 {
 	winApp->Finalize();
+	sceneManager->~GameSceneManager();
 	FbxLoader::GetInstance()->Finalize();
 	delete input;
 	delete winApp;
 	delete model;
 	
-	scene_->Finalize();
-	delete scene_;
+	//scene_->Finalize();
+	//delete scene_;
 	//delete object1;
 	/*delete model1;
 	delete obj3d;*/

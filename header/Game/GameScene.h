@@ -18,7 +18,8 @@
 #include "header/3D/FbxModel.h"
 #include "header/3D/Model.h"
 #include "header/3D/JsonLoader.h"
-
+//シーン関連
+#include "header/Game/GameSceneManager.h"
 #include "header/Game/GameTitleScene.h"
 #include "header/Game/GamePlayScene.h"
 
@@ -65,6 +66,8 @@ private: //ゲーム内使用クラス
 	FbxModel* model = nullptr;
 	FbxObject3d* object1 = new FbxObject3d();
 	
+	//シーンマネージャ
+	GameSceneManager* sceneManager = nullptr;
 	//マップ用JsonLoader
 	//JSON
 	LevelData* jsonLoader = nullptr;
@@ -80,6 +83,6 @@ private: //ゲーム内使用クラス
 	////UI関連
 	bool isBlackOut = false;
 
-	GameTitleScene* scene_ = nullptr;
+	GameBaseScene* scene_ = nullptr;
 };
 
