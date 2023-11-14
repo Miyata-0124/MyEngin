@@ -1,5 +1,5 @@
 #include "header/Game/Floor.h"
-#include "header/Collider/PlaneCollider.h"
+#include "header/Collider/BoxCollider.h"
 
 Floor* Floor::Create(Model* model)
 {
@@ -31,7 +31,7 @@ bool Floor::Initialize()
 	SetPosition({ 0, -15, 0 });
 	//コライダーの追加
 	//中心座標と原点からの距離
-	SetCollider(new PlaneCollider(XMVECTOR({ position.x,position.y + radius.y,position.z,0 }), distance.m128_f32[1]));
+	SetCollider(new BoxCollider(XMVECTOR({ 0,radius.y,0,0 }), radius));
 	//識別を設定する
 	SetIdentification(IDENT_NEUTRAL);
 	return true;

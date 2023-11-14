@@ -30,7 +30,7 @@ bool Item::Initialize()
 	}
 	//初期座標指定
 	SetSize({ 0.5f,0.5f,0.5f });
-	SetPosition({ -15,-13,0, });
+	SetPosition({ -15,-10,0, });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));

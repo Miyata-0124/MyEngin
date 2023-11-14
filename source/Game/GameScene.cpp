@@ -88,15 +88,14 @@ void GameScene::Initialize()
 	objPlayer = Player::Create(playerModel);
 	objPlayer->SetInput(input);
 	//敵
-	//objEnem = Enemy::Create(ground);
+	objEnem = Enemy::Create(ground);
 	//地面
 	objFloor = Floor::Create(item_);
 	//アイテム
 	objItem = Item::Create(ground);
 	objItem->SetInput(input);
-	//壁	
-	objWall = Wall::Create(ground);
-	
+	//壁
+	//objWall = Wall::Create(ground);
 	//背景
 	objBackGround = BackGround::Create(backGround);
 #pragma endregion
@@ -147,13 +146,14 @@ void GameScene::Update()
 		objPlayer->SetScene(scene);
 		objPlayer->Update();
 		//敵
-		//objEnem->Update();
+		objEnem->Update();
 		//アイテム
 		//objItem -> Update();
 		//地面
 		objFloor -> Update();
 		//壁
-		objWall->Update();
+		//objWall -> Update();
+		
 		//背景
 		objBackGround->Update();
 		
@@ -175,16 +175,12 @@ void GameScene::Update()
 		scene = objPlayer->GetScene();
 
 		break;
-	case 2: //ゲームオーバー
+	case 2:
 		if (input->TriggerKey(DIK_R))//リセット
 		{
-			overSprite->Reset();
-			titleSprite->Reset();
-			blackOut->Reset();
-			isBlackOut = false;
 			scene = 0;
+			overSprite->Reset();
 		}
-
 		rain->Update();
 		overSprite->Update();
 		break;
@@ -213,6 +209,8 @@ void GameScene::Draw()
 {
 	//描画処理ここから↓
 	directXCom->PreDraw();
+	
+	Particle::PreDraw(directXCom->GetCommandList());
 
 	switch (scene)
 	{
@@ -227,27 +225,29 @@ void GameScene::Draw()
 
 		//暗転用
 		blackOut->Draw();
+
+		
 		break;
 
 	case 1:
-		Object3d::PreDraw(directXCom->GetCommandList());
+		//Object3d::PreDraw(directXCom->GetCommandList());
 		//背景
 		
 		//オブジェクト
 		//object1->Draw(directXCom->GetCommandList());
 		
 		//プレイヤー
-		objPlayer->Draw();
+		objPlayer->Draw(directXCom->GetCommandList());
 		//敵
-		//objEnem->Draw();
+		objEnem->Draw(directXCom->GetCommandList());
 		//アイテム
-		//objItem->Draw();
+		objItem->Draw(directXCom->GetCommandList());
 		//地面
-		objFloor->Draw();
+		objFloor->Draw(directXCom->GetCommandList());
 		//壁
-		objWall->Draw();
+		//objWall->Draw();
 		//背景
-		objBackGround->Draw();
+		objBackGround->Draw(directXCom->GetCommandList());
 		//
 		/*for (auto object : objects) {
 			object->Draw();
@@ -256,7 +256,8 @@ void GameScene::Draw()
 
 		// UI,演出関連
 		blackOut->Draw();
-		Object3d::PostDraw();
+	
+		//Object3d::PostDraw();
 		break;
 	case 2:
 		Particle::PreDraw(directXCom->GetCommandList());
@@ -270,7 +271,8 @@ void GameScene::Draw()
 	}
 
 	directXCom->PostDraw();
-
+	
+	Particle::PostDraw();
 	//ここまで↑
 }
 

@@ -11,9 +11,8 @@
 
 enum class Posture //姿勢管理
 {
-	Upright,	//直立
-	Croching,	//しゃがみ
-	Climing
+	Upright,
+	Croching
 };
 
 class Player : public Object3d
@@ -91,7 +90,6 @@ private:
 	float radius = 1.0f;
 	//移動速度
 	float moveSpeed = 0.4f;
-	bool isMove = true;
 
 	//フラグ,タイマー( false=右 , true=左)
 	bool isDirection = false;

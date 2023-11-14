@@ -65,7 +65,7 @@ private:
 	float yadd = 0.0f;
 	float g = 0.80f;
 	//”¼Œa
-	float radius = 0.5f;
+	float radius = 1.0f;
 	//ˆÚ“®‚·‚é‰‘¬“x
 	float throwSpeed = 1.25f;
 	//‚‚³
