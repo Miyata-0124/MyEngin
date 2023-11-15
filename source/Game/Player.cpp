@@ -135,6 +135,11 @@ void Player::OnCollider(const CollisionInfo& info)
 
 			}
 		}
+		//•Ç‚É“–‚½‚Á‚½Žž
+		if (info.object->GetIdentification() == IDENT_WALL)
+		{
+
+		}
 	}
 }
 

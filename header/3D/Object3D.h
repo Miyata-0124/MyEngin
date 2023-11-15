@@ -21,13 +21,14 @@ class BaseCollider;
 enum Identification //属性
 {
 	IDENT_UNKNOWN = -1,
-	IDENT_NEUTRAL,		//中立
 	IDENT_PLAYER,		//プレイヤー
+	IDENT_NEUTRAL,		//中立
 	IDENT_ENEMY,		//敵対
 	IDENT_FREND,		//友好
 	IDENT_ITEM,			//アイテム
 	IDENT_GOAL,			//ゴール
 	IDENT_GATE,			//イベント
+	IDENT_WALL,			//壁
 };
 
 /// <summary>

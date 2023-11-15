@@ -6,6 +6,7 @@
 #include "header/Game/BlackOut.h"
 #include "header/Game/ClearSprite.h"
 #include "header/Game/OverSprite.h"
+#include "header/Game/WakeUp.h"
 
 class Player;
 class BackGround;
@@ -42,13 +43,16 @@ public:// メンバ変数
 	void Draw()override;
 
 private:
+	ViewProjection* camera;
+	Input* input;
+
+private:
 	//スプライト機能
 	SpriteCommon* spriteCommon = SpriteCommon::GetInstance();
 	DirectXCommon* directXCom = DirectXCommon::GetInstance();
-	
-	ClearSprite* clearSprite = new ClearSprite();
-	OverSprite* overSprite = new OverSprite();
-	BlackOut* blackOut = new BlackOut();
+	//スプライト
+	//演出
+	WakeUp* wakeUp = new WakeUp();
 	//判定マネージャー
 	CollisionManager* collisionManager = CollisionManager::GetInstance();
 	//ゲーム内オブジェクト
@@ -62,10 +66,6 @@ private:
 	Item* objItem = nullptr;
 	//壁
 	Wall* objWall = nullptr;
-	//ゴールゲート
-	Gate* objGoalGate[2] = {};
-	StageGate* objGate = nullptr;
-	ClearBox* objClearBox = nullptr;
 	//背景
 	BackGround* objBackGround = nullptr;
 	//パーティクル

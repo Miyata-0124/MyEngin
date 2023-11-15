@@ -47,35 +47,6 @@ void GameScene::Update()
 	camera->Update();
 
 	sceneManager->Update(camera, input);
-
-//	switch (scene)
-//	{
-//	case 0: //タイトル画面 雨が降っているように見えるタイトル
-////#pragma region パーティクル
-////		rain->Update();
-////#pragma endregion
-////#pragma region シーン切り替え時の処理
-////
-////
-////		titleSprite->Update(input, scene, isBlackOut);
-////		isBlackOut = titleSprite->GetBlackOut();
-////
-////		//暗転させるのか判断
-////		blackOut->Update(scene, isBlackOut);//暗転後シーン切り替えをする
-////		scene = blackOut->GetScene();//切り替えた情報を渡す->切り替わる
-//
-//#pragma endregion
-//		break;
-//	case 1:
-//		
-//
-//		break;
-//	case 2:
-//		/*rain->Update();
-//		overSprite->Update();*/
-//		break;
-//	}
-
 }
 
 void GameScene::Draw()
@@ -87,29 +58,6 @@ void GameScene::Draw()
 
 	directXCom->PostDraw();
 	//ここまで↑
-
-	//switch (scene)
-	//{
-	//case 0:
-	//	
-	//	//タイトル
-	//	//titleSprite->Draw();
-
-	//	//rain->Draw();
-	//	////暗転用
-	//	//blackOut->Draw();
-	//	break;
-
-	//case 1:
-
-	//	break;
-	//case 2:
-	//	/*rain->Draw();
-	//	overSprite->Draw();*/
-	//	break;
-	//}
-
-
 }
 
 void GameScene::Finalize()
@@ -120,8 +68,6 @@ void GameScene::Finalize()
 	delete input;
 	delete winApp;
 	delete model;
-	
-	//scene_->Finalize();
 	//delete scene_;
 	//delete object1;
 	/*delete model1;

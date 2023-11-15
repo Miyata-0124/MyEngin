@@ -13,8 +13,10 @@ Rain* Rain::Create()
 		delete instance;
 		assert(0);
 	}
+
 	//モデルセット
 	instance->LoadTexture(texIndex, "blue1x1.png");
+
 	return instance;
 }
 

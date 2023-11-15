@@ -38,6 +38,6 @@ public:
 
 private:
 	//”¼Œa
-	DirectX::XMFLOAT2 radius = { 1.0f,1.0f };
+	DirectX::XMFLOAT2 radius = { 2.0f,2.0f };
 };
 

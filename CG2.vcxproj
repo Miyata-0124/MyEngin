@@ -143,6 +143,7 @@
     <ClCompile Include="source\Game\Rain.cpp" />
     <ClCompile Include="source\Game\StageGate.cpp" />
     <ClCompile Include="source\Game\TitleSprite.cpp" />
+    <ClCompile Include="source\Game\WakeUp.cpp" />
     <ClCompile Include="source\Game\Wall.cpp" />
     <ClCompile Include="source\Engin\WinApp.cpp" />
   </ItemGroup>
@@ -262,6 +263,7 @@
     <ClInclude Include="header\Game\Rain.h" />
     <ClInclude Include="header\Game\StageGate.h" />
     <ClInclude Include="header\Game\TitleSprite.h" />
+    <ClInclude Include="header\Game\WakeUp.h" />
     <ClInclude Include="Math\Affin.h" />
     <ClInclude Include="Math\Convert.h" />
     <ClInclude Include="Math\Matrix4.h" />

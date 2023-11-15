@@ -21,7 +21,6 @@
 //ƒV[ƒ“ŠÖ˜A
 #include "header/Game/GameSceneManager.h"
 #include "header/Game/GameTitleScene.h"
-#include "header/Game/GamePlayScene.h"
 
 class GameScene
 {

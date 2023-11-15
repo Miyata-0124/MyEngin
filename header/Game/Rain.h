@@ -27,6 +27,6 @@ private:
 	float rainTimer = 0.0f;
 	bool rainFlag = false;
 	//テクスチャのインデックス
-	const static uint32_t texIndex = 1;
+	static const uint32_t texIndex = 1;
 };
 
