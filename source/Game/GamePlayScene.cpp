@@ -11,9 +11,8 @@
 #include "header/Game/Item.h"
 #include "header/Game/Wall.h"
 #include "header/Game/Gate.h"
-#include "header/Game/StageGate.h"
+#include "header/Game/MoveGate.h"
 #include "header/Game/Rain.h"
-#include "header/Game/ClearBox.h"
 #include "easing/Easing.h"
 
 void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
@@ -66,11 +65,14 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//’n–Ê
 	objFloor = Floor::Create(item_);
 	//•Ç	
-	objWall = Wall::Create(wall);
+	//objWall = Wall::Create(wall);
 	//ƒAƒCƒeƒ€
 	objItem = Item::Create(ground);
 	objItem->SetInput(input);
 
+	//ˆÚ“®—pƒQ[ƒg
+	objGate = MoveGate::Create(wall);
+	objGate->SetInput(input);
 	//”wŒi
 	//objBackGround = BackGround::Create(backGround);
 #pragma endregion
@@ -90,12 +92,12 @@ void GamePlayScene::Finalize()
 	{
 		delete objGate[i];
 	}*/
-	delete objWall;
+	//delete objWall;
 	delete objItem;
 	delete objBackGround;
+	delete objGate;
 	delete rain;
 	delete wakeUp;
-
 }
 
 void GamePlayScene::Update()
@@ -109,7 +111,8 @@ void GamePlayScene::Update()
 	//’n–Ê
 	objFloor->Update();
 	//•Ç
-	objWall->Update();
+	//objWall->Update();
+	objGate->Update();
 	//”wŒi
 	//objBackGround->Update();
 
@@ -148,7 +151,8 @@ void GamePlayScene::Draw()
 	//’n–Ê
 	objFloor->Draw();
 	//•Ç
-	objWall->Draw();
+	//objWall->Draw();
+	objGate->Draw();
 	//”wŒi
 	//objBackGround->Draw();
 	//JsonLoader‚Ì•`‰æ

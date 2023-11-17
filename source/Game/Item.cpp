@@ -29,7 +29,7 @@ bool Item::Initialize()
 		return false;
 	}
 	//初期座標指定
-	SetSize({ 0.5f,0.5f,0.5f });
+	SetSize({ 2.0f,0.5f,0.5f });
 	SetPosition({ -15,-13,0, });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
@@ -112,6 +112,12 @@ void Item::OnCollider(const CollisionInfo& info)
 		if (info.object->GetIdentification() == IDENT_ENEMY)
 		{
 
+		}
+		if (info.object->GetIdentification() == IDENT_WALL)
+		{
+			height = 0.0f;
+			length = 0.0f;
+			yadd = 0.0f;	
 		}
 	}
 }

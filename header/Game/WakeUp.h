@@ -1,6 +1,6 @@
 #pragma once
 #include "header/2D/Sprite.h"
-enum Blink
+enum class Blink
 {
 	slowOpen,
 	slowClose,

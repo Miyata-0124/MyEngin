@@ -43,6 +43,6 @@ private:
 	//Œ´“_‚©‚ç‚Ì‹——£
 	XMVECTOR distance = { 0, 0, 0 };
 	//”¼Œa
-	DirectX::XMFLOAT2 radius = { 80.0f,1.0f };
+	DirectX::XMFLOAT2 radius = { 60.0f,1.0f };
 };
 

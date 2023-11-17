@@ -1,12 +1,10 @@
-#include "header/Game/Wall.h"
+#include "header/Game/MoveGate.h"
 #include "header/Collider/BoxCollider.h"
 
-using namespace DirectX;
-
-Wall* Wall::Create(Model* model)
+MoveGate* MoveGate::Create(Model* model)
 {
 	//インスタンス生成
-	Wall* instance = new Wall();
+	MoveGate* instance = new MoveGate();
 	if (instance == nullptr)
 	{
 		return nullptr;
@@ -23,32 +21,39 @@ Wall* Wall::Create(Model* model)
 	return instance;
 }
 
-bool Wall::Initialize()
+bool MoveGate::Initialize()
 {
 	if (!Object3d::Initialize())
 	{
 		return false;
 	}
 	//初期座標指定
-	SetSize({ 1.0f,1.0f,1.0f });
-	SetPosition({ 0,-13,0, });
+	SetSize({ 1,1,1 });
+	SetRotation({ 0,0,0 });
+	SetPosition({ 30,-13,0 });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new BoxCollider(XMVECTOR({ 0,radius.y,0,0 }), radius));
 	//識別を設定する
-	SetIdentification(IDENT_WALL);
+	SetIdentification(IDENT_GATE);
 	return true;
 }
 
-void Wall::Update()
+void MoveGate::Update()
 {
 	Object3d::Update();
 }
 
-void Wall::OnCollider(const CollisionInfo& info)
+void MoveGate::OnCollider(const CollisionInfo& info)
 {
 	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
 	{
-
+		if (info.object->GetIdentification() == IDENT_PLAYER)
+		{
+			if (input->TriggerKey(DIK_V))
+			{
+				isMapMove = true;
+			}
+		}
 	}
 }

@@ -96,7 +96,7 @@ private:
 	//フラグ,タイマー( false=右 , true=左)
 	bool isDirection = false;
 	//ジャンプ
-	bool isJamp = false;
+	bool isJamp = true;
 	//横にハイジャンプ
 	float hiJumpTimer = 5.0f;
 	//アイテムを保持

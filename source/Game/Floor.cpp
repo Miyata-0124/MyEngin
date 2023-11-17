@@ -32,7 +32,7 @@ bool Floor::Initialize()
 	//コライダーの追加
 	SetDistance({ position.x, position.y + radius.y+radius.y, position.z });
 	//中心座標と原点からの距離
-	SetCollider(new PlaneCollider(XMVECTOR({ position.x,position.y + radius.y,position.z,0 }), distance.m128_f32[1]));
+	SetCollider(new PlaneCollider(XMVECTOR({ 0,position.y + radius.y,0,0 }), distance.m128_f32[1]));
 	//識別を設定する
 	SetIdentification(IDENT_NEUTRAL);
 	return true;

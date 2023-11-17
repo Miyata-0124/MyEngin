@@ -134,6 +134,7 @@
     <ClCompile Include="source\3D\Object3D.cpp" />
     <ClCompile Include="source\2D\Particle.cpp" />
     <ClCompile Include="source\Collider\PlaneCollider.cpp" />
+    <ClCompile Include="source\Game\MoveGate.cpp" />
     <ClCompile Include="source\Game\OverSprite.cpp" />
     <ClCompile Include="source\Game\Player.cpp" />
     <ClCompile Include="source\Collider\SphereCollider.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="header\Game\Gate.h" />
     <ClInclude Include="header\Game\Item.h" />
     <ClInclude Include="header\3D\JsonLoader.h" />
+    <ClInclude Include="header\Game\MoveGate.h" />
     <ClInclude Include="header\Game\OverSprite.h" />
     <ClInclude Include="header\Game\Rain.h" />
     <ClInclude Include="header\Game\StageGate.h" />

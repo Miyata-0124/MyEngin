@@ -56,12 +56,15 @@ void Player::Update()
 		//HiJump();
 		break;
 	}
+	//重力
+	if (isJamp)
+	{
+		Gravity();
+	}
 	//移動
 	Move();
 	//アイテムに対する行動
 	Retention();
-	//重力
-	Gravity();
 	Object3d::Update();
 }
 
@@ -74,11 +77,6 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 			yadd = 0.0f;
 			isJamp = false;
-		}
-		//アイテムに当たった時
-		if (info.object->GetIdentification() == IDENT_ITEM)
-		{
-			
 		}
 		//敵性オブジェクトor敵に当たった時
 		if (info.object->GetIdentification() == IDENT_ENEMY)
@@ -117,28 +115,31 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 
 		}
-		//アイテムに当たった時
-		if (info.object->GetIdentification() == IDENT_ITEM)
+		//敵性オブジェクトor敵に当たった時
+		if (info.object->GetIdentification() == IDENT_ENEMY)
 		{
 
 		}
-		//敵性オブジェクトor敵に当たった時
-		if (info.object->GetIdentification() == IDENT_ENEMY)
+		//アイテムに当たった時
+		if (info.object->GetIdentification() == IDENT_ITEM)
 		{
 
 		}
 		//移動用ゲートに当たった時
 		if (info.object->GetIdentification() == IDENT_GATE)
 		{
-			if (input->TriggerKey(DIK_V))
-			{
+			yadd = 0.0f;
+			isJamp = false;
 
-			}
 		}
 		//壁に当たった時
 		if (info.object->GetIdentification() == IDENT_WALL)
 		{
-
+			//上に乗った時
+			if (position.y + radius > info.object->GetPosition().y - 1.0f)
+			{
+				position.y += 0.5f;;
+			}
 		}
 	}
 }
@@ -155,7 +156,6 @@ void Player::Move()
 		{
 			moveSpeed = 0.0f;
 		}
-		
 		isDirection = true;
 	}
 	else if (input->PushKey(DIK_RIGHT))

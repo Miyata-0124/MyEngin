@@ -16,7 +16,7 @@ class Wall;
 class Enemy;
 class Rain;
 class Gate;
-class StageGate;
+class MoveGate;
 class ClearBox;
 
 class GamePlayScene : public GameBaseScene
@@ -66,10 +66,13 @@ private:
 	Item* objItem = nullptr;
 	//壁
 	Wall* objWall = nullptr;
+	//マップ移動用ゲート
+	MoveGate* objGate = nullptr;
 	//背景
 	BackGround* objBackGround = nullptr;
 	//パーティクル
 	Rain* rain = nullptr;
 
+	XMFLOAT3 move = { 0,0,0 };
 };
 

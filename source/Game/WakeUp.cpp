@@ -16,16 +16,16 @@ void WakeUp::Initialize(SpriteCommon* spriteCommon)
 void WakeUp::Update()
 {
 	//äJénââèo
-	if (blink == slowOpen)
+	if (blink == Blink::slowOpen)
 	{
 		minAlpha -= 0.01f;
 		if (minAlpha <= 0.6f)
 		{
-			blink = slowClose;
+			blink = Blink::slowClose;
 			blinkCount += 1;
 		}
 	}
-	else if (blink == slowClose)
+	else if (blink == Blink::slowClose)
 	{
 		if (blinkCount >= 3)
 		{
@@ -40,16 +40,16 @@ void WakeUp::Update()
 		{
 			if (blinkCount < 3)
 			{
-				blink = slowOpen;
+				blink = Blink::slowOpen;
 			}
 			else 
 			{
-				blink = Open;
+				blink = Blink::Open;
 			}
 			blinkCount += 1;
 		}
 	}
-	else if (blink == Open)
+	else if (blink == Blink::Open)
 	{
 		minAlpha -= 0.02f;
 	}
