@@ -75,7 +75,6 @@ void Gate::Update()
 			if (rotation.x >= 90.0f)
 			{
 				rotation.x = 90.0f;
-				isBlackOut = true;
 			}
 		}
 	}

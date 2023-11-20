@@ -28,7 +28,6 @@ public:
 	void SetIsGoal(bool isGoal_) { this->isGoal = isGoal_; }
 
 	bool GetIsGoal() { return isGoal; }
-	bool GetIsBlackOut() { return isBlackOut; }
 private:
 	int32_t gateNum;
 
@@ -37,7 +36,6 @@ private:
 	DirectX::XMFLOAT2 radius = { 1.0f,1.0f };
 
 	bool isGoal = false;
-	bool isBlackOut = false;
 	//イージング用
 	float min = 0.0f;
 	float max = 1.0f;

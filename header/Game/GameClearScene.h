@@ -5,6 +5,7 @@
 #include "header/Game/GameBaseScene.h"
 
 #include "header/Game/BlackOut.h"
+#include "header/Game/ClearSprite.h"
 
 class Player;
 class Floor;
@@ -41,6 +42,7 @@ private:
 	DirectXCommon* directXCom = DirectXCommon::GetInstance();
 	//暗転
 	BlackOut* blackOut = new BlackOut();
+	ClearSprite* clearSprite = new ClearSprite();
 	//判定マネージャー
 	CollisionManager* collisionManager = CollisionManager::GetInstance();
 	//オブジェクト

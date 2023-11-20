@@ -14,7 +14,7 @@ public:
 	/// </summary>
 	/// <param name="sceneNum_"></param>
 	/// <param name="isBlackOut_"></param>
-	void Update(bool isGoal_);
+	void Update();
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -24,7 +24,6 @@ public:
 private:
 	Sprite* clearSprite;
 private:
-	bool isBlackOut = false;
 	//ゲームオーバーが降ってくるタイマー
 	float downTimer = 0.0f;
 	//イージング用
