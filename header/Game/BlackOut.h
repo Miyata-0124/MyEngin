@@ -29,6 +29,9 @@ public:
 	//アルファ値
 	float GetMinAlpha() { return minAlpha; }
 	float GetMaxAlpha() { return maxAlpha; }
+
+	void SetMinAlpha(float minAlpha_) { minAlpha = minAlpha_; }
+	void SetMaxAlpha(float maxAlpha_) { maxAlpha = maxAlpha_; }
 private:
 	Sprite* blackOut;
 private:

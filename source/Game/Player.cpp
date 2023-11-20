@@ -57,10 +57,8 @@ void Player::Update()
 		break;
 	}
 	//重力
-	if (isJamp)
-	{
-		Gravity();
-	}
+	Gravity();
+	
 	//移動
 	Move();
 	//アイテムに対する行動
@@ -135,11 +133,7 @@ void Player::OnCollider(const CollisionInfo& info)
 		//壁に当たった時
 		if (info.object->GetIdentification() == IDENT_WALL)
 		{
-			//上に乗った時
-			if (position.y + radius > info.object->GetPosition().y - 1.0f)
-			{
-				position.y += 0.5f;;
-			}
+
 		}
 	}
 }
@@ -211,7 +205,7 @@ void Player::ChangePosture()
 }
 
 void Player::Gravity()
-{  
+{
 	position.y -= yadd;
 	if (yadd <= 1.8f)
 	{

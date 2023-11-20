@@ -99,6 +99,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="easing\Easing.cpp" />
+    <ClCompile Include="source\Game\GameClearScene.cpp" />
     <ClCompile Include="source\Game\GameSceneManager.cpp" />
     <ClCompile Include="source\Game\BackGround.cpp" />
     <ClCompile Include="source\Collider\BaseCollider.cpp" />
@@ -234,6 +235,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="easing\Easing.h" />
+    <ClInclude Include="header\Game\GameClearScene.h" />
     <ClInclude Include="header\Game\GameSceneManager.h" />
     <ClInclude Include="header\Game\BackGround.h" />
     <ClInclude Include="header\Collider\BaseCollider.h" />

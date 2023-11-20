@@ -9,6 +9,9 @@ void BlackOut::Initialize(SpriteCommon* spriteCommon)
 	blackOut ->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
 	blackOut ->SetPosition({ 0,0 });
 	blackOut ->SetColor({ 0,0,0,0 });
+
+	minAlpha = 0.0f;
+	maxAlpha = 1.0f;
 }
 
 void BlackOut::Update()

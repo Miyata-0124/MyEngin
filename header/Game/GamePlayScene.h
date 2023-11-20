@@ -4,8 +4,6 @@
 #include "header/Game/GameBaseScene.h"
 #include "header/Game/BackGround.h"
 #include "header/Game/BlackOut.h"
-#include "header/Game/ClearSprite.h"
-#include "header/Game/OverSprite.h"
 #include "header/Game/WakeUp.h"
 
 class Player;
@@ -15,9 +13,14 @@ class Item;
 class Wall;
 class Enemy;
 class Rain;
-class Gate;
 class MoveGate;
 class ClearBox;
+
+enum class MAP
+{
+	MAP1,
+	MAP2,
+};
 
 class GamePlayScene : public GameBaseScene
 {
@@ -46,6 +49,7 @@ private:
 	ViewProjection* camera;
 	Input* input;
 
+	MAP map = MAP::MAP1;
 private:
 	//スプライト機能
 	SpriteCommon* spriteCommon = SpriteCommon::GetInstance();
@@ -53,6 +57,8 @@ private:
 	//スプライト
 	//演出
 	WakeUp* wakeUp = new WakeUp();
+	//暗転
+	BlackOut* blackOut = new BlackOut();
 	//判定マネージャー
 	CollisionManager* collisionManager = CollisionManager::GetInstance();
 	//ゲーム内オブジェクト
