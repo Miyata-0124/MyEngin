@@ -21,9 +21,6 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "white1x1.png");
 	spriteCommon->Loadtexture(2, "white1x1.png");
-	spriteCommon->Loadtexture(3, "GamePlay.png");
-	spriteCommon->Loadtexture(4, "GamePlay2.png");
-	spriteCommon->Loadtexture(5, "GamePlay3.png");
 	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), camera);
 	//FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
@@ -32,21 +29,6 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	wakeUp->Initialize(spriteCommon);
 
 	blackOut->Initialize(spriteCommon);
-
-	sprite[0]->Initialize(spriteCommon, 3);
-	sprite[1]->Initialize(spriteCommon, 4);
-	sprite[2]->Initialize(spriteCommon, 5);
-	for (int i = 0; i < 3; i++)
-	{
-		sprite[i]->SetAnchorPoint(XMFLOAT2(0, 0));
-	}
-	sprite[0]->SetSize(XMFLOAT2(WinApp::window_width, 360));
-	sprite[1]->SetSize(XMFLOAT2(WinApp::window_width, 360));
-	sprite[2]->SetSize(XMFLOAT2(WinApp::window_width, 360));
-	sprite[0]->SetPosition({ 0,0 });
-	sprite[1]->SetPosition({ 100,0 });
-	sprite[2]->SetPosition({ 320,200 });
-	
 	//jsonLoader = JsonLoader::LoadFlomJSONInternal("map");
 
 #pragma region FBX
@@ -69,7 +51,6 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//Model* pipe = Model::LoadFromOBJ("pipe");
 	//Model* backGround = Model::LoadFromOBJ("BG");
 	//Model* clear = Model::LoadFromOBJ("clear");
-	Model* gate = Model::LoadFromOBJ("gate");
 #pragma endregion
 #pragma region Player等のオブジェクト
 
@@ -81,7 +62,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//地面
 	objFloor = Floor::Create(item_);
 	//壁	
-	objWall = Wall::Create(gate);
+	objWall = Wall::Create(wall);
 	//アイテム
 	objItem = Item::Create(ground);
 	objItem->SetInput(input);
@@ -115,16 +96,10 @@ void GamePlayScene::Finalize()
 	delete rain;
 	delete wakeUp;
 	delete blackOut;
-	for (int i = 0; i < 3; i++)
-	{
-		delete sprite[i];
-	}
 }
 
 void GamePlayScene::Update()
 {
-	if (map == MAP::MAP1)
-	{
 		//フェードアウト
 		wakeUp->Update();
 		if (objGate->GetMapMove())
@@ -135,15 +110,9 @@ void GamePlayScene::Update()
 				objPlayer->SetPosition({ -20,-13,0 });
 				objGate->SetMapMove(false);
 				blackOut->Reset();
-				map = MAP::MAP2;
 			}
 		}
 
-		sprite[0]->Update();
-		sprite[2]->Update();
-	}
-	else if (map == MAP::MAP2)
-	{
 		//壁
 		objWall->Update();
 		//アイテム
@@ -162,8 +131,7 @@ void GamePlayScene::Update()
 				sceneManager->SetNextScene(scene);
 			}
 		}
-		sprite[1]->Update();
-	}
+	
 	//プレイヤー
 	objPlayer->Update();
 	//地面
@@ -178,6 +146,9 @@ void GamePlayScene::Update()
 		object->Update();
 	}*/
 
+	//カメラ
+	camera->Update();
+
 #pragma region 各クラス間の情報受け渡し
 	//オブジェクト
 	//objEnem->SetPPosition(objPlayer->GetPosition());
@@ -191,27 +162,11 @@ void GamePlayScene::Update()
 #pragma endregion
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
-
-	camera->Update();
 }
 
 void GamePlayScene::Draw()
 {
 	Object3d::PreDraw(directXCom->GetCommandList());
-	if (map == MAP::MAP1)
-	{
-		
-	}
-	else if (map == MAP::MAP2)
-	{
-		//壁
-		objWall->Draw();
-		//アイテム
-		objItem->Draw();
-	}
-
-	//背景
-
 	//オブジェクト
 	//object1->Draw(directXCom->GetCommandList());
 
@@ -219,8 +174,12 @@ void GamePlayScene::Draw()
 	objPlayer->Draw();
 	//地面
 	objFloor->Draw();
-
+	//扉
 	objGate->Draw();
+	//壁
+	objWall->Draw();
+	//アイテム
+	objItem->Draw();
 	//背景
 	//objBackGround->Draw();
 	//JsonLoaderの描画
@@ -229,20 +188,8 @@ void GamePlayScene::Draw()
 	}*/
 	Object3d::PostDraw();
 	// UI,演出関連
-	if (map == MAP::MAP1)
-	{
-		wakeUp->Draw();
-
-		sprite[0]->Draw();
-		sprite[2]->Draw();
-
-		blackOut->Draw();
-		
-	}
-	else if (map == MAP::MAP2)
-	{
-		sprite[1]->Draw();
-		blackOut->Draw();
-	}
+	wakeUp->Draw();
+	blackOut->Draw();
+	
 }
 

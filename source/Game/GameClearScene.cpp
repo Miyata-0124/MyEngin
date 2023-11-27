@@ -45,7 +45,7 @@ void GameClearScene::Initialize(ViewProjection* camera_, Input* input_)
 		objFloor[i] = Floor::Create(item_);
 	}
 	objFloor[1]->SetPosition({ 0, 15, 0 });
-	objFloor[2]->SetSize({ 1,80,20 });
+	objFloor[2]->SetScale({ 1,80,20 });
 	objFloor[2]->SetPosition({ 30,0,0 });
 	//”à
 	for (int i = 0; i < 2; i++)

@@ -16,12 +16,6 @@ class Rain;
 class MoveGate;
 class ClearBox;
 
-enum class MAP
-{
-	MAP1,
-	MAP2,
-};
-
 class GamePlayScene : public GameBaseScene
 {
 public:// メンバ変数
@@ -48,8 +42,6 @@ public:// メンバ変数
 private:
 	ViewProjection* camera;
 	Input* input;
-
-	MAP map = MAP::MAP1;
 private:
 	//スプライト機能
 	SpriteCommon* spriteCommon = SpriteCommon::GetInstance();
@@ -59,8 +51,6 @@ private:
 	WakeUp* wakeUp = new WakeUp();
 	//暗転
 	BlackOut* blackOut = new BlackOut();
-
-	Sprite* sprite[3] = { new Sprite(),new Sprite, new Sprite };
 	//判定マネージャー
 	CollisionManager* collisionManager = CollisionManager::GetInstance();
 	//ゲーム内オブジェクト

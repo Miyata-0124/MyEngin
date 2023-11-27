@@ -28,7 +28,7 @@ bool ClearBox::Initialize()
 	{
 		return false;
 	}
-	SetSize({ 10,5,1, });
+	SetScale({ 10,5,1, });
 	SetPosition({ 15, -13.0f, 0 });
 	//コライダーの追加
 	//中心座標と原点からの距離

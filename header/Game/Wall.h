@@ -36,8 +36,9 @@ public:
 	/// <param name="info"></param>
 	void OnCollider(const CollisionInfo& info)override;
 
+	//ゲッター,セッター
 private:
 	//半径
-	DirectX::XMFLOAT2 radius = {1.0f,2.0f };
+	DirectX::XMFLOAT2 radius = {3.0f,3.0f };
 };
 

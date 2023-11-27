@@ -28,8 +28,10 @@ bool Gate::Initialize()
 	{
 		return false;
 	}
-	SetSize({ 1,15,20, });
+	SetScale({ 1,15,20, });
+	SetRotation({ 0,0,0 });
 	SetPosition({ 0, 0, 0 });
+	SetRadius({ radius.x,radius.y });
 	//コライダーの追加
 	//中心座標と原点からの距離
 	SetCollider(new BoxCollider(XMVECTOR({ 0,radius.y,0,0 }), radius));

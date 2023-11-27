@@ -30,9 +30,10 @@ bool Player::Initialize()
 		return false;
 	}
 	//初期座標指定
-	SetSize({ 1,1,1 });
+	SetScale({ 1,1,1 });
 	SetRotation({ 0,0,0 });
-	SetPosition({ -20,-13,0 });
+	SetPosition({ 0,0,0 });
+	SetRadius({ radius,radius });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
@@ -58,23 +59,30 @@ void Player::Update()
 	}
 	//重力
 	Gravity();
-	
 	//移動
 	Move();
 	//アイテムに対する行動
 	Retention();
+
 	Object3d::Update();
 }
 
 void Player::OnCollider(const CollisionInfo& info)
 {
-	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE)
+	if (info.collider->GetShapeType() == COLISIONSHAPE_PLANE) 
 	{
 		//中立なオブジェクトに当たった時
 		if (info.object->GetIdentification() == IDENT_NEUTRAL)
 		{
 			yadd = 0.0f;
 			isJamp = false;
+
+			//平地に当たっていてめり込んでいたら
+			if (position.y < -13.0f)
+			{
+				//平地の上に合わせる
+				position.y = -13.0f;
+			}
 		}
 		//敵性オブジェクトor敵に当たった時
 		if (info.object->GetIdentification() == IDENT_ENEMY)
@@ -126,14 +134,13 @@ void Player::OnCollider(const CollisionInfo& info)
 		//移動用ゲートに当たった時
 		if (info.object->GetIdentification() == IDENT_GATE)
 		{
-			yadd = 0.0f;
-			isJamp = false;
+
 
 		}
 		//壁に当たった時
 		if (info.object->GetIdentification() == IDENT_WALL)
 		{
-
+			position.y = info.object->GetPosition().y;
 		}
 	}
 }
@@ -191,14 +198,14 @@ void Player::ChangePosture()
 	if (posture == Posture::Upright && input->TriggerKey(DIK_DOWN))
 	{
 		moveSpeed = 0.3f;
-		SetSize({ 1,0.5f,1 });
+		SetScale({ 1,0.5f,1 });
 		position.y -= 0.5f;
 		posture = Posture::Croching;
 	}
 	if (posture == Posture::Croching && input->TriggerKey(DIK_UP))
 	{
 		moveSpeed = 0.4f;
-		SetSize({ 1,1,1 });
+		SetScale({ 1,1,1 });
 		position.y += 0.5f;
 		posture = Posture::Upright;
 	}
@@ -207,7 +214,7 @@ void Player::ChangePosture()
 void Player::Gravity()
 {
 	position.y -= yadd;
-	if (yadd <= 1.8f)
+	if (yadd <= 1.0f)
 	{
 		yadd += 0.2f;
 	}

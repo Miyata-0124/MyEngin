@@ -30,8 +30,10 @@ bool Enemy::Initialize()
 		return false;
 	}
 	//初期座標指定
-	SetSize({ 1,1,1 });
+	SetScale({ 1,1,1 });
+	SetRotation({ 0,0,0 });
 	SetPosition({ 15,0,0 });
+	SetRadius({ radius,radius });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));

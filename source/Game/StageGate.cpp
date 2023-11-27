@@ -28,9 +28,10 @@ bool StageGate::Initialize()
 		return false;
 	}
 	//初期座標指定
-	SetSize({ 2,2,2 });
+	SetScale({ 2,2,2 });
 	SetRotation({ 0,0,0 });
 	SetPosition({ 40,-13,0 });
+	SetRadius({ radius.x,radius.y });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new BoxCollider(XMVECTOR({ 0,radius.y,0,0 }), radius));

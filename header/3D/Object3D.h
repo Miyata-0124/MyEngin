@@ -55,7 +55,6 @@ public: // サブクラス
 
 private: // 定数
 	static const int division = 50;	// 分割数
-	static const float radius;	// 底面の半径
 	static const float prizmHeight;	// 柱の高さ
 	static const int planeCount = division * 2 + division * 2; // 面の数
 	static const int vertexCount = planeCount * 3; // 頂点数
@@ -195,6 +194,8 @@ public: // メンバ関数
 	/// <returns></returns>
 	const XMFLOAT3& GetRotation()const { return rotation; }
 
+	const XMFLOAT2& GetRadius()const { return radius; }
+	//セッター
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
@@ -204,14 +205,21 @@ public: // メンバ関数
 	/// オブジェクトサイズの設定
 	/// </summary>
 	/// <param name="size"></param>
-	void SetSize(const XMFLOAT3& scale_) { this->scale = scale_; }
+	void SetScale(const XMFLOAT3& scale_) { this->scale = scale_; }
 	/// <summary>
 	/// 回転角の設定
 	/// </summary>
 	/// <param name="rotation"></param>
 	void SetRotation(const XMFLOAT3& rotation_) { this->rotation = rotation_; }
-
-	//セッター
+	/// <summary>
+	/// 半径の設定
+	/// </summary>
+	/// <param name="radius_"></param>
+	void SetRadius(const XMFLOAT2& radius_) { this->radius = radius_; }
+	/// <summary>
+	/// モデルセット
+	/// </summary>
+	/// <param name="model_"></param>
 	void SetModel(Model* model_) { model = model_; }
 	/// <summary>
 	/// ワールド行列の取得
@@ -241,6 +249,8 @@ protected: // メンバ変数
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
 	XMFLOAT3 position = { 0,0,0 };
+	//半径
+	XMFLOAT2 radius = { 0,0 };	//
 	// ローカルワールド変換行列
 	XMMATRIX matWorld;
 	XMMATRIX matScale, matRot, matTrans;
@@ -251,6 +261,7 @@ protected: // メンバ変数
 
 	const char* name = nullptr;
 	BaseCollider* collider = nullptr;
+
 	//それぞれが持つ識別コード
 	Identification ident = IDENT_UNKNOWN;
 };

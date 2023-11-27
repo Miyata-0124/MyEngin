@@ -92,13 +92,13 @@ private:
 	//移動速度
 	float moveSpeed = 0.4f;
 	bool isMove = true;
+	//横にハイジャンプ
+	float hiJumpTimer = 5.0f;
 
 	//フラグ,タイマー( false=右 , true=左)
 	bool isDirection = false;
 	//ジャンプ
 	bool isJamp = true;
-	//横にハイジャンプ
-	float hiJumpTimer = 5.0f;
 	//アイテムを保持
 	bool isRetention = false;
 	//投擲フラグ

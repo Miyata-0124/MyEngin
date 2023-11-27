@@ -27,8 +27,10 @@ bool Floor::Initialize()
 	{
 		return false;
 	}
-	SetSize({ 60,1,60, });
+	SetScale({ 60,1,60, });
+	SetRotation({ 0,0,0 });
 	SetPosition({ 0, -15, 0 });
+	SetRadius({ radius.x,radius.y });
 	//コライダーの追加
 	SetDistance({ position.x, position.y + radius.y+radius.y, position.z });
 	//中心座標と原点からの距離

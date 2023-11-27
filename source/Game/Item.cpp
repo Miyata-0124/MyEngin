@@ -29,8 +29,10 @@ bool Item::Initialize()
 		return false;
 	}
 	//初期座標指定
-	SetSize({ 2.0f,0.5f,0.5f });
+	SetScale({ 2.0f,0.5f,0.5f });
+	SetRotation({ 0,0,0 });
 	SetPosition({ -15,-13,0, });
+	SetRadius({ radius,radius });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
