@@ -100,38 +100,12 @@ void GamePlayScene::Finalize()
 
 void GamePlayScene::Update()
 {
-		//フェードアウト
-		wakeUp->Update();
-		if (objGate->GetMapMove())
-		{
-			blackOut->Update();
-			if (blackOut->GetMinAlpha() > blackOut->GetMaxAlpha())
-			{
-				objPlayer->SetPosition({ -20,-13,0 });
-				objGate->SetMapMove(false);
-				blackOut->Reset();
-			}
-		}
-
-		//壁
-		objWall->Update();
-		//アイテム
-		objItem->Update();
-
-		if (objGate->GetMapMove())
-		{
-			blackOut->Update();
-			if (blackOut->GetMinAlpha() > blackOut->GetMaxAlpha())
-			{
-				objGate->SetMapMove(false);
-				objPlayer->SetPosition({ -20,-13,0 });
-				blackOut->Reset();
-
-				GameBaseScene* scene = new GameClearScene();
-				sceneManager->SetNextScene(scene);
-			}
-		}
-	
+	//フェードアウト
+	wakeUp->Update();
+	//壁
+	objWall->Update();
+	//アイテム
+	objItem->Update();
 	//プレイヤー
 	objPlayer->Update();
 	//地面
@@ -162,6 +136,20 @@ void GamePlayScene::Update()
 #pragma endregion
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
+
+	if (objGate->GetMapMove())
+	{
+		blackOut->Update();
+		if (blackOut->GetMinAlpha() > blackOut->GetMaxAlpha())
+		{
+			objGate->SetMapMove(false);
+			objPlayer->SetPosition({ -20,-13,0 });
+			blackOut->Reset();
+
+			GameBaseScene* scene = new GameClearScene();
+			sceneManager->SetNextScene(scene);
+		}
+	}
 }
 
 void GamePlayScene::Draw()

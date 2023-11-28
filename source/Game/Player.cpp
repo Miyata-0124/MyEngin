@@ -140,7 +140,9 @@ void Player::OnCollider(const CollisionInfo& info)
 		//•Ç‚É“–‚½‚Á‚½
 		if (info.object->GetIdentification() == IDENT_WALL)
 		{
-			position.y = info.object->GetPosition().y;
+			yadd = 0.0f;
+			isJamp = false;
+			position.y = info.object->GetPosition().y + info.object->GetRadius().y + 0.9f;
 		}
 	}
 }

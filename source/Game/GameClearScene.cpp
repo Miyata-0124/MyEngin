@@ -102,12 +102,6 @@ void GameClearScene::Update()
 		clearSprite->Update();
 	}
 
-	if (input->TriggerKey(DIK_R))
-	{
-		GameBaseScene* scene = new GameTitleScene();
-		sceneManager->SetNextScene(scene);
-	}
-
 	//判定用
 	objClearBox->Update();
 
@@ -118,6 +112,13 @@ void GameClearScene::Update()
 
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
+
+	if (input->TriggerKey(DIK_R))
+	{
+		GameBaseScene* scene = new GameTitleScene();
+		sceneManager->SetNextScene(scene);
+	}
+
 }
 
 void GameClearScene::Draw()
