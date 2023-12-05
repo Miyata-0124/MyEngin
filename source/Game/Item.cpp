@@ -45,6 +45,8 @@ void Item::Update()
 {
 	//保持投擲の挙動
 	RetentionThrow();
+	//アイテムの距離制限
+	Remove();
 	if (!isStop)
 	{
 		//重力
@@ -172,6 +174,23 @@ void Item::RetentionThrow()
 		position.x += (float)length;
 	}
 
+}
+
+void Item::Remove()
+{
+	if (position.y < -13.0f)
+	{
+		//平地の上に合わせる
+		position.y = -13.0f;
+	}
+	if (position.x > 50.0f)
+	{
+		position.x--;
+	}
+	if (position.x < -50.0f)
+	{
+		position.x++;
+	}
 }
 
 void Item::Gravity()

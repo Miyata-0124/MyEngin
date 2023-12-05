@@ -40,7 +40,10 @@ public:
 	/// <param name="info"></param>
 	void OnCollider(const CollisionInfo& info)override;
 
+	//アイテムの投擲
 	void RetentionThrow();
+	//アイテムの飛んでいく距離の制限
+	void Remove();
 
 	float GetRadius() { return radius; }
 	bool GetIsStop() { return isStop; }

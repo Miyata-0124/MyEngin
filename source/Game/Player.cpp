@@ -32,7 +32,7 @@ bool Player::Initialize()
 	//初期座標指定
 	SetScale({ 1,1,1 });
 	SetRotation({ 0,0,0 });
-	SetPosition({ -20,0,0 });
+	SetPosition({ -30,0,0 });
 	SetRadius({ radius,radius });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
@@ -201,6 +201,17 @@ void Player::Move()
 	else
 	{
 		moveSpeed = 0.0f;
+	}
+	//制限エリア外に行きそうなら
+	if (position.x < -50)
+	{
+		//戻す
+		position.x++;
+	}
+	if (position.x > 50)
+	{
+		//戻す
+		position.x--;
 	}
 
 	position.x += moveSpeed;
