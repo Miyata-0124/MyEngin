@@ -43,6 +43,7 @@ public:
 	void RetentionThrow();
 
 	float GetRadius() { return radius; }
+	bool GetIsStop() { return isStop; }
 
 	void SetRetention(bool isRetention_) { this->isRetention = isRetention_; }
 	//プレイヤーの座標取得
@@ -77,6 +78,8 @@ private:
 	bool isRetention = false;
 	bool isThrow = false;
 	bool isDirection = false;
+
+	bool isStop = false;
 
 	float throwTimer = 3.0f; //掛かった時間
 

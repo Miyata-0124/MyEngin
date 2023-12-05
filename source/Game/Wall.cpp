@@ -31,8 +31,8 @@ bool Wall::Initialize()
 	}
 	//初期座標指定
 	SetScale({ radius.x,radius.y,radius.x });
-	SetRotation({ 0,0,0 });
-	SetPosition({ 0,-13,0, });
+	SetRotation({ 0,90,0 });
+	SetPosition({ 0,-11,0, });
 	SetRadius({ radius.x,radius.y });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心

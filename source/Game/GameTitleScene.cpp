@@ -27,7 +27,7 @@ void GameTitleScene::Finalize()
 	//ゲーム内スプライト
 	delete titleSprite;
 	//雨
-	delete rain;
+	//delete rain;
 	//暗転
 	delete blackOut;
 }

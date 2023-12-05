@@ -6,6 +6,8 @@
 #include "header/Game/Gate.h"
 #include "header/Game/ClearBox.h"
 
+#include "header/Game/Rain.h"
+
 #include "easing/Easing.h"
 
 #include "header/Game/GameTitleScene.h"
@@ -57,6 +59,10 @@ void GameClearScene::Initialize(ViewProjection* camera_, Input* input_)
 	objGate[1]->SetPosition({ -23, 40,0 });
 
 	objClearBox = ClearBox::Create(clear);
+
+#pragma region パーティクル関係
+	rain = Rain::Create();
+#pragma	endregion
 }
 
 void GameClearScene::Finalize()
@@ -77,6 +83,9 @@ void GameClearScene::Finalize()
 
 void GameClearScene::Update()
 {
+#pragma region パーティクル
+	rain->Update();
+#pragma endregion
 	//プレイヤー
 	if (!objClearBox->GetIsGoal())
 	{
@@ -123,6 +132,10 @@ void GameClearScene::Update()
 
 void GameClearScene::Draw()
 {
+	Particle::PreDraw(directXCom->GetCommandList());
+	rain->Draw();
+	Particle::PostDraw();
+
 	Object3d::PreDraw(directXCom->GetCommandList());
 	//プレイヤー
 	objPlayer->Draw();

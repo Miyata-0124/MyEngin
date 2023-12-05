@@ -45,8 +45,19 @@ void Item::Update()
 {
 	//•ÛŽ“Š±‚Ì‹““®
 	RetentionThrow();
-	//d—Í
-	Gravity();
+	if (!isStop)
+	{
+		//d—Í
+		Gravity();
+	}
+	else
+	{
+		if (isRetention)
+		{
+			isStop = false;
+		}
+	}
+
 	Object3d::Update();
 }
 
@@ -119,7 +130,19 @@ void Item::OnCollider(const CollisionInfo& info)
 		{
 			height = 0.0f;
 			length = 0.0f;
-			yadd = 0.0f;	
+			yadd = 0.0f;
+
+			if (isDirection)//¶
+			{
+				position.x = info.object->GetPosition().x + info.object->GetRadius().x + radius;
+			}
+			else//‰E
+			{
+				position.x = info.object->GetPosition().x - info.object->GetRadius().x - radius;
+			}
+			position.y = info.object->GetPosition().y;
+
+			isStop = true;
 		}
 	}
 }

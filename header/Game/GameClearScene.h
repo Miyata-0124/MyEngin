@@ -11,6 +11,7 @@ class Player;
 class Floor;
 class Gate;
 class ClearBox;
+class Rain;
 
 class GameClearScene : public GameBaseScene
 {
@@ -54,5 +55,8 @@ private:
 	Gate* objGate[2] = {};
 	//クリア判定用箱
 	ClearBox* objClearBox = nullptr;
+
+	//パーティクル
+	Rain* rain = nullptr;
 };
 

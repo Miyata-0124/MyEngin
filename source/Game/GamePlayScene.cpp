@@ -21,6 +21,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "white1x1.png");
 	spriteCommon->Loadtexture(2, "white1x1.png");
+	spriteCommon->Loadtexture(3, "Rule.png");
 	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), camera);
 	//FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
@@ -29,6 +30,8 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	wakeUp->Initialize(spriteCommon);
 
 	blackOut->Initialize(spriteCommon);
+
+	sprite->Initialize(spriteCommon, 3);
 	//jsonLoader = JsonLoader::LoadFlomJSONInternal("map");
 
 #pragma region FBX
@@ -49,7 +52,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	Model* item_ = Model::LoadFromOBJ("Item");
 	Model* wall = Model::LoadFromOBJ("wall");
 	//Model* pipe = Model::LoadFromOBJ("pipe");
-	//Model* backGround = Model::LoadFromOBJ("BG");
+	Model* backGround = Model::LoadFromOBJ("BG");
 	//Model* clear = Model::LoadFromOBJ("clear");
 #pragma endregion
 #pragma region Player等のオブジェクト
@@ -62,13 +65,19 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//地面
 	objFloor = Floor::Create(item_);
 	//壁	
-	objWall = Wall::Create(wall);
+	for (int i = 0; i < 3; i++)
+	{
+		objWall[i] = Wall::Create(wall);
+	}
+	objWall[1]->SetPosition({ 15,-5,0 });
+	objWall[2]->SetPosition({ 20,-5,0 });
 	//アイテム
 	objItem = Item::Create(ground);
 	objItem->SetInput(input);
 
 	//移動用ゲート
-	objGate = MoveGate::Create(wall);
+	objGate = MoveGate::Create(backGround);
+	objGate->SetPosition({ 20,-1,0 });
 	objGate->SetInput(input);
 	//背景
 	//objBackGround = BackGround::Create(backGround);
@@ -76,7 +85,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//LoadMap();
 
 #pragma region パーティクル関係
-	rain = Rain::Create();
+	//rain = Rain::Create();
 #pragma	endregion
 }
 
@@ -89,13 +98,17 @@ void GamePlayScene::Finalize()
 	{
 		delete objGate[i];
 	}*/
-	delete objWall;
+	for (int i = 0; i < 3; i++)
+	{
+		delete objWall[i];
+	}
 	delete objItem;
 	delete objBackGround;
 	delete objGate;
-	delete rain;
+	//delete rain;
 	delete wakeUp;
 	delete blackOut;
+	delete sprite;
 }
 
 void GamePlayScene::Update()
@@ -103,7 +116,10 @@ void GamePlayScene::Update()
 	//フェードアウト
 	wakeUp->Update();
 	//壁
-	objWall->Update();
+	for (int i = 0; i < 3; i++)
+	{
+		objWall[i]->Update();
+	}
 	//アイテム
 	objItem->Update();
 	//プレイヤー
@@ -126,6 +142,7 @@ void GamePlayScene::Update()
 #pragma region 各クラス間の情報受け渡し
 	//オブジェクト
 	//objEnem->SetPPosition(objPlayer->GetPosition());
+	objPlayer->SetIsStop(objItem->GetIsStop());
 	objItem->SetPPosition(objPlayer->GetPosition());
 	objItem->SetRetention(objPlayer->GetRetention());
 	objItem->SetDirection(objPlayer->GetDirection());
@@ -136,6 +153,8 @@ void GamePlayScene::Update()
 #pragma endregion
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
+
+	sprite->Update();
 
 	if (objGate->GetMapMove())
 	{
@@ -165,7 +184,10 @@ void GamePlayScene::Draw()
 	//扉
 	objGate->Draw();
 	//壁
-	objWall->Draw();
+	for (int i = 0; i < 3; i++)
+	{
+		objWall[i]->Draw();
+	}
 	//アイテム
 	objItem->Draw();
 	//背景
@@ -176,6 +198,7 @@ void GamePlayScene::Draw()
 	}*/
 	Object3d::PostDraw();
 	// UI,演出関連
+	sprite->Draw();
 	wakeUp->Draw();
 	blackOut->Draw();
 	

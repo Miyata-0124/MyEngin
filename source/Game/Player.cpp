@@ -32,7 +32,7 @@ bool Player::Initialize()
 	//初期座標指定
 	SetScale({ 1,1,1 });
 	SetRotation({ 0,0,0 });
-	SetPosition({ 0,0,0 });
+	SetPosition({ -20,0,0 });
 	SetRadius({ radius,radius });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
@@ -106,6 +106,11 @@ void Player::OnCollider(const CollisionInfo& info)
 				//保持フラグを真にする
 				isRetention = true;
 			}
+			if (isStop)
+			{
+				yadd = 0.0f;
+				position.y = info.object->GetPosition().y + info.object->GetRadius().y - radius;;
+			}
 		}
 		//敵性オブジェクトor敵に当たった時
 		if (info.object->GetIdentification() == IDENT_ENEMY)
@@ -142,7 +147,17 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 			yadd = 0.0f;
 			isJamp = false;
-			position.y = info.object->GetPosition().y + info.object->GetRadius().y + 0.9f;
+			//下から上がろうとした場合
+			if (position.y < info.object->GetPosition().y)
+			{
+				//座標を下げる
+				position.y--;
+			}
+			//一定以上よりも上から来たなら止める
+			else
+			{
+				position.y = info.object->GetPosition().y + info.object->GetRadius().y + 1.0f;
+			}
 		}
 	}
 }
@@ -159,6 +174,11 @@ void Player::Move()
 		{
 			moveSpeed = 0.0f;
 		}
+
+		if (posture == Posture::Croching)
+		{
+			moveSpeed = -0.2f;
+		}
 		isDirection = true;
 	}
 	else if (input->PushKey(DIK_RIGHT))
@@ -172,6 +192,11 @@ void Player::Move()
 			moveSpeed = 0.0f;
 		}
 		isDirection = false;
+
+		if (posture == Posture::Croching)
+		{
+			moveSpeed = 0.2f;
+		}
 	}
 	else
 	{

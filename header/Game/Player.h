@@ -50,8 +50,10 @@ public:
 	/// <param name="input">キー情報</param>
 	/// <returns></returns>
 	Input* SetInput(Input* input_) { return this->input = input_; }
+
+	bool SetIsStop(bool isStop_) { return this->isStop = isStop_; }
 	/// <summary>
-	/// はんけいを渡している
+	/// 半径を渡している
 	/// </summary>
 	/// <returns></returns>
 	float GetRadius() { return radius; }
@@ -103,6 +105,8 @@ private:
 	bool isRetention = false;
 	//投擲フラグ
 	bool isThrow = false;
+	//アイテムが刺さっているかの判別
+	bool isStop = false;
 
 	int sceneNum = 0;
 };

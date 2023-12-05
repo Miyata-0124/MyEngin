@@ -51,6 +51,7 @@ private:
 	WakeUp* wakeUp = new WakeUp();
 	//暗転
 	BlackOut* blackOut = new BlackOut();
+	Sprite* sprite = new Sprite();
 	//判定マネージャー
 	CollisionManager* collisionManager = CollisionManager::GetInstance();
 	//ゲーム内オブジェクト
@@ -63,13 +64,13 @@ private:
 	//アイテム
 	Item* objItem = nullptr;
 	//壁
-	Wall* objWall = nullptr;
+	Wall* objWall[3] = {};
 	//マップ移動用ゲート
 	MoveGate* objGate = nullptr;
 	//背景
 	BackGround* objBackGround = nullptr;
 	//パーティクル
-	Rain* rain = nullptr;
+	//Rain* rain = nullptr;
 
 	XMFLOAT3 move = { 0,0,0 };
 };
