@@ -62,7 +62,8 @@
                     3.0,
                     3.0
                 ]
-            }
+            },
+            "file_name": "floor"
         },
         {
             "type": "MESH",
@@ -83,7 +84,8 @@
                     3.0,
                     3.0
                 ]
-            }
+            },
+            "file_name": "floor"
         },
         {
             "type": "MESH",
@@ -104,7 +106,8 @@
                     3.0,
                     3.0
                 ]
-            }
+            },
+            "file_name": "floor"
         },
         {
             "type": "MESH",
@@ -125,7 +128,8 @@
                     3.0,
                     3.0
                 ]
-            }
+            },
+            "file_name": "floor"
         },
         {
             "type": "MESH",
@@ -146,7 +150,8 @@
                     3.0,
                     3.0
                 ]
-            }
+            },
+            "file_name": "floor"
         },
         {
             "type": "MESH",
@@ -167,7 +172,8 @@
                     3.0,
                     3.0
                 ]
-            }
+            },
+            "file_name": "floor"
         },
         {
             "type": "MESH",
@@ -188,7 +194,8 @@
                     3.0,
                     3.0
                 ]
-            }
+            },
+            "file_name": "floor"
         },
         {
             "type": "MESH",
@@ -209,7 +216,8 @@
                     3.0,
                     3.0
                 ]
-            }
+            },
+            "file_name": "floor"
         },
         {
             "type": "MESH",
@@ -230,7 +238,8 @@
                     3.0,
                     3.0
                 ]
-            }
+            },
+            "file_name": "floor"
         },
         {
             "type": "MESH",
@@ -238,7 +247,7 @@
             "transform": {
                 "translation": [
                     0.0,
-                    26.0,
+                    26.047767639160156,
                     -11.0
                 ],
                 "rotation": [
@@ -251,7 +260,8 @@
                     3.0,
                     3.0
                 ]
-            }
+            },
+            "file_name": "floor"
         },
         {
             "type": "MESH",

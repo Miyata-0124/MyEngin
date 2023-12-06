@@ -67,6 +67,7 @@ void GameClearScene::Initialize(ViewProjection* camera_, Input* input_)
 
 void GameClearScene::Finalize()
 {
+	delete rain;
 	delete blackOut;
 	delete clearSprite;
 	delete objPlayer;

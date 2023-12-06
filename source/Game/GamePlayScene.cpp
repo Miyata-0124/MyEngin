@@ -90,6 +90,9 @@ void GamePlayScene::Finalize()
 	delete wakeUp;
 	delete blackOut;
 	delete sprite;
+	for (auto object : objects) {
+		delete object;
+	}
 }
 
 void GamePlayScene::Update()
@@ -174,35 +177,42 @@ void GamePlayScene::Draw()
 void GamePlayScene::LoadMap()
 {
 	for (auto& objectData : jsonLoader->objects) {
-		Model* model_ = Model::LoadFromOBJ("wall");
+		Model* model = Model::LoadFromOBJ("wall");
 		decltype(models)::iterator it = models.find(objectData.fileName);
-		if (it != models.end()) { model_ = it->second; }
+		if (objectData.fileName == "floor")
+		{
+			if (it != models.end()) { model = it->second; }
+			//モデルを指定して3Dオブジェクトを生成
+			Wall* objWall = Wall::Create(model);
+			//objWall->SetModel(model_);
+			//座標
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objWall->SetScale(scale);
 
-		//モデルを指定して3Dオブジェクトを生成
-		Wall* objWall = Wall::Create();
-		objWall->SetModel(model_);
-		//座標
-		DirectX::XMFLOAT3 scale;
-		DirectX::XMStoreFloat3(&scale, objectData.scaling);
-		objWall->SetScale(scale);
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objWall->SetRotation(rot);
 
-		//回転角
-		DirectX::XMFLOAT3 rot;
-		DirectX::XMStoreFloat3(&rot, objectData.rotation);
-		objWall->SetRotation(rot);
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objWall->SetPosition(pos);
 
-		//座標
-		DirectX::XMFLOAT3 pos;
-		DirectX::XMStoreFloat3(&pos, objectData.position);
-		objWall->SetPosition(pos);
+			//コライダー
+			/*DirectX::XMFLOAT3 center;
+			DirectX::XMFLOAT2 radius;
+			DirectX::XMStoreFloat3(&center, objectData.center);
+			DirectX::XMStoreFloat2(&radius, objectData.size);*/
 
-		//コライダー
-		/*DirectX::XMFLOAT3 center;
-		DirectX::XMFLOAT2 radius;
-		DirectX::XMStoreFloat3(&center, objectData.center);
-		DirectX::XMStoreFloat2(&radius, objectData.size);*/
+			//配列に登録
+			objects.push_back(objWall);
+		}
 
-		//配列に登録
-		objects.push_back(objWall);
+		if (objectData.fileName == "air")
+		{
+			
+		}
 	}
 }
