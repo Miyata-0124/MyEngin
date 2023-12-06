@@ -206,12 +206,12 @@ void Player::Move()
 	if (position.x < -50)
 	{
 		//–ß‚·
-		position.x++;
+		position.x += 0.4f;
 	}
 	if (position.x > 50)
 	{
 		//–ß‚·
-		position.x--;
+		position.x -= 0.4f;
 	}
 
 	position.x += moveSpeed;

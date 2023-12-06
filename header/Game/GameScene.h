@@ -17,7 +17,6 @@
 #include "header/3D/FbxObject3D.h"
 #include "header/3D/FbxModel.h"
 #include "header/3D/Model.h"
-#include "header/3D/JsonLoader.h"
 //シーン関連
 #include "header/Game/GameSceneManager.h"
 #include "header/Game/GameTitleScene.h"
@@ -45,8 +44,6 @@ public: //基本関数
 	/// </summary>
 	void Finalize();
 
-	void LoadMap();
-
 public: //mainに一部引き渡し用
 	WinApp* GetWinApp() { return winApp; }
 	Input* GetInput() { return input; }
@@ -67,12 +64,6 @@ private: //ゲーム内使用クラス
 	
 	//シーンマネージャ
 	GameSceneManager* sceneManager = nullptr;
-	//マップ用JsonLoader
-	//JSON
-	LevelData* jsonLoader = nullptr;
-	std::map<std::string, Model*> models;
-	std::vector<Object3d*> objects;
-
 
 	//シーン切り替え要情報
 	int scene = 0;

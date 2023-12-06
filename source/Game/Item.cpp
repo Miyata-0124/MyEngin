@@ -31,7 +31,7 @@ bool Item::Initialize()
 	//初期座標指定
 	SetScale({ 2.0f,0.5f,0.5f });
 	SetRotation({ 0,0,0 });
-	SetPosition({ -15,-13,0, });
+	SetPosition({ -40,0,0, });
 	SetRadius({ radius,radius });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
@@ -133,18 +133,20 @@ void Item::OnCollider(const CollisionInfo& info)
 			height = 0.0f;
 			length = 0.0f;
 			yadd = 0.0f;
-
-			if (isDirection)//左
+			if (isThrow)
 			{
-				position.x = info.object->GetPosition().x + info.object->GetRadius().x + radius;
-			}
-			else//右
-			{
-				position.x = info.object->GetPosition().x - info.object->GetRadius().x - radius;
-			}
-			position.y = info.object->GetPosition().y;
+				if (isDirection)//左
+				{
+					position.x = info.object->GetPosition().x + info.object->GetRadius().x + radius;
+				}
+				else//右
+				{
+					position.x = info.object->GetPosition().x - info.object->GetRadius().x - radius;
+				}
+				position.y = info.object->GetPosition().y;
 
-			isStop = true;
+				isStop = true;
+			}
 		}
 	}
 }

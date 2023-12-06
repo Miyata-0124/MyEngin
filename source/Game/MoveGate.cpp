@@ -30,7 +30,7 @@ bool MoveGate::Initialize()
 	//初期座標指定
 	SetScale({ 1,1,1 });
 	SetRotation({ 0,0,0 });
-	SetPosition({ 30,-13,0 });
+	SetPosition({ 30,-7,0 });
 	SetRadius({ radius.x,radius.y });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
