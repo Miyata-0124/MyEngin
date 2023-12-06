@@ -49,7 +49,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//プレイヤーモデル
 	Model* playerModel = Model::LoadFromOBJ("player");
 	Model* ground = Model::LoadFromOBJ("blue");
-	//Model* item_ = Model::LoadFromOBJ("Item");
+	Model* item_ = Model::LoadFromOBJ("Item");
 	Model* backGround = Model::LoadFromOBJ("BG");
 #pragma endregion
 #pragma region Player等のオブジェクト
@@ -60,7 +60,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//敵
 	//objEnem = Enemy::Create(ground);
 	//地面
-	//objFloor = Floor::Create(item_);
+	objFloor = Floor::Create(item_);
 	//アイテム
 	objItem = Item::Create(ground);
 	objItem->SetInput(input);
@@ -82,7 +82,7 @@ void GamePlayScene::Finalize()
 {
 	//オブジェクト
 	delete objPlayer;
-	//delete objFloor;
+	delete objFloor;
 	delete objItem;
 	delete objBackGround;
 	delete objGate;
@@ -101,7 +101,7 @@ void GamePlayScene::Update()
 	//プレイヤー
 	objPlayer->Update();
 	//地面
-	//objFloor->Update();
+	objFloor->Update();
 
 	objGate->Update();
 	//背景
@@ -152,7 +152,7 @@ void GamePlayScene::Draw()
 	//プレイヤー
 	objPlayer->Draw();
 	//地面
-	//objFloor->Draw();
+	objFloor->Draw();
 	//扉
 	objGate->Draw();
 	//アイテム
