@@ -60,6 +60,11 @@ void Item::Update()
 		}
 	}
 
+	if (position.y <= -50)
+	{
+		position = { -40,0,0, };
+	}
+
 	Object3d::Update();
 }
 
@@ -104,6 +109,7 @@ void Item::OnCollider(const CollisionInfo& info)
 		{
 
 		}
+		//プレイヤーが当たっているとき
 		if (info.object->GetIdentification() == IDENT_PLAYER)
 		{
 			yadd = 0.0f;
@@ -180,19 +186,19 @@ void Item::RetentionThrow()
 
 void Item::Remove()
 {
-	if (position.y < -13.0f)
-	{
-		//平地の上に合わせる
-		position.y = -13.0f;
-	}
-	if (position.x > 50.0f)
-	{
-		position.x--;
-	}
-	if (position.x < -50.0f)
-	{
-		position.x++;
-	}
+	//if (position.y < -13.0f)
+	//{
+	//	//平地の上に合わせる
+	//	position.y = -13.0f;
+	//}
+	//if (position.x > 50.0f)
+	//{
+	//	position.x--;
+	//}
+	//if (position.x < -50.0f)
+	//{
+	//	position.x++;
+	//}
 }
 
 void Item::Gravity()

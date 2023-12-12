@@ -7,11 +7,14 @@
 #include "header/Game/BlackOut.h"
 #include "header/Game/ClearSprite.h"
 
+#include "header/3D/JsonLoader.h"
+
 class Player;
 class Floor;
 class Gate;
 class ClearBox;
 class Rain;
+class Wall;
 
 class GameClearScene : public GameBaseScene
 {
@@ -35,6 +38,10 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw()override;
+
+
+	//マップ読み込み
+	void LoadMap();
 private:
 	ViewProjection* camera = nullptr;
 	Input* input = nullptr;
@@ -49,14 +56,20 @@ private:
 	//オブジェクト
 	//プレイヤー
 	Player* objPlayer = nullptr;
-	//床(仮)
-	Floor* objFloor[3] = {};
+	//壁
+	Wall* objWall = {};
 	//扉
-	Gate* objGate[2] = {};
+	Gate* objGate = {};
 	//クリア判定用箱
 	ClearBox* objClearBox = nullptr;
 
 	//パーティクル
 	Rain* rain = nullptr;
+
+	//マップ用JsonLoader
+	//JSON
+	LevelData* jsonLoader = nullptr;
+	std::map<std::string, Model*> models;
+	std::vector<Object3d*> objects;
 };
 

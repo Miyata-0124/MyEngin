@@ -64,6 +64,8 @@ private:
 	Enemy* objEnem = nullptr;
 	//床(仮)
 	Floor* objFloor = nullptr;
+	//壁
+	Wall* objWall = nullptr;
 	//アイテム
 	Item* objItem = nullptr;
 	//マップ移動用ゲート

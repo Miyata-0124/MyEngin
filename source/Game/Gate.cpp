@@ -44,34 +44,18 @@ void Gate::Update()
 {
 	if (isGoal)
 	{
-		if (gateNum == 0)
+		//“®‚©‚·‚½‚ß‚ÉÀ•W‚ğæ“¾
+		startY = position.y;
+		if (min <= max)
 		{
-			//“®‚©‚·‚½‚ß‚ÉÀ•W‚ğæ“¾
-			position_[0] = {-25,-40,0};
-			if (min <= max)
-			{
-				min += 0.01f;
-			}
-			y = min / max;
-			position_[0].y = startY[0] + (endY - startY[0]) * Easing::easeOutQuint(y);
-
-			SetPosition(position_[0]);
+			min += 0.01f;
 		}
-		else if (gateNum == 1)
-		{
-			//“®‚©‚·‚½‚ß‚ÉÀ•W‚ğæ“¾
-			position_[1] = { -23, 40, 0 };
+		y = min / max;
+		position.y = startY + (endY - startY) * Easing::easeOutQuint(y);
 
-			if (min <= max)
-			{
-				min += 0.01f;
-			}
-			y = min / max;
-			position_[1].y = startY[1] + (endY - startY[1]) * Easing::easeOutQuint(y);
+		SetPosition(position);
 
-			SetPosition(position_[1]);
-		}
-		if (position_[0].y == 0.0f && position_[1].y == 0.0f)
+		if (position.y == 0.0f)
 		{
 			rotation.x++;
 			if (rotation.x >= 90.0f)
@@ -80,5 +64,6 @@ void Gate::Update()
 			}
 		}
 	}
+
 	Object3d::Update();
 }

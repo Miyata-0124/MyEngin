@@ -109,4 +109,7 @@ private:
 	bool isStop = false;
 
 	int sceneNum = 0;
+
+	//ƒJƒƒ‰‚Ì‘¬“x
+	float cameraSpeed = 0.0f;
 };

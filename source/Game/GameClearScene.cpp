@@ -2,9 +2,10 @@
 #include "header/Game/GameSceneManager.h"
 
 #include "header/Game/Player.h"
-#include "header/Game/Floor.h"
 #include "header/Game/Gate.h"
 #include "header/Game/ClearBox.h"
+#include "header/Game/Wall.h"
+#include "header/Game/MoveGate.h"
 
 #include "header/Game/Rain.h"
 
@@ -30,39 +31,24 @@ void GameClearScene::Initialize(ViewProjection* camera_, Input* input_)
 	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), camera);
 
+	//json読み込み
+	jsonLoader = JsonLoader::LoadFlomJSONInternal("sherter");
+
 	//プレイヤーモデル
 	Model* playerModel = Model::LoadFromOBJ("player");
 	//地面仮モデル
-	Model* item_ = Model::LoadFromOBJ("Item");
-	//扉
-	Model* gate = Model::LoadFromOBJ("gate");
+	//Model* item_ = Model::LoadFromOBJ("Item");
 
-	Model* clear = Model::LoadFromOBJ("clear");
 	//プレイヤー
 	objPlayer = Player::Create(playerModel);
 	objPlayer->SetInput(input);
-	//地面
-	for (int i = 0; i < 3; i++)
-	{
-		objFloor[i] = Floor::Create(item_);
-	}
-	objFloor[1]->SetPosition({ 0, 15, 0 });
-	objFloor[2]->SetScale({ 1,80,20 });
-	objFloor[2]->SetPosition({ 30,0,0 });
-	//扉
-	for (int i = 0; i < 2; i++)
-	{
-		objGate[i] = Gate::Create(gate);
-		objGate[i]->SetGateNum(i);
-	}
-	objGate[0]->SetPosition({ -25,-40,0 });
-	objGate[1]->SetPosition({ -23, 40,0 });
-
-	objClearBox = ClearBox::Create(clear);
 
 #pragma region パーティクル関係
 	rain = Rain::Create();
 #pragma	endregion
+
+	//マップ読み込み
+	LoadMap();
 }
 
 void GameClearScene::Finalize()
@@ -71,14 +57,8 @@ void GameClearScene::Finalize()
 	delete blackOut;
 	delete clearSprite;
 	delete objPlayer;
-	delete objClearBox;
-	for (int i = 0; i < 3; i++)
-	{
-		delete objFloor[i];
-	}
-	for (int i = 0; i < 2; i++)
-	{
-		delete objGate[i];
+	for (auto object : objects) {
+		delete object;
 	}
 }
 
@@ -93,35 +73,23 @@ void GameClearScene::Update()
 		objPlayer->Update();
 	}
 	
-	//地面
-	for (int i = 0; i < 3; i++)
-	{
-		objFloor[i]->Update();
+	for (auto object : objects) {
+		object->Update();
 	}
-	//扉
-	for (int i = 0; i < 2; i++)
+	if (objGate->GetRotation().x >= 90.0f)
 	{
-		objGate[i]->Update();
-		if (objGate[i]->GetRotation().x >= 90.0f)
-		{
-			blackOut->Update();
-		}
+		blackOut->Update();
 	}
+
 	if (blackOut->GetMinAlpha() > blackOut->GetMaxAlpha())
 	{
 		clearSprite->Update();
 	}
-
-	//判定用
-	objClearBox->Update();
-
-	//各クラスに情報を渡す
-	for (int i = 0; i < 2; i++) {
-		objGate[i]->SetIsGoal(objClearBox->GetIsGoal());
-	}
-
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
+
+	//各クラスに情報を渡す
+	objGate->SetIsGoal(objClearBox->GetIsGoal());
 
 	if (input->TriggerKey(DIK_R))
 	{
@@ -140,15 +108,8 @@ void GameClearScene::Draw()
 	Object3d::PreDraw(directXCom->GetCommandList());
 	//プレイヤー
 	objPlayer->Draw();
-	//地面
-	for (int i = 0; i < 3; i++)
-	{
-		objFloor[i]->Draw();
-	}
-	//ゴールゲート
-	for (int i = 0; i < 2; i++)
-	{
-		objGate[i]->Draw();
+	for (auto object : objects) {
+		object->Draw();
 	}
 	objClearBox->Draw();
 
@@ -157,4 +118,103 @@ void GameClearScene::Draw()
 
 	blackOut->Draw();
 	clearSprite->Draw();
+}
+
+void GameClearScene::LoadMap()
+{
+	for (auto& objectData : jsonLoader->objects) {
+		//地面に接している壁オブジェクト
+		Model* model = Model::LoadFromOBJ("wall");
+		//次のステージへ移動するためのオブジェクト
+		//Model* backGround = Model::LoadFromOBJ("BG");
+		//扉
+		Model* gate = Model::LoadFromOBJ("gate");
+
+		Model* clear = Model::LoadFromOBJ("clear");
+
+		decltype(models)::iterator it = models.find(objectData.fileName);
+		if (objectData.fileName == "floor")
+		{
+			if (it != models.end()) { model = it->second; }
+			//モデルを指定して3Dオブジェクトを生成
+			objWall = Wall::Create(model);
+			//座標
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objWall->SetScale(scale);
+
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objWall->SetRotation(rot);
+
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objWall->SetPosition(pos);
+
+			//コライダー
+			/*DirectX::XMFLOAT3 center;
+			DirectX::XMFLOAT2 radius;
+			DirectX::XMStoreFloat3(&center, objectData.center);
+			DirectX::XMStoreFloat2(&radius, objectData.size);*/
+
+			//配列に登録
+			objects.push_back(objWall);
+		}
+
+		if (objectData.fileName == "Gate")
+		{
+			if (it != models.end()) { gate = it->second; }
+			//モデルを指定して3Dオブジェクトを生成
+			objGate = Gate::Create(gate);
+			//座標
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objGate->SetScale(scale);
+
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objGate->SetRotation(rot);
+
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objGate->SetPosition(pos);
+
+			//コライダー
+			/*DirectX::XMFLOAT3 center;
+			DirectX::XMFLOAT2 radius;
+			DirectX::XMStoreFloat3(&center, objectData.center);
+			DirectX::XMStoreFloat2(&radius, objectData.size);*/
+
+			//配列に登録
+			objects.push_back(objGate);
+		}
+
+		if (objectData.fileName == "MoveGate")
+		{
+			if (it != models.end()) { clear = it->second; }
+			//移動用ゲート
+			objClearBox = ClearBox::Create(clear);
+			//座標
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objClearBox->SetScale(scale);
+
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objClearBox->SetRotation(rot);
+
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objClearBox->SetPosition(pos);
+
+			//配列に登録
+			objects.push_back(objClearBox);
+		}
+	}
 }

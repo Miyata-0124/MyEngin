@@ -32,7 +32,7 @@ bool Player::Initialize()
 	//初期座標指定
 	SetScale({ 1,1,1 });
 	SetRotation({ 0,0,0 });
-	SetPosition({ -30,0,0 });
+	SetPosition({ 0,0,0 });
 	SetRadius({ radius,radius });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
@@ -63,6 +63,13 @@ void Player::Update()
 	Move();
 	//アイテムに対する行動
 	Retention();
+
+	if (position.y <= -50)
+	{
+		position = { 0,0,0 };
+		SetEye({ 0,0,-50 });
+		SetTarget({ 0,0,0 });
+	}
 
 	Object3d::Update();
 }
@@ -174,12 +181,12 @@ void Player::Move()
 		{
 			moveSpeed = 0.0f;
 		}
+		isDirection = true;
 
 		if (posture == Posture::Croching)
 		{
 			moveSpeed = -0.2f;
 		}
-		isDirection = true;
 	}
 	else if (input->PushKey(DIK_RIGHT))
 	{
@@ -202,16 +209,16 @@ void Player::Move()
 	{
 		moveSpeed = 0.0f;
 	}
-	//制限エリア外に行きそうなら
-	if (position.x < -50)
+
+	//カメラの移動
+	if (position.x > -5.0f && position.x < 220.0f)
 	{
-		//戻す
-		position.x += 0.4f;
+
+		CameraMoveVector({ moveSpeed,0,0 });
 	}
-	if (position.x > 50)
+	else
 	{
-		//戻す
-		position.x -= 0.4f;
+		CameraMoveVector({ 0,0,0 });
 	}
 
 	position.x += moveSpeed;

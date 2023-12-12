@@ -67,7 +67,7 @@ void ClearBox::OnCollider(const CollisionInfo& info)
 		}
 		if (info.object->GetIdentification() == IDENT_PLAYER)
 		{
-			isGoal = true;
+ 			isGoal = true;
 		}
 	}
 }

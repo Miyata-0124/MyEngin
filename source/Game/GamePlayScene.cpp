@@ -49,8 +49,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//プレイヤーモデル
 	Model* playerModel = Model::LoadFromOBJ("player");
 	Model* ground = Model::LoadFromOBJ("blue");
-	Model* item_ = Model::LoadFromOBJ("Item");
-	Model* backGround = Model::LoadFromOBJ("BG");
+	//Model* item_ = Model::LoadFromOBJ("Item");
 #pragma endregion
 #pragma region Player等のオブジェクト
 
@@ -60,17 +59,16 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//敵
 	//objEnem = Enemy::Create(ground);
 	//地面
-	objFloor = Floor::Create(item_);
+	//objFloor = Floor::Create(item_);
 	//アイテム
 	objItem = Item::Create(ground);
 	objItem->SetInput(input);
 
-	//移動用ゲート
-	objGate = MoveGate::Create(backGround);
-	objGate->SetInput(input);
+	
 	//背景
 	//objBackGround = BackGround::Create(backGround);
 #pragma endregion
+	//マップ読み込み
 	LoadMap();
 
 #pragma region パーティクル関係
@@ -82,10 +80,9 @@ void GamePlayScene::Finalize()
 {
 	//オブジェクト
 	delete objPlayer;
-	delete objFloor;
+	//delete objFloor;
 	delete objItem;
 	delete objBackGround;
-	delete objGate;
 	//delete rain;
 	delete wakeUp;
 	delete blackOut;
@@ -93,6 +90,7 @@ void GamePlayScene::Finalize()
 	for (auto object : objects) {
 		delete object;
 	}
+	blackOut->Reset();
 }
 
 void GamePlayScene::Update()
@@ -104,9 +102,7 @@ void GamePlayScene::Update()
 	//プレイヤー
 	objPlayer->Update();
 	//地面
-	objFloor->Update();
-
-	objGate->Update();
+	//objFloor->Update();
 	//背景
 	//objBackGround->Update();
 
@@ -117,6 +113,9 @@ void GamePlayScene::Update()
 
 	//カメラ
 	camera->Update();
+
+
+	sprite->Update();
 
 #pragma region 各クラス間の情報受け渡し
 	//オブジェクト
@@ -129,8 +128,6 @@ void GamePlayScene::Update()
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
 
-	sprite->Update();
-
 	if (objGate->GetMapMove())
 	{
 		blackOut->Update();
@@ -138,7 +135,6 @@ void GamePlayScene::Update()
 		{
 			objGate->SetMapMove(false);
 			objPlayer->SetPosition({ -20,-13,0 });
-			blackOut->Reset();
 
 			GameBaseScene* scene = new GameClearScene();
 			sceneManager->SetNextScene(scene);
@@ -155,9 +151,7 @@ void GamePlayScene::Draw()
 	//プレイヤー
 	objPlayer->Draw();
 	//地面
-	objFloor->Draw();
-	//扉
-	objGate->Draw();
+	//objFloor->Draw();
 	//アイテム
 	objItem->Draw();
 	//背景
@@ -177,14 +171,16 @@ void GamePlayScene::Draw()
 void GamePlayScene::LoadMap()
 {
 	for (auto& objectData : jsonLoader->objects) {
+		//地面に接している壁オブジェクト
 		Model* model = Model::LoadFromOBJ("wall");
+		//次のステージへ移動するためのオブジェクト
+		Model* backGround = Model::LoadFromOBJ("BG");
 		decltype(models)::iterator it = models.find(objectData.fileName);
 		if (objectData.fileName == "floor")
 		{
 			if (it != models.end()) { model = it->second; }
 			//モデルを指定して3Dオブジェクトを生成
-			Wall* objWall = Wall::Create(model);
-			//objWall->SetModel(model_);
+			objWall = Wall::Create(model);
 			//座標
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
@@ -210,9 +206,34 @@ void GamePlayScene::LoadMap()
 			objects.push_back(objWall);
 		}
 
-		if (objectData.fileName == "air")
+		if (objectData.fileName == "wall")
 		{
-			
+
+		}
+
+		if (objectData.fileName == "moveGate")
+		{
+			if (it != models.end()) { backGround = it->second; }
+			//移動用ゲート
+			objGate = MoveGate::Create(backGround);
+			objGate->SetInput(input);
+			//座標
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objGate->SetScale(scale);
+
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objGate->SetRotation(rot);
+
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objGate->SetPosition(pos);
+
+			//配列に登録
+			objects.push_back(objGate);
 		}
 	}
 }

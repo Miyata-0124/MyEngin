@@ -39,6 +39,6 @@ public:
 	//ゲッター,セッター
 private:
 	//半径
-	DirectX::XMFLOAT2 radius = {3.0f,3.0f };
+	DirectX::XMFLOAT2 radius = { 3 , 3 };
 };
 
