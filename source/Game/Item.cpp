@@ -141,17 +141,20 @@ void Item::OnCollider(const CollisionInfo& info)
 			yadd = 0.0f;
 			if (isThrow)
 			{
-				if (isDirection)//ç∂
+				if (position.y < info.object->GetPosition().y + info.object->GetRadius().y)
 				{
-					position.x = info.object->GetPosition().x + info.object->GetRadius().x + radius;
-				}
-				else//âE
-				{
-					position.x = info.object->GetPosition().x - info.object->GetRadius().x - radius;
-				}
-				position.y = info.object->GetPosition().y;
+					if (isDirection)//ç∂
+					{
+						position.x = info.object->GetPosition().x + info.object->GetRadius().x + radius;
+					}
+					else//âE
+					{
+						position.x = info.object->GetPosition().x - info.object->GetRadius().x - radius;
+					}
+					position.y = info.object->GetPosition().y;
 
-				isStop = true;
+					isStop = true;
+				}
 			}
 		}
 	}
