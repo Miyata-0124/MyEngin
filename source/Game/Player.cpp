@@ -171,11 +171,11 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 			if (position.x > info.object->GetPosition().x + info.object->GetRadius().x)
 			{
-				position.x += 0.4f;
+				position.x -= moveSpeed - radius;
 			}
 			if (position.x < info.object->GetPosition().x - info.object->GetRadius().x)
 			{
-				position.x -= 0.4f;
+				position.x -= moveSpeed - radius;
 			}
 		}
 	}
