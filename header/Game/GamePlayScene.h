@@ -12,6 +12,7 @@ class BackGround;
 class Floor;
 class Item;
 class Wall;
+class KeepsWall;
 class Enemy;
 class Rain;
 class MoveGate;
@@ -66,6 +67,8 @@ private:
 	Floor* objFloor = nullptr;
 	//壁
 	Wall* objWall = nullptr;
+	//プレイヤーを通さない壁
+	KeepsWall* objKeepsWall = nullptr;
 	//アイテム
 	Item* objItem = nullptr;
 	//マップ移動用ゲート

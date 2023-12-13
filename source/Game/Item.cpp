@@ -62,6 +62,8 @@ void Item::Update()
 
 	if (position.y <= -50)
 	{
+		height = 0.0f;
+		length = 0.0f;
 		position = { -40,0,0, };
 	}
 
@@ -134,7 +136,7 @@ void Item::OnCollider(const CollisionInfo& info)
 		{
 
 		}
-		if (info.object->GetIdentification() == IDENT_WALL)
+		if (info.object->GetIdentification() == IDENT_FLOOR)
 		{
 			height = 0.0f;
 			length = 0.0f;

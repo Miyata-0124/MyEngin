@@ -149,8 +149,8 @@ void Player::OnCollider(const CollisionInfo& info)
 
 
 		}
-		//•Ç‚É“–‚½‚Á‚½Žž
-		if (info.object->GetIdentification() == IDENT_WALL)
+		//°‚É“–‚½‚Á‚½Žž
+		if (info.object->GetIdentification() == IDENT_FLOOR)
 		{
 			yadd = 0.0f;
 			isJamp = false;
@@ -164,6 +164,18 @@ void Player::OnCollider(const CollisionInfo& info)
 			else
 			{
 				position.y = info.object->GetPosition().y + info.object->GetRadius().y + 1.0f;
+			}
+		}
+		//•Ç‚É“–‚½‚Á‚½Žž
+		if (info.object->GetIdentification() == IDENT_WALL)
+		{
+			if (position.x > info.object->GetPosition().x + info.object->GetRadius().x)
+			{
+				position.x += 0.4f;
+			}
+			if (position.x < info.object->GetPosition().x - info.object->GetRadius().x)
+			{
+				position.x -= 0.4f;
 			}
 		}
 	}

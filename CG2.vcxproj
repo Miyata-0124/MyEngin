@@ -124,6 +124,7 @@
     <ClCompile Include="source\Game\Gate.cpp" />
     <ClCompile Include="source\Game\Item.cpp" />
     <ClCompile Include="source\3D\JsonLoader.cpp" />
+    <ClCompile Include="source\Game\KeepsWall.cpp" />
     <ClCompile Include="source\Game\main.cpp" />
     <ClCompile Include="Math\Affin.cpp" />
     <ClCompile Include="Math\Convert.cpp" />
@@ -262,6 +263,7 @@
     <ClInclude Include="header\Game\Gate.h" />
     <ClInclude Include="header\Game\Item.h" />
     <ClInclude Include="header\3D\JsonLoader.h" />
+    <ClInclude Include="header\Game\KeepsWall.h" />
     <ClInclude Include="header\Game\MoveGate.h" />
     <ClInclude Include="header\Game\OverSprite.h" />
     <ClInclude Include="header\Game\Rain.h" />

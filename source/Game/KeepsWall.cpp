@@ -1,12 +1,10 @@
-#include "header/Game/Wall.h"
+#include "header/Game/KeepsWall.h"
 #include "header/Collider/BoxCollider.h"
 
-using namespace DirectX;
-
-Wall* Wall::Create(Model* model)
+KeepsWall* KeepsWall::Create(Model* model)
 {
 	//インスタンス生成
-	Wall* instance = new Wall();
+	KeepsWall* instance = new KeepsWall();
 	if (instance == nullptr)
 	{
 		return nullptr;
@@ -23,31 +21,31 @@ Wall* Wall::Create(Model* model)
 	return instance;
 }
 
-bool Wall::Initialize()
+bool KeepsWall::Initialize()
 {
 	if (!Object3d::Initialize())
 	{
 		return false;
 	}
 	//初期座標指定
-	SetScale({ 1,1,1});
-	SetRotation({ 0,90,0 });
+	SetScale({ 1,1,1 });
+	SetRotation({ 0,0,0 });
 	SetPosition({ 0,0,0, });
 	SetRadius({ 3.0f,3.0f });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
 	SetCollider(new BoxCollider(XMVECTOR({ 0,radius.y,0,0 }), radius));
 	//識別を設定する
-	SetIdentification(IDENT_FLOOR);
+	SetIdentification(IDENT_WALL);
 	return true;
 }
 
-void Wall::Update()
+void KeepsWall::Update()
 {
 	Object3d::Update();
 }
 
-void Wall::OnCollider(const CollisionInfo& info)
+void KeepsWall::OnCollider(const CollisionInfo& info)
 {
 	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
 	{

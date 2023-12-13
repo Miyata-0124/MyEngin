@@ -6,6 +6,7 @@
 #include "header/Game/Floor.h"
 #include "header/Game/Item.h"
 #include "header/Game/Wall.h"
+#include "header/Game/KeepsWall.h"
 #include "header/Game/MoveGate.h"
 #include "header/Game/Rain.h"
 #include "easing/Easing.h"
@@ -208,7 +209,26 @@ void GamePlayScene::LoadMap()
 
 		if (objectData.fileName == "wall")
 		{
+			if (it != models.end()) { model = it->second; }
+			//ˆÚ“®—pƒQ[ƒg
+			objKeepsWall = KeepsWall::Create(model);
+			//À•W
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objKeepsWall->SetScale(scale);
 
+			//‰ñ“]Šp
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objKeepsWall->SetRotation(rot);
+
+			//À•W
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objKeepsWall->SetPosition(pos);
+
+			//”z—ñ‚É“o˜^
+			objects.push_back(objKeepsWall);
 		}
 
 		if (objectData.fileName == "moveGate")
