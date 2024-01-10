@@ -10,12 +10,14 @@
 class Player;
 class BackGround;
 class Floor;
+class Pipe;
 class Item;
 class Wall;
 class KeepsWall;
 class Enemy;
 class Rain;
 class MoveGate;
+class Gate;
 class ClearBox;
 
 class GamePlayScene : public GameBaseScene
@@ -56,6 +58,7 @@ private:
 	//暗転
 	BlackOut* blackOut = new BlackOut();
 	Sprite* sprite = new Sprite();
+	Sprite* back = new Sprite();
 	//判定マネージャー
 	CollisionManager* collisionManager = CollisionManager::GetInstance();
 	//ゲーム内オブジェクト
@@ -65,14 +68,20 @@ private:
 	Enemy* objEnem = nullptr;
 	//床(仮)
 	Floor* objFloor = nullptr;
+	//パイプ
+	Pipe* objPipe = nullptr;
 	//壁
 	Wall* objWall = nullptr;
 	//プレイヤーを通さない壁
 	KeepsWall* objKeepsWall = nullptr;
 	//アイテム
 	Item* objItem = nullptr;
+	//クリア判定用箱
+	ClearBox* objClearBox = nullptr;
 	//マップ移動用ゲート
-	MoveGate* objGate = nullptr;
+	MoveGate* objMGate = nullptr;
+	//扉
+	Gate* objGate = nullptr;
 	//背景
 	BackGround* objBackGround = nullptr;
 	//パーティクル

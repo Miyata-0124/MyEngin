@@ -77,6 +77,8 @@ private:
 	void HiJump();
 	//姿勢変更
 	void ChangePosture();
+	//上り下りの動作
+	void Clim();
 	//重力
 	void Gravity();
 	//アイテムに対する行動

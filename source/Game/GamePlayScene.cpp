@@ -4,14 +4,17 @@
 #include "header/Game/Player.h"
 #include "header/Game/enemy.h"
 #include "header/Game/Floor.h"
+#include "header/Game/Pipe.h"
 #include "header/Game/Item.h"
 #include "header/Game/Wall.h"
 #include "header/Game/KeepsWall.h"
 #include "header/Game/MoveGate.h"
+#include "header/Game/Gate.h"
+#include "header/Game/ClearBox.h"
 #include "header/Game/Rain.h"
 #include "easing/Easing.h"
 
-#include "header/Game/GameClearScene.h"
+#include "header/Game/GameTitleScene.h"
 
 void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 {
@@ -23,6 +26,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	spriteCommon->Loadtexture(1, "white1x1.png");
 	spriteCommon->Loadtexture(2, "white1x1.png");
 	spriteCommon->Loadtexture(3, "Rule.png");
+	spriteCommon->Loadtexture(4, "sample.png");
 	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), camera);
 	//FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
@@ -33,9 +37,13 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	blackOut->Initialize(spriteCommon);
 
 	sprite->Initialize(spriteCommon, 3);
+
+	back->Initialize(spriteCommon, 4);
+	back->SetSize({ 2560,720 });
 	//json読み込み
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("map");
-
+	//マップ読み込み
+	LoadMap();
 #pragma region FBX
 	/*model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
@@ -65,12 +73,10 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	objItem = Item::Create(ground);
 	objItem->SetInput(input);
 
-	
 	//背景
 	//objBackGround = BackGround::Create(backGround);
 #pragma endregion
-	//マップ読み込み
-	LoadMap();
+
 
 #pragma region パーティクル関係
 	//rain = Rain::Create();
@@ -88,6 +94,7 @@ void GamePlayScene::Finalize()
 	delete wakeUp;
 	delete blackOut;
 	delete sprite;
+	delete back;
 	for (auto object : objects) {
 		delete object;
 	}
@@ -96,6 +103,13 @@ void GamePlayScene::Finalize()
 
 void GamePlayScene::Update()
 {
+	if (input->TriggerKey(DIK_R))
+	{
+
+		//タイトルに戻す
+		/*GameBaseScene* scene = new GameTitleScene();
+		sceneManager->SetNextScene(scene);*/
+	}
 	//フェードアウト
 	wakeUp->Update();
 	//アイテム
@@ -112,11 +126,17 @@ void GamePlayScene::Update()
 		object->Update();
 	}
 
+	if (objGate->GetRotation().x >= 90.0f)
+	{
+		blackOut->Update();
+	}
+
 	//カメラ
 	camera->Update();
 
 
 	sprite->Update();
+	back->Update();
 
 #pragma region 各クラス間の情報受け渡し
 	//オブジェクト
@@ -125,11 +145,12 @@ void GamePlayScene::Update()
 	objItem->SetPPosition(objPlayer->GetPosition());
 	objItem->SetRetention(objPlayer->GetRetention());
 	objItem->SetDirection(objPlayer->GetDirection());
+	objGate->SetIsGoal(objClearBox->GetIsGoal());
 #pragma endregion
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
 
-	if (objGate->GetMapMove())
+	/*if (objGate->GetMapMove())
 	{
 		blackOut->Update();
 		if (blackOut->GetMinAlpha() > blackOut->GetMaxAlpha())
@@ -140,11 +161,12 @@ void GamePlayScene::Update()
 			GameBaseScene* scene = new GameClearScene();
 			sceneManager->SetNextScene(scene);
 		}
-	}
+	}*/
 }
 
 void GamePlayScene::Draw()
 {
+	back->Draw();
 	Object3d::PreDraw(directXCom->GetCommandList());
 	//オブジェクト
 	//object1->Draw(directXCom->GetCommandList());
@@ -173,15 +195,21 @@ void GamePlayScene::LoadMap()
 {
 	for (auto& objectData : jsonLoader->objects) {
 		//地面に接している壁オブジェクト
-		Model* model = Model::LoadFromOBJ("wall");
+		Model* floor = Model::LoadFromOBJ("wall");
+		Model* wall = Model::LoadFromOBJ("floor");
+		Model* pipe = Model::LoadFromOBJ("pipe");
+		//扉
+		Model* gate = Model::LoadFromOBJ("gate");
+		//クリア範囲
+		Model* clear = Model::LoadFromOBJ("clear");
 		//次のステージへ移動するためのオブジェクト
 		Model* backGround = Model::LoadFromOBJ("BG");
 		decltype(models)::iterator it = models.find(objectData.fileName);
 		if (objectData.fileName == "floor")
 		{
-			if (it != models.end()) { model = it->second; }
+			if (it != models.end()) { floor = it->second; }
 			//モデルを指定して3Dオブジェクトを生成
-			objWall = Wall::Create(model);
+			objWall = Wall::Create(floor);
 			//座標
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
@@ -209,9 +237,9 @@ void GamePlayScene::LoadMap()
 
 		if (objectData.fileName == "wall")
 		{
-			if (it != models.end()) { model = it->second; }
+			if (it != models.end()) { wall = it->second; }
 			//移動用ゲート
-			objKeepsWall = KeepsWall::Create(model);
+			objKeepsWall = KeepsWall::Create(wall);
 			//座標
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
@@ -231,12 +259,60 @@ void GamePlayScene::LoadMap()
 			objects.push_back(objKeepsWall);
 		}
 
+		if (objectData.fileName == "pipe")
+		{
+			if (it != models.end()) { pipe = it->second; }
+			//移動用ゲート
+			objPipe = Pipe::Create(pipe);
+			//座標
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objPipe->SetScale(scale);
+
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objPipe->SetRotation(rot);
+
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objPipe->SetPosition(pos);
+
+			//配列に登録
+			objects.push_back(objPipe);
+		}
+
 		if (objectData.fileName == "moveGate")
 		{
 			if (it != models.end()) { backGround = it->second; }
 			//移動用ゲート
-			objGate = MoveGate::Create(backGround);
-			objGate->SetInput(input);
+			objMGate = MoveGate::Create(backGround);
+			objMGate->SetInput(input);
+			//座標
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objMGate->SetScale(scale);
+
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objMGate->SetRotation(rot);
+
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objMGate->SetPosition(pos);
+
+			//配列に登録
+			objects.push_back(objMGate);
+		}
+
+		if (objectData.fileName == "gate")
+		{
+			if (it != models.end()) { gate = it->second; }
+			//移動用ゲート
+			objGate = Gate::Create(gate);
 			//座標
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
@@ -254,6 +330,30 @@ void GamePlayScene::LoadMap()
 
 			//配列に登録
 			objects.push_back(objGate);
+		}
+
+		if (objectData.fileName == "goal")
+		{
+			if (it != models.end()) { clear = it->second; }
+			//移動用ゲート
+			objClearBox = ClearBox::Create(clear);
+			//座標
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objClearBox->SetScale(scale);
+
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objClearBox->SetRotation(rot);
+
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objClearBox->SetPosition(pos);
+
+			//配列に登録
+			objects.push_back(objClearBox);
 		}
 	}
 }

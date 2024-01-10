@@ -51,10 +51,7 @@ void MoveGate::OnCollider(const CollisionInfo& info)
 	{
 		if (info.object->GetIdentification() == IDENT_PLAYER)
 		{
-			if (input->TriggerKey(DIK_V))
-			{
-				isMapMove = true;
-			}
+			isMapMove = true;
 		}
 	}
 }

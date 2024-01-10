@@ -30,6 +30,7 @@ enum Identification //属性
 	IDENT_GATE,			//イベント
 	IDENT_WALL,			//壁
 	IDENT_FLOOR,		//床
+	IDENT_PIPE,			//パイプ(登れる)
 };
 
 /// <summary>

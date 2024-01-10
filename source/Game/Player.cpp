@@ -124,6 +124,13 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 
 		}
+		//パイプに当たった時
+		if (info.object->GetIdentification() == IDENT_PIPE)
+		{
+			yadd = 0.0f;
+			isJamp = false;
+			Clim();
+		}
 	}
 
 	if (info.collider->GetShapeType() == COLISIONSHAPE_BOX)
@@ -171,11 +178,11 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 			if (position.x > info.object->GetPosition().x + info.object->GetRadius().x)
 			{
-				position.x -= moveSpeed - radius;
+				position.x -= (moveSpeed - radius);
 			}
 			if (position.x < info.object->GetPosition().x - info.object->GetRadius().x)
 			{
-				position.x -= moveSpeed - radius;
+				position.x -= (moveSpeed + radius);
 			}
 		}
 	}
@@ -223,7 +230,7 @@ void Player::Move()
 	}
 
 	//カメラの移動
-	if (position.x > -5.0f && position.x < 220.0f)
+	if (position.x > -5.0f && position.x < 280.0f)
 	{
 
 		CameraMoveVector({ moveSpeed,0,0 });
@@ -265,6 +272,14 @@ void Player::ChangePosture()
 		SetScale({ 1,1,1 });
 		position.y += 0.5f;
 		posture = Posture::Upright;
+	}
+}
+
+void Player::Clim()
+{
+	if (input->PushKey(DIK_UP))
+	{
+		position.y += 0.05f;
 	}
 }
 

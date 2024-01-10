@@ -51,7 +51,10 @@ void Gate::Update()
 			min += 0.01f;
 		}
 		y = min / max;
-		position.y = startY + (endY - startY) * Easing::easeOutQuint(y);
+		if (startY < 0)
+		{
+			position.y = startY + (endY - startY) * Easing::easeOutQuint(y);
+		}
 
 		SetPosition(position);
 
