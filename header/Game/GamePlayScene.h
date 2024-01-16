@@ -81,7 +81,7 @@ private:
 	//マップ移動用ゲート
 	MoveGate* objMGate = nullptr;
 	//扉
-	Gate* objGate = nullptr;
+	Gate* objGate[2] = {};
 	//背景
 	BackGround* objBackGround = nullptr;
 	//パーティクル

@@ -1,6 +1,8 @@
 #include "header/Game/GamePlayScene.h"
 #include "header/Game/GameSceneManager.h"
 
+#include "header/3D/FbxObject3D.h"
+
 #include "header/Game/Player.h"
 #include "header/Game/enemy.h"
 #include "header/Game/Floor.h"
@@ -29,7 +31,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	spriteCommon->Loadtexture(4, "sample.png");
 	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), camera);
-	//FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
+	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	Particle::StaticInitialize(directXCom->GetDevice(), camera);
 	//目覚め
 	wakeUp->Initialize(spriteCommon);
@@ -45,7 +47,8 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//マップ読み込み
 	LoadMap();
 #pragma region FBX
-	/*model = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+	//FbxModel* playerModel = FbxLoader::GetInstance()->LoadModelFromFile("player");
+	/*
 
 	object1->initialize();
 	object1->SetModel(model);
@@ -103,13 +106,10 @@ void GamePlayScene::Finalize()
 
 void GamePlayScene::Update()
 {
-	if (input->TriggerKey(DIK_R))
-	{
-
-		//タイトルに戻す
-		/*GameBaseScene* scene = new GameTitleScene();
-		sceneManager->SetNextScene(scene);*/
-	}
+	//タイトルに戻す
+	/*GameBaseScene* scene = new GameTitleScene();
+	sceneManager->SetNextScene(scene);*/
+	
 	//フェードアウト
 	wakeUp->Update();
 	//アイテム
@@ -126,9 +126,12 @@ void GamePlayScene::Update()
 		object->Update();
 	}
 
-	if (objGate->GetRotation().x >= 90.0f)
+	for (int i = 0; i < 2; i++)
 	{
-		blackOut->Update();
+		if (objGate[i]->GetRotation().x >= 90.0f)
+		{
+			blackOut->Update();
+		}
 	}
 
 	//カメラ
@@ -145,7 +148,10 @@ void GamePlayScene::Update()
 	objItem->SetPPosition(objPlayer->GetPosition());
 	objItem->SetRetention(objPlayer->GetRetention());
 	objItem->SetDirection(objPlayer->GetDirection());
-	objGate->SetIsGoal(objClearBox->GetIsGoal());
+	for (int i = 0; i < 2; i++)
+	{
+		objGate[i]->SetIsGoal(objClearBox->GetIsGoal());
+	}
 #pragma endregion
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
@@ -193,17 +199,18 @@ void GamePlayScene::Draw()
 
 void GamePlayScene::LoadMap()
 {
+	//地面に接している壁オブジェクト
+	Model* floor = Model::LoadFromOBJ("wall");
+	Model* wall = Model::LoadFromOBJ("floor");
+	Model* pipe = Model::LoadFromOBJ("pipe");
+	//扉
+	Model* gate = Model::LoadFromOBJ("gate");
+	//クリア範囲
+	Model* clear = Model::LoadFromOBJ("clear");
+	//次のステージへ移動するためのオブジェクト
+	Model* backGround = Model::LoadFromOBJ("BG");
 	for (auto& objectData : jsonLoader->objects) {
-		//地面に接している壁オブジェクト
-		Model* floor = Model::LoadFromOBJ("wall");
-		Model* wall = Model::LoadFromOBJ("floor");
-		Model* pipe = Model::LoadFromOBJ("pipe");
-		//扉
-		Model* gate = Model::LoadFromOBJ("gate");
-		//クリア範囲
-		Model* clear = Model::LoadFromOBJ("clear");
-		//次のステージへ移動するためのオブジェクト
-		Model* backGround = Model::LoadFromOBJ("BG");
+		
 		decltype(models)::iterator it = models.find(objectData.fileName);
 		if (objectData.fileName == "floor")
 		{
@@ -311,25 +318,28 @@ void GamePlayScene::LoadMap()
 		if (objectData.fileName == "gate")
 		{
 			if (it != models.end()) { gate = it->second; }
-			//移動用ゲート
-			objGate = Gate::Create(gate);
-			//座標
-			DirectX::XMFLOAT3 scale;
-			DirectX::XMStoreFloat3(&scale, objectData.scaling);
-			objGate->SetScale(scale);
+			for (int i = 0; i < 2; i++)
+			{
+				//移動用ゲート
+				objGate[i] = Gate::Create(gate);
+				//座標
+				DirectX::XMFLOAT3 scale;
+				DirectX::XMStoreFloat3(&scale, objectData.scaling);
+				objGate[i]->SetScale(scale);
 
-			//回転角
-			DirectX::XMFLOAT3 rot;
-			DirectX::XMStoreFloat3(&rot, objectData.rotation);
-			objGate->SetRotation(rot);
+				//回転角
+				DirectX::XMFLOAT3 rot;
+				DirectX::XMStoreFloat3(&rot, objectData.rotation);
+				objGate[i]->SetRotation(rot);
 
-			//座標
-			DirectX::XMFLOAT3 pos;
-			DirectX::XMStoreFloat3(&pos, objectData.position);
-			objGate->SetPosition(pos);
+				//座標
+				DirectX::XMFLOAT3 pos;
+				DirectX::XMStoreFloat3(&pos, objectData.position);
+				objGate[i]->SetPosition(pos);
 
-			//配列に登録
-			objects.push_back(objGate);
+				//配列に登録
+				objects.push_back(objGate[i]);
+			}
 		}
 
 		if (objectData.fileName == "goal")

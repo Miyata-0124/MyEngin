@@ -31,7 +31,7 @@ bool Player::Initialize()
 	}
 	//初期座標指定
 	SetScale({ 1,1,1 });
-	SetRotation({ 0,0,0 });
+	SetRotation({ 0,-90,0 });
 	SetPosition({ 0,0,0 });
 	SetRadius({ radius,radius });
 	//コライダーの追加
@@ -63,6 +63,18 @@ void Player::Update()
 	Move();
 	//アイテムに対する行動
 	Retention();
+
+	if (isJamp)
+	{
+		rotation.z += 2.0f;
+	}
+	else
+	{
+		if (rotation.z != 0)
+		{
+			rotation.z = 0;
+		}
+	}
 
 	if (position.y <= -50)
 	{
@@ -108,6 +120,8 @@ void Player::OnCollider(const CollisionInfo& info)
 		//アイテムに当たった時
 		if (info.object->GetIdentification() == IDENT_ITEM)
 		{
+			isJamp = false;
+
 			if (input->TriggerKey(DIK_Z) && !isRetention)
 			{
 				//保持フラグを真にする
@@ -161,6 +175,7 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 			yadd = 0.0f;
 			isJamp = false;
+
 			//下から上がろうとした場合
 			if (position.y < info.object->GetPosition().y)
 			{
@@ -206,6 +221,11 @@ void Player::Move()
 		{
 			moveSpeed = -0.2f;
 		}
+
+		if (rotation.y != -90)
+		{
+			rotation.y -= 30;
+		}
 	}
 	else if (input->PushKey(DIK_RIGHT))
 	{
@@ -222,6 +242,11 @@ void Player::Move()
 		if (posture == Posture::Croching)
 		{
 			moveSpeed = 0.2f;
+		}
+
+		if (rotation.y != 90)
+		{
+			rotation.y += 30;
 		}
 	}
 	else

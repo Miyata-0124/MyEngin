@@ -166,7 +166,15 @@ void Item::RetentionThrow()
 {
 	if (isRetention)
 	{
-		SetPosition({ playerPosition.x,playerPosition.y,playerPosition.z });
+		if (isDirection)
+		{
+			SetPosition({ playerPosition.x,playerPosition.y + radius,playerPosition.z + radius });
+		}
+		else
+		{
+			SetPosition({ playerPosition.x,playerPosition.y + radius,playerPosition.z - radius });
+		}
+		
 		if (input->TriggerKey(DIK_X))
 		{
 			if (!isThrow && !input->PushKey(DIK_DOWN))

@@ -1,6 +1,7 @@
 #include "header/2D/Particle.h"
 #include <d3dcompiler.h>
 #include "DirectXTex/include/DirectXTex.h"
+#include <algorithm>
 
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -14,8 +15,6 @@ std::string Particle::defaultTextureDirectoryPath = "Resources/";
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-const float Particle::radius = 5.0f;				// 底面の半径
-const float Particle::prizmHeight = 8.0f;			// 柱の高さ
 ID3D12Device* Particle::device = nullptr;
 UINT Particle::descriptorHandleIncrementSize = 0;
 UINT Particle::incrementSize = 0;
@@ -30,7 +29,6 @@ CD3DX12_GPU_DESCRIPTOR_HANDLE Particle::gpuDescHandleSRV;
 XMMATRIX Particle::matView{};
 XMMATRIX Particle::matProjection{};
 D3D12_VERTEX_BUFFER_VIEW Particle::vbView{};
-Particle::VertexPos Particle::vertices[vertexCount];
 ViewProjection* Particle::camera = nullptr;
 
 //XMFLOAT3同士の加算処理
@@ -70,7 +68,7 @@ void Particle::CreateModel()
 {
 	HRESULT result = S_FALSE;
 
-	UINT sizeVB = static_cast<UINT>(sizeof(vertices));
+	UINT sizeVB = static_cast<UINT>(sizeof(VertexPos) * vertexCount);
 
 	// ヒーププロパティ
 	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
@@ -83,19 +81,10 @@ void Particle::CreateModel()
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
 
-	// 頂点バッファへのデータ転送
-	//VertexPosNormalUv* vertMap = nullptr;
-	VertexPos* vertMap = nullptr;
-	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
-	if (SUCCEEDED(result)) {
-		memcpy(vertMap, vertices, sizeof(vertices));
-		vertBuff->Unmap(0, nullptr);
-	}
-
 	// 頂点バッファビューの作成
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-	vbView.SizeInBytes = sizeof(vertices);
-	vbView.StrideInBytes = sizeof(vertices[0]);
+	vbView.SizeInBytes = sizeVB;
+	vbView.StrideInBytes = sizeof(VertexPos);
 }
 
 Particle* Particle::Create(uint32_t texIndex_)
@@ -208,7 +197,7 @@ void	Particle::SetTextureCommands(uint32_t index) {
 	cmdList->SetGraphicsRootSignature(rootsignature.Get());
 
 	// プリミティブ形状の設定コマンド
-	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト
+	//cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト
 	//三角形リスト		TRIANGLELIST
 	//三角形ストリップ	TRIANGLESTRIP
 	//線リスト			LINELIST
@@ -613,18 +602,25 @@ void Particle::Update()
 	//頂点バッファへデータ転送
 	VertexPos* vertMap = nullptr;
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+	int counter = 0;
 	if (SUCCEEDED(result))
 	{
 		//パーティクルの情報を1つずつ反映
 		for (std::forward_list<Particles>::iterator itrator_ = particles.begin();
 			itrator_ != particles.end(); itrator_++)
 		{
+			counter += 1;
 			//座標
 			vertMap->pos = itrator_->position;
 			//スケール
 			vertMap->scale = itrator_->scale;
 			//次の頂点
 			vertMap++;
+			
+			if (counter >= vertexCount)
+			{
+				break;
+			}
 		}
 		vertBuff->Unmap(0, nullptr);
 	}
@@ -661,8 +657,16 @@ void Particle::Draw()
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
 	// シェーダリソースビューをセット
 	cmdList->SetGraphicsRootDescriptorTable(1, gpuDescHandleSRV);
+
+	UINT num = (UINT)std::distance(particles.begin(), particles.end());
+
+	UINT vertCount = static_cast<UINT>(vertexCount);
+	//比較
+	UINT minNum = std::min(vertCount, num);
+	//小さい値を上限に
+
 	// 描画コマンド
-	cmdList->DrawInstanced((UINT)std::distance(particles.begin(), particles.end()), 1, 0, 0);
+	cmdList->DrawInstanced(/*(UINT)std::distance(particles.begin(), particles.end())*/minNum, 1, 0, 0);
 }
 
 void Particle::PreDraw(ID3D12GraphicsCommandList* cmdList_)
