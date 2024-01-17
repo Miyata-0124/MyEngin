@@ -64,18 +64,6 @@ void Player::Update()
 	//アイテムに対する行動
 	Retention();
 
-	if (isJamp)
-	{
-		rotation.z += 2.0f;
-	}
-	else
-	{
-		if (rotation.z != 0)
-		{
-			rotation.z = 0;
-		}
-	}
-
 	if (position.y <= -50)
 	{
 		position = { 0,0,0 };
@@ -120,8 +108,6 @@ void Player::OnCollider(const CollisionInfo& info)
 		//アイテムに当たった時
 		if (info.object->GetIdentification() == IDENT_ITEM)
 		{
-			isJamp = false;
-
 			if (input->TriggerKey(DIK_Z) && !isRetention)
 			{
 				//保持フラグを真にする
@@ -129,8 +115,8 @@ void Player::OnCollider(const CollisionInfo& info)
 			}
 			if (isStop)
 			{
+				isJamp = false;
 				yadd = 0.0f;
-				position.y = info.object->GetPosition().y + info.object->GetRadius().y - radius;;
 			}
 		}
 		//敵性オブジェクトor敵に当たった時
