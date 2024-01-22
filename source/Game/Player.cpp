@@ -32,7 +32,7 @@ bool Player::Initialize()
 	//初期座標指定
 	SetScale({ 1,1,1 });
 	SetRotation({ 0,-90,0 });
-	SetPosition({ 0,0,0 });
+	SetPosition({ 0,-6,0 });
 	SetRadius({ radius,radius });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
@@ -161,18 +161,6 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 			yadd = 0.0f;
 			isJamp = false;
-
-			//下から上がろうとした場合
-			if (position.y < info.object->GetPosition().y)
-			{
-				//座標を下げる
-				position.y--;
-			}
-			//一定以上よりも上から来たなら止める
-			else
-			{
-				position.y = info.object->GetPosition().y + info.object->GetRadius().y + 1.0f;
-			}
 		}
 		//壁に当たった時
 		if (info.object->GetIdentification() == IDENT_WALL)

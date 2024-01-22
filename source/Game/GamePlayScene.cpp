@@ -39,6 +39,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	blackOut->Initialize(spriteCommon);
 
 	sprite->Initialize(spriteCommon, 3);
+	sprite->SetPosition({ -1230,0 });
 
 	back->Initialize(spriteCommon, 4);
 	back->SetSize({ 2560,720 });
@@ -59,7 +60,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 #pragma region モデル
 	//	//モデル
 	//プレイヤーモデル
-	Model* playerModel = Model::LoadFromOBJ("player");
+	Model* playerModel = Model::LoadFromOBJ("sphere");
 	Model* ground = Model::LoadFromOBJ("blue");
 	//Model* item_ = Model::LoadFromOBJ("Item");
 #pragma endregion
@@ -126,17 +127,23 @@ void GamePlayScene::Update()
 		object->Update();
 	}
 
-	for (int i = 0; i < 2; i++)
+	if (objGate->GetRotation().x >= 90.0f)
 	{
-		if (objGate[i]->GetRotation().x >= 90.0f)
-		{
-			blackOut->Update();
-		}
+		blackOut->Update();
 	}
 
 	//カメラ
 	camera->Update();
-
+	if (input->TriggerKey(DIK_TAB) && !move && sprite->GetPosition().x < 0.0f)
+	{
+		move = true;
+		sprite->SetPosition({ 0,0 });
+	}
+	else if (input->TriggerKey(DIK_TAB) && move/* && sprite->GetPosition().x > 0.0f*/)
+	{
+		move = false;
+		sprite->SetPosition({ -1230,0 });
+	}
 
 	sprite->Update();
 	back->Update();
@@ -148,10 +155,7 @@ void GamePlayScene::Update()
 	objItem->SetPPosition(objPlayer->GetPosition());
 	objItem->SetRetention(objPlayer->GetRetention());
 	objItem->SetDirection(objPlayer->GetDirection());
-	for (int i = 0; i < 2; i++)
-	{
-		objGate[i]->SetIsGoal(objClearBox->GetIsGoal());
-	}
+	objGate->SetIsGoal(objClearBox->GetIsGoal());
 #pragma endregion
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
@@ -207,6 +211,9 @@ void GamePlayScene::LoadMap()
 	Model* gate = Model::LoadFromOBJ("gate");
 	//クリア範囲
 	Model* clear = Model::LoadFromOBJ("clear");
+
+	Model* test = Model::LoadFromOBJ("TestBox");
+
 	//次のステージへ移動するためのオブジェクト
 	Model* backGround = Model::LoadFromOBJ("BG");
 	for (auto& objectData : jsonLoader->objects) {
@@ -266,6 +273,30 @@ void GamePlayScene::LoadMap()
 			objects.push_back(objKeepsWall);
 		}
 
+		if (objectData.fileName == "TestBox")
+		{
+			if (it != models.end()) { test = it->second; }
+			//移動用ゲート
+			objWall = Wall::Create(test);
+			//座標
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objWall->SetScale(scale);
+
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objWall->SetRotation(rot);
+
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objWall->SetPosition(pos);
+
+			//配列に登録
+			objects.push_back(objWall);
+		}
+
 		if (objectData.fileName == "pipe")
 		{
 			if (it != models.end()) { pipe = it->second; }
@@ -318,28 +349,26 @@ void GamePlayScene::LoadMap()
 		if (objectData.fileName == "gate")
 		{
 			if (it != models.end()) { gate = it->second; }
-			for (int i = 0; i < 2; i++)
-			{
-				//移動用ゲート
-				objGate[i] = Gate::Create(gate);
-				//座標
-				DirectX::XMFLOAT3 scale;
-				DirectX::XMStoreFloat3(&scale, objectData.scaling);
-				objGate[i]->SetScale(scale);
+			//移動用ゲート
+			objGate = Gate::Create(gate);
+			//座標
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objGate->SetScale(scale);
 
-				//回転角
-				DirectX::XMFLOAT3 rot;
-				DirectX::XMStoreFloat3(&rot, objectData.rotation);
-				objGate[i]->SetRotation(rot);
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objGate->SetRotation(rot);
 
-				//座標
-				DirectX::XMFLOAT3 pos;
-				DirectX::XMStoreFloat3(&pos, objectData.position);
-				objGate[i]->SetPosition(pos);
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objGate->SetPosition(pos);
 
-				//配列に登録
-				objects.push_back(objGate[i]);
-			}
+			//配列に登録
+			objects.push_back(objGate);
+			
 		}
 
 		if (objectData.fileName == "goal")

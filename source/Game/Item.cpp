@@ -31,7 +31,7 @@ bool Item::Initialize()
 	//初期座標指定
 	SetScale({ 2.0f,0.5f,0.5f });
 	SetRotation({ 0,0,0 });
-	SetPosition({ -40,0,0, });
+	SetPosition({ 10,0,0, });
 	SetRadius({ radius,radius });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心

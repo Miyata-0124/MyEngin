@@ -81,13 +81,13 @@ private:
 	//マップ移動用ゲート
 	MoveGate* objMGate = nullptr;
 	//扉
-	Gate* objGate[2] = {};
+	Gate* objGate = {};
 	//背景
 	BackGround* objBackGround = nullptr;
 	//パーティクル
 	//Rain* rain = nullptr;
 
-	XMFLOAT3 move = { 0,0,0 };
+	bool move = false;
 
 	//マップ用JsonLoader
 	//JSON
