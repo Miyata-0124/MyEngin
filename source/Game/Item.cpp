@@ -30,7 +30,7 @@ bool Item::Initialize()
 	}
 	//初期座標指定
 	SetScale({ 2.0f,0.5f,0.5f });
-	SetRotation({ 0,0,0 });
+	SetRotation({ 0,0,60 });
 	SetPosition({ 10,0,0, });
 	SetRadius({ radius,radius });
 	//コライダーの追加
@@ -45,7 +45,7 @@ void Item::Update()
 {
 	//保持投擲の挙動
 	RetentionThrow();
-	//アイテムの距離制限
+	//アイテムをプレイヤーの周辺に移動させる
 	Remove();
 	if (!isStop)
 	{
@@ -138,11 +138,11 @@ void Item::OnCollider(const CollisionInfo& info)
 		}
 		if (info.object->GetIdentification() == IDENT_FLOOR)
 		{
-			height = 0.0f;
-			length = 0.0f;
 			yadd = 0.0f;
 			if (isThrow)
 			{
+				height = 0.0f;
+				length = 0.0f;
 				if (position.y < info.object->GetPosition().y + info.object->GetRadius().y)
 				{
 					if (isDirection)//左
@@ -166,6 +166,7 @@ void Item::RetentionThrow()
 {
 	if (isRetention)
 	{
+		SetRotation({ 0,0,0 });
 		if (isDirection)
 		{
 			SetPosition({ playerPosition.x,playerPosition.y + radius,playerPosition.z + radius });
@@ -199,19 +200,7 @@ void Item::RetentionThrow()
 
 void Item::Remove()
 {
-	//if (position.y < -13.0f)
-	//{
-	//	//平地の上に合わせる
-	//	position.y = -13.0f;
-	//}
-	//if (position.x > 50.0f)
-	//{
-	//	position.x--;
-	//}
-	//if (position.x < -50.0f)
-	//{
-	//	position.x++;
-	//}
+	
 }
 
 void Item::Gravity()
@@ -225,6 +214,9 @@ void Item::Gravity()
 
 void Item::ThrowLength()
 {
+	//投げられた時の重力加算
+	//アイテム本体についているのとは別物
+	float g = 0.80f;
 	//左向き
 	if (isDirection)
 	{

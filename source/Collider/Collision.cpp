@@ -73,15 +73,15 @@ bool Collision::CheckSphere2Box2D(const Sphere& sphere, const Box& box)
     float Xmin = box.center.m128_f32[0] - box.radius.x;
     float Ymin = box.center.m128_f32[1] - box.radius.y;
     DirectX::XMFLOAT2 Pmin = { Xmin,Ymin };
-    //プレイヤーの座標
+    //プレイヤーの中心座標
     DirectX::XMFLOAT2 SpherePos = { sphere.center.m128_f32[0],sphere.center.m128_f32[1] };
 
-    //もしプレイヤーの座標と2DBoxの2頂点の座標で判定を取る
-    if (SpherePos.y + sphere.radius > Pmin.y && SpherePos.y - sphere.radius < Pmax.y)
+    //もし球の座標と2DBoxの2頂点の座標で判定を取る
+    if (SpherePos.x > Pmin.x && SpherePos.x < Pmax.x)
     {
-        if (SpherePos.x + sphere.radius > Pmin.x && SpherePos.x - sphere.radius < Pmax.x)
+        if (SpherePos.y + sphere.radius > Pmin.y && SpherePos.y - sphere.radius < Pmax.y)
         {
-            return true;
+           return true;
         }
     }
 

@@ -16,8 +16,6 @@
 #include "header/Game/Rain.h"
 #include "easing/Easing.h"
 
-#include "header/Game/GameTitleScene.h"
-
 void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 {
 	camera = camera_;
@@ -37,9 +35,6 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	wakeUp->Initialize(spriteCommon);
 
 	blackOut->Initialize(spriteCommon);
-
-	sprite->Initialize(spriteCommon, 3);
-	sprite->SetPosition({ -1230,0 });
 
 	back->Initialize(spriteCommon, 4);
 	back->SetSize({ 2560,720 });
@@ -91,13 +86,10 @@ void GamePlayScene::Finalize()
 {
 	//オブジェクト
 	delete objPlayer;
-	//delete objFloor;
 	delete objItem;
 	delete objBackGround;
-	//delete rain;
 	delete wakeUp;
 	delete blackOut;
-	delete sprite;
 	delete back;
 	for (auto object : objects) {
 		delete object;
@@ -127,25 +119,13 @@ void GamePlayScene::Update()
 		object->Update();
 	}
 
-	if (objGate->GetRotation().x >= 90.0f)
+	/*if (objGate->GetRotation().x >= 90.0f)
 	{
 		blackOut->Update();
-	}
+	}*/
 
 	//カメラ
 	camera->Update();
-	if (input->TriggerKey(DIK_TAB) && !move && sprite->GetPosition().x < 0.0f)
-	{
-		move = true;
-		sprite->SetPosition({ 0,0 });
-	}
-	else if (input->TriggerKey(DIK_TAB) && move/* && sprite->GetPosition().x > 0.0f*/)
-	{
-		move = false;
-		sprite->SetPosition({ -1230,0 });
-	}
-
-	sprite->Update();
 	back->Update();
 
 #pragma region 各クラス間の情報受け渡し
@@ -155,7 +135,7 @@ void GamePlayScene::Update()
 	objItem->SetPPosition(objPlayer->GetPosition());
 	objItem->SetRetention(objPlayer->GetRetention());
 	objItem->SetDirection(objPlayer->GetDirection());
-	objGate->SetIsGoal(objClearBox->GetIsGoal());
+	//objGate->SetIsGoal(objClearBox->GetIsGoal());
 #pragma endregion
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
@@ -195,7 +175,6 @@ void GamePlayScene::Draw()
 	}
 	Object3d::PostDraw();
 	// UI,演出関連
-	sprite->Draw();
 	wakeUp->Draw();
 	blackOut->Draw();
 	

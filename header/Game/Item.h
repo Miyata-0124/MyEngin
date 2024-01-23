@@ -67,7 +67,6 @@ private:
 private:
 	//d—Í‰ÁZ—Ê
 	float yadd = 0.0f;
-	float g = 0.80f;
 	//”¼Œa
 	float radius = 2.0f;
 	//ˆÚ“®‚·‚é‰‘¬“x

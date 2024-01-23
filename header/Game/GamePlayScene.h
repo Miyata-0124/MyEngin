@@ -57,7 +57,6 @@ private:
 	WakeUp* wakeUp = new WakeUp();
 	//暗転
 	BlackOut* blackOut = new BlackOut();
-	Sprite* sprite = new Sprite();
 	Sprite* back = new Sprite();
 	//判定マネージャー
 	CollisionManager* collisionManager = CollisionManager::GetInstance();

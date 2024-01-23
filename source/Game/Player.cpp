@@ -64,13 +64,6 @@ void Player::Update()
 	//アイテムに対する行動
 	Retention();
 
-	if (position.y <= -50)
-	{
-		position = { 0,0,0 };
-		SetEye({ 0,0,-50 });
-		SetTarget({ 0,0,0 });
-	}
-
 	Object3d::Update();
 }
 
@@ -159,19 +152,31 @@ void Player::OnCollider(const CollisionInfo& info)
 		//床に当たった時
 		if (info.object->GetIdentification() == IDENT_FLOOR)
 		{
-			yadd = 0.0f;
-			isJamp = false;
+			//床の最大値を取得
+			float floorMAX = info.object->GetPosition().y + info.object->GetRadius().y;
+			//最小値を取得
+			//float floorMIN = info.object->GetPosition().y - info.object->GetRadius().y;
+			//最大値に0.1触れるようにする
+			float adj = 0.1f;
+			//自分の座標が床の最大よりも下(床にめり込んでいるなら)
+			if (position.y - radius < floorMAX)
+			{
+				//床に0.1触れさせるように戻す
+				position.y = floorMAX - adj;
+				yadd = 0.0f;
+				isJamp = false;
+			}
 		}
 		//壁に当たった時
 		if (info.object->GetIdentification() == IDENT_WALL)
 		{
 			if (position.x > info.object->GetPosition().x + info.object->GetRadius().x)
 			{
-				position.x -= (moveSpeed - radius);
+				
 			}
 			if (position.x < info.object->GetPosition().x - info.object->GetRadius().x)
 			{
-				position.x -= (moveSpeed + radius);
+
 			}
 		}
 	}
@@ -228,16 +233,16 @@ void Player::Move()
 		moveSpeed = 0.0f;
 	}
 
-	//カメラの移動
-	if (position.x > -5.0f && position.x < 280.0f)
+	//カメラのX移動
+	if (position.x > -5.0f && position.x < 867.0f)
 	{
-
 		CameraMoveVector({ moveSpeed,0,0 });
 	}
 	else
 	{
 		CameraMoveVector({ 0,0,0 });
 	}
+	
 
 	position.x += moveSpeed;
 }
@@ -246,7 +251,9 @@ void Player::Jump()
 {
 	if (!isJamp && input->TriggerKey(DIK_SPACE))
 	{
+		//重力をマイナスにして飛ばす
 		yadd = antiYadd;
+		//飛んでると伝える
 		isJamp = true;
 	}
 }
@@ -276,17 +283,27 @@ void Player::ChangePosture()
 
 void Player::Clim()
 {
+	float climeSpeed = 0.5f;
 	if (input->PushKey(DIK_UP))
 	{
-		position.y += 0.05f;
+		position.y += climeSpeed;
+		
+	}
+
+	if (input->PushKey(DIK_DOWN))
+	{
+		position.y -= climeSpeed;
 	}
 }
 
 void Player::Gravity()
 {
+	//重力を加算する
 	position.y -= yadd;
+	//ジャンプされたとき
 	if (yadd <= 1.0f)
 	{
+		//加算する値を大きくしていく
 		yadd += 0.2f;
 	}
 }

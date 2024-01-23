@@ -92,7 +92,7 @@ private:
 	//ジャンプ時の反重力
 	float antiYadd = -1.5f;
 	//半径
-	float radius = 1.0f;
+	float radius = 2.0f;
 	//移動速度
 	float moveSpeed = 0.4f;
 	bool isMove = true;
