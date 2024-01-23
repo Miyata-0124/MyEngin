@@ -63,6 +63,14 @@ void Player::Update()
 	Move();
 	//アイテムに対する行動
 	Retention();
+	if (position.x > -5.0f && position.x < 867.0f)
+	{
+		if (position.y > -220.0f && position.y < 100.0f)
+		{
+			SetEye({ position.x,position.y,-50 });
+			SetTarget({ position.x,position.y,0 });
+		}
+	}
 
 	Object3d::Update();
 }
@@ -233,17 +241,6 @@ void Player::Move()
 		moveSpeed = 0.0f;
 	}
 
-	//カメラのX移動
-	if (position.x > -5.0f && position.x < 867.0f)
-	{
-		CameraMoveVector({ moveSpeed,0,0 });
-	}
-	else
-	{
-		CameraMoveVector({ 0,0,0 });
-	}
-	
-
 	position.x += moveSpeed;
 }
 
@@ -283,16 +280,18 @@ void Player::ChangePosture()
 
 void Player::Clim()
 {
-	float climeSpeed = 0.5f;
+	float climeSpeed = 0.0f;
 	if (input->PushKey(DIK_UP))
 	{
+		climeSpeed = 0.5f;
 		position.y += climeSpeed;
 		
 	}
 
 	if (input->PushKey(DIK_DOWN))
 	{
-		position.y -= climeSpeed;
+		climeSpeed = -0.5f;
+		position.y += climeSpeed;
 	}
 }
 
