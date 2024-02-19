@@ -32,10 +32,13 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
 	Particle::StaticInitialize(directXCom->GetDevice(), camera);
 	//目覚め
+	wakeUp = std::make_unique<WakeUp>();
 	wakeUp->Initialize(spriteCommon);
 
+	blackOut = std::make_unique<BlackOut>();
 	blackOut->Initialize(spriteCommon);
 
+	back = std::make_unique<Sprite>();
 	back->Initialize(spriteCommon, 4);
 	back->SetSize({ 2560,720 });
 	//json読み込み
@@ -85,16 +88,16 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 void GamePlayScene::Finalize()
 {
 	//オブジェクト
+	wakeUp.reset();
+	blackOut.reset();
+	back.reset();
+
 	delete objPlayer;
 	delete objItem;
 	delete objBackGround;
-	delete wakeUp;
-	delete blackOut;
-	delete back;
 	for (auto object : objects) {
 		delete object;
 	}
-	blackOut->Reset();
 }
 
 void GamePlayScene::Update()
@@ -191,8 +194,6 @@ void GamePlayScene::LoadMap()
 	//クリア範囲
 	Model* clear = Model::LoadFromOBJ("clear");
 
-	Model* test = Model::LoadFromOBJ("TestBox");
-
 	//次のステージへ移動するためのオブジェクト
 	Model* backGround = Model::LoadFromOBJ("BG");
 	for (auto& objectData : jsonLoader->objects) {
@@ -203,10 +204,11 @@ void GamePlayScene::LoadMap()
 			if (it != models.end()) { floor = it->second; }
 			//モデルを指定して3Dオブジェクトを生成
 			objWall = Wall::Create(floor);
-			//座標
+			//サイズ
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
 			objWall->SetScale(scale);
+			objWall->SetRadius({ scale.x,scale.y });
 
 			//回転角
 			DirectX::XMFLOAT3 rot;
@@ -233,10 +235,11 @@ void GamePlayScene::LoadMap()
 			if (it != models.end()) { wall = it->second; }
 			//移動用ゲート
 			objKeepsWall = KeepsWall::Create(wall);
-			//座標
+			//サイズ
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
 			objKeepsWall->SetScale(scale);
+			objKeepsWall->SetRadius({ scale.x,scale.y });
 
 			//回転角
 			DirectX::XMFLOAT3 rot;
@@ -248,32 +251,11 @@ void GamePlayScene::LoadMap()
 			DirectX::XMStoreFloat3(&pos, objectData.position);
 			objKeepsWall->SetPosition(pos);
 
+			//半径をオブジェクトのサイズに合わせる
+			objKeepsWall->SetRadius({ scale.x,scale.y });
+
 			//配列に登録
 			objects.push_back(objKeepsWall);
-		}
-
-		if (objectData.fileName == "TestBox")
-		{
-			if (it != models.end()) { test = it->second; }
-			//移動用ゲート
-			objWall = Wall::Create(test);
-			//座標
-			DirectX::XMFLOAT3 scale;
-			DirectX::XMStoreFloat3(&scale, objectData.scaling);
-			objWall->SetScale(scale);
-
-			//回転角
-			DirectX::XMFLOAT3 rot;
-			DirectX::XMStoreFloat3(&rot, objectData.rotation);
-			objWall->SetRotation(rot);
-
-			//座標
-			DirectX::XMFLOAT3 pos;
-			DirectX::XMStoreFloat3(&pos, objectData.position);
-			objWall->SetPosition(pos);
-
-			//配列に登録
-			objects.push_back(objWall);
 		}
 
 		if (objectData.fileName == "pipe")
@@ -281,10 +263,11 @@ void GamePlayScene::LoadMap()
 			if (it != models.end()) { pipe = it->second; }
 			//移動用ゲート
 			objPipe = Pipe::Create(pipe);
-			//座標
+			//サイズ
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
 			objPipe->SetScale(scale);
+			objPipe->SetRadius({ scale.x,scale.y });
 
 			//回転角
 			DirectX::XMFLOAT3 rot;
@@ -306,10 +289,11 @@ void GamePlayScene::LoadMap()
 			//移動用ゲート
 			objMGate = MoveGate::Create(backGround);
 			objMGate->SetInput(input);
-			//座標
+			//サイズ
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
 			objMGate->SetScale(scale);
+			objMGate->SetRadius({ scale.x,scale.y });
 
 			//回転角
 			DirectX::XMFLOAT3 rot;

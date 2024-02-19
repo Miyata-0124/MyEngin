@@ -1,5 +1,5 @@
 #include "header/Game/Pipe.h"
-#include "header/Collider/SphereCollider.h"
+#include "header/Collider/BoxCollider.h"
 
 Pipe* Pipe::Create(Model* model)
 {
@@ -29,12 +29,12 @@ bool Pipe::Initialize()
 	}
 	//初期座標指定
 	SetScale({ 1,1,1 });
-	SetRotation({ 0,90,0 });
+	SetRotation({ 0,0,0 });
 	SetPosition({ 0,0,0, });
-	SetRadius({ 3.0f,3.0f });
+	SetRadius({ 1.0f,10.0f });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
-	SetCollider(new SphereCollider(XMVECTOR({ 0,radius.y,0,0 }), radius.y));
+	SetCollider(new BoxCollider(XMVECTOR({ 0,GetRadius().y,0,0 }), GetRadius()));
 	//識別を設定する
 	SetIdentification(IDENT_PIPE);
 	return true;

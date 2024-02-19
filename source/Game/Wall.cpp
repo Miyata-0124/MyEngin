@@ -33,10 +33,10 @@ bool Wall::Initialize()
 	SetScale({ 1,1,1});
 	SetRotation({ 0,90,0 });
 	SetPosition({ 0,0,0, });
-	SetRadius({ 3.0f,3.0f });
+	SetRadius({ 5.0f,5.0f });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
-	SetCollider(new BoxCollider(XMVECTOR({ 0,radius.y,0,0 }), radius));
+	SetCollider(new BoxCollider(XMVECTOR({ 0,GetRadius().y,0,0}), GetRadius()));
 	//識別を設定する
 	SetIdentification(IDENT_FLOOR);
 	return true;

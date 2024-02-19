@@ -54,10 +54,10 @@ private:
 	DirectXCommon* directXCom = DirectXCommon::GetInstance();
 	//スプライト
 	//演出
-	WakeUp* wakeUp = new WakeUp();
+	std::unique_ptr<WakeUp> wakeUp = nullptr;
 	//暗転
-	BlackOut* blackOut = new BlackOut();
-	Sprite* back = new Sprite();
+	std::unique_ptr<BlackOut> blackOut = nullptr;
+	std::unique_ptr<Sprite> back = nullptr;
 	//判定マネージャー
 	CollisionManager* collisionManager = CollisionManager::GetInstance();
 	//ゲーム内オブジェクト

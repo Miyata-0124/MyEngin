@@ -32,7 +32,7 @@ bool Player::Initialize()
 	//初期座標指定
 	SetScale({ 1,1,1 });
 	SetRotation({ 0,-90,0 });
-	SetPosition({ 0,-6,0 });
+	SetPosition({ 5,0,0 });
 	SetRadius({ radius,radius });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
@@ -63,14 +63,10 @@ void Player::Update()
 	Move();
 	//アイテムに対する行動
 	Retention();
-	if (position.x > -5.0f && position.x < 867.0f)
-	{
-		if (position.y > -220.0f && position.y < 100.0f)
-		{
-			SetEye({ position.x,position.y,-50 });
-			SetTarget({ position.x,position.y,0 });
-		}
-	}
+	//行動制限
+	//スクロール
+	SetEye({ position.x,position.y,-50 });
+	SetTarget({ position.x,position.y,0 });
 
 	Object3d::Update();
 }
@@ -84,13 +80,6 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 			yadd = 0.0f;
 			isJamp = false;
-
-			//平地に当たっていてめり込んでいたら
-			if (position.y < -13.0f)
-			{
-				//平地の上に合わせる
-				position.y = -13.0f;
-			}
 		}
 		//敵性オブジェクトor敵に当たった時
 		if (info.object->GetIdentification() == IDENT_ENEMY)
@@ -114,24 +103,13 @@ void Player::OnCollider(const CollisionInfo& info)
 				//保持フラグを真にする
 				isRetention = true;
 			}
-			if (isStop)
-			{
-				isJamp = false;
-				yadd = 0.0f;
-			}
 		}
 		//敵性オブジェクトor敵に当たった時
 		if (info.object->GetIdentification() == IDENT_ENEMY)
 		{
 
 		}
-		//パイプに当たった時
-		if (info.object->GetIdentification() == IDENT_PIPE)
-		{
-			yadd = 0.0f;
-			isJamp = false;
-			Clim();
-		}
+		
 	}
 
 	if (info.collider->GetShapeType() == COLISIONSHAPE_BOX)
@@ -159,33 +137,53 @@ void Player::OnCollider(const CollisionInfo& info)
 		}
 		//床に当たった時
 		if (info.object->GetIdentification() == IDENT_FLOOR)
-		{
+		{	
+			//Y軸
 			//床の最大値を取得
-			float floorMAX = info.object->GetPosition().y + info.object->GetRadius().y;
+			float floorMAXY = info.object->GetPosition().y + info.object->GetRadius().y;
 			//最小値を取得
-			//float floorMIN = info.object->GetPosition().y - info.object->GetRadius().y;
-			//最大値に0.1触れるようにする
+			float floorMINY = info.object->GetPosition().y - info.object->GetRadius().y;
+			//0.1触れるようにする
 			float adj = 0.1f;
 			//自分の座標が床の最大よりも下(床にめり込んでいるなら)
-			if (position.y - radius < floorMAX)
+			if (position.y - radius < floorMAXY)
 			{
 				//床に0.1触れさせるように戻す
-				position.y = floorMAX - adj;
+				position.y = floorMAXY - adj;
 				yadd = 0.0f;
 				isJamp = false;
+			}
+			//自分の座標が床の最小値よりも下から来たなら
+			if (position.y + radius < floorMINY)
+			{
+				position.y = floorMINY + adj;
 			}
 		}
 		//壁に当たった時
 		if (info.object->GetIdentification() == IDENT_WALL)
 		{
-			if (position.x > info.object->GetPosition().x + info.object->GetRadius().x)
+			//Y軸
+			//床の最大値を取得
+			float floorMAXY = info.object->GetPosition().y + info.object->GetRadius().y;
+			//最小値を取得
+			//float floorMINY = info.object->GetPosition().y - info.object->GetRadius().y;
+			//0.1触れるようにする
+ 			float adj = 0.1f;
+			//自分の座標が床の最大よりも下(床にめり込んでいるなら)
+			if (position.y - radius < floorMAXY)
 			{
-				
+				//床に0.1触れさせるように戻す
+				position.y = floorMAXY - adj;
+				yadd = 0.0f;
+				isJamp = false;
 			}
-			if (position.x < info.object->GetPosition().x - info.object->GetRadius().x)
-			{
-
-			}
+		}
+		//パイプに当たった時
+		if (info.object->GetIdentification() == IDENT_PIPE)
+		{
+			yadd = 0.0f;
+			isJamp = false;
+			Clim(info.object->GetRotation());
 		}
 	}
 }
@@ -278,7 +276,7 @@ void Player::ChangePosture()
 	}
 }
 
-void Player::Clim()
+void Player::Clim(const XMFLOAT3& Rotation)
 {
 	float climeSpeed = 0.0f;
 	if (input->PushKey(DIK_UP))
@@ -292,6 +290,21 @@ void Player::Clim()
 	{
 		climeSpeed = -0.5f;
 		position.y += climeSpeed;
+	}
+
+	if (Rotation.y == -90)
+	{
+		if (input->PushKey(DIK_RIGHT))
+		{
+			climeSpeed = 0.5f;
+			position.x += climeSpeed;
+		}
+
+		if (input->PushKey(DIK_LEFT))
+		{
+			climeSpeed = -0.5f;
+			position.x += climeSpeed;
+		}
 	}
 }
 

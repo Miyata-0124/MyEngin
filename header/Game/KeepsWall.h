@@ -31,7 +31,6 @@ public:
 
 	//ゲッター,セッター
 private:
-	//半径
-	DirectX::XMFLOAT2 radius = { 30 , 50 };
+
 };
 

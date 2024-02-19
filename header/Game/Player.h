@@ -78,7 +78,7 @@ private:
 	//姿勢変更
 	void ChangePosture();
 	//上り下りの動作
-	void Clim();
+	void Clim(const XMFLOAT3& Rotation);
 	//重力
 	void Gravity();
 	//アイテムに対する行動
@@ -99,7 +99,8 @@ private:
 	//横にハイジャンプ
 	float hiJumpTimer = 5.0f;
 
-	//フラグ,タイマー( false=右 , true=左)
+	//フラグ,タイマー
+	// 向き( false=右 , true=左)
 	bool isDirection = false;
 	//ジャンプ
 	bool isJamp = true;
