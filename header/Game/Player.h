@@ -78,7 +78,7 @@ private:
 	//姿勢変更
 	void ChangePosture();
 	//上り下りの動作
-	void Clim(const XMFLOAT3& Rotation);
+	void Clim();
 	//重力
 	void Gravity();
 	//アイテムに対する行動

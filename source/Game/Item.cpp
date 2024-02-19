@@ -64,7 +64,7 @@ void Item::Update()
 	{
 		height = 0.0f;
 		length = 0.0f;
-		position = { -10,0,0, };
+		position = { -10,5,0, };
 	}
 
 	Object3d::Update();

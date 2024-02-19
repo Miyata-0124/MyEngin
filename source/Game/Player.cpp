@@ -146,7 +146,7 @@ void Player::OnCollider(const CollisionInfo& info)
 			//0.1G‚ê‚é‚æ‚¤‚É‚·‚é
 			float adj = 0.1f;
 			//©•ª‚ÌÀ•W‚ª°‚ÌÅ‘å‚æ‚è‚à‰º(°‚É‚ß‚è‚ñ‚Å‚¢‚é‚È‚ç)
-			if (position.y - radius < floorMAXY)
+			if (position.y < floorMAXY)
 			{
 				//°‚É0.1G‚ê‚³‚¹‚é‚æ‚¤‚É–ß‚·
 				position.y = floorMAXY - adj;
@@ -183,7 +183,7 @@ void Player::OnCollider(const CollisionInfo& info)
 		{
 			yadd = 0.0f;
 			isJamp = false;
-			Clim(info.object->GetRotation());
+			Clim();
 		}
 	}
 }
@@ -276,35 +276,19 @@ void Player::ChangePosture()
 	}
 }
 
-void Player::Clim(const XMFLOAT3& Rotation)
+void Player::Clim()
 {
 	float climeSpeed = 0.0f;
 	if (input->PushKey(DIK_UP))
 	{
 		climeSpeed = 0.5f;
 		position.y += climeSpeed;
-		
 	}
 
 	if (input->PushKey(DIK_DOWN))
 	{
 		climeSpeed = -0.5f;
 		position.y += climeSpeed;
-	}
-
-	if (Rotation.y == -90)
-	{
-		if (input->PushKey(DIK_RIGHT))
-		{
-			climeSpeed = 0.5f;
-			position.x += climeSpeed;
-		}
-
-		if (input->PushKey(DIK_LEFT))
-		{
-			climeSpeed = -0.5f;
-			position.x += climeSpeed;
-		}
 	}
 }
 
