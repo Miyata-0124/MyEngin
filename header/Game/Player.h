@@ -9,13 +9,6 @@
 #include "header/3D/Object3D.h"
 #include "header/Engin/Input.h"
 
-enum class Posture //姿勢管理
-{
-	Upright,	//直立
-	Croching,	//しゃがみ
-	Climing
-};
-
 class Player : public Object3d
 {
 public:
@@ -59,8 +52,6 @@ public:
 	float GetRadius() { return radius; }
 	//座標受け渡し
 	XMFLOAT3 GetPosition() { return position; }
-	//現在の姿勢受け渡し
-	Posture GetPosture() { return posture; }
 	//フラグの受け渡し
 	bool GetRetention() { return isRetention; }
 	bool GetThrow() { return isThrow; }
@@ -73,10 +64,6 @@ private:
 	void Move();
 	//ジャンプ
 	void Jump();
-	//ハイジャンプ
-	void HiJump();
-	//姿勢変更
-	void ChangePosture();
 	//上り下りの動作
 	void Clim();
 	//重力
@@ -85,7 +72,6 @@ private:
 	void Retention();
 private:
 	Input* input = nullptr;
-	Posture posture = Posture::Upright;
 private:
 	//重力加算量
 	float yadd = 0.0f;

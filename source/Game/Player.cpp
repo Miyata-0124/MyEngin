@@ -44,19 +44,8 @@ bool Player::Initialize()
 
 void Player::Update()
 {
-	//姿勢変更情報
-	ChangePosture();
-	switch (posture)
-	{
-	case Posture::Upright://直立
-		//ジャンプ
-		Jump();
-		break;
-	case Posture::Croching://しゃがみ
-		//ハイジャンプ
-		//HiJump();
-		break;
-	}
+	//ジャンプ
+	Jump();
 	//重力
 	Gravity();
 	//移動
@@ -65,9 +54,12 @@ void Player::Update()
 	Retention();
 	//行動制限
 	//スクロール
-	SetEye({ position.x,position.y,-50 });
-	SetTarget({ position.x,position.y,0 });
+	if (position.x > -65 && position.x < 115)
+	{
+		SetEye({ position.x,0,-50 });
+		SetTarget({ position.x,0,0 });
 
+	}
 	Object3d::Update();
 }
 
@@ -139,25 +131,32 @@ void Player::OnCollider(const CollisionInfo& info)
 		if (info.object->GetIdentification() == IDENT_FLOOR)
 		{	
 			//Y軸
-			//床の最大値を取得
-			float floorMAXY = info.object->GetPosition().y + info.object->GetRadius().y;
-			//最小値を取得
-			float floorMINY = info.object->GetPosition().y - info.object->GetRadius().y;
-			//0.1触れるようにする
-			float adj = 0.1f;
-			//自分の座標が床の最大よりも下(床にめり込んでいるなら)
-			if (position.y < floorMAXY)
-			{
-				//床に0.1触れさせるように戻す
-				position.y = floorMAXY - adj;
-				yadd = 0.0f;
-				isJamp = false;
-			}
-			//自分の座標が床の最小値よりも下から来たなら
-			if (position.y + radius < floorMINY)
-			{
-				position.y = floorMINY + adj;
-			}
+			//床のX,Y最大値を取得
+			//float floorMAXY = info.object->GetPosition().y + info.object->GetRadius().y;
+			//float floorMAXX = info.object->GetPosition().x + info.object->GetRadius().x;
+			////最小値を取得
+			//float floorMINY = info.object->GetPosition().y - info.object->GetRadius().y;
+			//float floorMINX = info.object->GetPosition().x - info.object->GetRadius().x;
+			////0.1触れるようにする
+			//float adj = 0.1f;
+			////自分の座標が床の最大よりも下(床にめり込んでいるなら)
+			//if (position.y < floorMAXY)
+			//{
+			//	//床に0.1触れさせるように戻す
+			//	position.y = floorMAXY - adj;
+			//	yadd = 0.0f;
+			//	isJamp = false;
+			//}
+			////自分の座標が床の最小値よりも下から来たなら
+			//if (position.y < floorMINY)
+			//{
+			//	position.y = floorMINY - adj;
+			//}
+
+			yadd = 0.0;
+			isJamp = false;
+
+
 		}
 		//壁に当たった時
 		if (info.object->GetIdentification() == IDENT_WALL)
@@ -201,16 +200,6 @@ void Player::Move()
 			moveSpeed = 0.0f;
 		}
 		isDirection = true;
-
-		if (posture == Posture::Croching)
-		{
-			moveSpeed = -0.2f;
-		}
-
-		if (rotation.y != -90)
-		{
-			rotation.y -= 30;
-		}
 	}
 	else if (input->PushKey(DIK_RIGHT))
 	{
@@ -223,16 +212,6 @@ void Player::Move()
 			moveSpeed = 0.0f;
 		}
 		isDirection = false;
-
-		if (posture == Posture::Croching)
-		{
-			moveSpeed = 0.2f;
-		}
-
-		if (rotation.y != 90)
-		{
-			rotation.y += 30;
-		}
 	}
 	else
 	{
@@ -250,29 +229,6 @@ void Player::Jump()
 		yadd = antiYadd;
 		//飛んでると伝える
 		isJamp = true;
-	}
-}
-
-void Player::HiJump()
-{
-
-}
-
-void Player::ChangePosture()
-{
-	if (posture == Posture::Upright && input->TriggerKey(DIK_DOWN))
-	{
-		moveSpeed = 0.3f;
-		SetScale({ 1,0.5f,1 });
-		position.y -= 0.5f;
-		posture = Posture::Croching;
-	}
-	if (posture == Posture::Croching && input->TriggerKey(DIK_UP))
-	{
-		moveSpeed = 0.4f;
-		SetScale({ 1,1,1 });
-		position.y += 0.5f;
-		posture = Posture::Upright;
 	}
 }
 
