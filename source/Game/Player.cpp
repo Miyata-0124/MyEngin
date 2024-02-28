@@ -162,14 +162,14 @@ void Player::OnCollider(const CollisionInfo& info)
 		if (info.object->GetIdentification() == IDENT_WALL)
 		{
 			//Y軸
-			//床の最大値を取得
+			//床のX,Yの最大値を取得
 			float floorMAXY = info.object->GetPosition().y + info.object->GetRadius().y;
 			//最小値を取得
 			//float floorMINY = info.object->GetPosition().y - info.object->GetRadius().y;
 			//0.1触れるようにする
  			float adj = 0.1f;
 			//自分の座標が床の最大よりも下(床にめり込んでいるなら)
-			if (position.y - radius < floorMAXY)
+			if (position.y - radius < floorMAXY && position.y - radius > floorMAXY - 0.5f)
 			{
 				//床に0.1触れさせるように戻す
 				position.y = floorMAXY - adj;

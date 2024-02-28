@@ -189,13 +189,9 @@ void GamePlayScene::LoadMap()
 	Model* floor = Model::LoadFromOBJ("wall");
 	Model* wall = Model::LoadFromOBJ("floor");
 	Model* pipe = Model::LoadFromOBJ("pipe");
-	//扉
-	Model* gate = Model::LoadFromOBJ("gate");
 	//クリア範囲
 	Model* clear = Model::LoadFromOBJ("clear");
 
-	//次のステージへ移動するためのオブジェクト
-	Model* backGround = Model::LoadFromOBJ("BG");
 	for (auto& objectData : jsonLoader->objects) {
 		
 		decltype(models)::iterator it = models.find(objectData.fileName);
@@ -258,6 +254,11 @@ void GamePlayScene::LoadMap()
 			objects.push_back(objKeepsWall);
 		}
 
+		if (objectData.fileName == "box")
+		{
+
+		}
+
 		if (objectData.fileName == "pipe")
 		{
 			if (it != models.end()) { pipe = it->second; }
@@ -281,57 +282,6 @@ void GamePlayScene::LoadMap()
 
 			//配列に登録
 			objects.push_back(objPipe);
-		}
-
-		if (objectData.fileName == "moveGate")
-		{
-			if (it != models.end()) { backGround = it->second; }
-			//移動用ゲート
-			objMGate = MoveGate::Create(backGround);
-			objMGate->SetInput(input);
-			//サイズ
-			DirectX::XMFLOAT3 scale;
-			DirectX::XMStoreFloat3(&scale, objectData.scaling);
-			objMGate->SetScale(scale);
-			objMGate->SetRadius({ scale.x,scale.y });
-
-			//回転角
-			DirectX::XMFLOAT3 rot;
-			DirectX::XMStoreFloat3(&rot, objectData.rotation);
-			objMGate->SetRotation(rot);
-
-			//座標
-			DirectX::XMFLOAT3 pos;
-			DirectX::XMStoreFloat3(&pos, objectData.position);
-			objMGate->SetPosition(pos);
-
-			//配列に登録
-			objects.push_back(objMGate);
-		}
-
-		if (objectData.fileName == "gate")
-		{
-			if (it != models.end()) { gate = it->second; }
-			//移動用ゲート
-			objGate = Gate::Create(gate);
-			//座標
-			DirectX::XMFLOAT3 scale;
-			DirectX::XMStoreFloat3(&scale, objectData.scaling);
-			objGate->SetScale(scale);
-
-			//回転角
-			DirectX::XMFLOAT3 rot;
-			DirectX::XMStoreFloat3(&rot, objectData.rotation);
-			objGate->SetRotation(rot);
-
-			//座標
-			DirectX::XMFLOAT3 pos;
-			DirectX::XMStoreFloat3(&pos, objectData.position);
-			objGate->SetPosition(pos);
-
-			//配列に登録
-			objects.push_back(objGate);
-			
 		}
 
 		if (objectData.fileName == "goal")

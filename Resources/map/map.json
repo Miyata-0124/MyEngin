@@ -2,28 +2,6 @@
     "name": "scene",
     "objects": [
         {
-            "type": "MESH",
-            "name": "floor",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -95.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
             "type": "LIGHT",
             "name": "Light",
             "transform": {
@@ -89,28 +67,6 @@
         },
         {
             "type": "MESH",
-            "name": "floor.001",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -85.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
             "name": "wall.001",
             "transform": {
                 "translation": [
@@ -130,1062 +86,6 @@
                 ]
             },
             "file_name": "wall"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.002",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -75.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.003",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -65.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.004",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -55.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.005",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -45.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.006",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -35.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.007",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -25.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.008",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -15.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.009",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -5.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.010",
-            "transform": {
-                "translation": [
-                    0.0,
-                    5.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.011",
-            "transform": {
-                "translation": [
-                    0.0,
-                    15.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.012",
-            "transform": {
-                "translation": [
-                    0.0,
-                    25.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.013",
-            "transform": {
-                "translation": [
-                    0.0,
-                    35.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.014",
-            "transform": {
-                "translation": [
-                    0.0,
-                    45.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.015",
-            "transform": {
-                "translation": [
-                    0.0,
-                    55.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.016",
-            "transform": {
-                "translation": [
-                    0.0,
-                    65.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.017",
-            "transform": {
-                "translation": [
-                    0.0,
-                    75.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.018",
-            "transform": {
-                "translation": [
-                    0.0,
-                    85.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.019",
-            "transform": {
-                "translation": [
-                    0.0,
-                    95.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.020",
-            "transform": {
-                "translation": [
-                    0.0,
-                    105.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.021",
-            "transform": {
-                "translation": [
-                    0.0,
-                    115.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.022",
-            "transform": {
-                "translation": [
-                    0.0,
-                    125.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.023",
-            "transform": {
-                "translation": [
-                    0.0,
-                    135.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.024",
-            "transform": {
-                "translation": [
-                    0.0,
-                    145.0,
-                    -5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.025",
-            "transform": {
-                "translation": [
-                    0.0,
-                    145.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.026",
-            "transform": {
-                "translation": [
-                    0.0,
-                    135.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.027",
-            "transform": {
-                "translation": [
-                    0.0,
-                    125.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.028",
-            "transform": {
-                "translation": [
-                    0.0,
-                    115.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.029",
-            "transform": {
-                "translation": [
-                    0.0,
-                    105.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.030",
-            "transform": {
-                "translation": [
-                    0.0,
-                    95.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.031",
-            "transform": {
-                "translation": [
-                    0.0,
-                    85.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.032",
-            "transform": {
-                "translation": [
-                    0.0,
-                    75.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.033",
-            "transform": {
-                "translation": [
-                    0.0,
-                    65.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.034",
-            "transform": {
-                "translation": [
-                    0.0,
-                    55.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.035",
-            "transform": {
-                "translation": [
-                    0.0,
-                    45.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.036",
-            "transform": {
-                "translation": [
-                    0.0,
-                    35.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.037",
-            "transform": {
-                "translation": [
-                    0.0,
-                    25.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.038",
-            "transform": {
-                "translation": [
-                    0.0,
-                    15.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.039",
-            "transform": {
-                "translation": [
-                    0.0,
-                    5.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.040",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -5.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.041",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -15.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.042",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -25.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.043",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -35.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.044",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -45.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.045",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -55.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.046",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -65.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.047",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -75.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.048",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -85.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
-        },
-        {
-            "type": "MESH",
-            "name": "floor.049",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -95.0,
-                    65.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "floor"
         },
         {
             "type": "MESH",
@@ -1494,6 +394,556 @@
                 ]
             },
             "file_name": "goal"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.002",
+            "transform": {
+                "translation": [
+                    0.0,
+                    5.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.004",
+            "transform": {
+                "translation": [
+                    0.0,
+                    15.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.005",
+            "transform": {
+                "translation": [
+                    0.0,
+                    25.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.006",
+            "transform": {
+                "translation": [
+                    0.0,
+                    35.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.007",
+            "transform": {
+                "translation": [
+                    0.0,
+                    45.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -5.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.003",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -15.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.008",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -25.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.009",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -35.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.010",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -45.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.011",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -55.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.012",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -65.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.013",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -75.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.014",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -85.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.015",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -95.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.016",
+            "transform": {
+                "translation": [
+                    0.0,
+                    55.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.017",
+            "transform": {
+                "translation": [
+                    0.0,
+                    65.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.018",
+            "transform": {
+                "translation": [
+                    0.0,
+                    75.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.019",
+            "transform": {
+                "translation": [
+                    0.0,
+                    85.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.020",
+            "transform": {
+                "translation": [
+                    0.0,
+                    95.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.021",
+            "transform": {
+                "translation": [
+                    0.0,
+                    105.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.022",
+            "transform": {
+                "translation": [
+                    0.0,
+                    115.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.023",
+            "transform": {
+                "translation": [
+                    0.0,
+                    125.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.024",
+            "transform": {
+                "translation": [
+                    0.0,
+                    135.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
+        },
+        {
+            "type": "MESH",
+            "name": "floor.025",
+            "transform": {
+                "translation": [
+                    0.0,
+                    145.0,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "floor"
         }
     ]
 }
