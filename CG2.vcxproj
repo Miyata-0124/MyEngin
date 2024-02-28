@@ -255,7 +255,7 @@
     <ClInclude Include="header\3D\FbxLoader.h" />
     <ClInclude Include="header\3D\FbxModel.h" />
     <ClInclude Include="header\3D\FbxObject3D.h" />
-    <ClInclude Include="header\Game\Floor.h" />
+    <ClInclude Include="header\Game\Platform.h" />
     <ClInclude Include="header\Game\GameBaseScene.h" />
     <ClInclude Include="header\Game\GamePlayScene.h" />
     <ClInclude Include="header\Game\GameScene.h" />
