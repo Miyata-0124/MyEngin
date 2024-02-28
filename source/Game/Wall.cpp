@@ -3,10 +3,10 @@
 
 using namespace DirectX;
 
-Wall* Wall::Create(Model* model)
+Floor* Floor::Create(Model* model)
 {
 	//インスタンス生成
-	Wall* instance = new Wall();
+	Floor* instance = new Floor();
 	if (instance == nullptr)
 	{
 		return nullptr;
@@ -23,7 +23,7 @@ Wall* Wall::Create(Model* model)
 	return instance;
 }
 
-bool Wall::Initialize()
+bool Floor::Initialize()
 {
 	if (!Object3d::Initialize())
 	{
@@ -42,12 +42,12 @@ bool Wall::Initialize()
 	return true;
 }
 
-void Wall::Update()
+void Floor::Update()
 {
 	Object3d::Update();
 }
 
-void Wall::OnCollider(const CollisionInfo& info)
+void Floor::OnCollider(const CollisionInfo& info)
 {
 	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
 	{

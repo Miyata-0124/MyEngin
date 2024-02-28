@@ -115,7 +115,7 @@
     <ClCompile Include="source\3D\FbxLoader.cpp" />
     <ClCompile Include="source\3D\FbxModel.cpp" />
     <ClCompile Include="source\3D\FbxObject3D.cpp" />
-    <ClCompile Include="source\Game\Floor.cpp" />
+    <ClCompile Include="source\Game\Platform.cpp" />
     <ClCompile Include="source\Game\GameBaseScene.cpp" />
     <ClCompile Include="source\Game\GamePlayScene.cpp" />
     <ClCompile Include="source\Game\GameScene.cpp" />

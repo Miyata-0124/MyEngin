@@ -9,10 +9,10 @@
 
 class Player;
 class BackGround;
-class Floor;
+class Platform;
 class Pipe;
 class Item;
-class Wall;
+class Floor;
 class KeepsWall;
 class Enemy;
 class Rain;
@@ -66,11 +66,11 @@ private:
 	//敵
 	Enemy* objEnem = nullptr;
 	//床(仮)
-	Floor* objFloor = nullptr;
+	Platform* objFloor = nullptr;
 	//パイプ
 	Pipe* objPipe = nullptr;
 	//壁
-	Wall* objWall = nullptr;
+	Floor* objWall = nullptr;
 	//プレイヤーを通さない壁
 	KeepsWall* objKeepsWall = nullptr;
 	//アイテム

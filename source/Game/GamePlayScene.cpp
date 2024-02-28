@@ -197,9 +197,9 @@ void GamePlayScene::LoadMap()
 		decltype(models)::iterator it = models.find(objectData.fileName);
 		if (objectData.fileName == "floor")
 		{
-			if (it != models.end()) { floor = it->second; }
+			if (it != models.end()) { wall = it->second; }
 			//モデルを指定して3Dオブジェクトを生成
-			objWall = Wall::Create(floor);
+			objWall = Floor::Create(wall);
 			//サイズ
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
@@ -228,9 +228,9 @@ void GamePlayScene::LoadMap()
 
 		if (objectData.fileName == "wall")
 		{
-			if (it != models.end()) { wall = it->second; }
+			if (it != models.end()) { floor = it->second; }
 			//移動用ゲート
-			objKeepsWall = KeepsWall::Create(wall);
+			objKeepsWall = KeepsWall::Create(floor);
 			//サイズ
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
@@ -256,7 +256,27 @@ void GamePlayScene::LoadMap()
 
 		if (objectData.fileName == "box")
 		{
+			if (it != models.end()) { floor = it->second; }
+			//モデルを指定して3Dオブジェクトを生成
+			objWall = Floor::Create(floor);
+			//サイズ
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objWall->SetScale(scale);
+			objWall->SetRadius({ scale.x,scale.y });
 
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objWall->SetRotation(rot);
+
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objWall->SetPosition(pos);
+
+			//配列に登録
+			objects.push_back(objWall);
 		}
 
 		if (objectData.fileName == "pipe")

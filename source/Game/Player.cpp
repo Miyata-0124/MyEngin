@@ -32,7 +32,7 @@ bool Player::Initialize()
 	//初期座標指定
 	SetScale({ 1,1,1 });
 	SetRotation({ 0,-90,0 });
-	SetPosition({ 5,0,0 });
+	SetPosition({ -64,0,0 });
 	SetRadius({ radius,radius });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
@@ -132,31 +132,21 @@ void Player::OnCollider(const CollisionInfo& info)
 		{	
 			//Y軸
 			//床のX,Y最大値を取得
-			//float floorMAXY = info.object->GetPosition().y + info.object->GetRadius().y;
+			float floorMAXY = info.object->GetPosition().y + info.object->GetRadius().y;
 			//float floorMAXX = info.object->GetPosition().x + info.object->GetRadius().x;
-			////最小値を取得
+			//最小値を取得
 			//float floorMINY = info.object->GetPosition().y - info.object->GetRadius().y;
 			//float floorMINX = info.object->GetPosition().x - info.object->GetRadius().x;
-			////0.1触れるようにする
-			//float adj = 0.1f;
-			////自分の座標が床の最大よりも下(床にめり込んでいるなら)
-			//if (position.y < floorMAXY)
-			//{
-			//	//床に0.1触れさせるように戻す
-			//	position.y = floorMAXY - adj;
-			//	yadd = 0.0f;
-			//	isJamp = false;
-			//}
-			////自分の座標が床の最小値よりも下から来たなら
-			//if (position.y < floorMINY)
-			//{
-			//	position.y = floorMINY - adj;
-			//}
-
-			yadd = 0.0;
-			isJamp = false;
-
-
+			//0.1触れるようにする
+			float adj = 0.1f;
+			//自分の座標が床の最大よりも下(床にめり込んでいるなら)
+			if (position.y < floorMAXY && position.y > floorMAXY - 1.0f)
+			{
+				//床に0.1触れさせるように戻す
+				position.y = floorMAXY - adj;
+				yadd = 0.0f;
+				isJamp = false;
+			}
 		}
 		//壁に当たった時
 		if (info.object->GetIdentification() == IDENT_WALL)
@@ -164,11 +154,13 @@ void Player::OnCollider(const CollisionInfo& info)
 			//Y軸
 			//床のX,Yの最大値を取得
 			float floorMAXY = info.object->GetPosition().y + info.object->GetRadius().y;
+			//float floorMAXX = info.object->GetPosition().x + info.object->GetRadius().x;
 			//最小値を取得
 			//float floorMINY = info.object->GetPosition().y - info.object->GetRadius().y;
+			//float floorMINX = info.object->GetPosition().x - info.object->GetRadius().x;
 			//0.1触れるようにする
  			float adj = 0.1f;
-			//自分の座標が床の最大よりも下(床にめり込んでいるなら)
+			//上に乗っているかどうかの判定
 			if (position.y - radius < floorMAXY && position.y - radius > floorMAXY - 0.5f)
 			{
 				//床に0.1触れさせるように戻す
@@ -176,6 +168,8 @@ void Player::OnCollider(const CollisionInfo& info)
 				yadd = 0.0f;
 				isJamp = false;
 			}
+
+
 		}
 		//パイプに当たった時
 		if (info.object->GetIdentification() == IDENT_PIPE)

@@ -10,7 +10,7 @@
 #include "header/3D/Model.h"
 //最も低い地形クラス
 
-class Floor : public Object3d
+class Platform : public Object3d
 {
 public:
 	/// <summary>
@@ -18,7 +18,7 @@ public:
 	/// </summary>
 	/// <param name="model"></param>
 	/// <returns></returns>
-	static Floor* Create(Model* model = nullptr);
+	static Platform* Create(Model* model = nullptr);
 
 public:
 	/// <summary>

@@ -1,10 +1,10 @@
 #include "header/Game/Floor.h"
 #include "header/Collider/PlaneCollider.h"
 
-Floor* Floor::Create(Model* model)
+Platform* Platform::Create(Model* model)
 {
 	//インスタンス生成
-	Floor* instance = new Floor();
+	Platform* instance = new Platform();
 	if (instance == nullptr)
 	{
 		return nullptr;
@@ -21,7 +21,7 @@ Floor* Floor::Create(Model* model)
 	return instance;
 }
 
-bool Floor::Initialize()
+bool Platform::Initialize()
 {
 	if (!Object3d::Initialize())
 	{
@@ -40,12 +40,12 @@ bool Floor::Initialize()
 	return true;
 }
 
-void Floor::Update()
+void Platform::Update()
 {
 	Object3d::Update();
 }
 
-void Floor::OnCollider(const CollisionInfo& info)
+void Platform::OnCollider(const CollisionInfo& info)
 {
 	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
 	{

@@ -10,11 +10,11 @@
 #include "header/3D/JsonLoader.h"
 
 class Player;
-class Floor;
+class Platform;
 class Gate;
 class ClearBox;
 class Rain;
-class Wall;
+class Floor;
 
 class GameClearScene : public GameBaseScene
 {
@@ -57,7 +57,7 @@ private:
 	//プレイヤー
 	Player* objPlayer = nullptr;
 	//壁
-	Wall* objWall = {};
+	Floor* objWall = {};
 	//扉
 	Gate* objGate = {};
 	//クリア判定用箱

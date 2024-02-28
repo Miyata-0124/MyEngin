@@ -96,9 +96,11 @@ private:
 	bool isThrow = false;
 	//アイテムが刺さっているかの判別
 	bool isStop = false;
-
+	//シーンナンバー
 	int sceneNum = 0;
 
 	//カメラの速度
 	float cameraSpeed = 0.0f;
+
+
 };

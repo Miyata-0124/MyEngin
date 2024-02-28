@@ -137,7 +137,7 @@ void GameClearScene::LoadMap()
 		{
 			if (it != models.end()) { model = it->second; }
 			//モデルを指定して3Dオブジェクトを生成
-			objWall = Wall::Create(model);
+			objWall = Floor::Create(model);
 			//座標
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);

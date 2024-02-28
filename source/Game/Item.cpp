@@ -1,5 +1,5 @@
 #include "header/Game/Item.h"
-#include "header/Collider/SphereCollider.h"
+#include "header/Collider/BoxCollider.h"
 
 Item* Item::Create(Model* model)
 {
@@ -30,12 +30,12 @@ bool Item::Initialize()
 	}
 	//初期座標指定
 	SetScale({ 2.0f,0.5f,0.5f });
-	SetRotation({ 0,0,60 });
-	SetPosition({ 10,0,0, });
-	SetRadius({ radius,radius });
+	SetRotation({ 0,0,0 });
+	SetPosition({ -60,0,0, });
+	SetRadius({ radius.x,radius.y });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
-	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
+	SetCollider(new BoxCollider(XMVECTOR({ 0,GetRadius().y,0,0}), GetRadius()));
 	//識別を設定する
 	SetIdentification(IDENT_ITEM);
 	return true;
@@ -47,9 +47,11 @@ void Item::Update()
 	RetentionThrow();
 	//アイテムをプレイヤーの周辺に移動させる
 	Remove();
+	//アイテムの状態が刺さっているかどうか
+	//刺さっていないなら
 	if (!isStop)
 	{
-		//重力
+		//重力を足していく
 		Gravity();
 	}
 	else
@@ -138,6 +140,8 @@ void Item::OnCollider(const CollisionInfo& info)
 		}
 		if (info.object->GetIdentification() == IDENT_FLOOR)
 		{
+			//壁に当たった時の場所を保存する変数
+			float stopPos = position.y;
 			yadd = 0.0f;
 			if (isThrow)
 			{
@@ -147,13 +151,14 @@ void Item::OnCollider(const CollisionInfo& info)
 				{
 					if (isDirection)//左
 					{
-						position.x = info.object->GetPosition().x + info.object->GetRadius().x + radius;
+						position.x = info.object->GetPosition().x + info.object->GetRadius().x + radius.x;
 					}
 					else//右
 					{
-						position.x = info.object->GetPosition().x - info.object->GetRadius().x - radius;
+						position.x = info.object->GetPosition().x - info.object->GetRadius().x - radius.x;
 					}
-					position.y = info.object->GetPosition().y;
+					//座標の高さを保存した場所に固定する
+					position.y = stopPos;
 
 					isStop = true;
 				}
@@ -169,11 +174,11 @@ void Item::RetentionThrow()
 		SetRotation({ 0,0,0 });
 		if (isDirection)
 		{
-			SetPosition({ playerPosition.x,playerPosition.y + radius,playerPosition.z + radius });
+			SetPosition({ playerPosition.x,playerPosition.y + radius.y ,playerPosition.z + radius.y });
 		}
 		else
 		{
-			SetPosition({ playerPosition.x,playerPosition.y + radius,playerPosition.z - radius });
+			SetPosition({ playerPosition.x,playerPosition.y + radius.y ,playerPosition.z - radius.y });
 		}
 		
 		if (input->TriggerKey(DIK_X))

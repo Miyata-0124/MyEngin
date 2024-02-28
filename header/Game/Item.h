@@ -45,7 +45,7 @@ public:
 	//アイテムの飛んでいく距離の制限
 	void Remove();
 
-	float GetRadius() { return radius; }
+	XMFLOAT2 GetRadius() { return radius; }
 	bool GetIsStop() { return isStop; }
 
 	void SetRetention(bool isRetention_) { this->isRetention = isRetention_; }
@@ -68,7 +68,7 @@ private:
 	//重力加算量
 	float yadd = 0.0f;
 	//半径
-	float radius = 2.0f;
+	DirectX::XMFLOAT2 radius = { 1 , 2 };
 	//移動する初速度
 	float throwSpeed = 1.25f;
 	//高さ
