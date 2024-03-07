@@ -71,6 +71,17 @@ void CollisionManager::CheckAllCollisions()
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }
             }
+
+            //2DŽlŠp*2
+            if (colA->GetShapeType() == COLISIONSHAPE_BOX && colB->GetShapeType() == COLISIONSHAPE_BOX) {
+                Box* BoxB = dynamic_cast<Box*>(colA);
+                Box* BoxA = dynamic_cast<Box*>(colB);
+                DirectX::XMVECTOR inter;//Œð“_
+                if (Collision::CheckBox2DBox2D(*BoxB, *BoxA)) {
+                    colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
+                    colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
+                }
+            }
         }
     }
 }

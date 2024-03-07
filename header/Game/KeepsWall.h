@@ -1,7 +1,7 @@
 #pragma once
 #include "header/3D/Object3D.h"
 
-class KeepsWall : public Object3d
+class Wall : public Object3d
 {
 public:
 	/// <summary>
@@ -9,7 +9,7 @@ public:
 	/// </summary>
 	/// <param name="model"></param>
 	/// <returns></returns>
-	static KeepsWall* Create(Model* model = nullptr);
+	static Wall* Create(Model* model = nullptr);
 
 public:
 	/// <summary>

@@ -5,7 +5,6 @@
 
 #include "header/Game/Player.h"
 #include "header/Game/enemy.h"
-#include "header/Game/Floor.h"
 #include "header/Game/Pipe.h"
 #include "header/Game/Item.h"
 #include "header/Game/Wall.h"
@@ -230,7 +229,7 @@ void GamePlayScene::LoadMap()
 		{
 			if (it != models.end()) { floor = it->second; }
 			//移動用ゲート
-			objKeepsWall = KeepsWall::Create(floor);
+			objKeepsWall = Wall::Create(floor);
 			//サイズ
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);

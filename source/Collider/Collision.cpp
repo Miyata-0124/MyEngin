@@ -87,3 +87,36 @@ bool Collision::CheckSphere2Box2D(const Sphere& sphere, const Box& box)
 
     return false;
 }
+
+bool Collision::CheckBox2DBox2D(const Box& box1, const Box& box2)
+{
+    //最大点1
+    float X1max = box1.center.m128_f32[0] + box1.radius.x;
+    float Y1max = box1.center.m128_f32[1] + box1.radius.y;
+    DirectX::XMFLOAT2 P1max = { X1max,Y1max };
+    //最小点1
+    float X1min = box1.center.m128_f32[0] - box1.radius.x;
+    float Y1min = box1.center.m128_f32[1] - box1.radius.y;
+    DirectX::XMFLOAT2 P1min = { X1min,Y1min };
+
+    //最大点2
+    float X2max = box2.center.m128_f32[0] + box2.radius.x;
+    float Y2max = box2.center.m128_f32[1] + box2.radius.y;
+    DirectX::XMFLOAT2 P2max = { X2max,Y2max };
+    //最小点2
+    float X2min = box2.center.m128_f32[0] - box2.radius.x;
+    float Y2min = box2.center.m128_f32[1] - box2.radius.y;
+    DirectX::XMFLOAT2 P2min = { X2min,Y2min };
+    //もし重なったなら
+    if (P1max.y < P2max.y && P1max.y > P2min.y ||
+        P1min.y < P2max.y && P1min.y > P2min.y)
+    {
+        if (P1max.x > P2min.x && P1max.x < P2max.x ||
+            P1min.x > P2min.x && P1min.x < P2max.x)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}

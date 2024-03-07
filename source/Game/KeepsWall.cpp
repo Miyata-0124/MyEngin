@@ -1,10 +1,10 @@
 #include "header/Game/KeepsWall.h"
 #include "header/Collider/BoxCollider.h"
 
-KeepsWall* KeepsWall::Create(Model* model)
+Wall* Wall::Create(Model* model)
 {
 	//インスタンス生成
-	KeepsWall* instance = new KeepsWall();
+	Wall* instance = new Wall();
 	if (instance == nullptr)
 	{
 		return nullptr;
@@ -21,7 +21,7 @@ KeepsWall* KeepsWall::Create(Model* model)
 	return instance;
 }
 
-bool KeepsWall::Initialize()
+bool Wall::Initialize()
 {
 	if (!Object3d::Initialize())
 	{
@@ -40,12 +40,12 @@ bool KeepsWall::Initialize()
 	return true;
 }
 
-void KeepsWall::Update()
+void Wall::Update()
 {
 	Object3d::Update();
 }
 
-void KeepsWall::OnCollider(const CollisionInfo& info)
+void Wall::OnCollider(const CollisionInfo& info)
 {
 	if (info.collider->GetShapeType() == COLISIONSHAPE_SPHERE)
 	{

@@ -43,6 +43,13 @@ public:
 	/// <param name="box"></param>
 	/// <returns></returns>
 	static bool CheckSphere2Box2D(const Sphere& sphere, const Box& box);
+	/// <summary>
+	/// 2Déläp*2
+	/// </summary>
+	/// <param name="box"></param>
+	/// <param name="box"></param>
+	/// <returns></returns>
+	static bool CheckBox2DBox2D(const Box& box1, const Box& box2);
 };
 	
 

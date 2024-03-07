@@ -13,7 +13,7 @@ class Platform;
 class Pipe;
 class Item;
 class Floor;
-class KeepsWall;
+class Wall;
 class Enemy;
 class Rain;
 class MoveGate;
@@ -72,7 +72,7 @@ private:
 	//壁
 	Floor* objWall = nullptr;
 	//プレイヤーを通さない壁
-	KeepsWall* objKeepsWall = nullptr;
+	Wall* objKeepsWall = nullptr;
 	//アイテム
 	Item* objItem = nullptr;
 	//クリア判定用箱

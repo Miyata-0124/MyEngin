@@ -68,7 +68,7 @@ private:
 	//d—Í‰ÁZ—Ê
 	float yadd = 0.0f;
 	//”¼Œa
-	DirectX::XMFLOAT2 radius = { 1 , 2 };
+	DirectX::XMFLOAT2 radius = { 0.5 , 2 };
 	//ˆÚ“®‚·‚é‰‘¬“x
 	float throwSpeed = 1.25f;
 	//‚‚³

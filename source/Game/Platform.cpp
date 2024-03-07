@@ -1,4 +1,4 @@
-#include "header/Game/Floor.h"
+#include "header/Game/Platform.h"
 #include "header/Collider/PlaneCollider.h"
 
 Platform* Platform::Create(Model* model)

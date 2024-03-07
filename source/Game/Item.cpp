@@ -30,8 +30,8 @@ bool Item::Initialize()
 	}
 	//初期座標指定
 	SetScale({ 2.0f,0.5f,0.5f });
-	SetRotation({ 0,0,0 });
-	SetPosition({ -60,0,0, });
+	SetRotation({ 0,0,60 });
+	SetPosition({ -5,0,0, });
 	SetRadius({ radius.x,radius.y });
 	//コライダーの追加
 	//半径分足元から浮いている座標が中心
@@ -174,11 +174,11 @@ void Item::RetentionThrow()
 		SetRotation({ 0,0,0 });
 		if (isDirection)
 		{
-			SetPosition({ playerPosition.x,playerPosition.y + radius.y ,playerPosition.z + radius.y });
+			SetPosition({ playerPosition.x,playerPosition.y + radius.y ,playerPosition.z + 2.0f });
 		}
 		else
 		{
-			SetPosition({ playerPosition.x,playerPosition.y + radius.y ,playerPosition.z - radius.y });
+			SetPosition({ playerPosition.x,playerPosition.y + radius.y ,playerPosition.z - 2.0f });
 		}
 		
 		if (input->TriggerKey(DIK_X))
