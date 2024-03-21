@@ -1,4 +1,5 @@
 #include "header/Game/GamePlayScene.h"
+#include "header/Game/GameTitleScene.h"
 #include "header/Game/GameSceneManager.h"
 
 #include "header/3D/FbxObject3D.h"
@@ -6,7 +7,6 @@
 #include "header/Game/Player.h"
 #include "header/Game/enemy.h"
 #include "header/Game/Pipe.h"
-#include "header/Game/Item.h"
 #include "header/Game/Wall.h"
 #include "header/Game/KeepsWall.h"
 #include "header/Game/MoveGate.h"
@@ -70,9 +70,6 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//objEnem = Enemy::Create(ground);
 	//地面
 	//objFloor = Floor::Create(item_);
-	//アイテム
-	objItem = Item::Create(ground);
-	objItem->SetInput(input);
 
 	//背景
 	//objBackGround = BackGround::Create(backGround);
@@ -107,8 +104,6 @@ void GamePlayScene::Update()
 	
 	//フェードアウト
 	wakeUp->Update();
-	//アイテム
-	objItem->Update();
 	//プレイヤー
 	objPlayer->Update();
 	//地面
@@ -121,6 +116,16 @@ void GamePlayScene::Update()
 		object->Update();
 	}
 
+	//マップ移動
+	if (objClearBox->GetIsGoal() == true)
+	{
+		if (input->TriggerKey(DIK_V))
+		{
+			GameBaseScene* scene = new GameTitleScene();
+			sceneManager->SetNextScene(scene);
+		}
+	}
+
 	/*if (objGate->GetRotation().x >= 90.0f)
 	{
 		blackOut->Update();
@@ -131,13 +136,7 @@ void GamePlayScene::Update()
 	back->Update();
 
 #pragma region 各クラス間の情報受け渡し
-	//オブジェクト
-	//objEnem->SetPPosition(objPlayer->GetPosition());
-	objPlayer->SetIsStop(objItem->GetIsStop());
-	objItem->SetPPosition(objPlayer->GetPosition());
-	objItem->SetRetention(objPlayer->GetRetention());
-	objItem->SetDirection(objPlayer->GetDirection());
-	//objGate->SetIsGoal(objClearBox->GetIsGoal());
+
 #pragma endregion
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
@@ -165,12 +164,6 @@ void GamePlayScene::Draw()
 
 	//プレイヤー
 	objPlayer->Draw();
-	//地面
-	//objFloor->Draw();
-	//アイテム
-	objItem->Draw();
-	//背景
-	//objBackGround->Draw();
 	//JsonLoaderの描画
 	for (auto object : objects) {
 		object->Draw();
@@ -185,8 +178,9 @@ void GamePlayScene::Draw()
 void GamePlayScene::LoadMap()
 {
 	//地面に接している壁オブジェクト
-	Model* floor = Model::LoadFromOBJ("wall");
-	Model* wall = Model::LoadFromOBJ("floor");
+	Model* wall = Model::LoadFromOBJ("wall");
+	Model* floor = Model::LoadFromOBJ("floor");
+	Model* box = Model::LoadFromOBJ("box");
 	Model* pipe = Model::LoadFromOBJ("pipe");
 	//クリア範囲
 	Model* clear = Model::LoadFromOBJ("clear");
@@ -196,9 +190,9 @@ void GamePlayScene::LoadMap()
 		decltype(models)::iterator it = models.find(objectData.fileName);
 		if (objectData.fileName == "floor")
 		{
-			if (it != models.end()) { wall = it->second; }
+			if (it != models.end()) { floor = it->second; }
 			//モデルを指定して3Dオブジェクトを生成
-			objWall = Floor::Create(wall);
+			objWall = Floor::Create(floor);
 			//サイズ
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
@@ -227,9 +221,9 @@ void GamePlayScene::LoadMap()
 
 		if (objectData.fileName == "wall")
 		{
-			if (it != models.end()) { floor = it->second; }
+			if (it != models.end()) { wall = it->second; }
 			//移動用ゲート
-			objKeepsWall = Wall::Create(floor);
+			objKeepsWall = Wall::Create(wall);
 			//サイズ
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);
@@ -255,9 +249,9 @@ void GamePlayScene::LoadMap()
 
 		if (objectData.fileName == "box")
 		{
-			if (it != models.end()) { floor = it->second; }
+			if (it != models.end()) { box = it->second; }
 			//モデルを指定して3Dオブジェクトを生成
-			objWall = Floor::Create(floor);
+			objWall = Floor::Create(box);
 			//サイズ
 			DirectX::XMFLOAT3 scale;
 			DirectX::XMStoreFloat3(&scale, objectData.scaling);

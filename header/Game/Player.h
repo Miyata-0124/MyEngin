@@ -44,7 +44,6 @@ public:
 	/// <returns></returns>
 	Input* SetInput(Input* input_) { return this->input = input_; }
 
-	bool SetIsStop(bool isStop_) { return this->isStop = isStop_; }
 	/// <summary>
 	/// 半径を渡している
 	/// </summary>
@@ -52,10 +51,6 @@ public:
 	float GetRadius() { return radius; }
 	//座標受け渡し
 	XMFLOAT3 GetPosition() { return position; }
-	//フラグの受け渡し
-	bool GetRetention() { return isRetention; }
-	bool GetThrow() { return isThrow; }
-	bool GetDirection() { return isDirection; }
 	//シーン切り替えに使用する情報
 	int GetScene() { return sceneNum; }
 
@@ -84,23 +79,14 @@ private:
 	bool isMove = true;
 	//横にハイジャンプ
 	float hiJumpTimer = 5.0f;
-
 	//フラグ,タイマー
 	// 向き( false=右 , true=左)
 	bool isDirection = false;
 	//ジャンプ
 	bool isJamp = true;
-	//アイテムを保持
-	bool isRetention = false;
-	//投擲フラグ
-	bool isThrow = false;
-	//アイテムが刺さっているかの判別
-	bool isStop = false;
 	//シーンナンバー
 	int sceneNum = 0;
 
 	//カメラの速度
 	float cameraSpeed = 0.0f;
-
-
 };

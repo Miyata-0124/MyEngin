@@ -199,21 +199,26 @@ void Player::OnCollider(const CollisionInfo& info)
 				//床に0.1触れさせるように戻す
 				position.y = floorMINY + adj;
 			}
-
+			//壁の上部判定より下なら
 			if (position.y <= floorMAXY - 1.0f)
 			{
+				//壁より左なら
 				if (position.x <= info.object->GetPosition().x)
 				{
+					//もし座標が壁の内部に入っているなら
 					if (position.x > floorMINX)
 					{
+						//速度を足さない
 						position.x -= moveSpeed;
 					}
 				}
-
+				//壁より右なら
 				if (position.x >= info.object->GetPosition().x)
 				{
+					//もし座標が内部に入っているなら
 					if (position.x < floorMAXX)
 					{
+						//速度を足さない
 						position.x -= moveSpeed;
 					}
 				}
@@ -235,7 +240,14 @@ void Player::Move()
 	{
 		if (isMove)
 		{
-			moveSpeed = -0.4f;
+			if (position.x < -95)
+			{
+				moveSpeed = 0.0f;
+			}
+			else
+			{
+				moveSpeed = -0.4f;
+			}
 		}
 		else
 		{
@@ -246,8 +258,15 @@ void Player::Move()
 	else if (input->PushKey(DIK_RIGHT))
 	{
 		if (isMove)
-		{
-			moveSpeed = 0.4f;
+		{	
+			if (position.x > 145)
+			{
+				moveSpeed = 0.0f;
+			}
+			else
+			{
+				moveSpeed = 0.4f;
+			}
 		}
 		else
 		{

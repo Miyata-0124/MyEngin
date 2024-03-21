@@ -11,7 +11,6 @@ class Player;
 class BackGround;
 class Platform;
 class Pipe;
-class Item;
 class Floor;
 class Wall;
 class Enemy;
@@ -73,8 +72,6 @@ private:
 	Floor* objWall = nullptr;
 	//プレイヤーを通さない壁
 	Wall* objKeepsWall = nullptr;
-	//アイテム
-	Item* objItem = nullptr;
 	//クリア判定用箱
 	ClearBox* objClearBox = nullptr;
 	//マップ移動用ゲート
