@@ -4,7 +4,7 @@
 void BlackOut::Initialize(SpriteCommon* spriteCommon)
 {
 	blackOut = new Sprite();
-	blackOut ->Initialize(spriteCommon, 2);
+	blackOut ->Initialize(spriteCommon, 1);
 	blackOut ->SetAnchorPoint(XMFLOAT2(0, 0));
 	blackOut ->SetSize(XMFLOAT2(WinApp::window_width, WinApp::window_height));
 	blackOut ->SetPosition({ 0,0 });

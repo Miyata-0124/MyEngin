@@ -6,6 +6,7 @@
 
 #include "header/Game/Player.h"
 #include "header/Game/enemy.h"
+#include "header/Game/APBox.h"
 #include "header/Game/Pipe.h"
 #include "header/Game/Wall.h"
 #include "header/Game/KeepsWall.h"
@@ -23,9 +24,10 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//スプライト共通部分の初期化
 	spriteCommon->Initialize(directXCom);
 	spriteCommon->Loadtexture(1, "white1x1.png");
-	spriteCommon->Loadtexture(2, "white1x1.png");
-	spriteCommon->Loadtexture(3, "Rule.png");
-	spriteCommon->Loadtexture(4, "sample.png");
+	spriteCommon->Loadtexture(2, "Rule.png");
+	spriteCommon->Loadtexture(3, "sample.png");
+	spriteCommon->Loadtexture(4, "ap.png");
+	spriteCommon->Loadtexture(5, "noAP.png");
 	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), camera);
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
@@ -33,13 +35,16 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//目覚め
 	wakeUp = std::make_unique<WakeUp>();
 	wakeUp->Initialize(spriteCommon);
-
+	//暗転
 	blackOut = std::make_unique<BlackOut>();
 	blackOut->Initialize(spriteCommon);
-
+	//AP
+	ap = std::make_unique<AP>();
+	ap->Initialize(spriteCommon);
+	//背景
 	back = std::make_unique<Sprite>();
-	back->Initialize(spriteCommon, 4);
-	back->SetSize({ 2560,720 });
+	back->Initialize(spriteCommon, 3);
+	back->SetSize({ 1280,720 });
 	//json読み込み
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("map");
 	//マップ読み込み
@@ -58,7 +63,7 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//	//モデル
 	//プレイヤーモデル
 	Model* playerModel = Model::LoadFromOBJ("sphere");
-	Model* ground = Model::LoadFromOBJ("blue");
+	//Model* ground = Model::LoadFromOBJ("blue");
 	//Model* item_ = Model::LoadFromOBJ("Item");
 #pragma endregion
 #pragma region Player等のオブジェクト
@@ -86,10 +91,9 @@ void GamePlayScene::Finalize()
 	//オブジェクト
 	wakeUp.reset();
 	blackOut.reset();
+	ap.reset();
 	back.reset();
-
 	delete objPlayer;
-	delete objItem;
 	delete objBackGround;
 	for (auto object : objects) {
 		delete object;
@@ -126,17 +130,12 @@ void GamePlayScene::Update()
 		}
 	}
 
-	/*if (objGate->GetRotation().x >= 90.0f)
-	{
-		blackOut->Update();
-	}*/
-
 	//カメラ
 	camera->Update();
 	back->Update();
 
 #pragma region 各クラス間の情報受け渡し
-
+	ap->SetAP(objPlayer->GetAP());
 #pragma endregion
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
@@ -172,6 +171,7 @@ void GamePlayScene::Draw()
 	// UI,演出関連
 	wakeUp->Draw();
 	blackOut->Draw();
+	ap->Draw();
 	
 }
 
@@ -182,6 +182,7 @@ void GamePlayScene::LoadMap()
 	Model* floor = Model::LoadFromOBJ("floor");
 	Model* box = Model::LoadFromOBJ("box");
 	Model* pipe = Model::LoadFromOBJ("pipe");
+	Model* apBox = Model::LoadFromOBJ("apBox");
 	//クリア範囲
 	Model* clear = Model::LoadFromOBJ("clear");
 
@@ -245,6 +246,31 @@ void GamePlayScene::LoadMap()
 
 			//配列に登録
 			objects.push_back(objKeepsWall);
+		}
+
+		if (objectData.fileName == "item")
+		{
+			if (it != models.end()) { apBox = it->second; }
+			//モデルを指定して3Dオブジェクトを生成
+			objAP = APBox::Create(apBox);
+			//サイズ
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			objAP->SetScale(scale);
+			objAP->SetRadius({ scale.x,scale.y });
+
+			//回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			objAP->SetRotation(rot);
+
+			//座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.position);
+			objAP->SetPosition(pos);
+
+			//配列に登録
+			objects.push_back(objAP);
 		}
 
 		if (objectData.fileName == "box")

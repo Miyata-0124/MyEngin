@@ -53,7 +53,8 @@ public:
 	XMFLOAT3 GetPosition() { return position; }
 	//シーン切り替えに使用する情報
 	int GetScene() { return sceneNum; }
-
+	//アクションポイントを渡す
+	int GetAP() { return ap; }
 private:
 	//左右移動
 	void Move();
@@ -63,8 +64,8 @@ private:
 	void Clim();
 	//重力
 	void Gravity();
-	//アイテムに対する行動
-	void Retention();
+	//アクションポイントの増減
+	void APControl();
 private:
 	Input* input = nullptr;
 private:
@@ -86,6 +87,11 @@ private:
 	bool isJamp = true;
 	//シーンナンバー
 	int sceneNum = 0;
+
+	//アクションポイント
+	int ap = 0;
+	//アクションポイントの最大値
+	int maxAP = 2;
 
 	//カメラの速度
 	float cameraSpeed = 0.0f;

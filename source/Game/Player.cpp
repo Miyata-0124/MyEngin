@@ -39,6 +39,8 @@ bool Player::Initialize()
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
 	//識別を設定する
 	SetIdentification(IDENT_PLAYER);
+
+	ap = maxAP;
 	return true;
 }
 
@@ -50,15 +52,12 @@ void Player::Update()
 	Gravity();
 	//移動
 	Move();
-	//アイテムに対する行動
-	Retention();
 	//行動制限
 	//スクロール
 	if (position.x > -65 && position.x < 115)
 	{
 		SetEye({ position.x,0,-50 });
 		SetTarget({ position.x,0,0 });
-
 	}
 	Object3d::Update();
 }
@@ -115,16 +114,14 @@ void Player::OnCollider(const CollisionInfo& info)
 		//アイテムに当たった時
 		if (info.object->GetIdentification() == IDENT_ITEM)
 		{
-			if (input->TriggerKey(DIK_Z) && !isRetention)
+			if (input->TriggerKey(DIK_V))
 			{
-				//保持フラグを真にする
-				isRetention = true;
+				ap=maxAP;
 			}
 		}
 		//移動用ゲートに当たった時
 		if (info.object->GetIdentification() == IDENT_GATE)
 		{
-
 
 		}
 		//床に当たった時
@@ -286,10 +283,16 @@ void Player::Jump()
 {
 	if (!isJamp && input->TriggerKey(DIK_SPACE))
 	{
-		//重力をマイナスにして飛ばす
-		yadd = antiYadd;
-		//飛んでると伝える
-		isJamp = true;
+		//アクションポイントが0以外なら
+		if (ap != 0)
+		{
+			//重力をマイナスにして飛ばす
+			yadd = antiYadd;
+			//飛んでると伝える
+			isJamp = true;
+		}
+		//アクションポイントの管理
+		APControl();
 	}
 }
 
@@ -321,15 +324,14 @@ void Player::Gravity()
 	}
 }
 
-void Player::Retention()
+void Player::APControl()
 {
-	//物を保持していて
-	if (isRetention)
+	if (ap > 0)
 	{
-		//Xキーが押されたら
-		if (input->TriggerKey(DIK_X))
-		{
-			isRetention = false;
-		}
+		ap -= 1;
+	}
+	else if (ap == 0)
+	{
+		ap = 0;
 	}
 }

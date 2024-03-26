@@ -12,7 +12,6 @@ void TitleSprite::Initialize(SpriteCommon* spriteCommon)
 
 void TitleSprite::Update(Input* input)
 {
-	
 	//“®‚©‚·‚½‚ß‚ÉÀ•W‚ðŽæ“¾
 	XMFLOAT2 position = titleSprite->GetPosition();
 	if (!UIFlag) {

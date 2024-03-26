@@ -99,6 +99,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="easing\Easing.cpp" />
+    <ClCompile Include="source\Game\AP.cpp" />
+    <ClCompile Include="source\Game\APBox.cpp" />
     <ClCompile Include="source\Game\GameClearScene.cpp" />
     <ClCompile Include="source\Game\GameSceneManager.cpp" />
     <ClCompile Include="source\Game\BackGround.cpp" />
@@ -236,6 +238,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="easing\Easing.h" />
+    <ClInclude Include="header\Game\AP.h" />
+    <ClInclude Include="header\Game\APBox.h" />
     <ClInclude Include="header\Game\GameClearScene.h" />
     <ClInclude Include="header\Game\GameSceneManager.h" />
     <ClInclude Include="header\Game\BackGround.h" />

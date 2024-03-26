@@ -3,11 +3,13 @@
 
 #include "header/Game/GameBaseScene.h"
 #include "header/Game/BackGround.h"
+#include "header/Game/AP.h"
 #include "header/Game/BlackOut.h"
 #include "header/Game/WakeUp.h"
 #include "header/3D/JsonLoader.h"
 
 class Player;
+class APBox;
 class BackGround;
 class Platform;
 class Pipe;
@@ -57,6 +59,8 @@ private:
 	//暗転
 	std::unique_ptr<BlackOut> blackOut = nullptr;
 	std::unique_ptr<Sprite> back = nullptr;
+	//APスプライト
+	std::unique_ptr<AP> ap = nullptr;
 	//判定マネージャー
 	CollisionManager* collisionManager = CollisionManager::GetInstance();
 	//ゲーム内オブジェクト
@@ -64,6 +68,8 @@ private:
 	Player* objPlayer = nullptr;
 	//敵
 	Enemy* objEnem = nullptr;
+	//AP補給BOX
+	APBox* objAP = nullptr;
 	//床(仮)
 	Platform* objFloor = nullptr;
 	//パイプ
