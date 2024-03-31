@@ -59,6 +59,18 @@ void Player::Update()
 		SetEye({ position.x,0,-50 });
 		SetTarget({ position.x,0,0 });
 	}
+
+	if (position.y < -5.0f)
+	{
+		SetRotation({ 0,-90,0 });
+		SetPosition({ -64,0,0 });
+		SetEye({ position.x,0,-50 });
+		SetTarget({ position.x,0,0 });
+		ap = maxAP;
+		yadd = 0.0f;
+		isJamp = false;
+	}
+
 	Object3d::Update();
 }
 

@@ -28,6 +28,10 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	spriteCommon->Loadtexture(3, "sample.png");
 	spriteCommon->Loadtexture(4, "ap.png");
 	spriteCommon->Loadtexture(5, "noAP.png");
+	spriteCommon->Loadtexture(6, "tutorial1.png");
+	spriteCommon->Loadtexture(7, "tutorial2.png");
+	spriteCommon->Loadtexture(8, "tutorial3.png");
+	spriteCommon->Loadtexture(9, "tutorial4.png");
 	//一度しか宣言しない
 	Object3d::StaticInitialize(directXCom->GetDevice(), camera);
 	FbxObject3d::StaticInitialize(directXCom->GetDevice(), WinApp::window_width, WinApp::window_height);
@@ -41,10 +45,13 @@ void GamePlayScene::Initialize(ViewProjection* camera_, Input* input_)
 	//AP
 	ap = std::make_unique<AP>();
 	ap->Initialize(spriteCommon);
+	//チュートリアル用UI
+	tUI = std::make_unique<TutorialUI>();
+	tUI->Initialize(spriteCommon);
 	//背景
 	back = std::make_unique<Sprite>();
 	back->Initialize(spriteCommon, 3);
-	back->SetSize({ 1280,720 });
+	back->SetSize({ 2560,720 });
 	//json読み込み
 	jsonLoader = JsonLoader::LoadFlomJSONInternal("map");
 	//マップ読み込み
@@ -92,6 +99,7 @@ void GamePlayScene::Finalize()
 	wakeUp.reset();
 	blackOut.reset();
 	ap.reset();
+	tUI.reset();
 	back.reset();
 	delete objPlayer;
 	delete objBackGround;
@@ -132,10 +140,13 @@ void GamePlayScene::Update()
 
 	//カメラ
 	camera->Update();
+	//背景
 	back->Update();
-
+	//UI
+	tUI->Update();
 #pragma region 各クラス間の情報受け渡し
 	ap->SetAP(objPlayer->GetAP());
+	tUI->SetPlayerPos(objPlayer->GetPosition().x);
 #pragma endregion
 	//判定マネージャー
 	collisionManager->CheckAllCollisions();
@@ -172,7 +183,7 @@ void GamePlayScene::Draw()
 	wakeUp->Draw();
 	blackOut->Draw();
 	ap->Draw();
-	
+	tUI->Draw();
 }
 
 void GamePlayScene::LoadMap()

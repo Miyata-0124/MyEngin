@@ -4,6 +4,7 @@
 #include "header/Game/GameBaseScene.h"
 #include "header/Game/BackGround.h"
 #include "header/Game/AP.h"
+#include "header/Game/TutorialUI.h"
 #include "header/Game/BlackOut.h"
 #include "header/Game/WakeUp.h"
 #include "header/3D/JsonLoader.h"
@@ -61,6 +62,8 @@ private:
 	std::unique_ptr<Sprite> back = nullptr;
 	//APスプライト
 	std::unique_ptr<AP> ap = nullptr;
+	//チュートリアル用UI
+	std::unique_ptr<TutorialUI> tUI = nullptr;
 	//判定マネージャー
 	CollisionManager* collisionManager = CollisionManager::GetInstance();
 	//ゲーム内オブジェクト
