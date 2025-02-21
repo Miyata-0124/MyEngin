@@ -99,8 +99,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="easing\Easing.cpp" />
-    <ClCompile Include="source\Game\AP.cpp" />
-    <ClCompile Include="source\Game\APBox.cpp" />
     <ClCompile Include="source\Game\GameClearScene.cpp" />
     <ClCompile Include="source\Game\GameSceneManager.cpp" />
     <ClCompile Include="source\Game\BackGround.cpp" />
@@ -110,22 +108,15 @@
     <ClCompile Include="source\Collider\CollisionInfo.cpp" />
     <ClCompile Include="source\Collider\CollisionManager.cpp" />
     <ClCompile Include="source\Engin\DirectXCommon.cpp" />
-    <ClCompile Include="source\Game\BlackOut.cpp" />
-    <ClCompile Include="source\Game\ClearBox.cpp" />
-    <ClCompile Include="source\Game\ClearSprite.cpp" />
-    <ClCompile Include="source\Game\enemy.cpp" />
     <ClCompile Include="source\3D\FbxLoader.cpp" />
     <ClCompile Include="source\3D\FbxModel.cpp" />
     <ClCompile Include="source\3D\FbxObject3D.cpp" />
-    <ClCompile Include="source\Game\Platform.cpp" />
     <ClCompile Include="source\Game\GameBaseScene.cpp" />
     <ClCompile Include="source\Game\GamePlayScene.cpp" />
     <ClCompile Include="source\Game\GameScene.cpp" />
     <ClCompile Include="source\Engin\Input.cpp" />
     <ClCompile Include="source\Game\GameTitleScene.cpp" />
-    <ClCompile Include="source\Game\Gate.cpp" />
     <ClCompile Include="source\3D\JsonLoader.cpp" />
-    <ClCompile Include="source\Game\KeepsWall.cpp" />
     <ClCompile Include="source\Game\main.cpp" />
     <ClCompile Include="Math\Affin.cpp" />
     <ClCompile Include="Math\Convert.cpp" />
@@ -137,20 +128,10 @@
     <ClCompile Include="source\3D\Object3D.cpp" />
     <ClCompile Include="source\2D\Particle.cpp" />
     <ClCompile Include="source\Collider\PlaneCollider.cpp" />
-    <ClCompile Include="source\Game\MoveGate.cpp" />
-    <ClCompile Include="source\Game\OverSprite.cpp" />
-    <ClCompile Include="source\Game\Pipe.cpp" />
-    <ClCompile Include="source\Game\Player.cpp" />
     <ClCompile Include="source\Collider\SphereCollider.cpp" />
     <ClCompile Include="source\2D\Sprite.cpp" />
     <ClCompile Include="source\2D\SpriteCommon.cpp" />
     <ClCompile Include="source\Engin\ViewProjection.cpp" />
-    <ClCompile Include="source\Game\Rain.cpp" />
-    <ClCompile Include="source\Game\StageGate.cpp" />
-    <ClCompile Include="source\Game\TitleSprite.cpp" />
-    <ClCompile Include="source\Game\TutorialUI.cpp" />
-    <ClCompile Include="source\Game\WakeUp.cpp" />
-    <ClCompile Include="source\Game\Wall.cpp" />
     <ClCompile Include="source\Engin\WinApp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -239,8 +220,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="easing\Easing.h" />
-    <ClInclude Include="header\Game\AP.h" />
-    <ClInclude Include="header\Game\APBox.h" />
     <ClInclude Include="header\Game\GameClearScene.h" />
     <ClInclude Include="header\Game\BackGround.h" />
     <ClInclude Include="header\Collider\BaseCollider.h" />
@@ -251,31 +230,16 @@
     <ClInclude Include="header\Collider\CollisionPrimitive.h" />
     <ClInclude Include="header\Collider\CollisionTypes.h" />
     <ClInclude Include="header\Engin\DirectXCommon.h" />
-    <ClInclude Include="header\Game\BlackOut.h" />
-    <ClInclude Include="header\Game\ClearBox.h" />
-    <ClInclude Include="header\Game\ClearSprite.h" />
-    <ClInclude Include="header\Game\enemy.h" />
     <ClInclude Include="header\3D\FbxLoader.h" />
     <ClInclude Include="header\3D\FbxModel.h" />
     <ClInclude Include="header\3D\FbxObject3D.h" />
     <ClInclude Include="header\Game\GameSceneManager.h" />
-    <ClInclude Include="header\Game\Platform.h" />
     <ClInclude Include="header\Game\GameBaseScene.h" />
     <ClInclude Include="header\Game\GamePlayScene.h" />
     <ClInclude Include="header\Game\GameScene.h" />
     <ClInclude Include="header\Engin\Input.h" />
     <ClInclude Include="header\Game\GameTitleScene.h" />
-    <ClInclude Include="header\Game\Gate.h" />
     <ClInclude Include="header\3D\JsonLoader.h" />
-    <ClInclude Include="header\Game\KeepsWall.h" />
-    <ClInclude Include="header\Game\MoveGate.h" />
-    <ClInclude Include="header\Game\OverSprite.h" />
-    <ClInclude Include="header\Game\Pipe.h" />
-    <ClInclude Include="header\Game\Rain.h" />
-    <ClInclude Include="header\Game\StageGate.h" />
-    <ClInclude Include="header\Game\TitleSprite.h" />
-    <ClInclude Include="header\Game\TutorialUI.h" />
-    <ClInclude Include="header\Game\WakeUp.h" />
     <ClInclude Include="Math\Affin.h" />
     <ClInclude Include="Math\Convert.h" />
     <ClInclude Include="Math\Matrix4.h" />
@@ -286,13 +250,11 @@
     <ClInclude Include="header\3D\Object3D.h" />
     <ClInclude Include="header\2D\Particle.h" />
     <ClInclude Include="header\Collider\PlaneCollider.h" />
-    <ClInclude Include="header\Game\Player.h" />
     <ClInclude Include="x64\resource.h" />
     <ClInclude Include="header\Collider\SphereCollider.h" />
     <ClInclude Include="header\2D\Sprite.h" />
     <ClInclude Include="header\2D\SpriteCommon.h" />
     <ClInclude Include="header\Engin\ViewProjection.h" />
-    <ClInclude Include="header\Game\Wall.h" />
     <ClInclude Include="header\Engin\WinApp.h" />
   </ItemGroup>
   <ItemGroup>
