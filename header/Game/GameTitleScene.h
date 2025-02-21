@@ -1,10 +1,7 @@
 #pragma once
 #include "header/Engin/ViewProjection.h"
 #include "header/Game/GameBaseScene.h"
-#include "header/Game/BlackOut.h"
-#include "header/Game/TitleSprite.h"
-
-class Rain;
+#include "header/2D/Sprite.h"
 
 class GameTitleScene : public GameBaseScene
 {
@@ -29,20 +26,13 @@ public:
 	/// </summary>
 	void Draw()override;
 private:
+	ViewProjection* camera;
 	Input* input = nullptr;
 	//スプライト機能
 	SpriteCommon* spriteCommon = SpriteCommon::GetInstance();
 	DirectXCommon* directXCom = DirectXCommon::GetInstance();
 
-	//ゲーム内スプライト
-	TitleSprite* titleSprite = new TitleSprite();
-	//暗転
-	BlackOut* blackOut = new BlackOut();
-	//パーティクル
-	Rain* rain = nullptr;
-
 private:
-	//スプライトの落下地点
-	float landingPoint = 720;
+
 };
 

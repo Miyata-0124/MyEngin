@@ -3,11 +3,11 @@
 
 class GameSceneManager
 {
-public: 
+public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void  Update(ViewProjection* camera_,Input* input_);
+	void  Update(ViewProjection* camera_, Input* input_);
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -24,4 +24,3 @@ private:
 	//次のシーン
 	GameBaseScene* nextScene = nullptr;
 };
-

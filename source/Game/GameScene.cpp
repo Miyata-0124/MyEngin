@@ -68,8 +68,4 @@ void GameScene::Finalize()
 	delete input;
 	delete winApp;
 	delete model;
-	//delete scene_;
-	//delete object1;
-	/*delete model1;
-	delete obj3d;*/
 }

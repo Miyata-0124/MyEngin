@@ -1,26 +1,8 @@
 #pragma once
 #include "header/Collider/CollisionManager.h"
-
 #include "header/Game/GameBaseScene.h"
-#include "header/Game/BackGround.h"
-#include "header/Game/AP.h"
-#include "header/Game/TutorialUI.h"
-#include "header/Game/BlackOut.h"
-#include "header/Game/WakeUp.h"
 #include "header/3D/JsonLoader.h"
-
-class Player;
-class APBox;
-class BackGround;
-class Platform;
-class Pipe;
-class Floor;
-class Wall;
-class Enemy;
-class Rain;
-class MoveGate;
-class Gate;
-class ClearBox;
+#include "header/2D/Sprite.h"
 
 class GamePlayScene : public GameBaseScene
 {
@@ -54,45 +36,12 @@ private:
 	//スプライト機能
 	SpriteCommon* spriteCommon = SpriteCommon::GetInstance();
 	DirectXCommon* directXCom = DirectXCommon::GetInstance();
-	//スプライト
-	//演出
-	std::unique_ptr<WakeUp> wakeUp = nullptr;
-	//暗転
-	std::unique_ptr<BlackOut> blackOut = nullptr;
-	std::unique_ptr<Sprite> back = nullptr;
-	//APスプライト
-	std::unique_ptr<AP> ap = nullptr;
-	//チュートリアル用UI
-	std::unique_ptr<TutorialUI> tUI = nullptr;
+
 	//判定マネージャー
 	CollisionManager* collisionManager = CollisionManager::GetInstance();
 	//ゲーム内オブジェクト
-	//プレイヤー
-	Player* objPlayer = nullptr;
-	//敵
-	Enemy* objEnem = nullptr;
-	//AP補給BOX
-	APBox* objAP = nullptr;
-	//床(仮)
-	Platform* objFloor = nullptr;
-	//パイプ
-	Pipe* objPipe = nullptr;
-	//壁
-	Floor* objWall = nullptr;
-	//プレイヤーを通さない壁
-	Wall* objKeepsWall = nullptr;
-	//クリア判定用箱
-	ClearBox* objClearBox = nullptr;
-	//マップ移動用ゲート
-	MoveGate* objMGate = nullptr;
-	//扉
-	Gate* objGate = {};
-	//背景
-	BackGround* objBackGround = nullptr;
-	//パーティクル
-	//Rain* rain = nullptr;
 
-	bool move = false;
+	//パーティクル
 
 	//マップ用JsonLoader
 	//JSON
